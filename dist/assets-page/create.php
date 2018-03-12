@@ -59,7 +59,7 @@
 									<div class="asset-manage-wrapper">
 										<ul class="nav nav-pills mb-3">
 											<li class="nav-item">
-												<a class="nav-link active" href="../assets.html">資產管理</a>
+												<a class="nav-link active" href="../assets.php">資產管理</a>
 											</li>
 											<li class="nav-item">
 												<a class="nav-link" href="../household.html">住戶管理</a>

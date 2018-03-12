@@ -9,6 +9,7 @@ $conf['host']='127.0.0.1';
 $conf['port']='3306';
 $conf['db']['user']='root';
 $conf['sysname']='易入門智慧建築系統';
+$conf['apartment']='';
 /*$conf['db']['password']='1qaz@WSX';*/
 $conf['db']['password']='';
 $conf['db']['charset']='utf8';
