@@ -23,6 +23,31 @@
 	$data = $db->getRows($sql);
 //	var_dump($data);
 	session_start();
+
+	$timeout_timer = 60; // in sec
+
+	echo "\$_SESSION['LAST_ACTIVITY'] = " . $_SESSION['LAST_ACTIVITY'] . '<br>';
+	//if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 1800)) {
+	if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout_timer)) {
+		// last request was more than 30 minutes ago
+		
+		echo "Timeout " . $timeout_timer . "<br>" .
+		'<script>
+        document.onkeypress=function(e) {
+            //alert("You pressed a key inside the input field");
+            //document.getElementById("demo").innerHTML = 5 + 6;
+            //window.location.href = "http://stackoverflow.com";
+            window.location.href = "./login.php";
+        }
+	    </script>';
+		echo 'session_destroy();';
+		session_unset();     // unset $_SESSION variable for the run-time 
+		session_destroy();   // destroy session data in storage
+		// echo "<script>location.href='login.php';</script>";
+	}
+	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+	echo "\$_SESSION['LAST_ACTIVITY'] = " . $_SESSION['LAST_ACTIVITY'] . '<br>';
+
 /*
 	if (strlen($_SESSION['account']) == 0) {
 		header('Location: ' . '/smartbuilding/login.php');
