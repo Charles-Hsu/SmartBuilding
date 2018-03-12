@@ -21,7 +21,14 @@
 	$sql = 'SELECT * FROM assets';
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 	$data = $db->getRows($sql);
+	session_start();
+	echo "_SESSION['account'] = " . $_SESSION['account'];
+	echo strlen($_SESSION['account']);
 //	var_dump($data);
+
+	if (strlen($_SESSION['account']) == 0) {
+		header('Location: ' . '/smartbuilding/login.php');
+	}
 ?>
 
 <body>

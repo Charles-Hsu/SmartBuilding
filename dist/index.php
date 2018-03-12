@@ -22,6 +22,14 @@
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 	$data = $db->getRows($sql);
 //	var_dump($data);
+	session_start();
+
+	if (strlen($_SESSION['account']) == 0) {
+		header('Location: ' . '/smartbuilding/login.php');
+	} else {
+		header('Location: ' . '/smartbuilding/');
+	}
+
 ?>
 
 <body>
