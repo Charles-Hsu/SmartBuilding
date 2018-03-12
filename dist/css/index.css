@@ -211,10 +211,12 @@ label.col-form-label {
       .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .asset-table thead th {
         padding: 1rem; }
       .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .asset-table tbody td {
-        padding: 1rem; }
-      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .pagination .page-item.disabled .page-link {
-        background: #1F90E6;
-        color: #fff; }
+        padding: .5rem; }
+        .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .asset-table tbody td span {
+          display: inline-block;
+          padding: .3rem .75rem;
+          font-size: 1rem;
+          line-height: 1.5; }
       .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-title .assets-create-icon {
         color: #fff;
         background-color: #1F90E6;

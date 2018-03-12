@@ -12,6 +12,9 @@
 	<script src="./js/lib/jquery-3.1.1.min.js"></script>
 	<script src="./js/popper.min.js"></script>
 	<script src="./js/bootstrap.min.js"></script>
+	<link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
@@ -86,6 +89,7 @@
 														<th>資產名稱</th>
 														<th>使用狀態</th>
 														<th>價格</th>
+														<th>修改</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -99,10 +103,11 @@
 ?>
 
 													<tr>
-														<td><?=$var[asset_no]?></td>
-														<td><?=$var[asset_name]?></td>
-														<td><?=$var[status]?></td>
-														<td><?=$var[price]?></td>
+														<td><span><?=$var[asset_no]?></span></td>
+														<td><span><?=$var[asset_name]?></span></td>
+														<td><span><?=$var[status]?></span></td>
+														<td><span>?=$var[price]?></span></td>
+														<td><a href="javascript:;" class="btn btn-outline-secondary">修改</a></td>
 													</tr>
 <?php
 	}
@@ -117,23 +122,6 @@
 -->													
 												</tbody>
 											</table>
-											<ul class="pagination justify-content-end">
-												<li class="page-item disabled">
-													<a class="page-link" href="#" tabindex="-1"><</a>
-												</li>
-												<li class="page-item disabled">
-													<a class="page-link" href="#">1</a>
-												</li>
-												<li class="page-item">
-													<a class="page-link" href="#">2</a>
-												</li>
-												<li class="page-item">
-													<a class="page-link" href="#">3</a>
-												</li>
-												<li class="page-item">
-													<a class="page-link" href="#">></a>
-												</li>
-											</ul>
 										</div>
 									</div>
 								</div>
@@ -143,7 +131,27 @@
 				</div>
 			</div>
 		</div>
-		<script src="js/app.js"></script>
+	</div>
+	<script>
+		$(function(){
+			$('.asset-table').DataTable({
+				"oLanguage": {
+					"sLengthMenu": "每頁顯示 _MENU_ 條紀錄",
+					"sZeroRecords": "抱歉， 没有找到",
+					"sInfo": "從 _START_ 到 _END_ /共 _TOTAL_ 調數據",
+					"sInfoEmpty": "沒有數據",
+					"sInfoFiltered": "(從 _MAX_ 條數據中搜尋)",
+					"oPaginate": {
+						"sFirst": "第一頁",
+						"sPrevious": "上一頁",
+						"sNext": "下一頁",
+						"sLast": "最後一頁"
+					}
+				}
+			});
+		})
+	</script>
+	<script src="js/app.js"></script>
 </body>
 
 </html>
