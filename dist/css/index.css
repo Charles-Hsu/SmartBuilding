@@ -1,0 +1,220 @@
+@charset "UTF-8";
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*=====================================*/
+* {
+  padding: 0;
+  margin: 0; }
+
+body {
+  font-family: '微軟正黑體'; }
+
+[v-cloak] {
+  display: none; }
+
+.w-15 {
+  width: 15%; }
+
+.datepicker table tr td, .datepicker table tr th {
+  line-height: 30px; }
+
+.login-main .login-title {
+  font-weight: 900;
+  font-size: 1.75rem; }
+
+.login-main .login-sub-title {
+  border-bottom: 1px solid #a7a7a7; }
+  .login-main .login-sub-title a {
+    display: inline-block;
+    color: #404040;
+    padding: .75rem 1.5rem;
+    font-weight: 700;
+    position: relative;
+    font-size: 1.2rem; }
+    .login-main .login-sub-title a:hover {
+      text-decoration: none; }
+    .login-main .login-sub-title a.active {
+      color: #1F90E6; }
+      .login-main .login-sub-title a.active:before {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: #1F90E6; }
+
+.login-main .loign-form .input-group-text {
+  border-right: none;
+  background-color: transparent; }
+
+.login-main .loign-form .form-control {
+  border-left: none;
+  padding: .75rem; }
+
+.main-wrapper {
+  width: 100%; }
+  .main-wrapper .sidemenu {
+    background-color: #404040;
+    color: #fff;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 250px;
+            flex: 0 0 250px;
+    padding-right: 1rem;
+    padding-left: 1rem; }
+    .main-wrapper .sidemenu.slideToggleActive {
+      -webkit-box-flex: 0;
+          -ms-flex: 0 0 30px;
+              flex: 0 0 30px;
+      padding-right: 0;
+      padding-left: 0; }
+      .main-wrapper .sidemenu.slideToggleActive .sidemenu-wrapper .sidemenu-title span {
+        display: none; }
+      .main-wrapper .sidemenu.slideToggleActive .sidemenu-wrapper .sidemenu-nav {
+        margin-right: 0px;
+        margin-left: 0px; }
+        .main-wrapper .sidemenu.slideToggleActive .sidemenu-wrapper .sidemenu-nav li a i {
+          margin-right: 0; }
+        .main-wrapper .sidemenu.slideToggleActive .sidemenu-wrapper .sidemenu-nav li a span {
+          display: none; }
+    .main-wrapper .sidemenu .sidemenu-wrapper .sidemenu-title {
+      background-color: #1d1d1d;
+      padding: 1.2rem;
+      text-align: center;
+      border-radius: 8px; }
+    .main-wrapper .sidemenu .sidemenu-wrapper .sidemenu-nav {
+      margin-right: -15px;
+      margin-left: -15px; }
+      .main-wrapper .sidemenu .sidemenu-wrapper .sidemenu-nav li a {
+        width: 100%;
+        display: inline-block;
+        color: #dadada;
+        padding: 1rem;
+        font-size: 1.1rem; }
+        .main-wrapper .sidemenu .sidemenu-wrapper .sidemenu-nav li a i {
+          width: 30px;
+          text-align: center;
+          margin-right: .6rem; }
+        .main-wrapper .sidemenu .sidemenu-wrapper .sidemenu-nav li a span {
+          vertical-align: middle; }
+        .main-wrapper .sidemenu .sidemenu-wrapper .sidemenu-nav li a.active {
+          color: #fff;
+          background-color: #1F90E6; }
+        .main-wrapper .sidemenu .sidemenu-wrapper .sidemenu-nav li a:hover {
+          text-decoration: none; }
+  .main-wrapper .content {
+    background-color: #ECECEC;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1; }
+    .main-wrapper .content .content-header {
+      background-color: #fff;
+      padding: 1rem; }
+      .main-wrapper .content .content-header .slide-toggle-btn {
+        font-size: 1.2rem;
+        cursor: pointer; }
+    .main-wrapper .content .content-main-wrapper .content-main {
+      background-color: #fff;
+      min-height: calc(100vh - 51px - 2rem); }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper .nav {
+        border-bottom: 1px solid #e0e0e0; }
+        .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper .nav .nav-item a {
+          color: #404040;
+          background: transparent;
+          font-weight: bold;
+          padding: 1rem;
+          position: relative; }
+          .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper .nav .nav-item a.active {
+            color: #1F90E6; }
+            .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper .nav .nav-item a.active:before {
+              content: '';
+              width: 100%;
+              height: 3px;
+              background: #1F90E6;
+              position: absolute;
+              bottom: -2px;
+              left: 0; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .add-asset-btn {
+        background: #1F90E6;
+        color: #fff; }
+        .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .add-asset-btn span {
+          margin-right: .6rem; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .asset-table thead th {
+        padding: 1rem; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .asset-table tbody td {
+        padding: 1rem; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .pagination .page-item.disabled .page-link {
+        background: #1F90E6;
+        color: #fff; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-title .assets-create-icon {
+        color: #fff;
+        background-color: #1F90E6;
+        padding: .5rem .8rem;
+        border-radius: 6px;
+        vertical-align: middle;
+        margin-right: 6px; }
+        .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-title .assets-create-icon:hover {
+          text-decoration: none; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-title span {
+        font-weight: bold;
+        font-size: 1.2rem;
+        vertical-align: top;
+        margin-top: 5px;
+        display: inline-block; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-form label {
+        padding-right: 0;
+        padding-left: 0;
+        font-weight: bold; }
+        .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-form label .important {
+          color: red;
+          vertical-align: middle;
+          margin-right: 6px; }
+      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-form .assets-btn {
+        padding: .5rem 1.5rem;
+        background-color: #fff;
+        border: 1px solid #8d8d8d; }
