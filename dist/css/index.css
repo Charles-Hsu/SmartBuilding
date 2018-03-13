@@ -60,8 +60,28 @@ body {
 .w-15 {
   width: 15%; }
 
+.mt-8 {
+  margin-top: 8rem; }
+
+.pt-8 {
+  padding-top: 8rem; }
+
 .datepicker table tr td, .datepicker table tr th {
   line-height: 30px; }
+
+label.col-form-label {
+  padding-right: 0;
+  padding-left: 0;
+  font-weight: bold; }
+  label.col-form-label .important {
+    color: red;
+    vertical-align: middle;
+    margin-right: 6px; }
+
+.assets-btn {
+  padding: .5rem 1.5rem;
+  background-color: #fff;
+  border: 1px solid #8d8d8d; }
 
 .login-main .login-title {
   font-weight: 900;
@@ -89,12 +109,16 @@ body {
         height: 2px;
         background-color: #1F90E6; }
 
-.login-main .loign-form .input-group-text {
+.login-main .login-from .input-group-text {
   border-right: none;
   background-color: transparent; }
 
-.login-main .loign-form .form-control {
+.login-main .login-from .form-control {
   border-left: none;
+  padding: .75rem; }
+
+.login-main .login-from .login-btn {
+  background: #1F90E6;
   padding: .75rem; }
 
 .main-wrapper {
@@ -206,15 +230,3 @@ body {
         vertical-align: top;
         margin-top: 5px;
         display: inline-block; }
-      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-form label {
-        padding-right: 0;
-        padding-left: 0;
-        font-weight: bold; }
-        .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-form label .important {
-          color: red;
-          vertical-align: middle;
-          margin-right: 6px; }
-      .main-wrapper .content .content-main-wrapper .content-main .asset-manage-wrapper #assets-tab .assets-create-form .assets-btn {
-        padding: .5rem 1.5rem;
-        background-color: #fff;
-        border: 1px solid #8d8d8d; }
