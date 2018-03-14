@@ -46,25 +46,25 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/organization.php" class="d-flex sidemenu-link align-items-center" title="組織管理" data-type="organization">
+                    <a href="/smartbuilding/org.php" class="d-flex sidemenu-link align-items-center" title="組織管理" data-type="org">
                         <i class="fas fa-users"></i>
                         <span>組織管理</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/transportation.php" class="d-flex sidemenu-link align-items-center" title="維運管理" data-type="transportation">
+                    <a href="/smartbuilding/operation.php" class="d-flex sidemenu-link align-items-center" title="維運管理" data-type="operation">
                         <i class="far fa-address-book"></i>
                         <span>維運管理</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/complex.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="complex">
+                    <a href="/smartbuilding/infos.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="infos">
                         <i class="fas fa-home"></i>
                         <span>社區資料</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/file.php" class="d-flex sidemenu-link align-items-center" title="社區檔案庫" data-type="file">
+                    <a href="/smartbuilding/files.php" class="d-flex sidemenu-link align-items-center" title="社區檔案庫" data-type="files">
                         <i class="far fa-folder"></i>
                         <span>社區檔案庫</span>
                     </a>
