@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link href="./css/fontawesome.css" rel="stylesheet">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/reset.css">
     <script src="./js/lib/jquery-3.1.1.min.js"></script>
     <script src="./js/popper.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
 
 <?php
