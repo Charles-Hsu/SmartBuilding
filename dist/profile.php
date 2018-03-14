@@ -129,7 +129,7 @@
                                                     <div class="form-group row">
                                                         <label for="password" class="text-right col-md-3 col-form-label">密碼:</label>
                                                         <div class="col-md-9">
-                                                            <input type="password" class="form-control" name="password" id="password" placeholder="<?=$data['password'];?>">
+                                                            <input type="password" class="form-control" name="password" id="password" value="<?=$data['password'];?>">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">

@@ -16,12 +16,62 @@
 </head>
 
 <?php
+    session_start();
+    
+    $message="";
+
 	require 'DBAccess.class.php';
 	require 'config.admin.php';
 	//$sql = 'SELECT * FROM assets';
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
     //$data = $db->getRows($sql);
     
+    if(count($_POST)>0) {
+        $_POST['username'];
+        $_POST['password'];
+
+        $sql =  "SELECT count(id) as count FROM users WHERE account='" . $_POST['username'] . "'";
+        echo $sql;
+
+        $data = $db->getValue($sql);
+        echo $data;
+
+        if ($data == 0) {
+            $message = "使用者不存在";
+        } else {
+            $sql =  "SELECT count(id) as count FROM users WHERE account='" . $_POST['username'] . "' AND password='" . $_POST['password'] . "'";
+            echo $sql;
+            $data = $db->getValue($sql);
+            echo $data;
+            if ($data == 1) {
+                $_SESSION['account'] = $_POST['username'];
+
+                echo 
+                '<script>
+                    //document.onkeypress=function(e) {
+                        //alert("You pressed a key inside the input field");
+                        //document.getElementById("demo").innerHTML = 5 + 6;
+                        //window.location.href = "http://stackoverflow.com";
+                        window.location.href = "./index.php";
+                    //}
+                </script>';
+
+            } else {
+                $_SESSION['account'] = '';
+                $message = "帳號密碼錯誤";
+            }
+        }
+/*
+        if( $_POST["user_name"] == "admin" and $_POST["password"] == "admin") {
+            $_SESSION["user_id"] = 1001;
+            $_SESSION["user_name"] = $_POST["user_name"];
+            $_SESSION['loggedin_time'] = time();  
+        } else {
+            $message = "Invalid Username or Password!";
+        }
+*/        
+    }
+
 //	var_dump($data);
 ?>
 
@@ -34,7 +84,8 @@
                     <a href="login.html" class="active">登入系統</a>
                     <a href="sign.html">註冊會員</a>
                 </div>
-                <form action="checkuser.php" class="loign-form" method='POST'>
+                <!--<form action="checkuser.php" class="loign-form" method='POST'>-->
+                <form action="" class="loign-form" method='POST'>
                     <div class="form-group row">
                         <div class="input-group mb-3 col-md-10 offset-md-1">
                             <div class="input-group-prepend">
@@ -56,6 +107,13 @@
                             <button class="btn login-btn btn-primary btn-block" type="submit">登入</button>
                         </div>
                     </div>
+
+
+                    <?php if($message!="") { ?>
+                    <div class="message"><?php echo $message; ?></div>
+                    <?php } ?>
+
+
                 </form>
             </div>
         </div>
