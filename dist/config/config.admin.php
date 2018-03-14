@@ -17,6 +17,8 @@ $conf['db']['prename']='ssc_';
 define('PASSWORD_KEY','Yb&W@3(g$%*p!--'); // md5 key
 //$conf['safepass']='123456';     //后台登陆安全码
 
+//define('Document_root',dirname(__FILE__));
+
 $conf['cache']['expire']=0;
 $conf['cache']['dir']='_cache_$98ER29@fw!d#s4fef/';
 $conf['cache']['dirqiantai']='C:\\Users\\Administrator\\Desktop\\dsn\\web\\_cache_$98sER9@fw!d#s4fef\\'; //C:\\Users\\Administrator\\Desktop\\dsn\\admin
