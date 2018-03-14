@@ -31,7 +31,7 @@ if (strlen($_SESSION['account']) == 0) {
 				</li>
 			</ul>
 			<div id="assets-tab">
-				<a href="./assets-page/create.php" class="btn add-asset-btn mb-3">
+				<a href="./assets/create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增資產
 				</a>
 				<table class="table asset-table">
@@ -59,7 +59,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span><?=$var[asset_name]?></span></td>
 							<td><span><?=$var[status]?></span></td>
 							<td><span><?=$var[price]?></span></td>
-							<td><a href="javascript:;" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 	}

@@ -256,6 +256,23 @@ label.col-form-label .important {
     font-weight: bold;
     font-size: 1.2rem;
     vertical-align: top;
-    margin-top: 5px;
     display: inline-block;
+}
+.edit-title{
+	display: inline-block;
+	font-size: 1.3rem;
+	font-weight: bold;
+	color:#727272;
+	position: relative;
+}
+.edit-title:before{
+    content:'';
+    width: 100%;
+    height: 1.1px;
+    background: #727272;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(105%,-50%);
+
 }

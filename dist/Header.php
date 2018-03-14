@@ -34,49 +34,49 @@
             </div>
             <ul class="sidemenu-nav">
                 <li>
-                    <a href="#" class="" class="d-flex sidemenu-link" title="效能管理">
+                    <a href="#" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="#">
                         <i class="far fa-chart-bar"></i>
                         <span>效能管理</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/assets.php" class="" class="d-flex sidemenu-link" title="資產管理">
+                    <a href="/smartbuilding/assets.php" class="d-flex sidemenu-link align-items-center" title="資產管理" data-type="assets">
                         <i class="fas fa-book"></i>
                         <span>資產管理</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="" class="d-flex sidemenu-link" title="組織管理">
+                    <a href="/smartbuilding/organization.php" class="d-flex sidemenu-link align-items-center" title="組織管理" data-type="organization">
                         <i class="fas fa-users"></i>
                         <span>組織管理</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="" class="d-flex sidemenu-link" title="維運管理">
+                    <a href="/smartbuilding/transportation.php" class="d-flex sidemenu-link align-items-center" title="維運管理" data-type="transportation">
                         <i class="far fa-address-book"></i>
                         <span>維運管理</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="" class="d-flex sidemenu-link" title="社區資料">
+                    <a href="/smartbuilding/complex.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="complex">
                         <i class="fas fa-home"></i>
                         <span>社區資料</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="" class="d-flex sidemenu-link" title="社區檔案庫">
+                    <a href="/smartbuilding/file.php" class="d-flex sidemenu-link align-items-center" title="社區檔案庫" data-type="file">
                         <i class="far fa-folder"></i>
                         <span>社區檔案庫</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/profile.php" class="" class="d-flex sidemenu-link" title="個人資料">
+                    <a href="/smartbuilding/profile.php" class="d-flex sidemenu-link align-items-center" title="個人資料" data-type="profile">
                         <i class="far fa-smile"></i>
                         <span>個人資料</span>
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/logout.php" class="" class="d-flex sidemenu-link" title="登出">
+                    <a href="/smartbuilding/logout.php" class="d-flex sidemenu-link align-items-center" title="登出">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>登出</span>
                     </a>
