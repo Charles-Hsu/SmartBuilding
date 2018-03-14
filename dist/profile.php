@@ -6,18 +6,20 @@ include(Document_root.'/Header.php');
 
 session_start();
 
-$_SESSION['account'] = 'charles'; // for test only
+//echo $_SESSION['account'] . '<br>';
+
+//$_SESSION['account'] = 'charles'; // for test only
 
 $sql = 'SELECT * FROM users WHERE account = "' . $_SESSION['account'] . '"';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
+/*
 echo $_SESSION['account'] . '<br>';
 echo $sql . '<br>';
-
+*/
 $data = $db->getRow($sql);
-
+/*
 var_dump($data);
-
+*/
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -46,7 +48,7 @@ var_dump($data);
                         </div>
                         <div class="form-group row">
                             <label for="birthdate" class="text-right col-md-3 col-form-label">
-                                <span class="important">*</span>生日日期:</label>
+                                <span class="important"></span>生日日期:</label>
                             <div class="col-md-9">
                                 <input type="text" class="form-control datepicker" name="birthdate" id="birthdate" placeholder="生日日期..." value="<?=$data['birthday'];?>">
                             </div>

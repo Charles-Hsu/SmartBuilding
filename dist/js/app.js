@@ -13,11 +13,11 @@ $(function(){
     if($('.asset-table').length > 0){
         $('.asset-table').DataTable({
             "oLanguage": {
-                "sLengthMenu": "每頁顯示 _MENU_ 條紀錄",
+                "sLengthMenu": "每頁顯示 _MENU_ 筆資料",
                 "sZeroRecords": "抱歉， 没有找到",
-                "sInfo": "從 _START_ 到 _END_ /共 _TOTAL_ 調數據",
-                "sInfoEmpty": "沒有數據",
-                "sInfoFiltered": "(從 _MAX_ 條數據中搜尋)",
+                "sInfo": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
+                "sInfoEmpty": "沒有資料",
+                "sInfoFiltered": "(從 _MAX_ 筆資料中搜尋)",
                 "oPaginate": {
                     "sFirst": "第一頁",
                     "sPrevious": "上一頁",

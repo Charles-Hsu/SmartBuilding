@@ -22,8 +22,8 @@
 </head>
 
 <?php
-	require 'DBAccess.class.php';
-	require 'config.admin.php';
+	require 'lib/DBAccess.class.php';
+	require 'config/config.admin.php';
 ?>
 <body class="d-flex">
     <div class="sidemenu">
@@ -76,7 +76,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="" class="d-flex sidemenu-link" title="登出">
+                    <a href="/smartbuilding/logout.php" class="" class="d-flex sidemenu-link" title="登出">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>登出</span>
                     </a>

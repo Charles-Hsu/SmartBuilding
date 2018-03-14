@@ -20,8 +20,9 @@
     
     $message="";
 
-	require 'DBAccess.class.php';
-	require 'config.admin.php';
+	require 'lib/DBAccess.class.php';
+    require 'config/config.admin.php';
+    
 	//$sql = 'SELECT * FROM assets';
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
     //$data = $db->getRows($sql);
@@ -31,18 +32,18 @@
         $_POST['password'];
 
         $sql =  "SELECT count(id) as count FROM users WHERE account='" . $_POST['username'] . "'";
-        echo $sql;
+        //echo $sql;
 
         $data = $db->getValue($sql);
-        echo $data;
+        //echo $data;
 
         if ($data == 0) {
             $message = "使用者不存在";
         } else {
             $sql =  "SELECT count(id) as count FROM users WHERE account='" . $_POST['username'] . "' AND password='" . $_POST['password'] . "'";
-            echo $sql;
+            //echo $sql;
             $data = $db->getValue($sql);
-            echo $data;
+            //echo $data;
             if ($data == 1) {
                 $_SESSION['account'] = $_POST['username'];
 
