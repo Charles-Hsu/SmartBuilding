@@ -8,10 +8,10 @@ include(Document_root.'/Header.php');
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link active" href="/smartbuilding/assets.php">資產管理</a>
+					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
+					<a class="nav-link active" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/publicfacilities.php">公共設施預約</a>
