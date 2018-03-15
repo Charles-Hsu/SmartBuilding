@@ -9,7 +9,7 @@ $message = "";
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 if(count($_POST)>0) {
-	/*
+	
 	echo 'assets-no = ' . $_POST['assets-no'] . '<br>';
 	echo 'assets-name = ' . $_POST['assets-name'] . '<br>';
 	echo 'assets-sort = ' . $_POST['assets-sort'] . '<br>';
@@ -17,8 +17,8 @@ if(count($_POST)>0) {
 	echo 'assets-amount = ' . $_POST['assets-amount'] . '<br>';
 	echo 'assets-man = ' . $_POST['assets-man'] . '<br>';
 	echo 'assets-buy-date = ' . $_POST['assets-buy-date'] . '<br>';
-	echo 'assets-use-state = ' . $_POST['assets-use-state'] . '<br>';
-	*/
+	echo 'assets-use-stat = ' . $_POST['assets-use-stat'] . '<br>';
+
 	$sql =  "SELECT count(*) AS n FROM assets WHERE asset_no='" . $_POST['assets-no']. "'";
 	$data = $db->getValue($sql);
 
@@ -31,99 +31,21 @@ if(count($_POST)>0) {
 			$message="資產名稱重複";
 		}
 	}
-	//echo " message = [" . $message . "]";
-	if ($message == "") {
-		if ($_POST['assets-no'] == "") {
-			$message="資產編號不能空白";
-		} else if ($_POST['assets-name'] == "") {
-			$message="資產名稱不能空白";
-		} else if ($_POST['assets-buy-date'] == "") {
-			$message="請輸入購置日期";
-		} else if ($_POST['assets-use-state'] == "") {
-			$message="請選擇使用狀態";
-		} else {
-/*
-			echo 'assets-no = ' . $_POST['assets-no'] . '<br>';
-			echo 'assets-name = ' . $_POST['assets-name'] . '<br>';
-			echo 'assets-sort = ' . $_POST['assets-sort'] . '<br>';
-			echo 'assets-price = ' . $_POST['assets-price'] . '<br>';
-			echo 'assets-amount = ' . $_POST['assets-amount'] . '<br>';
-			echo 'assets-man = ' . $_POST['assets-man'] . '<br>';
-			echo 'assets-buy-date = ' . $_POST['assets-buy-date'] . '<br>';
-			echo 'assets-use-state = ' . $_POST['assets-use-state'] . '<br>';
-*/		
-			$table = 'assets';
-			$data = array();
-			$data['asset_no'] = $_POST['assets-no'];
-			$data['asset_name'] = $_POST['assets-name'];
-			$data['asset_category'] = $_POST['assets-sort'];
-			$data['price'] = $_POST['assets-price'];
-			$data['amount'] = $_POST['assets-amount'];
-			$data['order_by'] = $_POST['assets-man'];
-			$data['order_date'] = $_POST['assets-buy-date'];
-			$data['status'] = $_POST['assets-use-state'];
 
-			$fields = "";
-			$values = "";
-
-			foreach ($data as $key => $value) {
-//				echo $key;
-//				echo $value;
-				$fields = $fields . "`" . $key . "`,";
-				$values = $values . "'" . $value . "',"; 
-			}
-/*			
-			echo "<br>";
-			echo $fields;
-			echo "<br>";
-			echo $values;
-			echo "<br>";
-			echo strlen($fields)-1;
-			echo "<br>";
-			//echo substr($fields, 0, strlen($fields)-1);
-*/			
-			$fields = substr($fields, 0, strlen($fields)-1);
-/*			
-			echo $fields;
-			echo "<br>";
-			echo strlen($values)-1;
-			echo "<br>";
-			//echo substr($values, 0, strlen($values)-1);
-*/			
-			$values = substr($values, 0, strlen($values)-1);
-/*			
-			echo "<br>";
-*/			
-			$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
-/*			
-			echo $sql;
-*/			
-			if ($db->insert($sql)) {
-			//if ($db->insertRow($table, $data)) {
-				$message="新增成功";
-			}
-		}
+	if ($_POST['assets-no'] == "") {
+		$message="資產編號不能空白";
+	} else if ($_POST['assets-name'] == "") {
+		$message="資產名稱不能空白";
+	} else if ($_POST['assets-buy-date'] == "") {
+		$message="請輸入購置日期";
+	} else if ($_POST['assets-use-state'] == "") {
+		$message="請選擇使用狀態";
+	} else {
+		$message="新增成功";
 	}
 
 }
 
-/*
-	public function insertRow($table, $data){
-		$sql="insert into $table(";
-		$values='';
-		foreach($data as $key=>$val){
-			if($values){
-				$sql.=', ';
-				$values.=', ';
-			}
-			$sql.="`$key`";
-			$values.=":$key";
-		}
-		$sql.=") values($values)";
-
-		return $this->insert($sql, $data);
-	}
-*/
 
 $sql =  "SELECT asset_no,asset_name,asset_category FROM assets ORDER BY id DESC LIMIT 1";
 $data = $db->getRows($sql);
@@ -232,16 +154,16 @@ foreach($data as $var) {
 //	echo $var['Name'];
 //echo $var['id'];
 ?>
-									<option value="<?=$var['Name'];?>"><?=$var['Name'];?></option>
+<!--
+									<option value="<?=$var['id'];?>"><?=$var['Name'];?></option>
+-->
 <?php
 }
 ?>
-<!--
 
 										<option value="One">One</option>
 										<option value="Two">Two</option>
 										<option value="Three">Three</option>
--->										
 									</select>
 								</div>
 							</div>

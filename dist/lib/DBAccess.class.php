@@ -320,6 +320,7 @@ class DBAccess extends PDO {
 	}
 
 	public function insertRow($table, $data){
+		echo 'insertRow';
 		$sql="insert into $table(";
 		$values='';
 		foreach($data as $key=>$val){
@@ -331,6 +332,8 @@ class DBAccess extends PDO {
 			$values.=":$key";
 		}
 		$sql.=") values($values)";
+
+		echo $sql;
 
 		return $this->insert($sql, $data);
 	}

@@ -34,9 +34,11 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
+<!--
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
 				</li>
+-->
 			</ul>
 			<div id="assets-tab">
 				<a href="./assets/asset-create.php" class="btn add-asset-btn mb-3">
