@@ -58,9 +58,9 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/infos.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="infos">
+                    <a href="/smartbuilding/apartment.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="infos">
                         <i class="fas fa-home"></i>
-                        <span>社區資料</span>
+                        <span>社區管理</span>
                     </a>
                 </li>
                 <li>

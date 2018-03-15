@@ -6,12 +6,9 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
 session_start();
-echo "_SESSION['account'] = " . $_SESSION['account'];
-
+//echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
-
-
 
 if (strlen($_SESSION['account']) == 0) {
 	echo 
@@ -38,11 +35,11 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
+					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
 				</li>
 			</ul>
 			<div id="assets-tab">
-				<a href="./assets/create.php" class="btn add-asset-btn mb-3">
+				<a href="./assets/asset-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增資產
 				</a>
 				<table class="table asset-table">
@@ -52,7 +49,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>資產名稱</th>
 							<th>使用狀態</th>
 							<th>價格</th>
-							<th>修改</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>

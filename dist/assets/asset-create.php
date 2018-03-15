@@ -43,10 +43,10 @@ var_dump($data);
 					<a class="nav-link active" href="../assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="../household.html">住戶管理</a>
+					<a class="nav-link" href="household.php">住戶管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="../publicfacilities.html">公共設施預約</a>
+					<a class="nav-link" href="infrastructure.php">公共設施</a>
 				</li>
 			</ul>
 			<div id="assets-tab">
