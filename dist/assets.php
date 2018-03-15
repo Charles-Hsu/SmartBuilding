@@ -38,7 +38,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/publicfacilities.php">公共設施預約</a>
+					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
 				</li>
 			</ul>
 			<div id="assets-tab">
@@ -81,4 +81,27 @@ if (strlen($_SESSION['account']) == 0) {
 		</div>
 	</div>
 </div>
+
+<script>
+$('.asset-table').DataTable({
+	"language": {
+		"search": "搜尋_INPUT_",
+		"searchPlaceholder": "搜尋資產...",
+		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
+		"infoEmpty": "",
+		"emptyTable": "目前沒有資料",
+		"lengthMenu": "每頁顯示 _MENU_ 筆資料",
+		"zeroRecords": "搜尋無此資料",
+		"infoFiltered": " 搜尋結果 _MAX_ 筆資料",
+		"paginate": {
+			"previous": "上一頁",
+			"next": "下一頁",
+			"first": "第一頁",
+			"last": "最後一頁"
+		}
+	},
+	"deferRender": true,
+	"processing": true
+})
+</script>
 <?php include('./Footer.php'); ?>

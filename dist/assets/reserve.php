@@ -11,30 +11,29 @@ include(Document_root.'/Header.php');
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="/smartbuilding/assets/household.php">住戶管理</a>
+					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
+					<a class="nav-link active" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
 				</li>
 			</ul>
 			<div id="assets-tab">
-				<a href="/smartbuilding/assets/household-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增用戶
+				<a href="/smartbuilding/assets/reserve-create.php" class="btn add-asset-btn mb-3">
+					<span>+</span>新增預約公設
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>所屬大樓</th>
-							<th>戶號 樓層</th>
-							<th>住戶狀態</th>
-							<th>區權人</th>
-							<th>現任住戶</th>
-							<th>編輯住戶</th>
+							<th>預約時段</th>
+							<th>預約公設名稱</th>
+							<th>登記人</th>
+							<th>費用</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
 <?php
-	// foreach($data as $var) {
+	//foreach($data as $var) {
 //		echo $var[asset_no];
 //		echo $var[asset_name];
 //		echo $var[status];
@@ -43,23 +42,21 @@ include(Document_root.'/Header.php');
 ?>
 
 						<tr>
-							<td><span>忠孝棟</span></td>
-							<td><span>AX0001 1F樓</span></td>
-							<td><span>已入住</span></td>
-							<td><span>測試人員</span></td>
-							<td><span>測試人員</span></td>
-							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span>2018-03-09 19:04 至 2018-03-10 20:00</span></td>
+							<td><span>游泳池 - SPA池</span></td>
+							<td><span>Joe</span></td>
+							<td><span>20</span></td>
+							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">編輯</a></td>
 						</tr>
 						<tr>
-							<td><span>仁愛棟</span></td>
-							<td><span>19號 1F樓</span></td>
-							<td><span>出售中</span></td>
-							<td><span>測試人員</span></td>
-							<td><span>測試人員</span></td>
-							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span>2018-04-19 16:04 至 2018-04-20 21:00</span></td>
+							<td><span>健身房</span></td>
+							<td><span>Cena</span></td>
+							<td><span>200</span></td>
+							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">編輯</a></td>
 						</tr>
 <?php
-	// }
+	//}
 ?>
 					</tbody>
 				</table>
@@ -69,9 +66,17 @@ include(Document_root.'/Header.php');
 </div>
 <script>
 $('.asset-table').DataTable({
+	"search": {
+		"search": ""
+	},
+	"columnDefs": [
+	    { "searchable": false, "targets": 1 },
+	    { "searchable": false, "targets": 2 },
+	    { "searchable": false, "targets": 3 },
+	],
 	"language": {
 		"search": "搜尋_INPUT_",
-		"searchPlaceholder": "搜尋住戶...",
+		"searchPlaceholder": "請輸入日期...",
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",

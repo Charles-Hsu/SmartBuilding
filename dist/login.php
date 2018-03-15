@@ -111,7 +111,11 @@
 
 
                     <?php if($message!="") { ?>
-                    <div class="message"><?php echo $message; ?></div>
+                    <div class="form-group row">
+                        <div class="col-md-10 offset-md-1">
+                            <div class="alert alert-danger text-center" role="alert"><?php echo $message; ?></div>
+                        </div>
+                    </div>
                     <?php } ?>
 
 
