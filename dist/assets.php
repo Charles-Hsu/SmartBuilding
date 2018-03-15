@@ -6,12 +6,23 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
 session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
+echo "_SESSION['account'] = " . $_SESSION['account'];
+
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
 
+
+
 if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
+	echo 
+	'<script>
+		//document.onkeypress=function(e) {
+			//alert("You pressed a key inside the input field");
+			//document.getElementById("demo").innerHTML = 5 + 6;
+			//window.location.href = "http://stackoverflow.com";
+			window.location.href = "./login.php";
+		//}
+	</script>';
 }
 
 ?>

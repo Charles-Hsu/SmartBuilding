@@ -28,8 +28,8 @@
     //$data = $db->getRows($sql);
     
     if(count($_POST)>0) {
-        $_POST['username'];
-        $_POST['password'];
+        //$_POST['username'];
+        //$_POST['password'];
 
         $sql =  "SELECT count(id) as count FROM users WHERE account='" . $_POST['username'] . "'";
         //echo $sql;

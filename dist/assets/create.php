@@ -1,6 +1,38 @@
 <?php 
 include('../config.php');
 include(Document_root.'/Header.php'); 
+
+session_start();
+    
+$message="資產編號重複";
+$message="資產名稱重複";
+
+if(count($_POST)>0) {
+	/*
+	echo $_POST['assets-no'];
+	echo $_POST['assets-name'];
+	echo $_POST['assets-sort'];
+	echo $_POST['assets-price'];
+	echo $_POST['assets-amount'];
+	echo $_POST['assets-man'];
+	echo $_POST['assets-buy-date'];
+	*/
+	//echo $_POST['assets-use-state'];
+}
+
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
+$sql =  "SELECT count(*) AS n FROM assets WHERE asset_no='ast0001a'";
+$data = $db->getValue($sql);
+//var_dump($data);
+
+/*
+foreach($data as $var) {
+	echo $var['Name'];
+	echo $var['id'];
+}
+var_dump($data);
+*/
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -25,12 +57,14 @@ include(Document_root.'/Header.php');
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+							<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+							-->
 							<div class="form-group row">
 								<label for="assets-no" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>資產編號:</label>
@@ -82,11 +116,25 @@ include(Document_root.'/Header.php');
 									<span class="important">*</span>使用狀態:
 								</label>
 								<div class="col-md-9">
-									<select class="custom-select">
+									<select class="custom-select" name="assets-use-state">
 										<option selected>選取狀態</option>
+
+<?php
+$sql =  "SELECT * FROM asset_status";
+$data = $db->getRows($sql);
+foreach($data as $var) {
+	echo $var['Name'];
+	echo $var['id'];
+?>
+										<option value="<?=$var['id'];?>"><?=$var['Name'];?></option>
+<?php
+}
+?>
+<!--
 										<option value="One">One</option>
 										<option value="Two">Two</option>
 										<option value="Three">Three</option>
+-->
 									</select>
 								</div>
 							</div>
@@ -96,6 +144,13 @@ include(Document_root.'/Header.php');
 									<button class="btn assets-btn assets-cancel-btn">取消</button>
 								</div>
 							</div>
+
+                    <?php if($message!="") { ?>
+                    <div class="message"><?php echo $message; ?></div>
+                    <?php } ?>
+
+
+
 						</form>
 					</div>
 				</div>
