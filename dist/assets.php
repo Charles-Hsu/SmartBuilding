@@ -1,7 +1,4 @@
-<?php 
-include('./config.php');
-include('./Header.php'); 
-?>
+<?php include('./Header.php'); ?>
 <?php 
 
 $sql = 'SELECT * FROM assets';
@@ -11,10 +8,18 @@ $data = $db->getRows($sql);
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
+//var_dump($data);
 
 if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
+	echo 
+	'<script>
+		//document.onkeypress=function(e) {
+			//alert("You pressed a key inside the input field");
+			//document.getElementById("demo").innerHTML = 5 + 6;
+			//window.location.href = "http://stackoverflow.com";
+			window.location.href = "./login.php";
+		//}
+	</script>';
 }
 
 ?>
@@ -27,11 +32,13 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link active" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
+					<a class="nav-link" href="/smartbuilding/assets/household.php">物件管理</a>
 				</li>
+<!--
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
+					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
 				</li>
+-->
 			</ul>
 			<div id="assets-tab">
 				<a href="./assets/asset-create.php" class="btn add-asset-btn mb-3">
@@ -44,7 +51,8 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>資產名稱</th>
 							<th>使用狀態</th>
 							<th>價格</th>
-							<th>修改</th>
+							<th>數量</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -62,7 +70,8 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span><?=$var[asset_name]?></span></td>
 							<td><span><?=$var[status]?></span></td>
 							<td><span><?=$var[price]?></span></td>
-							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span><?=$var[amount]?></span></td>
+							<td><a href="/smartbuilding/assets/asset-edit.php?asset_no=<?=$var[asset_no]?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 	}
