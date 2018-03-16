@@ -4,19 +4,23 @@ include('./Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+$sql = 'SELECT * FROM apartment';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
+$data = $data[0];
+
+var_dump($data);
+
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
-
+/*
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
 }
-
+*/
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -37,8 +41,8 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 			</ul>
 			<div id="assets-tab" class="d-flex flex-column px-3">
-                <div class="infos-name">illumin</div>
-                <div class="infos-address">地址: 台北市中山區建國北路190號5樓</div>
+                <div class="infos-name">社區名稱：<?= $data['name']; ?></div>
+                <div class="infos-address">社區地址：<?= $data['address']; ?></div>
 			</div>
 		</div>
 	</div>

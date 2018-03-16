@@ -3,19 +3,20 @@ include('../config.php');
 include('../Header.php'); 
 ?>
 <?php 
-
-$sql = 'SELECT * FROM assets';
+$table = 'facilities';
+$sql = 'SELECT * FROM ' . $table . ' ORDER BY id ASC';
+//echo $sql;
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
+//var_dump($data);
 
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
+//if (strlen($_SESSION['account']) == 0) {
+//	header('Location: ' . '/smartbuilding/login.php');
+//}
 
 ?>
 <!-- 內容切換區 -->
@@ -43,10 +44,14 @@ if (strlen($_SESSION['account']) == 0) {
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
+<!--							
+							<th>#</th>
+-->						
 							<th>設施名稱</th>
-							<th>價格</th>
+							<th>費用</th>
 							<th>備註</th>
-							<th>修改</th>
+							<th>預約</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -58,13 +63,32 @@ if (strlen($_SESSION['account']) == 0) {
 //		echo $var[price];
 //		echo '<br>';
 ?>
+<?php
+	 foreach($data as $facility) {
+?>
 
+						<tr>
+<!--
+							<td><span><?=$facility[id];?></span></td>
+-->
+							<td><span><?=$facility[name];?></span></td>
+							<td><span><?=$facility[charge];?></span></td>
+							<td><span><?=$facility[comment];?></span></td>
+							<td><a href="<?= $urlName ?>/apartment/publicutil-appointment.php?id=<?=$facility[id];?>" class="btn btn-outline-secondary">預約</a></td>
+							<td><a href="<?= $urlName ?>/apartment/publicutil-edit.php?id=<?=$facility[id];?>" class="btn btn-outline-secondary">修改</a></td>
+						</tr>
+<?php
+	 }
+?>
+<!--
 						<tr>
 							<td><span>KTV - 娛樂室</span></td>
 							<td><span>400</span></td>
 							<td><span>最多10人同時使用</span></td>
+							<td><a href="<?= $urlName ?>/apartment/publicutil-appointment.php" class="btn btn-outline-secondary">預約</a></td>
 							<td><a href="<?= $urlName ?>/apartment/publicutil-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
+-->						
 <?php
 	// }
 ?>
@@ -77,9 +101,10 @@ if (strlen($_SESSION['account']) == 0) {
 
 <script>
 $('.asset-table').DataTable({
+	"searching": false,
 	"language": {
 		"search": "搜尋_INPUT_",
-		"searchPlaceholder": "搜尋資產...",
+		"searchPlaceholder": "搜尋公共設施...",
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",
@@ -94,7 +119,8 @@ $('.asset-table').DataTable({
 		}
 	},
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+	"ordering": false,
 })
 </script>
 <?php include('../Footer.php'); ?>

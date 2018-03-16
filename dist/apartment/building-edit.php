@@ -7,11 +7,23 @@ include('../Header.php');
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
+
+if ($_GET) {
+	$license_no = $_GET['license_no'];
+	//echo $license_no;
+	$table = 'building';
+	$sql = 'SELECT * FROM ' . $table . ' WHERE license_no = "' . $license_no . '"';
+	//echo $sql;
+	$data = $db->getRows($sql);
+	$data = $data[0];
+}
+
 $data = $db->getRows($sql);
+$data = $data[0];
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
+//var_dump($data);
 
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
@@ -44,51 +56,52 @@ if (strlen($_SESSION['account']) == 0) {
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-							<div class="form-group row">
-								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
-								<div class="col-md-9 d-flex align-items-center">
-									<span>XXXXXX</span>
-								</div>
-							</div>
-							<div class="form-group row">
+						<div class="form-group row">
 								<label for="builds-name" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>建築物名稱:</label>
+									建物名稱:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="builds-name" id="builds-name" placeholder="建築物名稱...">
+									<input type="text" class="form-control" value=<?=$data['name'];?> >
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="builds-address" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>建築物地址:</label>
+									建物地址:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="builds-address" id="builds-address" placeholder="建築物地址...">
+									<input type="text" class="form-control" value=<?=$data['address'];?> >
 								</div>
 							</div>
+
 							<div class="form-group row">
-								<label for="builds-license" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>建築物使用發照日期:
+								<label for="builds-license-num" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>使用執照字號:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="builds-license" id="builds-license" placeholder="建築物使用發照日期..." >
+									<input type="text" class="form-control" name="builds-license-num"  value=<?=$data['license_no'];?> readonly>
+								</div>
+							</div>
+
+
+							<div class="form-group row">
+								<label for="builds-license" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>發照日期:
+								</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control datepicker" name="builds-license" value=<?=$data['approved_date'];?> readonly>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="builds-license-num" class="text-right col-md-4 col-form-label">建築物使用執照字號:</label>
+								<label for="builds-yeaer" class="text-right col-md-4 col-form-label">使用年限:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="builds-license-num" id="builds-license-num" placeholder="建築物使用執照字號...">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="builds-yeaer" class="text-right col-md-4 col-form-label">建築物使用年限:</label>
-								<div class="col-md-8">
-									<input type="text" class="form-control" name="builds-yeaer" id="builds-yeaer" placeholder="建築物使用年限...">
+									<input type="text" class="form-control" name="builds-yeaer"  value=<?=$data['expired_years'];?>>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存更新</button>
 									<button class="btn btn-outline-secondary">取消更新</button>
+<!--									
 									<button class="btn btn-outline-danger">刪除該建築</button>
+-->									
 								</div>
 							</div>
 						</form>

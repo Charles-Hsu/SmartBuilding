@@ -3,15 +3,15 @@ include('../config.php');
 include('../Header.php'); 
 ?>
 <?php 
-
-$sql = 'SELECT * FROM assets';
+$table = 'bank_acc';
+$sql = 'SELECT * FROM ' . $table;
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
+//var_dump($data);
 
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
@@ -52,24 +52,20 @@ if (strlen($_SESSION['account']) == 0) {
 					</thead>
 					<tbody>
 <?php
-	//foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
+	 foreach($data as $account) {
 ?>
 
 						<tr>
-							<td><span>長期維護</span></td>
-							<td><span>法定公共基金</span></td>
-							<td><span>銀行名稱</span></td>
-							<td><span>銀行帳戶名稱</span></td>
-							<td><a href="<?= $urlName ?>/apartment/bankacc-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span><?=$account[account_purpose];?></span></td>
+							<td><span><?=$account[account_type];?></span></td>
+							<td><span><?=$account[bank_name];?></span></td>
+							<td><span><?=$account[account_name];?></span></td>
+							<td><a href="<?= $urlName ?>/apartment/bankacc-edit.php?id=<?=$account[id];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
-	//}
+	 }
 ?>
+
 					</tbody>
 				</table>
 			</div>
@@ -96,7 +92,10 @@ $('.asset-table').DataTable({
 		}
 	},
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+	"ordering": false,
+	"searching": false,
+	"paging": false,
 })
 </script>
 <?php include('../Footer.php'); ?>

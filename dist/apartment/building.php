@@ -3,19 +3,15 @@ include('../config.php');
 include('../Header.php'); 
 ?>
 <?php 
-
-$sql = 'SELECT * FROM assets';
+$table = 'building';
+$sql = 'SELECT * FROM ' . $table;
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
+//var_dump($data);
 
 ?>
 <!-- 內容切換區 -->
@@ -46,29 +42,26 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>名稱</th>
 							<th>地址</th>
 							<th>建築執照編號</th>
+							<th>發照日期</th>
 							<th>使用年限</th>
-							<th>修改</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
 <?php
-	// foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
+	 foreach($data as $building) {
 ?>
 
 						<tr>
-							<td><span>忠孝棟</span></td>
-							<td><span>台北市內湖區堤頂大道2段15號8樓</span></td>
-							<td><span>zsadqwe1040840</span></td>
-							<td><span>60年</span></td>
-							<td><a href="<?= $urlName ?>/apartment/building-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span><?=$building[name];?></span></td>
+							<td><span><?=$building[address];?></span></td>
+							<td><span><?=$building[license_no];?></span></td>
+							<td><span><?=$building[approved_date];?></span></td>
+							<td><span><?=$building[expired_years];?>年</span></td>
+							<td><a href="<?= $urlName ?>/apartment/building-edit.php?license_no=<?=$building[license_no];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
-	// }
+	 }
 ?>
 					</tbody>
 				</table>
@@ -80,8 +73,10 @@ if (strlen($_SESSION['account']) == 0) {
 <script>
 $('.asset-table').DataTable({
 	"language": {
+		/*
 		"search": "搜尋_INPUT_",
 		"searchPlaceholder": "搜尋資產...",
+		*/
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",
@@ -95,8 +90,10 @@ $('.asset-table').DataTable({
 			"last": "最後一頁"
 		}
 	},
+	"searching": false,
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+	"ordering": false,
 })
 </script>
 <?php include('../Footer.php'); ?>

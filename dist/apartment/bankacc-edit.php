@@ -4,18 +4,24 @@ include('../Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+$sql = '';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
 
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
+if ($_GET) {
+	$id = $_GET['id'];
+	//echo $license_no;
+	$table = 'bank_acc';
+	$sql = 'SELECT * FROM ' . $table . ' WHERE id = "' . $id . '"';
+	//echo $sql;
+	$data = $db->getRows($sql);
+	$data = $data[0];
 }
+
+$data = $db->getRows($sql);
+$data = $data[0];
+
+//var_dump($data);
 
 ?>
 <!-- 內容切換區 -->
@@ -44,56 +50,58 @@ if (strlen($_SESSION['account']) == 0) {
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+<!--							
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="bankacc-use" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>專戶用途:</label>
+									專戶用途:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-use" id="bankacc-use" placeholder="專戶用途...">
+									<input type="text" class="form-control" name="bankacc-use" value="<?=$data['acount_purpose'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="bankacc-type" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>專戶類型:</label>
+									專戶類型:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-type" id="bankacc-type" placeholder="專戶類型...">
+									<input type="text" class="form-control" name="bankacc-type" value="<?=$data['account_type'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="bankaccount-name" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>帳戶名稱:
+									帳戶名稱:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="bankaccount-name" id="bankaccount-name" placeholder="帳戶名稱..." >
+									<input type="text" class="form-control datepicker" name="bankaccount-name" value="<?=$data['account_name'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="bankacc-code" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>銀行代碼:
+									銀行代碼:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-code" id="bankacc-code" placeholder="銀行代碼...">
+									<input type="text" class="form-control" name="bankacc-code" value="<?=$data['bank_no'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="bank-name" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>銀行名稱:
+									銀行名稱:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bank-name" id="bank-account" placeholder="銀行名稱...">
+									<input type="text" class="form-control" name="bank-name" value="<?=$data['bank_name'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="bankacc-account" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>銀行帳號:
+									銀行帳號:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-account" id="bankacc-account" placeholder="銀行帳號...">
+									<input type="text" class="form-control" name="bankacc-account" value="<?=$data['account_number'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -101,7 +109,7 @@ if (strlen($_SESSION['account']) == 0) {
 									銀行餘額:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-balance" id="bankacc-balance" placeholder="銀行餘額...">
+									<input type="text" class="form-control" name="bankacc-balance" value="<?=$data['account_balance'];?>">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -109,14 +117,16 @@ if (strlen($_SESSION['account']) == 0) {
 									備註:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-note" id="bankacc-note" placeholder="備註...">
+									<input type="text" class="form-control" name="bankacc-note" value="<?=$data['comment'];?>">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存更新</button>
 									<button class="btn btn-outline-secondary">取消更新</button>
+<!--									
 									<button class="btn btn-outline-danger">刪除該建築</button>
+-->
 								</div>
 							</div>
 						</form>

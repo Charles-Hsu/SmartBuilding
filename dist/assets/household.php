@@ -11,6 +11,7 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 $data = $db->getRows($sql);
 session_start();
 
+var_dump($data);
 ?>
 
 
@@ -66,7 +67,7 @@ session_start();
 							<td><span><?=$var[status]?></span></td>
 							<td><span><?=$var[holder]?></span></td>
 							<td><span><?=$var[resident]?></span></td>
-							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="/smartbuilding/assets/household-edit.php?addr_no=<?=$var[addr_no]?>&floor=<?=$var[floor]?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 	}

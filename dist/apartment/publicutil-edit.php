@@ -4,18 +4,31 @@ include('../Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+//$sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
+$sql = '';
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
+
+if ($_GET) {
+	$id = $_GET['id'];
+	//echo $license_no;
+	$table = 'facilities';
+	$sql = 'SELECT * FROM ' . $table . ' WHERE id = "' . $id . '"';
+	//echo $sql;
+	$data = $db->getRows($sql);
+	$data = $data[0];
+}
+
 $data = $db->getRows($sql);
+$data = $data[0];
+//$data = $db->getRows($sql);
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
+var_dump($data);
 
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
 
 ?>
 <!-- 內容切換區 -->
@@ -38,42 +51,46 @@ if (strlen($_SESSION['account']) == 0) {
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/apartment/building.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增社區公共設施</span>
+					<a href="<?= $urlName ?>/apartment/public-util.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>修改公共設施資料</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+<!--							
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="publicutil-name" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>公共設施名稱:</label>
+									<span class="important">*</span>設施名稱:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="publicutil-name" id="publicutil-name" placeholder="公共設施名稱...">
+									<input type="text" class="form-control" name="publicutil-name" value='<?=$data["name"];?>' readonly>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="publicutil-amount" class="text-right col-md-4 col-form-label">費用:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="publicutil-amount" id="publicutil-amount" placeholder="費用...">
+									<input type="text" class="form-control" name="publicutil-amount" value='<?=$data["charge"];?>'>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="publicutil-note" class="text-right col-md-4 col-form-label">備註:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="publicutil-note" id="publicutil-note" placeholder="備註...">
+									<input type="text" class="form-control" name="publicutil-note" value='<?=$data["comment"];?>'>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存更新</button>
 									<button class="btn btn-outline-secondary">取消更新</button>
+<!--									
 									<button class="btn btn-outline-danger">刪除該公設</button>
+-->									
 								</div>
 							</div>
 						</form>

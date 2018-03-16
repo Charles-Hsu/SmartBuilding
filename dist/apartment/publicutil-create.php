@@ -13,9 +13,6 @@ session_start();
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
 
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
 
 ?>
 <!-- 內容切換區 -->
@@ -38,18 +35,20 @@ if (strlen($_SESSION['account']) == 0) {
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/apartment/building.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增社區公共設施</span>
+					<a href="<?= $urlName ?>/apartment/public-util.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>新增公共設施</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+<!--							
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="publicutil-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>公共設施名稱:</label>
