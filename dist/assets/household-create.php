@@ -1,6 +1,104 @@
 <?php 
 include('../config.php');
 include(Document_root.'/Header.php'); 
+
+session_start();
+
+$message = "";
+
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
+if(count($_POST)>0) {
+
+	$sql =  "SELECT count(*) AS n FROM assets WHERE asset_no='" . $_POST['assets-no']. "'";
+	$data = $db->getValue($sql);
+
+	if ($data != 0) {
+		$message="資產編號重複";
+	} else {
+		$sql =  "SELECT count(*) AS n FROM assets WHERE asset_name='" . $_POST['assets-name']. "'";
+		$data = $db->getValue($sql);
+		if ($data != 0) {
+			$message="資產名稱重複";
+		}
+	}
+	//echo " message = [" . $message . "]";
+	if ($message == "") {
+		if ($_POST['assets-no'] == "") {
+			$message="資產編號不能空白";
+		} else if ($_POST['assets-name'] == "") {
+			$message="資產名稱不能空白";
+		} else if ($_POST['assets-buy-date'] == "") {
+			$message="請輸入購置日期";
+		} else if ($_POST['assets-use-state'] == "") {
+			$message="請選擇使用狀態";
+		} else {
+/*
+			echo 'assets-no = ' . $_POST['assets-no'] . '<br>';
+			echo 'assets-name = ' . $_POST['assets-name'] . '<br>';
+			echo 'assets-sort = ' . $_POST['assets-sort'] . '<br>';
+			echo 'assets-price = ' . $_POST['assets-price'] . '<br>';
+			echo 'assets-amount = ' . $_POST['assets-amount'] . '<br>';
+			echo 'assets-man = ' . $_POST['assets-man'] . '<br>';
+			echo 'assets-buy-date = ' . $_POST['assets-buy-date'] . '<br>';
+			echo 'assets-use-state = ' . $_POST['assets-use-state'] . '<br>';
+*/		
+			$table = 'assets';
+			$data = array();
+			$data['asset_no'] = $_POST['assets-no'];
+			$data['asset_name'] = $_POST['assets-name'];
+			$data['asset_category'] = $_POST['assets-sort'];
+			$data['price'] = $_POST['assets-price'];
+			$data['amount'] = $_POST['assets-amount'];
+			$data['order_by'] = $_POST['assets-man'];
+			$data['order_date'] = $_POST['assets-buy-date'];
+			$data['status'] = $_POST['assets-use-state'];
+
+			$fields = "";
+			$values = "";
+
+			foreach ($data as $key => $value) {
+//				echo $key;
+//				echo $value;
+				$fields = $fields . "`" . $key . "`,";
+				$values = $values . "'" . $value . "',"; 
+			}
+/*			
+			echo "<br>";
+			echo $fields;
+			echo "<br>";
+			echo $values;
+			echo "<br>";
+			echo strlen($fields)-1;
+			echo "<br>";
+			//echo substr($fields, 0, strlen($fields)-1);
+*/			
+			$fields = substr($fields, 0, strlen($fields)-1);
+/*			
+			echo $fields;
+			echo "<br>";
+			echo strlen($values)-1;
+			echo "<br>";
+			//echo substr($values, 0, strlen($values)-1);
+*/			
+			$values = substr($values, 0, strlen($values)-1);
+/*			
+			echo "<br>";
+*/			
+			$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
+/*			
+			echo $sql;
+*/			
+			if ($db->insert($sql)) {
+			//if ($db->insertRow($table, $data)) {
+				$message="新增成功";
+			}
+		}
+	}
+
+}
+
+
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -11,34 +109,52 @@ include(Document_root.'/Header.php');
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="/smartbuilding/assets/household.php">住戶管理</a>
+					<a class="nav-link active" href="/smartbuilding/assets/household.php">物件管理</a>
 				</li>
+<!--				
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
+					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
 				</li>
+-->				
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="/smartbuilding/assets/household.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增住戶</span>
+					<span>新增物件</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+<!--							
 							<div class="form-group row">
 								<label for="community" class="text-right col-lg-6 col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-lg-6 col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
 									<span class="important">*</span>所屬大樓:</label>
 								<div class="col-lg-6 col-md-9">
 									<select name="household-area" id="household-area" class="form-control">
+
+<?php
+$sql =  "SELECT name FROM building";
+$data = $db->getRows($sql);
+foreach($data as $var) {
+//	echo $var['Name'];
+//echo $var['id'];
+?>
+									<option value="<?=$var['name'];?>"><?=$var['name'];?></option>
+<?php
+}
+?>
+<!--
 										<option value="" selected>選擇大樓</option>
 										<option value="AA">忠孝樓</option>
 										<option value="BB">仁愛樓</option>
+-->										
 									</select>
 								</div>
 							</div>
@@ -47,9 +163,11 @@ include(Document_root.'/Header.php');
 									<span class="important">*</span>房子用途:</label>
 								<div class="col-lg-6 col-md-9">
 									<select name="household-use" id="household-use" class="form-control">
+<!--									
 										<option value="" selected>選擇用途</option>
-										<option value="AA">出租</option>
-										<option value="BB">自住</option>
+-->										
+										<option value="住宅用">住宅用</option>
+										<option value="商業用">商業用</option>
 									</select>
 								</div>
 							</div>
@@ -58,9 +176,11 @@ include(Document_root.'/Header.php');
 									<span class="important">*</span>房子狀態:</label>
 								<div class="col-lg-6 col-md-9">
 									<select name="household-status" id="household-status" class="form-control">
+<!--									
 										<option value="" selected>選擇用途</option>
-										<option value="AA">出租</option>
-										<option value="BB">自住</option>
+-->										
+										<option value="自用">自用</option>
+										<option value="出租">出租</option>
 									</select>
 								</div>
 							</div>
@@ -143,10 +263,11 @@ include(Document_root.'/Header.php');
 								</label>
 								<div class="col-lg-6 col-md-9">
 									<select class="custom-select">
+<!--									
 										<option selected>選取狀態</option>
-										<option value="One">One</option>
-										<option value="Two">Two</option>
-										<option value="Three">Three</option>
+-->										
+										<option value="自用">自用</option>
+										<option value="租賃">租賃</option>
 									</select>
 								</div>
 							</div>

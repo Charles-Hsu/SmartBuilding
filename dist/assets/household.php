@@ -2,6 +2,18 @@
 include('../config.php');
 include(Document_root.'/Header.php'); 
 ?>
+
+<?php 
+
+$sql = 'SELECT * FROM household';
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
+$data = $db->getRows($sql);
+session_start();
+
+?>
+
+
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
@@ -11,28 +23,56 @@ include(Document_root.'/Header.php');
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="/smartbuilding/assets/household.php">住戶管理</a>
+					<a class="nav-link active" href="#">物件管理</a>
 				</li>
+<!--				
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
+					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
 				</li>
+-->				
 			</ul>
 			<div id="assets-tab">
 				<a href="/smartbuilding/assets/household-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增用戶
+					<span>+</span>新增物件
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
 							<th>所屬大樓</th>
-							<th>戶號 樓層</th>
+							<th>戶號</th>
+							<th>樓層</th>
 							<th>住戶狀態</th>
 							<th>區權人</th>
-							<th>現任住戶</th>
-							<th>編輯住戶</th>
+							<th>現住戶</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
+
+
+<?php
+	foreach($data as $var) {
+//		echo $var[asset_no];
+//		echo $var[asset_name];
+//		echo $var[status];
+//		echo $var[price];
+//		echo '<br>';
+?>
+
+						<tr>
+							<td><span><?=$var[building]?></span></td>
+							<td><span><?=$var[addr_no]?></span></td>
+							<td><span><?=$var[floor]?></span></td>
+							<td><span><?=$var[status]?></span></td>
+							<td><span><?=$var[holder]?></span></td>
+							<td><span><?=$var[resident]?></span></td>
+							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">修改</a></td>
+						</tr>
+<?php
+	}
+?>
+
+
 <?php
 	// foreach($data as $var) {
 //		echo $var[asset_no];
@@ -41,7 +81,7 @@ include(Document_root.'/Header.php');
 //		echo $var[price];
 //		echo '<br>';
 ?>
-
+<!--
 						<tr>
 							<td><span>忠孝棟</span></td>
 							<td><span>AX0001 1F樓</span></td>
@@ -58,6 +98,7 @@ include(Document_root.'/Header.php');
 							<td><span>測試人員</span></td>
 							<td><a href="/smartbuilding/assets/edit-page.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
+-->						
 <?php
 	// }
 ?>
