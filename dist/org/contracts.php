@@ -1,6 +1,6 @@
 <?php 
-include('./config.php');
-include('./Header.php'); 
+include('../config.php');
+include('../Header.php'); 
 ?>
 <?php 
 
@@ -24,13 +24,13 @@ if (strlen($_SESSION['account']) == 0) {
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org.php">人員</a>
+					<a class="nav-link" href="<?= $urlName ?>/org.php">人員</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/#">勤務管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">承包商管理</a>
+					<a class="nav-link active" href="<?= $urlName ?>/org/contracts.php">承包商管理</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/household.php">住戶意見</a>
@@ -49,16 +49,16 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/org/org-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增人員
+				<a href="<?= $urlName ?>/org/contracts-create.php" class="btn add-asset-btn mb-3">
+					<span>+</span>新增承包廠商
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>姓名</th>
-							<th>手機號碼</th>
-							<th>員工編號</th>
-							<th>所屬物業公司</th>
+							<th>廠商名稱</th>
+							<th>聯絡人</th>
+							<th>聯絡方式</th>
+							<th>統一編號</th>
 							<th>修改</th>
 						</tr>
 					</thead>
@@ -77,7 +77,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span>0912345678</span></td>
 							<td><span>0001</span></td>
 							<td><span>易入門股份有限公司</span></td>
-							<td><a href="<?= $urlName ?>/org/org-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="<?= $urlName ?>/org/contracts-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 	//}
@@ -111,4 +111,4 @@ $('.asset-table').DataTable({
 	"processing": true
 })
 </script>
-<?php include('./Footer.php'); ?>
+<?php include('../Footer.php'); ?>

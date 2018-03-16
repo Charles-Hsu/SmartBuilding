@@ -1,6 +1,6 @@
 <?php 
-include('./config.php');
-include('./Header.php'); 
+include('../config.php');
+include('../Header.php'); 
 ?>
 <?php 
 
@@ -24,10 +24,10 @@ if (strlen($_SESSION['account']) == 0) {
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/operation.php">例行作業</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation.php">例行作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
+					<a class="nav-link active" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
@@ -36,44 +36,36 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/operation/#">年度預算</a>
                 </li>
 			</ul>
-			<div id="assets-tab">
-				<a href="<?= $urlName ?>/operation/operation-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增例行作業
-				</a>
-				<table class="table asset-table">
-					<thead class="thead-light">
-						<tr>
-							<th>作業項目</th>
-							<th>作業類別</th>
-							<th>作業週期</th>
-							<th>承包廠商</th>
-							<th>作業金額</th>
-							<th>修改</th>
-						</tr>
-					</thead>
-					<tbody>
-<?php
-	//foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
-
-						<tr>
-							<td><span>測試2</span></td>
-							<td><span>清潔</span></td>
-							<td><span>週</span></td>
-							<td><span>八萬一公道行</span></td>
-							<td><span>5000</span></td>
-							<td><a href="<?= $urlName ?>/operation/operation-edit.php" class="btn btn-outline-secondary">修改</a></td>
-						</tr>
-<?php
-	//}
-?>
-					</tbody>
-				</table>
+			<div id="assets-tab" class="row mr-0 ml-0">
+				<div class="repairs-menu col-2">
+					<ul class="repairs-menu-bar d-flex flex-column align-items-center">
+						<li><a href="<?= $urlName ?>/operation/repairs-normal.php" class="">一般維修</a></li>
+						<li><a href="<?= $urlName ?>/operation/repairs-abnormal.php" class="active">異常回報</a></li>
+					</ul>
+				</div>
+				<div class="repairs-content col-10">
+					<a href="<?= $urlName ?>/operation/repairs-abnormal-create.php" class="btn add-asset-btn mb-3">
+						<span>+</span>新增異常回報
+					</a>
+					<table class="table asset-table">
+						<thead class="thead-light">
+							<tr>
+								<th>維修內容</th>
+								<th>類別</th>
+								<th>故障發生時間</th>
+								<th>修改</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span>異常回報測試修改</span></td>
+								<td><span>警衛安全</span></td>
+								<td><span>2018-02-10</span></td>
+								<td><a href="<?= $urlName ?>/operation/repairs-abnormal-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -101,4 +93,4 @@ $('.asset-table').DataTable({
 	"processing": true
 })
 </script>
-<?php include('./Footer.php'); ?>
+<?php include('../Footer.php'); ?>

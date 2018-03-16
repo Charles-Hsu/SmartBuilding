@@ -11,17 +11,15 @@ include(Document_root.'/Header.php');
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="#">住戶管理</a>
+					<a class="nav-link active" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
-<!--				
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
+					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
 				</li>
--->				
 			</ul>
 			<div id="assets-tab">
 				<a href="/smartbuilding/assets/household-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增住戶
+					<span>+</span>新增用戶
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
@@ -30,8 +28,8 @@ include(Document_root.'/Header.php');
 							<th>戶號 樓層</th>
 							<th>住戶狀態</th>
 							<th>區權人</th>
-							<th>現住戶</th>
-							<th>編輯</th>
+							<th>現任住戶</th>
+							<th>編輯住戶</th>
 						</tr>
 					</thead>
 					<tbody>

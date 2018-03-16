@@ -9,7 +9,7 @@ include(Document_root.'/Header.php');
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="/smartbuilding/files.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增合約</span>
+					<span>編輯文件</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
@@ -40,10 +40,16 @@ include(Document_root.'/Header.php');
                                     </label>
 								</div>
 							</div>
+                            <div class="form-group row">
+								<div class="col-md-9 offset-md-3">
+                                    <a href="#">smartbuilding.sql</a>
+								</div>
+							</div>
 							<div class="form-group row">
 								<div class="col-md-9 offset-md-3">
-									<button class="btn assets-btn assets-add-btn">新增</button>
-									<button class="btn assets-btn assets-cancel-btn">取消</button>
+									<button class="btn assets-btn assets-add-btn">儲存更新</button>
+									<button class="btn assets-btn assets-cancel-btn">取消更新</button>
+									<button class="btn assets-btn assets-cancel-btn">刪除該文件</button>
 								</div>
 							</div>
 						</form>
@@ -53,12 +59,6 @@ include(Document_root.'/Header.php');
 		</div>
 	</div>
 </div>
-<script>
-    $('#files-upload').on('change',function(){
-        var _name=$('#files-upload').val().split('\\')[$('#files-upload').val().split('\\').length-1];
-        $('.files-name').text(_name)
-    })
-</script>
 <?php 
 include(Document_root.'/Footer.php');
 ?>

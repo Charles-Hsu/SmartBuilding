@@ -13,11 +13,9 @@ include(Document_root.'/Header.php');
 				<li class="nav-item">
 					<a class="nav-link active" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
-<!--				
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
+					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
 				</li>
--->				
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">

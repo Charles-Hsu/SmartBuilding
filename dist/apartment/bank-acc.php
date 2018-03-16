@@ -1,6 +1,6 @@
 <?php 
-include('./config.php');
-include('./Header.php'); 
+include('../config.php');
+include('../Header.php'); 
 ?>
 <?php 
 
@@ -22,43 +22,31 @@ if (strlen($_SESSION['account']) == 0) {
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-			<ul class="nav nav-pills mb-3">
+            <ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org.php">人員</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/#">勤務管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">承包商管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/household.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/works.php">工作日誌</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">組織管理團</a>
+					<a class="nav-link active" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/org/org-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增人員
+				<a href="<?= $urlName ?>/apartment/bankacc-create.php" class="btn add-asset-btn mb-3">
+					<span>+</span>新增銀行專戶
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>姓名</th>
-							<th>手機號碼</th>
-							<th>員工編號</th>
-							<th>所屬物業公司</th>
+							<th>專戶用途</th>
+							<th>專戶類型</th>
+							<th>銀行名稱</th>
+							<th>銀行帳戶名稱</th>
 							<th>修改</th>
 						</tr>
 					</thead>
@@ -73,11 +61,11 @@ if (strlen($_SESSION['account']) == 0) {
 ?>
 
 						<tr>
-							<td><span>Joe Lee</span></td>
-							<td><span>0912345678</span></td>
-							<td><span>0001</span></td>
-							<td><span>易入門股份有限公司</span></td>
-							<td><a href="<?= $urlName ?>/org/org-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span>長期維護</span></td>
+							<td><span>法定公共基金</span></td>
+							<td><span>銀行名稱</span></td>
+							<td><span>銀行帳戶名稱</span></td>
+							<td><a href="<?= $urlName ?>/apartment/bankacc-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 	//}
@@ -111,4 +99,4 @@ $('.asset-table').DataTable({
 	"processing": true
 })
 </script>
-<?php include('./Footer.php'); ?>
+<?php include('../Footer.php'); ?>

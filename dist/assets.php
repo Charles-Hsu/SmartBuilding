@@ -1,4 +1,7 @@
-<?php include('./Header.php'); ?>
+<?php 
+include('./config.php');
+include('./Header.php'); 
+?>
 <?php 
 
 $sql = 'SELECT * FROM assets';
@@ -11,15 +14,7 @@ session_start();
 //	var_dump($data);
 
 if (strlen($_SESSION['account']) == 0) {
-	echo 
-	'<script>
-		//document.onkeypress=function(e) {
-			//alert("You pressed a key inside the input field");
-			//document.getElementById("demo").innerHTML = 5 + 6;
-			//window.location.href = "http://stackoverflow.com";
-			window.location.href = "./login.php";
-		//}
-	</script>';
+	header('Location: ' . '/smartbuilding/login.php');
 }
 
 ?>
@@ -34,11 +29,9 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
-<!--
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
+					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
 				</li>
--->
 			</ul>
 			<div id="assets-tab">
 				<a href="./assets/asset-create.php" class="btn add-asset-btn mb-3">
@@ -51,7 +44,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>資產名稱</th>
 							<th>使用狀態</th>
 							<th>價格</th>
-							<th>編輯</th>
+							<th>修改</th>
 						</tr>
 					</thead>
 					<tbody>
