@@ -10,7 +10,46 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 if(count($_POST)>0) {
 
-	$sql =  "SELECT count(*) AS n FROM assets WHERE asset_no='" . $_POST['assets-no']. "'";
+	var_dump($_POST);
+
+	$data = array();
+
+	$data['building'] = $_POST['household-area'];
+	$data['purpose'] = $_POST['household-use'];
+	$data['status'] = $_POST['household-status'];
+	$data['addr_no'] = $_POST['household-num'];
+	$data['floor'] = $_POST['household-floor'];
+	$data['holder'] = $_POST['household-own'];
+	$data['resident'] = $_POST['household-name'];
+	$data['owner_percentage'] = $_POST['household-props'];
+	$data['space'] = $_POST['household-sqft'];
+	$data['house_type'] = $_POST['household-style'];
+	$data['due'] = $_POST['household-guard-amount'];
+	$data['parking_lot_due'] = $_POST['household-park-amoun'];
+	$data['buy_date'] = $_POST['assets-buy-date'];
+	$data['used_for'] = $_POST['assets-use-state'];
+
+	$fields = "";
+	$values = "";
+
+	foreach ($data as $key => $value) {
+		$fields = $fields . "`" . $key . "`,";
+		$values = $values . "'" . $value . "',"; 
+	}
+
+	$fields = substr($fields, 0, strlen($fields)-1);
+	$values = substr($values, 0, strlen($values)-1);
+	$sql = 'INSERT INTO household (' . $fields . ') ' . ' VALUES (' . $values . ')';
+	echo $sql;
+	
+	if ($db->insert($sql)) {
+	//if ($db->insertRow($table, $data)) {
+		$message="新增成功";
+	}
+
+
+/*
+	$sql =  "SELECT count(*) AS n FROM household WHERE asset_no='" . $_POST['assets-no']. "'";
 	$data = $db->getValue($sql);
 
 	if ($data != 0) {
@@ -33,17 +72,7 @@ if(count($_POST)>0) {
 		} else if ($_POST['assets-use-state'] == "") {
 			$message="請選擇使用狀態";
 		} else {
-/*
-			echo 'assets-no = ' . $_POST['assets-no'] . '<br>';
-			echo 'assets-name = ' . $_POST['assets-name'] . '<br>';
-			echo 'assets-sort = ' . $_POST['assets-sort'] . '<br>';
-			echo 'assets-price = ' . $_POST['assets-price'] . '<br>';
-			echo 'assets-amount = ' . $_POST['assets-amount'] . '<br>';
-			echo 'assets-man = ' . $_POST['assets-man'] . '<br>';
-			echo 'assets-buy-date = ' . $_POST['assets-buy-date'] . '<br>';
-			echo 'assets-use-state = ' . $_POST['assets-use-state'] . '<br>';
-*/		
-			$table = 'assets';
+
 			$data = array();
 			$data['asset_no'] = $_POST['assets-no'];
 			$data['asset_name'] = $_POST['assets-name'];
@@ -52,50 +81,28 @@ if(count($_POST)>0) {
 			$data['amount'] = $_POST['assets-amount'];
 			$data['order_by'] = $_POST['assets-man'];
 			$data['order_date'] = $_POST['assets-buy-date'];
-			$data['status'] = $_POST['assets-use-state'];
+			$data['status_no'] = $_POST['assets-use-state'];
 
 			$fields = "";
 			$values = "";
 
 			foreach ($data as $key => $value) {
-//				echo $key;
-//				echo $value;
 				$fields = $fields . "`" . $key . "`,";
 				$values = $values . "'" . $value . "',"; 
 			}
-/*			
-			echo "<br>";
-			echo $fields;
-			echo "<br>";
-			echo $values;
-			echo "<br>";
-			echo strlen($fields)-1;
-			echo "<br>";
-			//echo substr($fields, 0, strlen($fields)-1);
-*/			
+
 			$fields = substr($fields, 0, strlen($fields)-1);
-/*			
-			echo $fields;
-			echo "<br>";
-			echo strlen($values)-1;
-			echo "<br>";
-			//echo substr($values, 0, strlen($values)-1);
-*/			
 			$values = substr($values, 0, strlen($values)-1);
-/*			
-			echo "<br>";
-*/			
 			$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
-/*			
 			echo $sql;
-*/			
+			
 			if ($db->insert($sql)) {
 			//if ($db->insertRow($table, $data)) {
 				$message="新增成功";
 			}
 		}
 	}
-
+	*/
 }
 
 
@@ -165,9 +172,23 @@ foreach($data as $var) {
 									<select name="household-use" id="household-use" class="form-control">
 <!--									
 										<option value="" selected>選擇用途</option>
--->										
+-->							
+
+<?php
+$sql =  "SELECT id,name FROM household_purpose";
+$data = $db->getRows($sql);
+foreach($data as $var) {
+//	echo $var['Name'];
+//echo $var['id'];
+?>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+<?php
+}
+?>
+<!--
 										<option value="住宅用">住宅用</option>
 										<option value="商業用">商業用</option>
+-->										
 									</select>
 								</div>
 							</div>
@@ -178,9 +199,22 @@ foreach($data as $var) {
 									<select name="household-status" id="household-status" class="form-control">
 <!--									
 										<option value="" selected>選擇用途</option>
--->										
+-->									
+<?php
+$sql =  "SELECT id,name FROM household_status";
+$data = $db->getRows($sql);
+foreach($data as $var) {
+//	echo $var['Name'];
+//echo $var['id'];
+?>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+<?php
+}
+?>	
+<!--
 										<option value="自用">自用</option>
 										<option value="出租">出租</option>
+-->										
 									</select>
 								</div>
 							</div>
@@ -222,31 +256,31 @@ foreach($data as $var) {
 							<div class="form-group row">
 								<label for="household-props" class="text-right col-lg-6 col-md-3 col-form-label">區權比例:</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-props" id="household-props" placeholder="區權比例..." value="0">
+									<input type="text" class="form-control" name="household-props" id="household-props" placeholder="區權比例..." value="">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="household-sqft" class="text-right col-lg-6 col-md-3 col-form-label">坪數:</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-sqft" id="household-sqft" placeholder="坪數..." value="0">
+									<input type="text" class="form-control" name="household-sqft" id="household-sqft" placeholder="坪數..." value="">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="household-style" class="text-right col-lg-6 col-md-3 col-form-label">房型:</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-style" id="household-style" placeholder="房型..." value="0">
+									<input type="text" class="form-control" name="household-style" id="household-style" placeholder="?房?廳" value="">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="household-guard-amount" class="text-right col-lg-6 col-md-3 col-form-label">應收管理費金額:</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-guard-amount" id="household-guard-amount" placeholder="應收管理費金額..." value="0">
+									<input type="text" class="form-control" name="household-guard-amount" id="household-guard-amount" placeholder="應收管理費金額..." value="">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="household-park-amount" class="text-right col-lg-6 col-md-3 col-form-label">應收停車費金額:</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="0">
+									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -262,12 +296,25 @@ foreach($data as $var) {
 									<span class="important">*</span>使用狀態:
 								</label>
 								<div class="col-lg-6 col-md-9">
-									<select class="custom-select">
+									<select class="custom-select" name="assets-use-state">
 <!--									
 										<option selected>選取狀態</option>
 -->										
+<?php
+$sql =  "SELECT id,name FROM household_used_for";
+$data = $db->getRows($sql);
+foreach($data as $var) {
+//	echo $var['Name'];
+//echo $var['id'];
+?>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+<?php
+}
+?>	
+<!--
 										<option value="自用">自用</option>
 										<option value="租賃">租賃</option>
+-->										
 									</select>
 								</div>
 							</div>
@@ -277,6 +324,13 @@ foreach($data as $var) {
 									<button class="btn assets-btn assets-cancel-btn">取消</button>
 								</div>
 							</div>
+
+<?php $message = "TEST"; ?>
+<?php if($message!="") { ?>
+                   		<div class="message"><?php echo $message; ?></div>
+<?php } ?>
+
+
 						</form>
 					</div>
 				</div>

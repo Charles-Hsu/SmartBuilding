@@ -7,12 +7,24 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = "";
 
+//SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND a.asset_no = 'AST0001A';
+
+if (count($_POST) > 0) {
+	// ["assets-use-status"]=> string(9) "使用中" ["assets-watch"]=> string(0) "" ["assets-scrap-date"]=> string(0) ""
+	$sql = "UPDATE assets SET status_no=" . $_POST['assets-use-status'] . " WHERE asset_no = '" . $_POST['assets-no'] . "'";
+	//echo $sql;
+	$db->update($sql);
+}
+
 if ($_GET) {
 	$asset_no = $_GET['asset_no'];
 	//echo $asset_no;
-	$sql = 'SELECT * FROM assets WHERE asset_no = "' . $asset_no . '"';
+	// SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND a.asset_no = 'AST0001A';
+	$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
+	//echo $sql;
 	$data = $db->getRows($sql);
 	$data = $data[0];
+	//var_dump($data);
 }
 
 //var_dump($data);
@@ -118,15 +130,15 @@ if ($_GET) {
 $sql =  "SELECT * FROM asset_status";
 $option = $db->getRows($sql);
 foreach($option as $var) {
-//	echo $var['Name'];
-//echo $var['id'];
+echo $var['name'];
+echo $var['id'];
 ?>
 									<option 
-									<?php if ($data['status'] == $var['Name']) {
+									<?php if ($data['status_no'] == $var['id']) {
 										echo 'selected';
 									}
 									?> 
-									value="<?=$var['Name'];?>"><?=$var['Name'];?></option>
+									value="<?=$var['id'];?>"><?=$var['name'];?></option>
 <?php
 }
 ?>

@@ -61,7 +61,7 @@ if(count($_POST)>0) {
 			$data['amount'] = $_POST['assets-amount'];
 			$data['order_by'] = $_POST['assets-man'];
 			$data['order_date'] = $_POST['assets-buy-date'];
-			$data['status'] = $_POST['assets-use-state'];
+			$data['status_no'] = $_POST['assets-use-state'];
 
 			$fields = "";
 			$values = "";
@@ -234,7 +234,7 @@ foreach($data as $var) {
 //	echo $var['Name'];
 //echo $var['id'];
 ?>
-									<option value="<?=$var['Name'];?>"><?=$var['Name'];?></option>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
 <?php
 }
 ?>

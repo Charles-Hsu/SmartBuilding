@@ -7,6 +7,35 @@ include('../Header.php');
 $sql = '';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
+$table = 'bank_acc';
+$id = 0;
+
+if ($_GET) {
+	$id = $_GET['id'];
+}
+
+if(count($_POST)>0) {
+
+	//var_dump($_POST);
+	$balance = $_POST['bankacc-balance'];
+	$comment = $_POST['bankacc-note'];
+	echo $comment;
+	//$comment = utf8_encode($comment);
+	//echo $comment;
+
+	
+	$sql =  "UPDATE " . $table . " SET account_balance='" . $balance . "', comment = '" . $comment . "' WHERE id = " . $id; 
+
+	echo $sql;
+
+	$data = $db->exec($sql);
+
+	//$sql = "update {$this->prename}member_cash set order_no='{$result['order_no']}',state=3 where id=?";
+	//$this->update($sql, $id);
+
+
+}
+
 
 if ($_GET) {
 	$id = $_GET['id'];
@@ -62,7 +91,7 @@ $data = $data[0];
 								<label for="bankacc-use" class="text-right col-md-4 col-form-label">
 									專戶用途:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-use" value="<?=$data['acount_purpose'];?>" readonly>
+									<input type="text" class="form-control" name="bankacc-use" value="<?=$data['account_purpose'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">

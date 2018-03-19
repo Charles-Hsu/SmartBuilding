@@ -11,7 +11,7 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 $data = $db->getRows($sql);
 session_start();
 
-var_dump($data);
+//var_dump($data);
 ?>
 
 

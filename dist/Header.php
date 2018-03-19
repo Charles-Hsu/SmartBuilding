@@ -34,7 +34,7 @@
             </div>
             <ul class="sidemenu-nav">
                 <li>
-                    <a href="index.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="index">
+                    <a href="/smartbuilding/index.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="index">
                         <i class="far fa-chart-bar"></i>
                         <span>效能管理</span>
                     </a>

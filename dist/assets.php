@@ -3,8 +3,8 @@ include('./config.php');
 include('./Header.php'); 
 ?>
 <?php 
-
-$sql = 'SELECT * FROM assets';
+//$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
+$sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.status_no = b.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
