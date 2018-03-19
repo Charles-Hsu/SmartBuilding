@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>SmartBuilding</title>
-	<link href="/smartbuilding/css/reset.css" rel="stylesheet">
 	<link href="/smartbuilding/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/smartbuilding/css/fontawesome.css" rel="stylesheet">
 	<link href="/smartbuilding/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
@@ -18,7 +17,8 @@
 	<script src="/smartbuilding/js/bootstrap-datepicker.min.js"></script>
     <script src="/smartbuilding/js/bootstrap-datepicker.zh-TW.min.js"></script>
 	<script src="/smartbuilding/js/jquery.dataTables.min.js"></script>
-	<script src="/smartbuilding/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/smartbuilding/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
 </head>
 
 <?php
@@ -34,7 +34,7 @@
             </div>
             <ul class="sidemenu-nav">
                 <li>
-                    <a href="#" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="#">
+                    <a href="index.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="index">
                         <i class="far fa-chart-bar"></i>
                         <span>效能管理</span>
                     </a>
@@ -90,10 +90,13 @@
             </ul>
         </div>
     </div>
-    <div class="content">
-        <div class="content-wrapper">
-            <div class="content-header">
-                <i class="slide-toggle-btn fas fa-outdent"></i>
+    <div class="content-main container-fluid">
+        <div class="row p-2">
+            <div class="col-12">
+                <div class="content-header">
+                    <i class="slide-toggle-btn fas fa-outdent"></i>
+                </div>
             </div>
-            <div class="content-main-wrapper p-3">
-                <div class="content-main container-fluid">
+        </div>
+        <div class="row p-3 content-wrapper">
+            <div class="col-12 content-wrapper-col">

@@ -1,5 +1,6 @@
 $(function(){
     $('.slide-toggle-btn').on('click',function(){
+        $('.content-main').toggleClass('toggle');
         $('.sidemenu').toggleClass('slideToggleActive')
         if($('.sidemenu').hasClass('slideToggleActive')){
             $(this).removeClass('fas fa-outdent')
@@ -21,6 +22,9 @@ $(function(){
 
     var getUrl=location.pathname.split('/')[2].split('.')[0];
     $('.sidemenu-nav li').each(function(i,v){
+        if(getUrl == 'index' || getUrl == ''){
+            $('.sidemenu-nav li').eq(0).find('.sidemenu-link').addClass('active')
+        }
         if($(v).find('.sidemenu-link').attr('data-type') == getUrl){
             $(this).find('.sidemenu-link').addClass('active')
         }

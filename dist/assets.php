@@ -1,4 +1,7 @@
-<?php include('./Header.php'); ?>
+<?php 
+include('./config.php');
+include('./Header.php'); 
+?>
 <?php 
 
 $sql = 'SELECT * FROM assets';
