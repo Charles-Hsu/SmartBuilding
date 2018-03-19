@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/apartment.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="infos">
+                    <a href="/smartbuilding/apartment.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="apartment">
                         <i class="fas fa-home"></i>
                         <span>社區管理</span>
                     </a>
@@ -76,8 +76,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/smartbuilding/system.php" class="d-flex sidemenu-link align-items-center" title="個人資料" data-type="profile">
-                        <i class="far fa-smile"></i>
+                    <a href="/smartbuilding/system.php" class="d-flex sidemenu-link align-items-center" title="個人資料" data-type="system">
+                        <i class="fas fa-cog"></i>
                         <span>系統管理</span>
                     </a>
                 </li>                

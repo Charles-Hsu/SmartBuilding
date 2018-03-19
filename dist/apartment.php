@@ -40,9 +40,26 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
                 </li>
 			</ul>
-			<div id="assets-tab" class="d-flex flex-column px-3">
-                <div class="infos-name">社區名稱：<?= $data['name']; ?></div>
-                <div class="infos-address">社區地址：<?= $data['address']; ?></div>
+			<div id="assets-tab" class="d-flex flex-column px-3 align-items-center">
+				<form action="" class="col-md-8 col-sm-12">
+					<div class="form-group row">
+						<label for="apartment-name" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
+							社區名稱:
+						</label>
+						<input type="text" id="apartment-name" class="form-contorl col-md-8 col-sm-8" name="apartment-name" value="<?= $data['name']; ?>">
+					</div>
+					<div class="form-group row">
+						<label for="apartment-address" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
+							社區地址:
+						</label>
+						<input type="text" id="apartment-address" class="form-contorl col-md-8 col-8" name="apartment-address" value="<?= $data['address']; ?>">
+					</div>
+					<div class="form-group row">
+						<div class="col-md-8 offset-md-4 col-12">
+							<button class="btn btn-primary">更新資料</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
