@@ -26,7 +26,7 @@ session_start();
 					<a class="nav-link active" href="<?= $urlName ?>/org.php">人員</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/#">勤務管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/org/patrol.php">勤務管理</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">承包商管理</a>
