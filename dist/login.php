@@ -76,27 +76,27 @@
 //	var_dump($data);
 ?>
 
-<body>
-    <div id="app" class="login-wrapper container pt-8">
+<body style="background-color: #f9f9f9;">
+    <div id="app" class="login-wrapper p-5">
         <div class="row">
-            <div class="col-sm-12 col-md-8 login-main offset-md-2">
+            <div class="col-12 login-main">
                 <h2 class="login-title text-center mb-4"><?=$conf['sysname']?></h2>
                 <div class="d-flex login-sub-title justify-content-around mb-4">
-                    <a href="login.html" class="active">登入系統</a>
-                    <a href="sign.html">註冊會員</a>
+                    <a href="javascript:;" class="active">登入系統</a>
+                    <a href="kpi.php">KPI</a>
                 </div>
                 <!--<form action="checkuser.php" class="loign-form" method='POST'>-->
                 <form action="" class="loign-form" method='POST'>
-                    <div class="form-group row">
-                        <div class="input-group mb-3 col-md-10 offset-md-1">
+                    <div class="form-group row mb-3">
+                        <div class="col-12 input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="far fa-user"></i></span>
                             </div>
                             <input type="text" class="form-control" name="username" placeholder="請輸入帳號...">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="input-group mb-3 col-md-10 offset-md-1">
+                    <div class="form-group row mb-3">
+                        <div class="col-12 input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
                             </div>
@@ -104,7 +104,10 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-md-10 offset-md-1">
+                        <div class="col-12"><a href="./sign.php" class="sign-btn">註冊會員</a></div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
                             <button class="btn login-btn btn-primary btn-block" type="submit">登入</button>
                         </div>
                     </div>
