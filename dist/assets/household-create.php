@@ -324,8 +324,6 @@ foreach($data as $var) {
 									<button class="btn assets-btn assets-cancel-btn">取消</button>
 								</div>
 							</div>
-
-<?php $message = "TEST"; ?>
 <?php if($message!="") { ?>
                    		<div class="message"><?php echo $message; ?></div>
 <?php } ?>

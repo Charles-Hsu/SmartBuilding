@@ -56,12 +56,14 @@ if (strlen($_SESSION['account']) == 0) {
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+<!--							
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="orgstaff-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>姓名:</label>
@@ -108,6 +110,7 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control datepicker" name="orgstaff-toworkdate" id="orgstaff-toworkdate">
 								</div>
 							</div>
+<!--							
 							<div class="form-group row">
 								<label for="orgstaff-traindate" class="text-right col-md-4 col-form-label">
 									在職訓練完成日期:
@@ -124,6 +127,7 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control datepicker" name="orgstaff-resigned" id="orgstaff-resigned">
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-outline-secondary">新增</button>

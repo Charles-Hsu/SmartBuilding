@@ -297,6 +297,7 @@ class DBAccess extends PDO {
 	}
 
 	public function insert($query, $params=null){
+		$this->setCharset(utf8);
 		if($params && !is_array($params)) $params=array($params);
 		if($params){
 			if(!$stmt=$this->prepare($query)){
@@ -307,6 +308,7 @@ class DBAccess extends PDO {
 				$err=$stmt->errorInfo();
 				throw new Exception(end($err));
 			}
+			
 			return $return;
 		}else{
 			if($this->exec($query)){

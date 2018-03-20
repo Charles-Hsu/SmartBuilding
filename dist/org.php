@@ -4,18 +4,17 @@ include('./Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+$sql = 'SELECT * FROM staff';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
+
+//var_dump($data);
+
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
 
 ?>
 <!-- 內容切換區 -->
@@ -33,7 +32,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">承包商管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/household.php">住戶意見</a>
+					<a class="nav-link" href="<?= $urlName ?>/org/opinions.php">住戶意見</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/works.php">工作日誌</a>
@@ -64,7 +63,7 @@ if (strlen($_SESSION['account']) == 0) {
 					</thead>
 					<tbody>
 <?php
-	//foreach($data as $var) {
+foreach($data as $staff) {
 //		echo $var[asset_no];
 //		echo $var[asset_name];
 //		echo $var[status];
@@ -73,14 +72,14 @@ if (strlen($_SESSION['account']) == 0) {
 ?>
 
 						<tr>
-							<td><span>Joe Lee</span></td>
-							<td><span>0912345678</span></td>
-							<td><span>0001</span></td>
-							<td><span>易入門股份有限公司</span></td>
-							<td><a href="<?= $urlName ?>/org/org-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span><?=$staff['name'];?></span></td>
+							<td><span><?=$staff['mobile'];?></span></td>
+							<td><span><?=$staff['no'];?></span></td>
+							<td><span><?=$staff['corp'];?></span></td>
+							<td><a href="<?= $urlName ?>/org/org-edit.php?no=<?=$staff['no'];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
-	//}
+}
 ?>
 					</tbody>
 				</table>
@@ -108,7 +107,9 @@ $('.asset-table').DataTable({
 		}
 	},
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+	"order": [[2, 'asc']],
+	"searching": false,
 })
 </script>
 <?php include('./Footer.php'); ?>

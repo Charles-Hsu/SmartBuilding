@@ -20,7 +20,12 @@ if (strlen($_SESSION['account']) == 0) {
 			//alert("You pressed a key inside the input field");
 			//document.getElementById("demo").innerHTML = 5 + 6;
 			//window.location.href = "http://stackoverflow.com";
-			window.location.href = "./login.php";
+
+
+
+			//window.location.href = "./login.php";
+
+
 		//}
 	</script>';
 }
