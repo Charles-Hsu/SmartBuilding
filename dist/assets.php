@@ -40,9 +40,13 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link active" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/household.php">物件管理</a>
+					<a class="nav-link" href="/smartbuilding/assets/household.php">產權管理</a>
 				</li>
-<!--
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/household.php">租賃管理</a>
+				</li>
+
+				<!--
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
 				</li>

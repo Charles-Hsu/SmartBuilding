@@ -148,7 +148,7 @@ var_dump($data);
 					<a class="nav-link active" href="../assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="household.php">住戶管理</a>
+					<a class="nav-link" href="household.php">物件管理</a>
 				</li>
 <!--				
 				<li class="nav-item">

@@ -10,7 +10,7 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 $data = $db->getRows($sql);
 $data = $data[0];
 
-var_dump($data);
+//var_dump($data);
 
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];

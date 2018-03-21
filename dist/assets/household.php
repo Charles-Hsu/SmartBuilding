@@ -24,8 +24,12 @@ session_start();
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="#">物件管理</a>
+					<a class="nav-link active" href="#">產權管理</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/household.php">租賃管理</a>
+				</li>
+
 <!--				
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
@@ -34,7 +38,7 @@ session_start();
 			</ul>
 			<div id="assets-tab">
 				<a href="/smartbuilding/assets/household-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增物件
+					<span>+</span>新增產權
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
