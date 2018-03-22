@@ -83,7 +83,7 @@
                 <h2 class="login-title text-center mb-4"><?=$conf['sysname']?></h2>
                 <div class="d-flex login-sub-title justify-content-around mb-4">
                     <a href="javascript:;" class="active">登入系統</a>
-                    <a href="kpi.php">KPI</a>
+                    <a href="./sign.php">註冊會員</a>
                 </div>
                 <!--<form action="checkuser.php" class="loign-form" method='POST'>-->
                 <form action="" class="loign-form" method='POST'>
@@ -102,9 +102,6 @@
                             </div>
                             <input type="password" class="form-control" name="password" placeholder="請輸入密碼...">
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12"><a href="./sign.php" class="sign-btn">註冊會員</a></div>
                     </div>
                     <div class="form-group row">
                         <div class="col-12">

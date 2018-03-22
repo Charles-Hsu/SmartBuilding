@@ -3,9 +3,15 @@ include('./config.php');
 include('./Header.php'); 
 ?>
 <!-- 內容切換區 -->
+<nav class="index-nav my-3">
+    <a class="active" href="./index.php">KPI</a>
+    <a class="" href="./space-management.php">空間管理申請</a>
+    <a class="" href="./announcement.php">公告</a>
+    <a class="" href="./management.php">管理辦法</a>
+</nav>
 <div class="row mb-3">
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
@@ -16,7 +22,7 @@ include('./Header.php');
         </div>
     </div>
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
@@ -27,7 +33,7 @@ include('./Header.php');
         </div>
     </div>
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
@@ -38,7 +44,7 @@ include('./Header.php');
         </div>
     </div>
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
