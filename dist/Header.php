@@ -61,7 +61,7 @@
                 <li>
                     <a href="<?= $urlName ?>/longTerm-repairs.php" class="d-flex sidemenu-link align-items-center" title="長期維護" data-type="longTerm-repairs">
                         <i class="far fa-address-book"></i>
-                        <span>長期維護</span>
+                        <span>長期修繕</span>
                     </a>
                 </li>
                 <li>
