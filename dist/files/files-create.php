@@ -30,7 +30,7 @@ if (count($_POST) > 0) {
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
-						<form class="assets-create-form" action="" method="POST">
+						<form class="assets-create-form" action="" method="POST" enctype="multipart/form-data">
 <!--						
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
@@ -51,10 +51,9 @@ if (count($_POST) > 0) {
 									<span class="important">*</span>選擇檔案:</label>
 								<div class="col-md-9">
                                     <label for="files-upload" class="files-upload">
-                                        <input name="files-upload" type="file" id="files-upload" class="form-control files-input" placeholder="點擊選擇欲上傳的檔案">
+                                        <input name="files-upload" type="file" id="files-upload" class="form-control files-input" placeholder="">
                                         <span class="files-name-box">
-                                            <i class="fas fa-upload"></i>
-                                            <span class="files-name"></span>
+                                            <span class="files-name">點擊選擇欲上傳的檔案</span>
                                         </span>
                                     </label>
 								</div>

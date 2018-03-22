@@ -40,7 +40,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
                 </li>
 			</ul>
-			<div id="assets-tab" class="d-flex flex-column px-3 align-items-center">
+			<div id="assets-tab" class="d-flex flex-column px-3">
 				<form action="" class="col-md-8 col-sm-12">
 					<div class="form-group row">
 						<label for="apartment-name" class="col-md-4 col-sm-4 col-form-label text-right pr-3">

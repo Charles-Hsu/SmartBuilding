@@ -30,7 +30,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/patrol.php">勤務管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">承包商管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/org/opinions.php">住戶意見</a>

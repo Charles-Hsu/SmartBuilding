@@ -242,7 +242,10 @@ label.col-form-label .important {
     background: #1F90E6;
     color: #fff;
 }
-
+.add-asset-btn:hover{
+    color:#fff;
+    background-color: rgb(45, 131, 197);
+}
 .add-asset-btn span {
     margin-right: .6rem;
 }
@@ -421,6 +424,51 @@ label.col-form-label .important {
 .loign-form input[name="password"]{
     padding: .55rem .75rem;
 }
+
+.householdInner-menu{
+    border-bottom: 1px solid #dcdcdc;
+}
+.householdInner-menu a{
+    color: #888;
+    display: inline-block;
+    padding: .5rem 1.75rem;
+    font-weight: bold;
+}
+.householdInner-menu a.active{
+    border-bottom:2px solid #1F90E6;
+    color:#1F90E6;
+}
+.householdInner-menu a:hover{
+    text-decoration: none;
+}
+.householdInner-tabs > .household-tab{
+    display: none;
+}
+.householdInner-tabs > .household-tab.show{
+    display: block;
+}
+.householdRecords-table tr th,
+.householdLease-table tr th{
+    text-align: center;
+}
+.householdRecords-table tr td,
+.householdLease-table tr td{
+    text-align: center;
+}
+.household-tab > .dataTables_wrapper {
+    padding-right: 0;
+    padding-left: 0;
+}
+.household-tab > .dataTables_wrapper > .row:nth-child(2) > .col-sm-12{
+    padding-right: 0;
+    padding-left: 0;
+}
+.householdLease-table > thead > tr > th:nth-child(1){
+    width: 70px;
+}
+.householdLease-table > tbody > tr > td{
+    vertical-align: middle;
+}
 .index-nav{
     border-bottom:1px solid #dcdcdc;
     padding: .75rem 0;
@@ -517,6 +565,14 @@ label.col-form-label .important {
 }
 .appointment-btn{
     padding: .375rem 2rem;
+}
+.paid{
+    color:rgb(22, 133, 72);
+    font-weight: bold;
+}
+.unpaid{
+    color:#da183a;
+    font-weight: bold;
 }
 @media (max-width:992px){
     .container-fluid{

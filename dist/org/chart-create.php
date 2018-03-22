@@ -30,7 +30,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/#">勤務管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">承包商管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/household.php">住戶意見</a>
@@ -55,7 +55,7 @@ if (strlen($_SESSION['account']) == 0) {
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-8col-md-8 col-sm-8 col-xs-12 col-12">
-						<form class="assets-create-form" action="" method="POST">
+						<form class="assets-create-form" action="" method="POST" enctype="multipart/form-data">
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
@@ -85,10 +85,9 @@ if (strlen($_SESSION['account']) == 0) {
 									<span class="important">*</span>檔案上傳:</label>
 								<div class="col-md-8">
                                     <label for="mails-upload" class="files-upload">
-                                        <input name="mails-upload" type="file" id="mails-upload" class="form-control files-input" placeholder="點擊選擇欲上傳的檔案">
+                                        <input name="mails-upload" type="file" id="mails-upload" class="form-control files-input" placeholder="">
                                         <span class="files-name-box">
-                                            <i class="fas fa-upload"></i>
-                                            <span class="files-name"></span>
+                                            <span class="files-name">點擊選擇欲上傳的檔案</span>
                                         </span>
                                     </label>
 								</div>

@@ -32,7 +32,7 @@ if (count($_POST) > 0) {
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/index.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>空間管理申請</span>
+					<span>空間辦法申請</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
@@ -63,24 +63,12 @@ if (count($_POST) > 0) {
                             </div>
                             <div class="form-group row">
 								<label for="announce-upload-label" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>辦法:</label>
+									<span class="important">*</span>公告:</label>
 								<div class="col-md-9">
                                     <label for="announce-upload" class="files-upload">
-                                        <input name="announce-upload" type="file" id="announce-upload" class="form-control files-input" placeholder="點擊選擇欲辦法的檔案">
+                                        <input name="announce-upload" type="file" id="announce-upload" class="form-control files-input" placeholder="點擊選擇欲公告的檔案">
                                         <span class="files-name-box">
-                                            <span class="files-name">點擊選擇欲辦法的檔案</span>
-                                        </span>
-                                    </label>
-								</div>
-                            </div>
-                            <div class="form-group row">
-								<label for="contractor-upload-label" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>承包管理:</label>
-								<div class="col-md-9">
-                                    <label for="contractor-upload" class="files-upload">
-                                        <input name="contractor-upload" type="file" id="contractor-upload" class="form-control files-input" placeholder="點擊選擇欲承包管理的檔案">
-                                        <span class="files-name-box">
-                                            <span class="files-name">點擊選擇欲承包管理的檔案</span>
+                                            <span class="files-name">點擊選擇欲公告的檔案</span>
                                         </span>
                                     </label>
 								</div>

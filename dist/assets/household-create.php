@@ -385,16 +385,16 @@ foreach($data as $var) {
 										<tr>
 											<td>信義房屋</td>
 											<td><a href="#">螢幕快照 2018-03-07.png</a></td>
-											<td><a href="#" class="btn btn-primary">下載檔案</a></td>
+											<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
 											<td><a href="#">螢幕快照 2018-03-07.png</a></td>
-											<td><a href="#" class="btn btn-primary">下載檔案</a></td>
+											<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
 										</tr>
 										<tr>
 											<td>信義房屋</td>
 											<td><a href="#">螢幕快照 2017-03-07.png</a></td>
-											<td><a href="#" class="btn btn-primary">下載檔案</a></td>
+											<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
 											<td><a href="#">螢幕快照 2017-03-07.png</a></td>
-											<td><a href="#" class="btn btn-primary">下載檔案</a></td>
+											<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
 										</tr>
 									</tbody>
 								</table>

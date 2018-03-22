@@ -48,7 +48,7 @@ if (strlen($_SESSION['account']) == 0) {
 						<tr>
 							<td><span>smartbuilding資料庫</span></td>
 							<td><span>smartbuilding.sql</span></td>
-							<td><a href="#" class="btn btn-primary">下載檔案</a></td>
+							<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
 							<td><a href="/smartbuilding/files/files-edit.php" class="btn btn-outline-secondary">編輯</a></td>
 						</tr>
 <?php

@@ -59,6 +59,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?= $urlName ?>/longTerm-repairs.php" class="d-flex sidemenu-link align-items-center" title="長期維護" data-type="longTerm-repairs">
+                        <i class="far fa-address-book"></i>
+                        <span>長期維護</span>
+                    </a>
+                </li>
+                <li>
                     <a href="<?= $urlName ?>/apartment.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="apartment">
                         <i class="fas fa-home"></i>
                         <span>社區管理</span>

@@ -5,7 +5,7 @@ include('./Header.php');
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
     <a class="active" href="./index.php">KPI</a>
-    <a class="" href="./space-management.php">空間管理申請</a>
+    <a class="" href="./space-management.php">空間辦法申請</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
 </nav>
