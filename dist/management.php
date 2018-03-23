@@ -21,7 +21,7 @@ if (strlen($_SESSION['account']) == 0) {
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
     <a class="" href="./index.php">KPI</a>
-    <a class="" href="./space-management.php">空間辦法申請</a>
+    <a class="" href="./space-management.php">空間變更申請</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="active" href="./management.php">管理辦法</a>
 </nav>

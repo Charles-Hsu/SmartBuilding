@@ -85,7 +85,7 @@
                 <li>
                     <a href="<?= $urlName ?>/system.php" class="d-flex sidemenu-link align-items-center" title="個人資料" data-type="system">
                         <i class="fas fa-cog"></i>
-                        <span>系統管理</span>
+                        <span>作業紀錄</span>
                     </a>
                 </li>                
                 <li>

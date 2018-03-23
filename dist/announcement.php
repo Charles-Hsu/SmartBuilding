@@ -34,7 +34,7 @@ if (strlen($_SESSION['account']) == 0) {
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
     <a class="" href="./index.php">KPI</a>
-    <a class="" href="./space-management.php">空間辦法申請</a>
+    <a class="" href="./space-management.php">空間變更申請</a>
     <a class="active" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
 </nav>
@@ -45,6 +45,7 @@ if (strlen($_SESSION['account']) == 0) {
             <span>回首頁</span>
         </div>
     </div>
+    <!--
 	<div class="col-lg-8 col-md-12 col-12 p-4">
         <div class="announcement-list d-flex">
             <span class="announcement-title">纖維比地瓜多2倍、營養勝酪梨！這水果潤腸解便超有效</span>
@@ -79,6 +80,41 @@ if (strlen($_SESSION['account']) == 0) {
             <span class="announcement-time">2018年03月19日</span>
         </div>
     </div>
+    -->
+    <div class="col-lg-8 col-md-12 col-12 p-4">
+    <table class="table asset-table">
+					<thead class="thead-light">
+						<tr>
+                            <th>公告日期</th>
+							<th>類別</th>
+							<th>內容</th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+	//foreach($data as $var) {
+//		echo $var[asset_no];
+//		echo $var[asset_name];
+//		echo $var[status];
+//		echo $var[price];
+//		echo '<br>';
+?>
+						<tr>
+							<td><span>2018/3/19</span></td>
+							<td><span>管委會</span></td>
+							<td><span><a href="#">敦聘吳謹斌為法律顧問</a></span></td>
+						</tr>
+						<tr>
+							<td><span>2018/3/21</span></td>
+							<td><span>電力公司</span></td>
+							<td><span><a href='#'>預計2018/3/22 24:00~2018/3/23 3:00停電</a></span></td>
+						</tr>
+<?php
+	//}
+?>
+					</tbody>
+				</table>
+        </div>
 </div>
 
 <?php include('./Footer.php'); ?>

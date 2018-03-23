@@ -5,7 +5,17 @@ include(Document_root.'/Header.php');
 
 <?php 
 
-$sql = 'SELECT * FROM household';
+$sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.status_no = b.id';
+/*
+							<td><span><?=$var[building]?></span></td>
+							<td><span><?=$var[addr_no]?></span></td>
+							<td><span><?=$var[floor]?></span></td>
+							<td><span><?=$var[status]?></span></td>
+							<td><span><?=$var[holder]?></span></td>
+							<td><span><?=$var[resident]?></span></td>
+*/
+
+$sql = 'SELECT building,addr_no,floor,b.name AS status,holder,resident FROM household a, household_status b WHERE a.status = b.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
@@ -43,14 +53,14 @@ session_start();
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>所屬大樓</th>
+							<th>大樓</th>
 							<th>戶號</th>
 							<th>樓層</th>
 							<th>住戶狀態</th>
 							<th>區權人</th>
 							<th>現住戶</th>
-							<th>停車費</th>
-							<th>管理費</th>
+							<th>費用</th>
+							<th>紀錄</th>
 							<th>編輯</th>
 						</tr>
 					</thead>
@@ -74,11 +84,14 @@ session_start();
 							<td><span><?=$var[holder]?></span></td>
 							<td><span><?=$var[resident]?></span></td>
 							<td>
-								<span class="paid">已繳</span>
+								<span class="paid">已繳清</span>
 							</td>
+<!--							
 							<td>
 								<span class="unpaid">未繳</span>
 							</td>
+-->							
+							<td><a href="#" class="btn btn-outline-secondary">顯示</a></td>
 							<td><a href="/smartbuilding/assets/household-edit.php?addr_no=<?=$var[addr_no]?>&floor=<?=$var[floor]?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php

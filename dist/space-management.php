@@ -22,7 +22,7 @@ if (count($_POST) > 0) {
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
     <a class="" href="./index.php">KPI</a>
-    <a class="active" href="./space-management.php">空間辦法申請</a>
+    <a class="active" href="./space-management.php">空間變更申請</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
 </nav>
@@ -32,7 +32,7 @@ if (count($_POST) > 0) {
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/index.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>空間辦法申請</span>
+					<span>空間變更申請</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
