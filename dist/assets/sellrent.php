@@ -15,7 +15,11 @@ $sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.statu
 							<td><span><?=$var[resident]?></span></td>
 */
 
+//$sql = 'SELECT building,addr_no,floor,b.name AS status,holder,resident FROM household a, household_status b WHERE a.status = b.id';
+//$sql = 'SELECT a.id AS id building,addr_no,floor,unpaid_total,b.name AS status,holder,resident FROM household a, household_status b WHERE a.status = b.id';
 $sql = 'SELECT a.id AS id,building,addr_no,floor,unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+
+
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
@@ -34,10 +38,10 @@ session_start();
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="/smartbuilding/assets/household.php">產權管理</a>
+					<a class="nav-link" href="/smartbuilding/assets/household.php">產權管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/sellrent.php">租售管理</a>
+					<a class="nav-link active" href="/smartbuilding/assets/sellrent.php">租售管理</a>
 				</li>
 
 <!--				
@@ -47,21 +51,27 @@ session_start();
 -->				
 			</ul>
 			<div id="assets-tab">
+<!--            
 				<a href="/smartbuilding/assets/household-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增產權
+					<span>+</span>新增租售案件
 				</a>
+-->                
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
 							<th>大樓</th>
 							<th>戶號</th>
 							<th>樓層</th>
+<!--                            
 							<th>住戶狀態</th>
+-->                            
 							<th>區權人</th>
+<!--                            
 							<th>現住戶</th>
+-->                            
 							<th>欠繳</th>
-							<th>明細</th>
-							<th>產權</th>
+							<th>紀錄</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -77,37 +87,29 @@ session_start();
 ?>
 
 						<tr>
-							<td><span><?=$var[building];?></span></td>
-							<td><span><?=$var[addr_no];?></span></td>
-							<td><span><?=$var[floor];?></span></td>
-							<td><span><?=$var[status];?></span></td>
-							<td><span><?=$var[holder];?></span></td>
-							<td><span><?=$var[resident];?></span></td>
+							<td><span><?=$var[building]?></span></td>
+							<td><span><?=$var[addr_no]?></span></td>
+							<td><span><?=$var[floor]?></span></td>
+<!--                            
+							<td><span><?=$var[status]?></span></td>
+-->                            
+							<td><span><?=$var[holder]?></span></td>
+<!--                            
+							<td><span><?=$var[resident]?></span></td>
+-->                            
 							<td>
 								<?php 
 								if($var[unpaid_total] == 0) {
 									echo '<span class="paid">';
 							 	} else {
-									echo '<span class="unpaid">' . $var[unpaid_total];
+									echo '<span class="unpaid">';
 								}
 								?>
+								<?=$var[unpaid_total];?>
 								</span>
 							</td>
-<!--							
-							<td>
-								<span class="unpaid">未繳</span>
-							</td>
--->							
-							<td>
-								<?php 
-								if($var[unpaid_total] != 0) {
-									echo '<a href="#" class="btn btn-outline-secondary">';
-									echo '顯示';
-									echo '</a>';
-								}
-								?>
-							</td>
-							<td><a href="/smartbuilding/assets/household-edit.php?id=<?=$var[id];?>" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="#" class="btn btn-outline-secondary">顯示</a></td>
+							<td><a href="/smartbuilding/assets/sellrent-edit.php?id=<?=$var[id]?>" class="btn btn-outline-secondary">帶看設定</a></td>
 						</tr>
 <?php
 	}

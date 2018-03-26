@@ -284,6 +284,12 @@ foreach($data as $var) {
 								</div>
 							</div>
 							<div class="form-group row">
+								<label for="household-park-amount" class="text-right col-md-4 col-form-label">帶看費用:</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
+								</div>
+							</div>
+							<div class="form-group row">
 								<label for="assets-buy-date" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>購置日期:
 								</label>

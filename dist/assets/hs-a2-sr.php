@@ -62,7 +62,7 @@ $household = $db->getRow($sql);
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
-			<li class="nav-item">
+            <li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
@@ -75,7 +75,7 @@ $household = $db->getRow($sql);
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="/smartbuilding/assets/household.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>修改物件</span>
+					<span>新增產權租售</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
@@ -96,69 +96,6 @@ $household = $db->getRow($sql);
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="household-use" class="text-right col-lg-6 col-md-3 col-form-label">
-									<span class="important">*</span>房子用途:</label>
-								<div class="col-lg-6 col-md-9">
-									<select name="household-use" id="household-use" class="form-control">
-<!--									
-										<option value="" selected>選擇用途</option>
--->							
-
-<?php
-$sql =  "SELECT id,name FROM household_purpose";
-$data = $db->getRows($sql);
-foreach($data as $var) {
-//	echo $var['Name'];
-//echo $var['id'];
-
-	$selected = "";
-	if ($var['id'] == $household['purpose']) {
-		$selected = 'selected';
-	}
-?>
-
-									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
-<?php
-}
-?>
-<!--
-										<option value="住宅用">住宅用</option>
-										<option value="商業用">商業用</option>
--->										
-									</select>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-status" class="text-right col-lg-6 col-md-3 col-form-label">
-									<span class="important">*</span>房子狀態:</label>
-								<div class="col-lg-6 col-md-9">
-									<select name="household-status" id="household-status" class="form-control">
-<!--									
-										<option value="" selected>選擇用途</option>
--->									
-<?php
-$sql =  "SELECT id,name FROM household_status";
-$data = $db->getRows($sql);
-foreach($data as $var) {
-//	echo $var['Name'];
-//echo $var['id'];
-	$selected = "";
-	if ($var['id'] == $household['status']) {
-		$selected = 'selected';
-	}
-?>
-									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
-<?php
-}
-?>	
-<!--
-										<option value="自用">自用</option>
-										<option value="出租">出租</option>
--->										
-									</select>
-								</div>
-							</div>
-							<div class="form-group row">
 								<label for="household-num" class="text-right col-lg-6 col-md-3 col-form-label">
 									戶號:
 								</label>
@@ -176,21 +113,10 @@ foreach($data as $var) {
 							</div>
 							<div class="form-group row">
 								<label for="household-own" class="text-right col-lg-6 col-md-3 col-form-label">
-									<span class="important">*</span>區權人:
+									區權人:
 								</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-own" id="household-own" value="<?=$household['holder'];?>">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-name" class="text-right col-lg-4 offset-lg-2 col-md-3 col-form-label">
-									<span class="important">*</span>住戶姓名:
-								</label>
-								<div class="col-lg-4 col-md-6">
-									<input type="text" class="form-control" name="household-name" id="household-name" value="<?=$household['resident'];?>">
-								</div>
-								<div class="col-lg-2 col-md-3 pl-0 ">
-									<button class="btn btn-primary btn-same">同區權人</button>
+									<input type="text" class="form-control" name="household-own" id="household-own" value="<?=$household['holder'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -212,67 +138,31 @@ foreach($data as $var) {
 								</div>
 							</div>
 							<div class="form-group row">
-								<label for="household-guard-amount" class="text-right col-lg-6 col-md-3 col-form-label">應收管理費金額:</label>
+								<label for="household-guard-amount" class="text-right col-lg-6 col-md-3 col-form-label">帶看費用:</label>
 								<div class="col-lg-6 col-md-9">
 									<input type="text" class="form-control" name="household-guard-amount" id="household-guard-amount" value="<?=$household['due'];?>">
 								</div>
 							</div>
+
+
+
+
 							<div class="form-group row">
-								<label for="household-park-amount" class="text-right col-lg-6 col-md-3 col-form-label">應收停車費金額:</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" value="<?=$household['parking_lot_due'];?>">
-								</div>
-							</div>
-<!--
-							<div class="form-group row">
-								<label for="household-park-amount" class="text-right col-md-4 col-form-label">帶看費用:</label>
+								<label for="household-status" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>租/售:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
-								</div>
-							</div>
--->
-							<div class="form-group row">
-								<label for="assets-buy-date" class="text-right col-lg-6 col-md-3 col-form-label">
-									購置日期:
-								</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control datepicker" name="assets-buy-date" id="assets-buy-date" value="<?=$household['buy_date'];?>" >
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="assets-use-state" class="text-right col-lg-6 col-md-3 col-form-label">
-									使用狀態:
-								</label>
-								<div class="col-lg-6 col-md-9">
-									<select class="custom-select" name="assets-use-state">
-<!--									
-										<option selected>選取狀態</option>
--->										
-<?php
-$sql =  "SELECT id,name FROM household_used_for";
-$data = $db->getRows($sql);
-foreach($data as $var) {
-//	echo $var['Name'];
-//echo $var['id'];
-    $selected = "";
-    if ($var['id'] == $household['used_for']) {
-        $selected = 'selected';
-    }
-?>
-									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
-<?php
-}
-?>	
-<!--
-										<option value="自用">自用</option>
-										<option value="租賃">租賃</option>
--->										
+									<select name="household-status" id="household-status" class="form-control">
+										<option value="1">出租</option>
+										<option value="0">出售</option>
 									</select>
 								</div>
 							</div>
-							<div class="form-group row">
+
+
+
+    						<div class="form-group row">
 								<div class="col-lg-6 offset-md-3 col-md-9 offset-md-3">
-									<button class="btn assets-btn assets-add-btn">更新</button>
+									<button class="btn assets-btn assets-add-btn">確定</button>
 									<button class="btn assets-btn assets-cancel-btn">取消</button>
 								</div>
 							</div>

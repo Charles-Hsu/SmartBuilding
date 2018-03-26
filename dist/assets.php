@@ -43,7 +43,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="/smartbuilding/assets/household.php">產權管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/household.php">租賃管理</a>
+					<a class="nav-link" href="/smartbuilding/assets/household.php">租售管理</a>
 				</li>
 
 				<!--

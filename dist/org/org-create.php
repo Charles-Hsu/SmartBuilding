@@ -55,6 +55,7 @@ if (strlen($_SESSION['account']) == 0) {
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
+					<p><pre>01   02   03   04   05 06 07 08 09 10 01 02 03 04 05 06 07 08 09 10 01 02 03 04 05 06 07 08 09 10</pre> </p>
 						<form class="assets-create-form" action="" method="POST">
 <!--							
 							<div class="form-group row">
