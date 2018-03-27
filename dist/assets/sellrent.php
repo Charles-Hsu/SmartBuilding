@@ -43,6 +43,9 @@ session_start();
 				<li class="nav-item">
 					<a class="nav-link active" href="/smartbuilding/assets/sellrent.php">租售管理</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
+				</li>
 
 <!--				
 				<li class="nav-item">
@@ -71,7 +74,7 @@ session_start();
 -->                            
 							<th>欠繳</th>
 							<th>紀錄</th>
-							<th>編輯</th>
+							<th>帶看</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -97,19 +100,34 @@ session_start();
 <!--                            
 							<td><span><?=$var[resident]?></span></td>
 -->                            
-							<td>
+<td>
 								<?php 
 								if($var[unpaid_total] == 0) {
 									echo '<span class="paid">';
 							 	} else {
-									echo '<span class="unpaid">';
+									echo '<span class="unpaid">' . $var[unpaid_total];
 								}
 								?>
-								<?=$var[unpaid_total];?>
 								</span>
 							</td>
-							<td><a href="#" class="btn btn-outline-secondary">顯示</a></td>
-							<td><a href="/smartbuilding/assets/sellrent-edit.php?id=<?=$var[id]?>" class="btn btn-outline-secondary">帶看設定</a></td>
+<!--							
+							<td>
+								<span class="unpaid">未繳</span>
+							</td>
+-->							
+							<td>
+								<?php 
+								if($var[unpaid_total] != 0) {
+									echo '<a href="#" class="btn btn-outline-secondary">';
+									echo '顯示';
+									echo '</a>';
+								}
+								?>
+							</td>
+                            <!--
+							<td><a href="/smartbuilding/assets/household-edit.php?id=<?=$var[id];?>" class="btn btn-outline-secondary">修改</a></td>
+                            -->
+							<td><a href="/smartbuilding/assets/sellrent-edit.php?id=<?=$var[id]?>" class="btn btn-outline-secondary">設定</a></td>
 						</tr>
 <?php
 	}

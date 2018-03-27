@@ -69,16 +69,16 @@ $household = $db->getRow($sql);
 					<a class="nav-link" href="/smartbuilding/assets/household.php">產權管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="/smartbuilding/assets/sellrent.php">租售管理</a>
+					<a class="nav-link" href="/smartbuilding/assets/sellrent.php">租售管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
+					<a class="nav-link active" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
 				</li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="/smartbuilding/assets/sellrent.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>設定帶看</span>
+					<a href="/smartbuilding/assets/brokerman.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>帶看管理</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
@@ -143,9 +143,53 @@ $household = $db->getRow($sql);
 							<div class="form-group row">
 								<label for="household-guard-amount" class="text-right col-lg-6 col-md-3 col-form-label">帶看費用:</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-guard-amount" id="household-guard-amount" value="<?=$household['due'];?>">
+									<input type="text" class="form-control" name="household-guard-amount" id="household-guard-amount" value="<?=$household['due'];?>" readonly>
 								</div>
 							</div>
+
+							<div class="form-group row">
+								<label for="household-guard-amount" class="text-right col-lg-6 col-md-3 col-form-label">仲介公司:</label>
+								<div class="col-lg-6 col-md-9">
+                                <select name="household-use" id="household-use" class="form-control">
+<!--									
+										<option value="" selected>選擇用途</option>
+-->							
+
+<?php
+/*
+$sql =  "SELECT id,name FROM household_purpose";
+$data = $db->getRows($sql);
+*/
+
+$sql = 'SELECT * FROM real_estate_agent';
+$data = $db->getRows($sql);
+
+foreach($data as $var) {
+//	echo $var['Name'];
+//echo $var['id'];
+?>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+<?php
+}
+?>
+<!--
+										<option value="住宅用">住宅用</option>
+										<option value="商業用">商業用</option>
+-->										
+									</select>
+								</div>
+							</div>
+
+
+    						<div class="form-group row">
+								<label for="orgstaff-toworkdate" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>帶看日期:
+								</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control datepicker" name="orgstaff-toworkdate" id="orgstaff-toworkdate">
+								</div>
+							</div>
+
 
 
 <!--

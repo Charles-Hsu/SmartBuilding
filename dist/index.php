@@ -8,6 +8,8 @@ include('./Header.php');
     <a class="" href="./space-management.php">空間變更申請</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
+    <a class="" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./opinionlist.php">住戶意見處理</a>
 </nav>
 <div class="row mb-3">
     <div class="col-md-3 col-6 mt-3">

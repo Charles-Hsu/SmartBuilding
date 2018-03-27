@@ -51,12 +51,13 @@ if (strlen($_SESSION['account']) == 0) {
 			<div id="assets-tab" class="row mr-0 ml-0">
 				<div class="col-7">
 					<div class="assets-create-title mb-3">
-						<a href="<?= $urlName ?>/org.php" class="assets-create-icon fas fa-chevron-left"></a>
+						<a href="<?= $urlName ?>/org/contracts.php" class="assets-create-icon fas fa-chevron-left"></a>
 						<span>新增承包廠商</span>
 					</div>
 					<div class="row justify-content-center">
 						<div class="col-12">
 							<form class="assets-create-form" action="" method="POST">
+<!--							
 								<span class="edit-title mb-3">資產資料</span>
 								<div class="form-group row">
 									<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
@@ -64,6 +65,8 @@ if (strlen($_SESSION['account']) == 0) {
 										<span>XXXXXX</span>
 									</div>
 								</div>
+-->								
+							
 								<div class="form-group row">
 									<label for="contracts-name" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>廠商名稱:</label>
@@ -71,6 +74,7 @@ if (strlen($_SESSION['account']) == 0) {
 										<input type="text" class="form-control" name="contracts-name" id="contracts-name">
 									</div>
 								</div>
+<!--								
 								<div class="form-group row">
 									<label for="contracts-engname" class="text-right col-md-4 col-form-label">
 										廠商英文名稱:
@@ -95,6 +99,7 @@ if (strlen($_SESSION['account']) == 0) {
 										<input type="text" class="form-control datepicker" name="contract-createdate" id="contract-createdate">
 									</div>
 								</div>
+-->								
 								<div class="form-group row">
 									<label for="contract-email" class="text-right col-md-4 col-form-label">
 										Email:
@@ -127,7 +132,9 @@ if (strlen($_SESSION['account']) == 0) {
 										<input type="text" class="form-control" name="contract-web" id="contract-web">
 									</div>
 								</div>
+<!--								
 								<span class="edit-title mb-3">聯絡方式</span>
+-->								
 								<div class="form-group row">
 									<label for="contract-person" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>聯絡人:
@@ -154,6 +161,7 @@ if (strlen($_SESSION['account']) == 0) {
 						</div>
 					</div>
 				</div>
+<!--				
 				<div class="col-5">
 					<a href="<?= $urlName ?>/org/contracts-addpaper.php" class="btn btn-primary mb-3">新增廠商合約</a>
 					<dvi class="card contracts-paper">
@@ -183,6 +191,7 @@ if (strlen($_SESSION['account']) == 0) {
 						</div>
 					</dvi>
 				</div>
+-->				
 			</div>
 		</div>
 	</div>

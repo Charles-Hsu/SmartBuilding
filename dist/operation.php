@@ -37,7 +37,10 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/operation/operation-create.php" class="btn add-asset-btn mb-3">
+			<!--
+				<a href="<?= $urlName ?>/calendar-addlist.php" class="btn add-asset-btn mb-3">
+			-->				
+				<a href="<?= $urlName ?>/calendar-records.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增例行作業
 				</a>
 				<table class="table asset-table">

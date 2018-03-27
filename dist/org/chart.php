@@ -50,24 +50,41 @@ if (strlen($_SESSION['account']) == 0) {
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/org/chart-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增工作日誌
+					<span>+</span>新增委員
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
 							<th>屆別</th>
-							<th>檔案名稱</th>
-							<th>下載</th>
-							<th>修改</th>
+							<th>職稱</th>
+							<th>戶號</th>
+							<th>樓層</th>
+							<th>姓名</th>
 						</tr>
 					</thead>
 					<tbody>
+					<?php
+	$sql = "SELECT a.edition, b.title, a.addr_no, a.floor, a.name FROM committee a, committee_role b WHERE a.role_id = b.id";
+	$data = $db->getRows($sql);
+	//var_dump($data);
+	foreach($data as $var) {
+//		echo $var[asset_no];
+//		echo $var[asset_name];
+//		echo $var[status];
+//		echo $var[price];
+//		echo '<br>';
+?>
+
 						<tr>
-							<td><span>2018-03-02</span></td>
-							<td><span>測試</span></td>
-							<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
-							<td><a href="<?= $urlName ?>/org/chart-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span><?=$var[edition];?></span></td>
+							<td><span><?=$var[title];?></span></td>
+							<td><span><?=$var[addr_no];?></span></td>
+							<td><span><?=$var[floor];?></span></td>
+							<td><span><?=$var[name];?></span></td>
 						</tr>
+<?php
+	}
+?>
 					</tbody>
 				</table>
 			</div>

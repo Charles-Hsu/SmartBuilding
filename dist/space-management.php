@@ -25,15 +25,19 @@ if (count($_POST) > 0) {
     <a class="active" href="./space-management.php">空間變更申請</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
+	<a class="" href="./overduelist.php">欠繳清單</a>
+	<a class="" href="./opinionlist.php">住戶意見處理</a>
 </nav>
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<div id="assets-tab">
+<!--			
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/index.php" class="assets-create-icon fas fa-chevron-left"></a>
 					<span>空間變更申請</span>
 				</div>
+-->				
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST" enctype="multipart/form-data">

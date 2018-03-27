@@ -55,7 +55,7 @@ if (strlen($_SESSION['account']) == 0) {
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
-					<p><pre>01   02   03   04   05 06 07 08 09 10 01 02 03 04 05 06 07 08 09 10 01 02 03 04 05 06 07 08 09 10</pre> </p>
+		
 						<form class="assets-create-form" action="" method="POST">
 <!--							
 							<div class="form-group row">
@@ -95,12 +95,62 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control" name="orgstaff-id" id="orgstaff-id">
 								</div>
 							</div>
+
+
 							<div class="form-group row">
-								<label for="orgstaff-company" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>所屬物業公司:
+								<label for="orgstaff-id" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>職稱:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="orgstaff-company" id="orgstaff-company">
+									<select name="household-area" id="household-area" class="form-control">
+<?php
+	$sql = 'SELECT * FROM staff_role';
+	$data = $db->getRows($sql);
+?>								
+<?php
+foreach($data as $var) {
+	//	echo $var['Name'];
+	//echo $var['id'];
+?>
+										<option value="<?=$var['id'];?>"><?=$var['title'];?></option>
+<?php
+}
+?>
+
+									</select>
+								</div>
+							</div>
+
+
+
+
+							<div class="form-group row">
+								<label for="orgstaff-company" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>所屬物業公司(或自聘):
+								</label>
+								<div class="col-md-8">
+									
+								<select name="household-area" id="household-area" class="form-control">
+<!--								
+									<option value="0">自聘</option>
+-->									
+<?php
+	$sql = 'SELECT * FROM contract';
+	$data = $db->getRows($sql);
+?>								
+<?php
+foreach($data as $var) {
+	//	echo $var['Name'];
+	//echo $var['id'];
+?>
+										<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+<?php
+}
+?>
+
+									</select>
+
+
 								</div>
 							</div>
 							<div class="form-group row">

@@ -106,9 +106,9 @@ if (strlen($_SESSION['account']) == 0) {
             if(i < my_day && my_year == my_date.getFullYear() && my_month == my_date.getMonth() ){
                 str+=`<li><a href="javascript:;" class="gray">${i}</a></li>`
             }else if( i == my_day && my_year == my_date.getFullYear() && my_month == my_date.getMonth() ){
-                str+=`<li><a class="today" href="calendar-addlist?year=${my_year}&month=${my_month}&day=${i}">${i}</a></li>`
+                str+=`<li><a class="today" href="calendar-addlist.php?year=${my_year}&month=${my_month}&day=${i}">${i}</a></li>`
             }else{
-                str+=`<li><a class="will" href="calendar-addlist?year=${my_year}&month=${my_month}&day=${i}">${i}</a></li>`
+                str+=`<li><a class="will" href="calendar-addlist.php?year=${my_year}&month=${my_month}&day=${i}">${i}</a></li>`
             }
         }
         $('#days').html(str)

@@ -4,7 +4,7 @@ include('./Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM staff';
+$sql = 'SELECT a.name AS staffname,a.mobile,a.no,b.title,c.name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
@@ -49,7 +49,7 @@ session_start();
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/org/org-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增人員
+					<span>+</span>新增社區職員
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
@@ -57,6 +57,7 @@ session_start();
 							<th>姓名</th>
 							<th>手機號碼</th>
 							<th>員工編號</th>
+							<th>職稱</th>
 							<th>所屬物業公司</th>
 							<th>修改</th>
 						</tr>
@@ -72,10 +73,11 @@ foreach($data as $staff) {
 ?>
 
 						<tr>
-							<td><span><?=$staff['name'];?></span></td>
+							<td><span><?=$staff['staffname'];?></span></td>
 							<td><span><?=$staff['mobile'];?></span></td>
 							<td><span><?=$staff['no'];?></span></td>
-							<td><span><?=$staff['corp'];?></span></td>
+							<td><span><?=$staff['title'];?></span></td>
+							<td><span><?=$staff['name'];?></span></td>
 							<td><a href="<?= $urlName ?>/org/org-edit.php?no=<?=$staff['no'];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php

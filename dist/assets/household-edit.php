@@ -75,7 +75,7 @@ $household = $db->getRow($sql);
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="/smartbuilding/assets/household.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>修改物件</span>
+					<span>產權修改</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">

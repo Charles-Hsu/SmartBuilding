@@ -38,7 +38,7 @@ if (strlen($_SESSION['account']) == 0) {
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/operation.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<a href="./calendar-addlist.php" class="assets-create-icon fas fa-chevron-left"></a>
 					<span>新增例行作業</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">

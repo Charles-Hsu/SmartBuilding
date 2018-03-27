@@ -674,17 +674,22 @@ label.col-form-label .important {
 .calendar-wrap .body .days-list ul li{
     flex-basis: calc(100% / 7);
     position: relative;
+    padding: 1.25rem .75rem 1.25rem;
+    text-align: center;
 }
 .calendar-wrap .body .days-list ul li a:hover{
     background-color: #f5f5f5;
     text-decoration: none;
 }
 .calendar-wrap .body .days-list ul li a{
-    display: block;
+    display: inline-block;
     text-align: center;
     font-size: 1.2rem;
     font-weight: bold;
-    padding: 1.25rem .75rem 1.25rem;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 50%;
     cursor: pointer;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
@@ -700,6 +705,22 @@ label.col-form-label .important {
 }
 .calendar-wrap .body .days-list ul li a.will{
     color:rgb(100, 100, 100);
+}
+.punch-table tbody tr td{
+    text-align: center;
+}
+.punch-table tbody tr td.checktime{
+    cursor: pointer;
+}
+.details-model{
+    width: 300px;
+    height: 500px;
+    background-color: rgba(150, 150, 150, 0.51);
+    border:1px solid #000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
 }
 @media (max-width:992px){
     .container-fluid{

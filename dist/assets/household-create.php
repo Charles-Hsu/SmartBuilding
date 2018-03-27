@@ -112,17 +112,18 @@ if(count($_POST)>0) {
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/assets.php">資產管理</a>
+			<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/assets/household.php">物件管理</a>
+					<a class="nav-link active" href="/smartbuilding/assets/household.php">產權管理</a>
 				</li>
-<!--				
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/assets/infrastructure.php">公共設施</a>
+					<a class="nav-link" href="/smartbuilding/assets/sellrent.php">租售管理</a>
 				</li>
--->				
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
+				</li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
@@ -283,12 +284,14 @@ foreach($data as $var) {
 									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
 								</div>
 							</div>
+<!--							
 							<div class="form-group row">
 								<label for="household-park-amount" class="text-right col-md-4 col-form-label">帶看費用:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="assets-buy-date" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>購置日期:
@@ -337,6 +340,7 @@ foreach($data as $var) {
 
 						</form>
 					</div>
+<!--					
 					<div class="col-lg-6 col-6">
 						<nav class="mb-3 householdInner-menu">
 							<a href="javascript:;" class="active"><i class="fas fa-list-ul mr-2"></i>規費紀錄</a>
@@ -407,6 +411,7 @@ foreach($data as $var) {
 							</div>
 						</div>
 					</div>
+-->					
 				</div>
 			</div>
 		</div>
