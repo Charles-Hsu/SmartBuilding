@@ -164,7 +164,11 @@ session_start();
 	</div>
 </div>
 
-<div class="details-model">
+<div id="details-model" class="details-model">
+	<div id="details-head" class="details-head">
+		<span>Head</span>
+		<span class="close-modal">X</span>
+	</div>
 	<table>
 		<thead>
 			<tr>
@@ -180,7 +184,6 @@ session_start();
 		</tbody>
 	</table>
 </div>
-
 <script>
 
 var moveX = 0, moveY = 0, x = 0, y = 0;

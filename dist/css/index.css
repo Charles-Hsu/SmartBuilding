@@ -713,8 +713,6 @@ label.col-form-label .important {
 .punch-table tbody tr td.checktime{
     cursor: pointer;
 }
-<<<<<<< HEAD
-=======
 table.punch-table td,
 table.punch-table th{
     padding: .15rem;
@@ -747,7 +745,6 @@ table.punch-table td.checktime label{
     margin-bottom: 0;
     user-select: none;
 }
->>>>>>> 3bbab26773a2bc4ba66389f1197984934beead15
 .details-model{
     width: 300px;
     height: 500px;
