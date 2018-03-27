@@ -8,10 +8,27 @@ $message = "";
 
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
+$id = $_GET['id'];
+
 if(count($_POST)>0) {
 
-//	var_dump($_POST);
+    //var_dump($_POST);
+    $datetime = $_POST['agent_datetime'];
+    $agent_id = $_POST['agent-id'];
+//    echo $datetime;
+   /* 
+    INSERT INTO `real_estate_agent_event` (`id`, `dt`, `realestate_id`, `agent_id`) VALUES (NULL, '2018-03-22 05:25:23', '1', '5');
+    */
 
+    $sql = "INSERT INTO real_estate_agent_event VALUES (NULL, '" . $datetime . "', '" . $id . "', '" . $agent_id . "')";
+    //echo $sql;
+
+    if ($db->insert($sql)) {
+        //if ($db->insertRow($table, $data)) {
+            //$message="新增成功";
+    }
+
+/*
 	$data = array();
 
 //	$data['building'] = $_POST['household-area'];
@@ -45,10 +62,11 @@ if(count($_POST)>0) {
 	if ($db->insert($sql)) {
 	//if ($db->insertRow($table, $data)) {
 		$message="修改成功";
-	}
+    }
+    */
 }
 
-$id = $_GET['id'];
+
 //$addr_no = $_GET['addr_no'];
 //$floor = $_GET['floor'];
 //$sql = 'SELECT * FROM household WHERE addr_no = "' . $addr_no . '" AND floor ="' . $floor . '"';
@@ -148,9 +166,9 @@ $household = $db->getRow($sql);
 							</div>
 
 							<div class="form-group row">
-								<label for="household-guard-amount" class="text-right col-lg-6 col-md-3 col-form-label">仲介公司:</label>
+								<label class="text-right col-lg-6 col-md-3 col-form-label">仲介公司:</label>
 								<div class="col-lg-6 col-md-9">
-                                <select name="household-use" id="household-use" class="form-control">
+                                <select name="agent-id" class="form-control">
 <!--									
 										<option value="" selected>選擇用途</option>
 -->							
@@ -182,11 +200,11 @@ foreach($data as $var) {
 
 
     						<div class="form-group row">
-								<label for="orgstaff-toworkdate" class="text-right col-md-4 col-form-label">
+								<label class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>帶看日期:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="orgstaff-toworkdate" id="orgstaff-toworkdate">
+									<input type="text" class="form-control datepicker" name="agent_datetime">
 								</div>
 							</div>
 
@@ -209,7 +227,7 @@ foreach($data as $var) {
 
     						<div class="form-group row">
 								<div class="col-lg-6 offset-md-3 col-md-9 offset-md-3">
-									<button class="btn assets-btn assets-add-btn">確定</button>
+									<button class="btn assets-btn assets-add-btn">新增</button>
 									<button class="btn assets-btn assets-cancel-btn">取消</button>
 								</div>
 							</div>
@@ -223,13 +241,85 @@ foreach($data as $var) {
 				</div>
 			</div>
 		</div>
-	</div>
+    </div>
+    
+<?php
+    $sql = 'SELECT *, b.name FROM real_estate_agent_event a, real_estate_agent b WHERE household_id = ' . $id . ' AND agent_id = b.id';
+    //echo $sql;
+    $data = $db->getRows($sql);
+    //var_dump($data);
+?>
+
+				<table class="table datatable">
+					<thead class="thead-light">
+						<tr>
+							<th>日期/時間</th>
+							<th>仲介公司</th>
+						</tr>
+					</thead>
+					<tbody>
+<?php
+	foreach($data as $var) {
+//		echo $var[asset_no];
+//		echo $var[asset_name];
+//		echo $var[status];
+//		echo $var[price];
+//		echo '<br>';
+?>
+
+						<tr>
+							<td><span><?=$var[dt]?></span></td>
+							<td><span><?=$var[name]?></span></td>
+						</tr>
+<?php
+	}
+?>
+					</tbody>
+				</table>
+
 </div>
 <script>
 $('.btn-same').on('click',function(e){
 	var _val=$('#household-own').val()
 	$('#household-name').val(_val)
 	e.preventDefault()
+})
+</script>
+<script>
+	var now_date=new Date();
+	var now_year=now_date.getFullYear();
+	var now_month=now_date.getMonth()+1;
+	var now_date=now_date.getDate();
+	if(now_month<10){
+		now_month='0'+now_month
+	}
+	if(now_date<10){
+		now_date='0'+now_date
+	}
+	$('.datepicker').val(`${now_year}-${now_month}-${now_date}`)
+</script>
+<script>
+$('.datatable').DataTable({
+	"language": {
+		"search": "搜尋_INPUT_",
+		"searchPlaceholder": "搜尋資產...",
+		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
+		"infoEmpty": "",
+		"emptyTable": "目前沒有資料",
+		"lengthMenu": "每頁顯示 _MENU_ 筆資料",
+		"zeroRecords": "搜尋無此資料",
+		"infoFiltered": " 搜尋結果 _MAX_ 筆資料",
+		"paginate": {
+			"previous": "上一頁",
+			"next": "下一頁",
+			"first": "第一頁",
+			"last": "最後一頁"
+		}
+	},
+	"deferRender": true,
+	"processing": true,
+    "order": [[0, 'desc']],
+    //"order": [[0, 'asc']],
 })
 </script>
 <?php 

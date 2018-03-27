@@ -13,10 +13,6 @@ session_start();
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
 
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -56,31 +52,31 @@ if (strlen($_SESSION['account']) == 0) {
 					<thead class="thead-light">
 						<tr>
 							<th>廠商名稱</th>
+							<th>合約類別</th>
 							<th>聯絡人</th>
 							<th>聯絡方式</th>
-							<th>統一編號</th>
 							<th>修改</th>
 						</tr>
 					</thead>
 					<tbody>
 <?php
-	//foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
 
+$sql = 'SELECT name,contact_person,contact_phone,b.item AS item FROM contract a, contract_item b WHERE a.id != 0 AND a.contract_item = b.id';
+//echo $sql;
+$data = $db->getRows($sql);
+
+foreach($data as $var) {
+?>
 						<tr>
-							<td><span>Joe Lee</span></td>
-							<td><span>0912345678</span></td>
-							<td><span>0001</span></td>
-							<td><span>易入門股份有限公司</span></td>
+							<td><span><?=$var['name'];?></span></td>
+							<td><span><?=$var['item'];?></span></td>
+							<td><span><?=$var['contact_person'];?></span></td>
+							<td><span><?=$var['contact_phone'];?></span></td>
 							<td><a href="<?= $urlName ?>/org/contracts-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
+					
 <?php
-	//}
+}
 ?>
 					</tbody>
 				</table>

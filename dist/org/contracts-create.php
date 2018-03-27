@@ -74,6 +74,38 @@ if (strlen($_SESSION['account']) == 0) {
 										<input type="text" class="form-control" name="contracts-name" id="contracts-name">
 									</div>
 								</div>
+
+							<div class="form-group row">
+								<label for="orgstaff-company" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>合約類別:
+								</label>
+								<div class="col-md-8">
+									
+								<select name="household-area" id="household-area" class="form-control">
+<!--								
+									<option value="0">自聘</option>
+-->									
+<?php
+	$sql = 'SELECT * FROM contract_item';
+	$data = $db->getRows($sql);
+?>								
+<?php
+foreach($data as $var) {
+	//	echo $var['Name'];
+	//echo $var['id'];
+?>
+										<option value="<?=$var['id'];?>"><?=$var['item'];?></option>
+<?php
+}
+?>
+
+									</select>
+
+
+								</div>
+							</div>
+
+
 <!--								
 								<div class="form-group row">
 									<label for="contracts-engname" class="text-right col-md-4 col-form-label">
