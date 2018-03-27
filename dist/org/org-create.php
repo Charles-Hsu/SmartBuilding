@@ -141,6 +141,19 @@ if (strlen($_SESSION['account']) == 0) {
 		</div>
 	</div>
 </div>
+<script>
+	var now_date=new Date();
+	var now_year=now_date.getFullYear();
+	var now_month=now_date.getMonth()+1;
+	var now_date=now_date.getDate();
+	if(now_month<10){
+		now_month='0'+now_month
+	}
+	if(now_date<10){
+		now_date='0'+now_date
+	}
+	$('.datepicker').val(`${now_year}-${now_month}-${now_date}`)
+</script>
 <?php 
 include(Document_root.'/Footer.php');
 ?>
