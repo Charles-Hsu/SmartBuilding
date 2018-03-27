@@ -772,7 +772,7 @@ table.punch-table td.checktime label{
     float: right;
 }
 .cxcalendar .acts a{
-    display: none;
+    width: 100%;
 }
 @media (max-width:992px){
     .container-fluid{
