@@ -200,11 +200,11 @@ foreach($data as $var) {
 
 
     						<div class="form-group row">
-								<label class="text-right col-md-4 col-form-label">
+								<label class="text-right col-lg-6 col-md-3 col-form-label">
 									<span class="important">*</span>帶看日期:
 								</label>
-								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="agent_datetime">
+								<div class="col-lg-6 col-md-9">
+									<input type="text" class="form-control datepicker" data-type="datetime" name="agent_datetime">
 								</div>
 							</div>
 
@@ -226,7 +226,7 @@ foreach($data as $var) {
 
 
     						<div class="form-group row">
-								<div class="col-lg-6 offset-md-3 col-md-9 offset-md-3">
+								<div class="col-lg-6 offset-lg-6 offset-md-3 col-md-9 offset-md-3">
 									<button class="btn assets-btn assets-add-btn">新增</button>
 									<button class="btn assets-btn assets-cancel-btn">取消</button>
 								</div>

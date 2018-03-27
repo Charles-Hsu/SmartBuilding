@@ -771,6 +771,9 @@ table.punch-table td.checktime label{
     line-height: 22px;
     float: right;
 }
+.cxcalendar .acts a{
+    display: none;
+}
 @media (max-width:992px){
     .container-fluid{
         width: calc(100% - 62px);

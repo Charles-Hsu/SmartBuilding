@@ -12,12 +12,20 @@ $(function(){
     })
 
     if($('.datepicker').length > 0){
-        $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: !0,
-            language: 'zh-TW',
-            todayHighlight: !0
-        })
+        var dataType=$('.datepicker').attr('data-type')
+        if(dataType == 'datetime'){
+            $('.datepicker').cxCalendar({
+                type: 'datetime',
+                format: 'YYYY-MM-DD HH:mm:ss'
+            });
+        }else{
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: !0,
+                language: 'zh-TW',
+                todayHighlight: !0
+            })
+        }
     }
 
     var getUrl=location.pathname.split('/')[2].split('.')[0];

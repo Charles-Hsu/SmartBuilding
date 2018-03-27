@@ -111,6 +111,18 @@ $getDate=$_GET['year'].'-'.$_GET['month'].'-'.$_GET['day'];
                                         <option value="BB">BB</option>
                                     </select>
                                 </div>
+							</div>
+							<div class="form-group row">
+								<label for="innerswim-reply" class="text-right col-md-4 col-form-label">作業週期:</label>
+								<div class="col-md-8">
+									<select id="innerswim-reply" class="form-control" name="innerswim-reply">
+                                        <option value="" selected>選擇週期</option>
+                                        <option value="date">每日</option>
+                                        <option value="week">每週</option>
+                                        <option value="month">每月</option>
+                                        <option value="year">每年</option>
+                                    </select>
+                                </div>
                             </div>
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
