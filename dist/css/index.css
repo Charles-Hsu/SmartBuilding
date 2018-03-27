@@ -752,7 +752,7 @@ table.punch-table td.checktime label{
     position: absolute;
     top: 50%;
     left: 50%;
-    display: block;
+    display: none;
     transform: translate(-50%,-50%);
 }
 .details-head{
