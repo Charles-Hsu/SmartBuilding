@@ -181,11 +181,31 @@ session_start();
 	</table>
 </div>
 
-
-
 <script>
 
+var moveX = 0, moveY = 0, x = 0, y = 0;
+var detailsHead=document.getElementById('details-head');
+var detailsModel=document.getElementById('details-model');
 
+detailsHead.onmousedown=function(e){
+	x=e.clientX;
+	y=e.clientY;
+	document.onmouseup=function(e){
+		document.onmouseup = null;
+    	document.onmousemove = null;
+	}
+	document.onmousemove=function(e){
+		moveX=x-e.clientX;
+		moveY=y-e.clientY;
+		x=e.clientX;
+		y=e.clientY;
+		detailsModel.style.top=(detailsModel.offsetTop-moveY)+'px';
+		detailsModel.style.left=(detailsModel.offsetLeft-moveX)+'px';
+	}
+}
+$('.close-modal').on('click',function(){
+	$('.details-model').hide()
+})
 $('.show-details').on('click',function(e){
 	e.preventDefault();
 	$.ajax({
@@ -213,7 +233,6 @@ $('.show-details').on('click',function(e){
 		}
 	})
 })
-
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
@@ -235,6 +254,8 @@ $('.asset-table').DataTable({
 	"processing": true
 })
 </script>
+
+
 <?php 
 include(Document_root.'/Footer.php');
 ?>
