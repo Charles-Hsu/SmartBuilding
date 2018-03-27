@@ -203,6 +203,7 @@ label.col-form-label .important {
 }
 .content-wrapper-col{
     background-color: #fff;
+    position: relative;
 }
 .content-main {
     background-color: #fff;
@@ -751,11 +752,27 @@ table.punch-table td.checktime label{
     width: 300px;
     height: 500px;
     background-color: rgba(150, 150, 150, 0.51);
-    border:1px solid #000;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     display: none;
+    transform: translate(-50%,-50%);
+}
+.details-head{
+    background-color: rgb(193, 241, 18);
+    cursor: move;
+}
+.close-modal{
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    background-color: #000;
+    border-radius: 50%;
+    display: inline-block;
+    color:#fff;
+    text-align: center;
+    line-height: 22px;
+    float: right;
 }
 @media (max-width:992px){
     .container-fluid{
