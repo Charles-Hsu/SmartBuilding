@@ -616,39 +616,53 @@ label.col-form-label .important {
     text-align: center;
     position: relative;
     display: flex;
-    justify-content: space-around;
     align-items: center;
+}
+.calendar-wrap .title #back{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 48px;
+    border: 1px solid #B72A67;
+    cursor: pointer;
+    color: #B72A67;
+    transition: all .6s;
+}
+.calendar-wrap .title #back:hover{
+    background-color: #B72A67;
+    color:#fff;
 }
 .calendar-wrap .title .left{
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+.calendar-wrap .title .left span{
+    font-size: 3rem;
+    font-weight: bold;
 }
 .calendar-wrap .title #month-en,
 .calendar-wrap .title #month-num{
     font-weight: 900;
-    font-size: 3rem;
     color: #6ac13c;
     font-family: Arial, Helvetica, sans-serif;
 }
 .calendar-wrap .title #year{
     font-weight: 900;
-    font-size: 2rem;
     color: rgb(49, 49, 49);
     font-family: Arial, Helvetica, sans-serif;
 }
 .calendar-wrap .title #prev{
-    top: 50%;
-    left: 16px;
-    transform: translateY(-50%);
-    position: absolute;
     cursor: pointer;
     font-size: 3rem;
 }
 .calendar-wrap .title #next{
-    top: 50%;
-    right: 16px;
-    transform: translateY(-50%);
-    position: absolute;
     cursor: pointer;
     font-size: 3rem;
 }
@@ -773,6 +787,48 @@ table.punch-table td.checktime label{
 }
 .cxcalendar .acts a{
     width: 100%;
+}
+.check_label{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.check_label input[type="checkbox"]{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.check_label label{
+    width: 30px;
+    height: 30px;
+    background-color: rgb(255, 255, 255);
+    border:2px solid #237bec;
+    margin-bottom: 0;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+}
+.check_label input[type="checkbox"] + label:before{
+    content: '';
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 53%;
+    left: 48%;
+    border-radius: 5px;
+    transform: translate(-50%,-50%) scale(0);
+    background-color: #237bec;
+    transition: all .3s;
+}
+.check_label input[type="checkbox"]:checked + label:before{
+    transform: translate(-50%,-50%) scale(1);
+}
+
+.table td, .table th{
+    vertical-align: middle;
 }
 @media (max-width:992px){
     .container-fluid{

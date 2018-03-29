@@ -23,13 +23,17 @@ if (strlen($_SESSION['account']) == 0) {
 	<div class="col-12 p-4">
         <div class="calendar-wrap">
             <div class="title">
+                <i id="back" class="fas fa-angle-left"></i>
                 <div class="left">
-                    <div id="month-en"></div>
-                    <div id="year"></div>
+                    <i id="prev" class="mr-5 fas fa-angle-left"></i>
+                    <span id="year"></span>
+                    <span class="mx-3">年</span>
+                    <span id="month-num"></span>
+                    <span class="ml-3">月</span>
+                    <i id="next" class="ml-5 fas fa-angle-right"></i>
                 </div>
-                <div id="month-num"></div>
-                <i id="prev" class="fas fa-angle-left"></i>
-                <i id="next" class="fas fa-angle-right"></i>
+                
+                
             </div>
             <div class="body">
                 <div class="week-list">
@@ -53,6 +57,9 @@ if (strlen($_SESSION['account']) == 0) {
 	</div>
 </div>
 <script>
+    $('#back').on('click',function(){
+        window.history.go(-1)
+    })
     var month_olympic = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var month_normal = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var month_name = ["January", "Febrary", "March", "April", "May", "June", "July", "Auguest", "September", "October","November", "December"];
@@ -112,7 +119,7 @@ if (strlen($_SESSION['account']) == 0) {
             }
         }
         $('#days').html(str)
-        $('#month-en').css('color',month_colors[my_month]).text(month_name[my_month])
+        // $('#month-en').css('color',month_colors[my_month]).text(month_name[my_month])
         $('#month-num').text(my_month+1)
         $('#year').text(my_year)
     }
