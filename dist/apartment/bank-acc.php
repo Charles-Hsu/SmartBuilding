@@ -3,8 +3,8 @@ include('../config.php');
 include('../Header.php'); 
 ?>
 <?php 
-$table = 'bank_acc';
-$sql = 'SELECT * FROM ' . $table;
+
+$sql = 'SELECT a.*,b.type FROM bank_acc a, bank_acc_type b WHERE a.account_type = b.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
@@ -46,7 +46,12 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>專戶用途</th>
 							<th>專戶類型</th>
 							<th>銀行名稱</th>
-							<th>銀行帳戶名稱</th>
+<!--							
+							<th>銀行編號</th>
+-->							
+							<th>帳戶名稱</th>
+							<th>帳戶編號</th>
+							<th>帳戶餘額</th>
 							<th>修改</th>
 						</tr>
 					</thead>
@@ -57,9 +62,11 @@ if (strlen($_SESSION['account']) == 0) {
 
 						<tr>
 							<td><span><?=$account[account_purpose];?></span></td>
-							<td><span><?=$account[account_type];?></span></td>
+							<td><span><?=$account[type];?></span></td>
 							<td><span><?=$account[bank_name];?></span></td>
 							<td><span><?=$account[account_name];?></span></td>
+							<td><span><?=$account[account_number];?></span></td>
+							<td><span><?=$account[account_balance];?></span></td>
 							<td><a href="<?= $urlName ?>/apartment/bankacc-edit.php?id=<?=$account[id];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php

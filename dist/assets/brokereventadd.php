@@ -14,7 +14,8 @@ if(count($_POST)>0) {
 
     //var_dump($_POST);
     $datetime = $_POST['agent_datetime'];
-    $agent_id = $_POST['agent-id'];
+	$agent_id = $_POST['agent-id'];
+	
 //    echo $datetime;
    /* 
     INSERT INTO `real_estate_agent_event` (`id`, `dt`, `realestate_id`, `agent_id`) VALUES (NULL, '2018-03-22 05:25:23', '1', '5');
@@ -140,12 +141,15 @@ $household = $db->getRow($sql);
 									<input type="text" class="form-control" name="household-own" id="household-own" value="<?=$household['holder'];?>" readonly>
 								</div>
 							</div>
+
+<!--							
 							<div class="form-group row">
 								<label for="household-props" class="text-right col-lg-6 col-md-3 col-form-label">區權比例:</label>
 								<div class="col-lg-6 col-md-9">
 									<input type="text" class="form-control" value="<?=$household['owner_percentage']?>" readonly>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="household-sqft" class="text-right col-lg-6 col-md-3 col-form-label">坪數:</label>
 								<div class="col-lg-6 col-md-9">

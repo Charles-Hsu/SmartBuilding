@@ -4,19 +4,19 @@ include('./Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+//$sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$data = $db->getRows($sql);
-session_start();
+//$data = $db->getRows($sql);
+//session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
-
+/*
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
 }
-
+*/
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -48,7 +48,9 @@ if (strlen($_SESSION['account']) == 0) {
 						<tr>
 							<th>作業項目</th>
 							<th>作業類別</th>
+<!--							
 							<th>作業週期</th>
+-->							
 							<th>承包廠商</th>
 							<th>作業金額</th>
 							<th>修改</th>
@@ -56,24 +58,32 @@ if (strlen($_SESSION['account']) == 0) {
 					</thead>
 					<tbody>
 <?php
-	//foreach($data as $var) {
+
+
+$sql = 'SELECT *, b.category, c.name FROM tasks a, task_category b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id';
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
+$data = $db->getRows($sql);
+//var_dump($data);
+//session_start();
+
+
+foreach($data as $var) {
 //		echo $var[asset_no];
 //		echo $var[asset_name];
 //		echo $var[status];
 //		echo $var[price];
 //		echo '<br>';
 ?>
-
 						<tr>
-							<td><span>測試2</span></td>
-							<td><span>清潔</span></td>
-							<td><span>週</span></td>
-							<td><span>八萬一公道行</span></td>
-							<td><span>5000</span></td>
+							<td><span><?=$var['dt'];?></span></td>
+							<td><span><?=$var['category'];?></span></td>
+							<td><span><?=$var['name'];?></span></td>
+							<td><span><?=$var['descript'];?></span></td>
 							<td><a href="<?= $urlName ?>/operation/operation-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
-	//}
+}
 ?>
 					</tbody>
 				</table>
@@ -86,7 +96,7 @@ if (strlen($_SESSION['account']) == 0) {
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
-		"searchPlaceholder": "搜尋資產...",
+		"searchPlaceholder": "搜尋作業項目...",
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",

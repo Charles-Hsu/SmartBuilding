@@ -290,6 +290,7 @@ class DBAccess extends PDO {
 	}
 
 	public function updateRows($table, $data, $where){
+		$this->setCharset(utf8);
 		$sql="update $table set";
 		foreach($data as $key=>$_v) $sql.=" $key=:$key,";
 		$sql=rtrim($sql, ',')." where $where";

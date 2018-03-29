@@ -41,10 +41,7 @@ $(function(){
     if($('.datepicker').length > 0){
         var dataType=$('.datepicker').attr('data-type')
         if(dataType == 'datetime'){
-
-            $('.datepicker').on('focus',function(){
-                $(this).val(getTodayTime())
-            })
+            $('.datepicker').val(getTodayTime())
         }else{
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',

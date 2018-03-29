@@ -141,6 +141,8 @@ session_start();
 									<input type="text" class="form-control datepicker" name="orgstaff-traindate" id="orgstaff-traindate" value="<?=$staff['trained_date'];?>">
 								</div>
 							</div>
+
+							
 							<div class="form-group row">
 								<label for="orgstaff-resigned" class="text-right col-md-4 col-form-label">
 									離職日:

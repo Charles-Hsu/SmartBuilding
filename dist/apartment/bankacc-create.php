@@ -17,6 +17,54 @@ session_start();
 
 //echo $data['account_purpose'];
 
+if (count($_POST) > 0) {
+	var_dump($_POST);
+
+	$data = array();
+	$data['account_purpose'] = $_POST['bankacc-use'];
+	$data['account_type'] = $_POST['bankacc-type'];
+	$data['bank_name'] = $_POST['bank-name'];
+	$data['account_number'] = $_POST['bankacc-account'];
+	$data['account_name'] = $_POST['bankacc-name'];
+	$data['account_balance'] = $_POST['bankacc-balance'];
+	$data['comment'] = $_POST['bankacc-note'];
+
+	$fields = "";
+	$values = "";
+
+	foreach ($data as $key => $value) {
+//				echo $key;
+//				echo $value;
+		$fields = $fields . "`" . $key . "`,";
+		$values = $values . "'" . $value . "',"; 
+	}
+/*			
+	echo "<br>";
+	echo $fields;
+	echo "<br>";
+	echo $values;
+	echo "<br>";
+	echo strlen($fields)-1;
+	echo "<br>";
+	//echo substr($fields, 0, strlen($fields)-1);
+*/			
+	$fields = substr($fields, 0, strlen($fields)-1);
+	$values = substr($values, 0, strlen($values)-1);
+
+	echo $fields;
+	echo $values;
+
+	$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
+				
+	echo $sql;
+				
+	if ($db->insert($sql)) {
+				//if ($db->insertRow($table, $data)) {
+		$message="新增成功";
+	}
+
+}
+
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -63,17 +111,56 @@ session_start();
 								<label for="bankacc-type" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>專戶類型:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-type" id="bankacc-type" placeholder="<?=$data['account_type'];?>">
+
+
+
+
+
+
+
+
+									
+								<select name="bankacc-type" id=""bankacc-type" class="form-control">
+<!--								
+									<option value="0">自聘</option>
+-->									
+<?php
+	$sql = 'SELECT * FROM bank_acc_type';
+	$data = $db->getRows($sql);
+?>								
+<?php
+foreach($data as $var) {
+	//	echo $var['Name'];
+	//echo $var['id'];
+
+	$selected = "";
+	if ($var['id'] == 2) {
+		$selected = "selected";
+	}
+
+
+?>
+<!--
+										<option value="2" selected>定期存款</option>
+-->										
+										<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['type'];?></option>
+<?php
+}
+?>
+
+									</select>
+
+					
+								
+								
+								
+								
+								
+								
 								</div>
 							</div>
-							<div class="form-group row">
-								<label for="bankaccount-name" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>帳戶名稱:
-								</label>
-								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="bankaccount-name" id="bankaccount-name" placeholder="<?=$data['account_name'];?>" >
-								</div>
-							</div>
+
+<!--
 							<div class="form-group row">
 								<label for="bankacc-code" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>銀行代碼:
@@ -82,6 +169,7 @@ session_start();
 									<input type="text" class="form-control" name="bankacc-code" id="bankacc-code" placeholder="<?=$data['bank_no'];?>">
 								</div>
 							</div>
+-->
 							<div class="form-group row">
 								<label for="bank-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>銀行名稱:
@@ -98,6 +186,21 @@ session_start();
 									<input type="text" class="form-control" name="bankacc-account" id="bankacc-account" placeholder="<?=$data['account_number'];?>">
 								</div>
 							</div>
+
+
+
+							<div class="form-group row">
+								<label for="bankacct-name" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>帳戶名稱:
+								</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="bankacc-name" id="bankacc-name" placeholder="<?=$data['account_name'];?>" >
+								</div>
+							</div>
+
+
+
+
 							<div class="form-group row">
 								<label for="bankacc-balance" class="text-right col-md-4 col-form-label">
 									銀行餘額:
@@ -120,12 +223,31 @@ session_start();
 									<button class="btn btn-outline-secondary">取消</button>
 								</div>
 							</div>
+
+
+					<?php //$message = "TEST"; ?>
+                    <?php if($message!="") { ?>
+                    <div class="form-group row">
+                        <div class="col-md-10 offset-md-1">
+                            <div class="alert alert-danger text-center" role="alert"><?php echo $message; ?></div>
+                        </div>
+                    </div>
+                    <?php } ?>
+
+
+
+
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+
+
+	
 </div>
 <?php 
 include(Document_root.'/Footer.php');

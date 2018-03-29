@@ -19,15 +19,16 @@ if(count($_POST)>0) {
 	//var_dump($_POST);
 	$balance = $_POST['bankacc-balance'];
 	$comment = $_POST['bankacc-note'];
-	echo $comment;
+	//echo $comment;
 	//$comment = utf8_encode($comment);
 	//echo $comment;
 
 	
 	$sql =  "UPDATE " . $table . " SET account_balance='" . $balance . "', comment = '" . $comment . "' WHERE id = " . $id; 
 
-	echo $sql;
+	//echo $sql;
 
+	$db->setCharset(utf8);
 	$data = $db->exec($sql);
 
 	//$sql = "update {$this->prename}member_cash set order_no='{$result['order_no']}',state=3 where id=?";
@@ -41,7 +42,10 @@ if ($_GET) {
 	$id = $_GET['id'];
 	//echo $license_no;
 	$table = 'bank_acc';
-	$sql = 'SELECT * FROM ' . $table . ' WHERE id = "' . $id . '"';
+
+	//$sql = 'SELECT a.*,b.type FROM bank_acc a, bank_acc_type b WHERE a.account_type = b.id';
+
+	$sql = 'SELECT a.*, b.type AS acc_type FROM bank_acc a, bank_acc_type b WHERE a.id = "' . $id . '" AND a.account_type = b.id';
 	//echo $sql;
 	$data = $db->getRows($sql);
 	$data = $data[0];
@@ -73,7 +77,7 @@ $data = $data[0];
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/apartment/building.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<a href="<?= $urlName ?>/apartment/bank-acc.php" class="assets-create-icon fas fa-chevron-left"></a>
 					<span>編輯銀行專戶</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
@@ -98,7 +102,7 @@ $data = $data[0];
 								<label for="bankacc-type" class="text-right col-md-4 col-form-label">
 									專戶類型:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-type" value="<?=$data['account_type'];?>" readonly>
+									<input type="text" class="form-control" name="bankacc-type" value="<?=$data['acc_type'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -109,6 +113,7 @@ $data = $data[0];
 									<input type="text" class="form-control datepicker" name="bankaccount-name" value="<?=$data['account_name'];?>" readonly>
 								</div>
 							</div>
+<!--							
 							<div class="form-group row">
 								<label for="bankacc-code" class="text-right col-md-4 col-form-label">
 									銀行代碼:
@@ -117,6 +122,7 @@ $data = $data[0];
 									<input type="text" class="form-control" name="bankacc-code" value="<?=$data['bank_no'];?>" readonly>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="bank-name" class="text-right col-md-4 col-form-label">
 									銀行名稱:

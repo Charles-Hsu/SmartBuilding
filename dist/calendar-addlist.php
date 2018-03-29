@@ -16,7 +16,87 @@ session_start();
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
 }
-$getDate=$_GET['year'].'-'.$_GET['month'].'-'.$_GET['day'];
+$getDate = $_GET['year'].'-'.$_GET['month'].'-'.$_GET['day'];
+
+
+if (count($_POST) > 0) {
+	//var_dump($_POST);
+	$day0 = strtotime($_POST['day0']); // integer of 'today'
+	$day1 = strtotime($_POST['day1']); // integer of 'end day'
+
+	$catid = $_POST['task-category'];
+	$conid = $_POST['contract-id'];
+	$desc  = $_POST['task-content'];
+	$per   = intval($_POST['task-period']); // 0: 單次, 1: 每日, 2: 每月, 3: 每季, 4: 每年
+	$interval = 0;
+
+	for ($diff=$day1-$day0; $diff >= 0; $diff=$day1 - $day0) {
+		//echo date('Y-m-d', $day0) . '<br>';
+		$dtstr = date('Y-m-d', $day0);
+		echo $dtstr . '<br>';
+		if ($per == 0) { // single task
+			break;
+		} else if ($per == 1) { // every day
+			$day0 = strtotime("+1 day", $day0);
+		} else if ($per == 2) { // every month
+			$day0 = strtotime("+1 month", $day0);
+		} else if ($per == 3) { // every quarter
+			$day0 = strtotime("+3 month", $day0);
+		} else if ($per == 4) { // every year
+			$day0 = strtotime("+1 year", $day0);
+		}  
+		$datestr = date('Y-m-d', day0);
+
+		$sql = "INSERT INTO `tasks` (`id`, `dt`, `category_id`, `contract_id`, `descript`) VALUES (NULL, '" . $dtstr . "', " . $catid . ", " . $conid . ", '" . $desc . "')";
+		echo $sql . '<br>';
+
+		if ($db->insert($sql)) {
+		//	//if ($db->insertRow($table, $data)) {
+		//		$message="新增成功";
+		}
+
+
+	}
+
+
+
+//	$start_day = strtotime($day0);
+//	$next_day = strtotime("+1 day", $start_day);
+//	echo $start_day;
+
+/*	
+	$date1 = date_create('2013-03-15');
+	$date2 = date_create('2013-12-12');
+	$diff = date_diff($date1, $date2);
+	echo $diff;
+ 	echo date ('Y-m-d', $diff);
+*/
+/*
+	for ($next_day = strtotime("+1 day", $start_day); date_diff($next_day, $day1)->days > 0;  $next_day = $start_day) {
+		echo date ('Y-m-d', $start_day);
+	}
+*/
+/*
+	$next_day = strtotime("+1 day", $start_day);
+
+	echo $start_day;
+	echo date ('Y-m-d', $start_day);
+	echo date ('Y-m-d', $next_day);
+*/	
+
+
+/*
+	$catid = $_POST['task-category'];
+	$conid = $_POST['contract-id'];
+	$desc = $_POST['task-content'];
+	$sql = "INSERT INTO `tasks` (`id`, `dt`, `category_id`, `contract_id`, `descript`) VALUES (NULL, '" . $dt . "', " . $catid . ", " . $conid . ", '" . $desc . "')";
+	//echo $sql;
+	if ($db->insert($sql)) {
+		//if ($db->insertRow($table, $data)) {
+		$message="新增成功";
+	}
+*/	
+}
 
 ?>
 <!-- 內容切換區 -->
@@ -47,82 +127,86 @@ $getDate=$_GET['year'].'-'.$_GET['month'].'-'.$_GET['day'];
 						<form class="assets-create-form" action="" method="POST">
                             <!-- 獲取點選日期 -->
                             <input type="hidden" name="getDate" value="<?= $getDate; ?>">
-
 							<div class="form-group row">
-								<label for="elevator-reply" class="text-right col-md-4 col-form-label">電梯:</label>
-								<div class="col-md-8">
-									<select id="elevator-reply" class="form-control" name="elevator-reply">
-                                        <option value="" selected>選擇電梯項目</option>
-                                        <option value="AA">AA</option>
-                                        <option value="BB">BB</option>
-                                    </select>
-								</div>
-                            </div>
-                            
-							<div class="form-group row">
-								<label for="firesafety-reply" class="text-right col-md-4 col-form-label">消防:</label>
-								<div class="col-md-8">
-									<select id="firesafety-reply" class="form-control" name="firesafety-reply">
-                                        <option value="" selected>選擇消防項目</option>
-                                        <option value="AA">AA</option>
-                                        <option value="BB">BB</option>
-                                    </select>
-								</div>
-                            </div>
-                            
-                            <div class="form-group row">
-								<label for="basestation-reply" class="text-right col-md-4 col-form-label">基地:</label>
-								<div class="col-md-8">
-									<select id="basestation-reply" class="form-control" name="basestation-reply">
-                                        <option value="" selected>選擇基地項目</option>
-                                        <option value="AA">AA</option>
-                                        <option value="BB">BB</option>
-                                    </select>
-								</div>
-                            </div>
 
-                            <div class="form-group row">
-								<label for="garden-reply" class="text-right col-md-4 col-form-label">花園:</label>
+								<label for="innerswim-reply" class="text-right col-md-4 col-form-label">作業類別:</label>
 								<div class="col-md-8">
-									<select id="garden-reply" class="form-control" name="garden-reply">
-                                        <option value="" selected>選擇花園項目</option>
-                                        <option value="AA">AA</option>
-                                        <option value="BB">BB</option>
+									<select id="innerswim-reply" class="form-control" name="task-category">
+
+<?php
+$sql = "SELECT * FROM task_category";
+$sql = "SELECT * FROM contract_item";
+//echo $sql;
+$data = $db->getRows($sql);
+//var_dump($data);
+
+foreach($data as $var) {
+?>
+										<option value="<?=$var['id'];?>"><?=$var['item'];?></option>
+<?php
+}
+?>									
                                     </select>
 								</div>
-                            </div>
-
-                            <div class="form-group row">
-								<label for="gym-reply" class="text-right col-md-4 col-form-label">健身房:</label>
+								
+								<label for="innerswim-reply" class="text-right col-md-4 col-form-label">承包廠商:</label>
 								<div class="col-md-8">
-									<select id="gym-reply" class="form-control" name="gym-reply">
-                                        <option value="" selected>選擇設備項目</option>
-                                        <option value="AA">AA</option>
-                                        <option value="BB">BB</option>
+									<select id="innerswim-reply" class="form-control" name="contract-id">
+
+<?php
+$sql = "SELECT * FROM contract";
+//echo $sql;
+$data = $db->getRows($sql);
+//var_dump($data);
+
+foreach($data as $var) {
+?>
+										<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+<?php
+}
+?>									
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-								<label for="innerswim-reply" class="text-right col-md-4 col-form-label">游泳池:</label>
+
+
+								<label for="household-title" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>作業內容:</label>
 								<div class="col-md-8">
-									<select id="innerswim-reply" class="form-control" name="innerswim-reply">
-                                        <option value="" selected>選擇設備項目</option>
-                                        <option value="AA">AA</option>
-                                        <option value="BB">BB</option>
-                                    </select>
-                                </div>
-							</div>
-							<div class="form-group row">
-								<label for="innerswim-reply" class="text-right col-md-4 col-form-label">作業週期:</label>
+									<input type="text" class="form-control" name="task-content" id="task-content">
+								</div>
+
+
+								<label for="household-title" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>起始日期:</label>
 								<div class="col-md-8">
-									<select id="innerswim-reply" class="form-control" name="innerswim-reply">
-                                        <option value="" selected>選擇週期</option>
-                                        <option value="date">每日</option>
-                                        <option value="week">每週</option>
-                                        <option value="month">每月</option>
-                                        <option value="year">每年</option>
+									<input type="text" class="form-control datepicker" name="day0" value="<?=$getDate;?>">
+								</div>
+
+
+								<label for="household-title" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>結束日期:</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control datepicker datepicker1" name="day1">
+								</div>
+
+
+								<label for="" class="text-right col-md-4 col-form-label">作業週期:</label>
+								<div class="col-md-8">
+									<select id="" class="form-control" name="task-period">
+<?php
+$sql = "SELECT * FROM task_repeat";
+$data = $db->getRows($sql);
+//var_dump($data);
+foreach ($data as $var) {
+?>									
+										<option value="<?=$var['id'];?>"><?=$var['duration'];?></option>							
+<?php
+}
+?>							
                                     </select>
-                                </div>
+								</div>
+								
+
                             </div>
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
@@ -137,6 +221,26 @@ $getDate=$_GET['year'].'-'.$_GET['month'].'-'.$_GET['day'];
 		</div>
 	</div>
 </div>
+
+<script>
+
+	var now_date=new Date();
+	var now_year=now_date.getFullYear();
+	/*
+	var now_month=now_date.getMonth()+1;
+	var now_date=now_date.getDate();
+	if(now_month<10){
+		now_month='0'+now_month
+	}
+	if(now_date<10){
+		now_date='0'+now_date
+	}
+	*/
+	$('.datepicker1').val(`${now_year}-12-31`)
+
+</script>
+
+
 <?php 
 include(Document_root.'/Footer.php');
 ?>
