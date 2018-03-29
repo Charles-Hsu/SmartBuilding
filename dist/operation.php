@@ -60,7 +60,7 @@ if (strlen($_SESSION['account']) == 0) {
 <?php
 
 
-$sql = 'SELECT *, b.category, c.name FROM tasks a, task_category b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id';
+$sql = 'SELECT a.id AS taks_id, a.dt AS dt, a.descript, b.category, c.name FROM tasks a, task_category b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
@@ -80,7 +80,7 @@ foreach($data as $var) {
 							<td><span><?=$var['category'];?></span></td>
 							<td><span><?=$var['name'];?></span></td>
 							<td><span><?=$var['descript'];?></span></td>
-							<td><a href="<?= $urlName ?>/operation/operation-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="<?= $urlName ?>/operation/task-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 }
