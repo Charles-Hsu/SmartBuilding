@@ -12,10 +12,11 @@ session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
-
+/*
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
 }
+*/
 $getDate = $_GET['year'].'-'.$_GET['month'].'-'.$_GET['day'];
 
 
@@ -24,18 +25,29 @@ if (count($_POST) > 0) {
 	$day0 = strtotime($_POST['day0']); // integer of 'today'
 	$day1 = strtotime($_POST['day1']); // integer of 'end day'
 
+	echo $day0;
+	echo '<br>';
+	echo $day1;
+	echo '<br>';
+	echo $day1 - $day0;
+	echo '<br>';
+
+
 	$catid = $_POST['task-category'];
 	$conid = $_POST['contract-id'];
 	$desc  = $_POST['task-content'];
 	$per   = intval($_POST['task-period']); // 0: 單次, 1: 每日, 2: 每月, 3: 每季, 4: 每年
 	$interval = 0;
 
-	for ($diff=$day1-$day0; $diff >= 0; $diff=$day1 - $day0) {
+	echo $per;
+	echo '<br>';
+
+	for ($diff = $day1 - $day0; $diff >= 0; $diff = $day1 - $day0) {
 		//echo date('Y-m-d', $day0) . '<br>';
 		$dtstr = date('Y-m-d', $day0);
 		echo $dtstr . '<br>';
 		if ($per == 0) { // single task
-			break;
+			$day0 = strtotime("+10 year", $day0);
 		} else if ($per == 1) { // every day
 			$day0 = strtotime("+1 day", $day0);
 		} else if ($per == 2) { // every month
