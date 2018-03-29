@@ -60,10 +60,18 @@ if (strlen($_SESSION['account']) == 0) {
 <?php
 
 
-$sql = 'SELECT a.id AS taks_id, a.dt AS dt, a.descript, b.category, c.name FROM tasks a, task_category b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id';
+$sql = 'SELECT a.id AS task_id, a.dt AS dt, a.descript, b.item, c.name FROM tasks a, contract_item b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id';
+
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
+//$sql = 'SELECT * FROM tasks';
+
+//echo 'Hello';
+
 $data = $db->getRows($sql);
+
+//echo 'Hello';
+
 //var_dump($data);
 //session_start();
 
@@ -77,10 +85,10 @@ foreach($data as $var) {
 ?>
 						<tr>
 							<td><span><?=$var['dt'];?></span></td>
-							<td><span><?=$var['category'];?></span></td>
+							<td><span><?=$var['item'];?></span></td>
 							<td><span><?=$var['name'];?></span></td>
 							<td><span><?=$var['descript'];?></span></td>
-							<td><a href="<?= $urlName ?>/operation/task-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="<?= $urlName ?>/operation/task-edit.php?id=<?=$var['task_id'];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 }
