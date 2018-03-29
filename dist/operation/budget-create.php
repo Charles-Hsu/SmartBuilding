@@ -38,35 +38,39 @@ if (strlen($_SESSION['account']) == 0) {
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/operation/supplies.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>編列預算</span>
+					<a href="<?= $urlName ?>/operation/budget.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>年度預算</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+<!--							
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="supplies-name" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>耗材名稱:</label>
+									<span class="important">*</span>預算名稱:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="supplies-name" id="supplies-name">
 								</div>
 							</div>
+<!--							
 							<div class="form-group row">
 								<label for="supplies-no" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>耗材編號:</label>
+									<span class="important">*</span>預算總類:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="supplies-no" id="supplies-no">
 								</div>
 							</div>
+-->							
                             <div class="form-group row">
 								<label for="supplies-brands" class="text-right col-md-4 col-form-label">
-									品牌:
+									預算金額:
 								</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="supplies-brands" id="supplies-brands">
@@ -74,12 +78,21 @@ if (strlen($_SESSION['account']) == 0) {
 							</div>
 							<div class="form-group row">
 								<label for="supplies-standard" class="text-right col-md-4 col-form-label">
-									規格:
+									預算帳戶:
 								</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="supplies-standard" id="supplies-standard">
 								</div>
 							</div>
+							<div class="form-group row">
+								<label for="supplies-standard" class="text-right col-md-4 col-form-label">
+									編列年限:
+								</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="supplies-standard" id="supplies-standard">
+								</div>
+							</div>
+<!--							
 							<div class="form-group row">
 								<label for="supplies-unit" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>單位:</label>
@@ -115,6 +128,7 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control" name="supplies-note" id="supplies-note">
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-outline-secondary">新增</button>
