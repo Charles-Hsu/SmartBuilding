@@ -46,6 +46,7 @@ if (strlen($_SESSION['account']) == 0) {
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
+							<th></th>
 							<th>作業項目</th>
 							<th>作業類別</th>
 <!--							
@@ -76,6 +77,12 @@ foreach($data as $var) {
 //		echo '<br>';
 ?>
 						<tr>
+							<td>
+								<div class="check_label">
+									<input type="checkbox" id="check_<?=$var['taks_id']?>" name="check_<?=$var['taks_id']?>" class="check_input">
+									<label for="check_<?=$var['taks_id']?>"></label>
+								</div>
+							</td>
 							<td><span><?=$var['dt'];?></span></td>
 							<td><span><?=$var['category'];?></span></td>
 							<td><span><?=$var['name'];?></span></td>
@@ -91,8 +98,59 @@ foreach($data as $var) {
 		</div>
 	</div>
 </div>
-
+<div class="modal fade" id="checkModal" data-type="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title mx-auto" id="exampleModalLabel">確認完成??</h5>
+				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button> -->
+			</div>
+			<div class="modal-footer justify-content-center">
+				<button type="button" class="btn btn-cancel btn-secondary" data-dismiss="modal">取消</button>
+				<button type="button" id="btn-send" class="btn btn-primary">送出</button>
+			</div>
+		</div>
+	</div>
+</div>
 <script>
+$('.check_input').on('change',function(){
+	$('#checkModal').modal('show')
+	var _type=$(this).attr('name');
+	$('#checkModal').attr('data-type',_type)
+	
+})
+$('.btn-cancel').on('click',function(){
+	var _type=$(this).closest('#checkModal').attr('data-type');
+	$('.check_input').each(function(index,item){
+		if($(item).attr('name') == _type){
+			$(item).prop('checked',false)
+		}
+	})
+})
+$('#btn-send').on('click',function(){
+	var _type=$(this).closest('#checkModal').attr('data-type');
+	$.ajax({
+		url:'<?= $urlName ?>/data/operationData.php',
+		method:'POST',
+		data:{
+			id:parseFloat(_type.split('_')[1])
+		},
+		success:function(data){
+			var _data=JSON.parse(data);
+			if(_data.info === 'success'){
+				location.reload();
+			}else{
+				alert('error')
+			}
+			
+		},
+		error:function(){
+
+		}
+	})
+})
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
@@ -111,7 +169,8 @@ $('.asset-table').DataTable({
 		}
 	},
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+	"ordering": false,
 })
 </script>
 <?php include('./Footer.php'); ?>
