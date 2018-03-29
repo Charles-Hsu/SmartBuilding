@@ -62,17 +62,9 @@ if (strlen($_SESSION['account']) == 0) {
 
 
 $sql = 'SELECT a.id AS task_id, a.dt AS dt, a.descript, b.item, c.name FROM tasks a, contract_item b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id';
-
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-//$sql = 'SELECT * FROM tasks';
-
-//echo 'Hello';
-
 $data = $db->getRows($sql);
-
-//echo 'Hello';
-
 //var_dump($data);
 //session_start();
 
