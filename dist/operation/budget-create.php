@@ -24,6 +24,7 @@ if (strlen($_SESSION['account']) == 0) {
 	$(function(){
 		$('#supplies-standard').on('change',function(){
 			var _val=$(this).val();
+			console.log(_val)
 			bank_data.forEach(function(item,index){
 				if(item.id == _val){
 					$('#bank_name').val(item.bank_name)
@@ -31,6 +32,11 @@ if (strlen($_SESSION['account']) == 0) {
 					$('#account_balance').val(item.account_balance)
 				}
 			})
+			if(_val == ''){
+				$('#bank_name').val('')
+				$('#account_purpose').val('')
+				$('#account_balance').val('')
+			}
 		})
 	})
 </script>
