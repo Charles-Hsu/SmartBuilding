@@ -4,19 +4,20 @@ include('../Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+$sql = 'SELECT a.id,a.account_name,a.bank_name,a.account_number,a.account_purpose,a.account_balance,b.type FROM bank_acc a, bank_acc_type b WHERE a.account_type = b.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
+
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
-
+var_dump($data);
+/*
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
 }
-
+*/
 ?>
 <!-- 內容切換區 -->
 <div class="row">

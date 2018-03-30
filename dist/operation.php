@@ -79,8 +79,8 @@ foreach($data as $var) {
 						<tr>
 							<td>
 								<div class="check_label">
-									<input type="checkbox" id="check_<?=$var['taks_id']?>" name="check_<?=$var['taks_id']?>" class="check_input">
-									<label for="check_<?=$var['taks_id']?>"></label>
+									<input type="checkbox" id="check_<?=$var['task_id']?>" name="check_<?=$var['task_id']?>" class="check_input">
+									<label for="check_<?=$var['task_id']?>"></label>
 								</div>
 							</td>
 							<td><span><?=$var['dt'];?></span></td>
