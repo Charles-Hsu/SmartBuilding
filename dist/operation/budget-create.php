@@ -19,6 +19,21 @@ if (strlen($_SESSION['account']) == 0) {
 }
 */
 ?>
+<script>
+	var bank_data=<?php echo json_encode($data) ?>;
+	$(function(){
+		$('#supplies-standard').on('change',function(){
+			var _val=$(this).val();
+			bank_data.forEach(function(item,index){
+				if(item.id == _val){
+					$('#bank_name').val(item.bank_name)
+					$('#account_purpose').val(item.account_purpose)
+					$('#account_balance').val(item.account_balance)
+				}
+			})
+		})
+	})
+</script>
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
@@ -82,7 +97,27 @@ if (strlen($_SESSION['account']) == 0) {
 									預算帳戶:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="supplies-standard" id="supplies-standard">
+									<select name="supplies-standard" id="supplies-standard" class="form-control">
+										<option value="" selected>選擇帳戶</option>
+									<?php foreach($data as $value) {?>
+										<option value="<?= $value['id'] ?>"><?php echo $value['account_name']; ?></option>
+									<?php } ?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-8 offset-md-4">
+									<input type="text" id="bank_name" class="form-control" name="bank_name" value="" readonly>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-8 offset-md-4">
+									<input type="text" id="account_purpose" class="form-control" name="account_purpose" value="" readonly>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-8 offset-md-4">
+									<input type="text" id="account_balance" class="form-control" name="account_balance" value="" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
