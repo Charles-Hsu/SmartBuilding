@@ -208,12 +208,9 @@ foreach($data as $var) {
 									<span class="important">*</span>帶看日期:
 								</label>
 								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control datepicker" data-type="datetime" name="agent_datetime">
+									<input type="text" class="form-control datepicker1" data-type="datetime" name="agent_datetime">
 								</div>
 							</div>
-
-
-
 <!--
 
 							<div class="form-group row">
@@ -227,8 +224,6 @@ foreach($data as $var) {
 								</div>
 							</div>
 -->
-
-
     						<div class="form-group row">
 								<div class="col-lg-6 offset-lg-6 offset-md-3 col-md-9 offset-md-3">
 									<button class="btn assets-btn assets-add-btn">新增</button>
@@ -300,7 +295,7 @@ $('.btn-same').on('click',function(e){
 	if(now_date<10){
 		now_date='0'+now_date
 	}
-	$('.datepicker').val(`${now_year}-${now_month}-${now_date}`)
+	$('.datepicker1').val(`${now_year}-${now_month}-${now_date}`);
 </script>
 <script>
 $('.datatable').DataTable({

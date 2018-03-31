@@ -7,6 +7,15 @@ include('./Header.php');
 //$sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
+$curmonth = date('m');
+$curyear = date('Y');
+
+echo $curmonth;
+echo $curyear;
+
+$sql = 'SELECT a.id AS task_id, a.dt AS dt, a.descript, b.item, c.name FROM tasks a, contract_item b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id AND MONTH(a.dt) = ' . $curmonth . ' AND YEAR(a.dt) = ' . $curyear;
+
+echo $sql;
 //$data = $db->getRows($sql);
 //session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
@@ -33,7 +42,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/#">年度預算</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
@@ -60,9 +69,13 @@ if (strlen($_SESSION['account']) == 0) {
 					<tbody>
 <?php
 
+//$curdate  = CURDATE();
 
-$sql = 'SELECT a.id AS task_id, a.dt AS dt, a.descript, b.item, c.name FROM tasks a, contract_item b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id';
+
+
+
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 
 $data = $db->getRows($sql);
 //var_dump($data);
@@ -170,7 +183,9 @@ $('.asset-table').DataTable({
 	},
 	"deferRender": true,
 	"processing": true,
-	"ordering": false,
+	//"ordering": false,
+	"ordering": true,
+	"order": [[1, 'asc']],
 })
 </script>
 <?php include('./Footer.php'); ?>

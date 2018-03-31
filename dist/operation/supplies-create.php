@@ -30,26 +30,28 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
+					<a class="nav-link active" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/operation/supplies.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>編列預算</span>
+					<span>耗材管理</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+<!--							
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
+-->							
 							<div class="form-group row">
 								<label for="supplies-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>耗材名稱:</label>

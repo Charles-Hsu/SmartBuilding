@@ -58,7 +58,7 @@ if (strlen($_SESSION['account']) == 0) {
 					</thead>
 					<tbody>
 <?php
-$sql = 'SELECT a.name,a.dt,a.amount,b.bank_name,b.account_number,b.account_purpose,b.account_balance FROM budget a, bank_acc b WHERE a.bank_acc_no = b.id';
+$sql = 'SELECT a.name,a.planning_dt AS dt,a.amount,b.bank_name,b.account_number,b.account_purpose,b.account_balance FROM budget a, bank_acc b WHERE a.bank_acc_no = b.id';
 $data = $db->getRows($sql);
 //var_dump($data);
 foreach($data as $var) {

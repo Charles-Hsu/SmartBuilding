@@ -4,18 +4,27 @@ include('../Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+
+
+
+if (count($_POST) > 0) {
+    //var_dump($_POST);
+}
+
+//$sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+$sql = 'SELECT a.staff_id,a.dt,b.name FROM `staff_work_time` a, staff b WHERE b.id = a.staff_id';
 
 $data = $db->getRows($sql);
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//	var_dump($data);
-
+//var_dump($data);
+/*
 if (strlen($_SESSION['account']) == 0) {
 	header('Location: ' . '/smartbuilding/login.php');
 }
+*/
 
 ?>
 <!-- 內容切換區 -->
@@ -53,7 +62,7 @@ if (strlen($_SESSION['account']) == 0) {
 </div>
 <div class="row">
     <div class="col-12">
-        <form action="" method="GET" class="table-responsive-lg table-responsive-xl row">
+        <form action="" method="POST" class="table-responsive-lg table-responsive-xl row">
             <table class="punch-table table table-bordered ">
                 <thead>
                     <tr>
