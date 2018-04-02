@@ -144,12 +144,21 @@ var_dump($data);
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
+
+
 				<li class="nav-item">
-					<a class="nav-link active" href="../assets.php">資產管理</a>
+					<a class="nav-link active" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="household.php">物件管理</a>
+					<a class="nav-link" href="/smartbuilding/assets/household.php">產權管理</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/sellrent.php">租售管理</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
+				</li>
+
 <!--				
 				<li class="nav-item">
 					<a class="nav-link" href="infrastructure.php">公共設施</a>
@@ -186,12 +195,39 @@ var_dump($data);
 									<input type="text" class="form-control" name="assets-name" id="assets-name"  value="<?=$data['asset_name'];?>" placeholder="資產名稱...">
 								</div>
 							</div>
+
 							<div class="form-group row">
-								<label for="assets-sort" class="text-right col-md-3 col-form-label">分類:</label>
+								<label for="assets-use-state" class="text-right col-md-3 col-form-label">
+									<span class="important">*</span>分類:
+								</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="assets-sort" id="assets-sort" value="<?=$data['asset_category'];?>" placeholder="分類...">
+									<select class="custom-select" name="assets-use-state">
+<!--										
+										<option selected>選取狀態</option>
+-->
+<?php
+$sql =  "SELECT * FROM asset_category";
+$data1 = $db->getRows($sql);
+foreach($data1 as $var) {
+//	echo $var['Name'];
+//echo $var['id'];
+?>
+									<option value="<?=$var['id'];?>"><?=$var['category'];?></option>
+<?php
+}
+?>
+<!--
+
+										<option value="One">One</option>
+										<option value="Two">Two</option>
+										<option value="Three">Three</option>
+-->										
+									</select>
 								</div>
 							</div>
+
+
+
 							<div class="form-group row">
 								<label for="assets-price" class="text-right col-md-3 col-form-label">價格:</label>
 								<div class="col-md-9">

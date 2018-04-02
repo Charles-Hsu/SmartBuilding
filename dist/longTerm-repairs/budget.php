@@ -24,21 +24,28 @@ if (strlen($_SESSION['account']) == 0) {
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
-				<li class="nav-item">
+				<!-- <li class="nav-item">
+
 					<a class="nav-link" href="<?= $urlName ?>/operation.php">例行作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/repairs-normal.php">維護作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/supplies.php">耗材管理</a>
+                </li> -->
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/longTerm-repairs/budget.php">預算計畫</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget-planning.php">財務籌措</a>
                 </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/bank-acc.php">銀行專戶</a>
+                </li>				
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/operation/budget-create.php" class="btn add-asset-btn mb-3">
+				<a href="<?= $urlName ?>/longTerm-repairs/budget-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>預算編列
 				</a>
 				<table class="table asset-table">
@@ -48,9 +55,11 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>編列日期</th>
 							<th>預算金額</th>
                             <th>銀行</th>
-                            <th>帳號</th>
+							<th>帳號</th>
+<!--							
                             <th>餘額</th>
-                            <th>帳戶目的</th>
+							<th>帳戶目的</th>
+-->							
 <!--                            
                             <th>修改</th>
 -->                            
@@ -78,9 +87,11 @@ foreach($data as $var) {
 							<td><span><?=$var['dt'];?></span></td>
                             <td><span><?=number_format($var['amount']);?></span></td>
                             <td><span><?=$var['bank_name'];?></span></td>
-                            <td><span><?=$var['account_number'];?></span></td>
+							<td><span><?=$var['account_number'];?></span></td>
+<!--							
                             <td><span><?=number_format($var['account_balance']);?></span></td>
-                            <td><span><?=$var['account_purpose'];?></span></td>
+							<td><span><?=$var['account_purpose'];?></span></td>
+-->							
 						</tr>
 <?php
 }

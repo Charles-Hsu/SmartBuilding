@@ -24,20 +24,17 @@ if (strlen($_SESSION['account']) == 0) {
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget.php">預算計畫</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget-planning.php">財務籌措</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/longTerm-repairs/bank-acc.php">銀行專戶</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/apartment/bankacc-create.php" class="btn add-asset-btn mb-3">
+				<a href="<?= $urlName ?>/longTerm-repairs/bankacc-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增銀行專戶
 				</a>
 				<table class="table asset-table">
@@ -66,8 +63,8 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span><?=$account[bank_name];?></span></td>
 							<td><span><?=$account[account_name];?></span></td>
 							<td><span><?=$account[account_number];?></span></td>
-							<td><span><?=$account[account_balance];?></span></td>
-							<td><a href="<?= $urlName ?>/apartment/bankacc-edit.php?id=<?=$account[id];?>" class="btn btn-outline-secondary">修改</a></td>
+							<td><span><?=number_format($account[account_balance]);?></span></td>
+							<td><a href="<?= $urlName ?>/longTerm-repairs/bankacc-edit.php?id=<?=$account[id];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 <?php
 	 }
