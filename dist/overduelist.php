@@ -4,14 +4,22 @@ include('./Header.php');
 ?>
 <?php 
 //$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
-$sql = 'SELECT a.id AS id,building,addr_no,floor,unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id AND a.unpaid_total != 0';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+// $sql = 'SELECT a.id AS id,building,addr_no,floor,0 AS unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id AND a.unpaid_total != 0';
 
+$sql = "SELECT * FROM hoa_fee_record WHERE p IS NULL";
+
+$sql = "SELECT c.addr_no, c.floor, c.holder, b.id, b.type, a.fee, a.m  FROM hoa_fee_record a, hoa_fee_type b, household c WHERE hid = c.id AND b.id = a.fee_type AND a.p IS NULL";
+
+$sql = "SELECT c.building, c.addr_no, c.floor, c.holder, SUM(a.fee) AS fee  FROM hoa_fee_record a, hoa_fee_type b, household c WHERE hid = c.id AND b.id = a.fee_type AND a.p IS NULL GROUP BY c.addr_no, c.floor, c.holder";
+
+
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 $data = $db->getRows($sql);
+// var_dump($data);
+
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
-//var_dump($data);
 
 if (strlen($_SESSION['account']) == 0) {
 	echo 
@@ -68,8 +76,8 @@ if (strlen($_SESSION['account']) == 0) {
 <!--                            
 							<th>現住戶</th>
 -->                            
-							<th>欠繳</th>
-							<th>紀錄</th>
+							<th>欠繳總額</th>
+							<!-- <th>明細</th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -88,43 +96,9 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span><?=$var[building]?></span></td>
 							<td><span><?=$var[addr_no]?></span></td>
 							<td><span><?=$var[floor]?></span></td>
-<!--                            
-							<td><span><?=$var[status]?></span></td>
--->                            
 							<td><span><?=$var[holder]?></span></td>
-<!--                            
-							<td><span><?=$var[resident]?></span></td>
--->                            
-<td>
-								<?php 
-								if($var[unpaid_total] == 0) {
-									echo '<span class="paid">';
-							 	} else {
-									echo '<span class="unpaid">' . $var[unpaid_total];
-								}
-								?>
-								</span>
-							</td>
-<!--							
-							<td>
-								<span class="unpaid">未繳</span>
-							</td>
--->							
-							<td>
-								<?php 
-								if($var[unpaid_total] != 0) {
-									echo '<a href="' . $var[id] . '" class="btn btn-outline-secondary">';
-									echo '顯示';
-                                    echo '</a>';
-								}
-								?>
-							</td>
-                            <!--
-							<td><a href="/smartbuilding/assets/household-edit.php?id=<?=$var[id];?>" class="btn btn-outline-secondary">修改</a></td>
-                            -->
-                            <!--
-							<td><a href="/smartbuilding/assets/sellrent-edit.php?id=<?=$var[id]?>" class="btn btn-outline-secondary">帶看設定</a></td>
-                            -->
+							<td><span><?=number_format($var[fee])?></span></td>
+							<!-- <td><span><a href='#'>清單</a></span></td> -->
 						</tr>
 <?php
 	}
@@ -157,7 +131,8 @@ $('.asset-table').DataTable({
 		}
 	},
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+	"order": [[4, 'desc']],
 })
 </script>
 <?php 

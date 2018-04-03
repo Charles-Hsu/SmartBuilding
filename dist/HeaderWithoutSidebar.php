@@ -27,5 +27,5 @@
 <?php
 	require 'lib/DBAccess.class.php';
     require 'config/config.admin.php';
-    require 'sidebar.php';
+    // require 'sidebar.php';
 ?>

@@ -6,9 +6,14 @@ require '../config/config.admin.php';
 if(isset($_POST['id'])){
     $id=$_POST['id'];
     $msg=array();
-    $sql = "SELECT a.id,building,addr_no,floor,b.name AS status,holder,resident FROM household a, household_status b WHERE a.status = b.id and a.id=$id";
-    //$sql = "SELECT a.id,building,addr_no,floor,b.name AS status,holder,resident FROM household a, household_status b WHERE a.status = b.id";
-    
+    $sql = "";
+
+    if (false) {
+        $sql = "SELECT a.id,building,addr_no,floor,b.name AS status,holder,resident FROM household a, household_status b WHERE a.status = b.id AND a.id = $id";
+    } else {
+        $sql = "SELECT b.type, a.fee, a.m  FROM hoa_fee_record a, hoa_fee_type b WHERE hid = $id AND b.id = a.fee_type";
+    }
+        
     $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
     $data = $db->getRows($sql);
 

@@ -46,7 +46,9 @@ session_start();
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
 				</li>
-
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
+				</li>
 <!--				
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>

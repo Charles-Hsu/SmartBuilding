@@ -37,6 +37,7 @@
  * PDOStatement->setFetchMode() — Set the default fetch mode for this statement
  */
 class DBAccess extends PDO {
+	
 	private $charset;	// 数据库字符集
 	public $cacheDir='_cache#57^%2RE/';
 	public $prename;

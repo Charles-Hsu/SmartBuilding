@@ -5,9 +5,34 @@ include(Document_root.'/Header.php');
 
 <?php 
 
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 if (count($_POST) > 0) {
-    var_dump($_POST);
+    //var_dump($_POST);
+    foreach($_POST as $key => $value) {
+        //var_dump($key);  //2018-03, 2018-04, ...
+        //var_dump($value);
+
+        //echo $key . '-01';
+        $m = $key . '-01';
+        $sql = "INSERT INTO hoa_fee_month_printed VALUES (NULL, '$m')";
+        if ($db->insert($sql)) {
+			//if ($db->insertRow($table, $data)) {
+			$message="新增成功";
+        }
+        $sql = "SELECT * FROM hoa_fee_defined WHERE fee_type = 1 OR fee_type = 2"; // 1: 管理費, 2:停車費, 3:帶看費
+        $data = $db->getRows($sql);
+        foreach ($data as $val) {
+            //var_dump($val);
+            $sql = "INSERT INTO hoa_fee_record VALUES (NULL, " . $val["hid"] . ", " . $val["fee_type"] . ", " . $val["fee"] . ", '" . $m . "', NULL)";
+            //echo $sql;
+            //echo '<br>';
+            if ($db->insert($sql)) {
+                //if ($db->insertRow($table, $data)) {
+                $message="新增成功";
+            }
+        }
+    }
 }
 
 $sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.status_no = b.id';
@@ -21,7 +46,7 @@ $sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.statu
 */
 
 $sql = 'SELECT SUM(fee) as total FROM hoa_fee_defined WHERE fee_type = 1 OR fee_type = 1';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 
 $data = $db->getRow($sql);
 
@@ -32,7 +57,7 @@ $total = $data['total'];
 session_start();
 
 
-$sql = 'SELECT has_generated FROM hoa_fee_added';
+$sql = 'SELECT has_generated FROM hoa_fee_month_printed';
 $data = $db->getRows($sql);
 //var_dump($data);
 
@@ -68,7 +93,7 @@ foreach ($data as $val) {
 					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="/smartbuilding/assets/hoa_fee.php">收管理費</a>
+					<a class="nav-link active" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
 				</li>
 			</ul>
 		</div>
@@ -83,7 +108,8 @@ foreach ($data as $val) {
                             <th>月份</th>
 							<th>收管理費</th>
 							<th>應收</th>
-							<th>已收</th>
+                            <th>已收</th>
+                            <th>未收</th>
 						</tr>
         </thead>
         <tbody>
@@ -109,9 +135,31 @@ do {
 ?>
             <tr>
                 <td><?=$Y_m?></td>
+
+<?php
+    if (in_array($Y_m, $has_generated)) {
+?>
+                <td>已產生</td>
+<?php
+    } else {
+?>
                 <td><input type='checkbox' name='<?=$Y_m?>' <?=$d;?>></td>
+<?php
+    }
+?>                
                 <td><?=number_format($total);?></td>
-                <td>1000</td>
+<?php
+        $Y_m_d = date('Y-m-d', $first_day_of_month);
+        $sql = "SELECT SUM(fee) AS paid FROM hoa_fee_record WHERE p IS NOT NULL AND m = '" . $Y_m_d . "'";
+        $paid = 0;
+        $p = $db->getRow($sql);
+        $paid = $p['paid'];
+
+        //var_dump($p);
+
+?>                
+                <td><?=number_format($paid);?></td>
+                <td><?=number_format($total - $paid);?></td>
             </tr>
 <?php
 

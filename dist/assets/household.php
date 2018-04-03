@@ -15,8 +15,12 @@ $sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.statu
 							<td><span><?=$var[resident]?></span></td>
 */
 
-$sql = 'SELECT a.id AS id,building,addr_no,floor,unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+//$sql = 'SELECT a.id AS id,building,addr_no,floor,unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+$sql = 'SELECT a.id AS id,building,addr_no,floor,"1100" as unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
+
+// echo $sql;
 
 $data = $db->getRows($sql);
 session_start();
@@ -42,7 +46,9 @@ session_start();
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
 				</li>
-
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
+				</li>
 
 <!--				
 				<li class="nav-item">
@@ -89,13 +95,21 @@ session_start();
 							<td><span><?=$var[resident];?></span></td>
 							<td>
 								<?php 
-								if($var[unpaid_total] == 0) {
-									echo '<span class="paid">';
-							 	} else {
-									echo '<span class="unpaid">' . $var[unpaid_total];
-								}
+								$sql = "SELECT SUM(fee) AS s FROM hoa_fee_record WHERE hid = $var[id] AND p IS NULL";
+								//echo $sql;
+								$s = $db->getRow($sql);
+								$s = $s['s'];
+								//echo $s;
+								//if (false) {
+								//if($var[unpaid_total] == 0) {
+								//	echo '<span class="paid">';
+							 	//} else {
+								//	echo '<span class="unpaid">' . $var[unpaid_total];
+								//}
+								//}
 								?>
-								</span>
+								
+								<span><?=number_format($s);?></span>
 							</td>
 <!--							
 							<td>
@@ -105,11 +119,21 @@ session_start();
 							<td>
 								<?php 
 								if($var[unpaid_total] != 0) {
+if (false) {																		
 									echo '<a href="#" data-id="' . $var[id] . '" class="show-details btn btn-outline-secondary">';
 									echo '顯示';
 									echo '</a>';
+} else {
+?>
+
+								<!-- <input id='clickMe' type='button' value='明細' onclick='doFunction(<?=$var[id];?>);' /> -->
+								<a href="/smartbuilding/assets/household-fee-list.php?id=<?=$var[id];?>&floor=<?=$var[floor];?>&addr_no=<?=$var[addr_no]?>&holder=<?=$var[holder];?>" class="btn btn-outline-secondary">顯示</a> 
+
+							<!-- <a href="/smartbuilding/assets/household-fee-list.php?id=<?=$var[id];?>" class="btn btn-outline-secondary">顯示</a> -->
+<?php
+}									
 								}
-								?>
+?>
 							</td>
 
 <!--
@@ -166,17 +190,15 @@ session_start();
 
 <div id="details-model" class="details-model">
 	<div id="details-head" class="details-head">
-		<span>Head</span>
+		<span>欠繳費用明細</span>
 		<span class="close-modal">X</span>
 	</div>
-	<table>
+	<table class="table">
 		<thead>
 			<tr>
-				<th>id</th>
-				<th>addr_no</th>
-				<th>building</th>
-				<th>holder</th>
-				<th>status</th>
+				<th>費用</th>
+				<th>金額</th>
+				<th>月份</th>
 			</tr>
 		</thead>
 		<tbody id="details-tbody">
@@ -185,6 +207,12 @@ session_start();
 	</table>
 </div>
 <script>
+
+
+document.GetElementById('clickMe').onclick = function() {
+	alert('Hello');
+}
+
 
 var moveX = 0, moveY = 0, x = 0, y = 0;
 var detailsHead=document.getElementById('details-head');
@@ -217,19 +245,48 @@ $('.show-details').on('click',function(e){
 		data:{id:$(this).attr('data-id')},
 		success:function(data){
 			var datalist=JSON.parse(data);
-			var str="<tr><td>{{id}}</td><td>{{addr_no}}</td><td>{{building}}</td><td>{{holder}}</td><td>{{status}}</td></tr>"
-			var strParse=null;
+<?php
+// $sql = "SELECT fee FROM hoa_fee_record WHERE hid=" . "<script>document.write(datalist[1][item].id)</script>";
+// $data = $db->getRow($sql);
+?>
+			// type, fee, m
+
+			var str = "";
+
+// if (false) {
+// 			str="<table><tr><td>{{id}}</td><td>{{addr_no}}</td><td>{{building}}</td><td>{{holder}}</td><td>{{status}}</td></tr></table>";
+// } else {
+			// str="<table><tr><td>{{type}}</td><td>{{fee}}</td><td>{{m}}</td></tr></table>";
+			str="<tr><td>{{type}}</td><td>{{fee}}</td><td>{{m}}</td></tr>";
+// }			
+			//var str="<table><tr><td>{{m}}</td><td>{{type}}</td><td>{{fee}}</td></table>";
+			//var str="<tr><td>{{m}}</td><td>{{type}}</td><td>{{fee}}</td>";
+			//var str="<tr><td>{{m}}</td>";
+			//var strParse = "<?=$data['fee'];?>";
 			if(datalist[0] == 1){
+				var strParse = "";
 				$('.details-model').show()
+// if (false) {
+// 				for(var item in datalist[1]){
+// 					strParse +=
+// 						str.replace('{{id}}',datalist[1][item].id)
+// 						.replace('{{addr_no}}',datalist[1][item].addr_no)
+// 						.replace('{{building}}',datalist[1][item].building)
+// 						.replace('{{holder}}',datalist[1][item].holder)
+// 						.replace('{{status}}',datalist[1][item].status)
+// 				}
+// } else {
 				for(var item in datalist[1]){
-					strParse+=str.replace('{{id}}',datalist[1][item].id)
-						.replace('{{addr_no}}',datalist[1][item].addr_no)
-						.replace('{{building}}',datalist[1][item].building)
-						.replace('{{holder}}',datalist[1][item].holder)
-						.replace('{{status}}',datalist[1][item].status)
+					strParse +=
+						str.replace('{{type}}',datalist[1][item].type)
+						.replace('{{fee}}',datalist[1][item].fee)
+						.replace('{{m}}',datalist[1][item].m)
 				}
+// }
+				//  strParse += "</table>";
 				$('#details-tbody').html(strParse)
 			}
+
 		},
 		error:function(){
 			console.log(123)

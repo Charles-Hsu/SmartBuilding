@@ -124,6 +124,9 @@ if(count($_POST)>0) {
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
+				</li>				
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
