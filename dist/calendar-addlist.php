@@ -65,6 +65,9 @@ if (count($_POST) > 0) {
 		if ($db->insert($sql)) {
 		//	//if ($db->insertRow($table, $data)) {
 		//		$message="新增成功";
+			echo "<script>location.replace('operation.php');</script>";
+		}else{
+;
 		}
 
 
@@ -138,9 +141,8 @@ if (count($_POST) > 0) {
 					<div class="col-xl-6 col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
                             <!-- 獲取點選日期 -->
-                            <input type="hidden" name="getDate" value="<?= $getDate; ?>">
+                            	<input type="hidden" name="getDate" value="<?= $getDate; ?>">
 							<div class="form-group row">
-
 								<label for="innerswim-reply" class="text-right col-md-4 col-form-label">作業類別:</label>
 								<div class="col-md-8">
 									<select id="innerswim-reply" class="form-control" name="task-category">
@@ -158,9 +160,10 @@ foreach($data as $var) {
 <?php
 }
 ?>									
-                                    </select>
+                                	</select>
 								</div>
-								
+							</div>
+							<div class="form-group row">
 								<label for="innerswim-reply" class="text-right col-md-4 col-form-label">承包廠商:</label>
 								<div class="col-md-8">
 									<select id="innerswim-reply" class="form-control" name="contract-id">
@@ -179,29 +182,29 @@ foreach($data as $var) {
 ?>									
                                     </select>
                                 </div>
-
-
+							</div>
+							<div class="form-group row">
 								<label for="household-title" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>作業內容:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="task-content" id="task-content">
 								</div>
-
-
+							</div>
+							<div class="form-group row">
 								<label for="household-title" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>起始日期:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control datepicker" name="day0" value="<?=$getDate;?>">
 								</div>
-
-
+							</div>
+							<div class="form-group row">
 								<label for="household-title" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>結束日期:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control datepicker datepicker1" name="day1">
 								</div>
-
-
+							</div>
+							<div class="form-group row">
 								<label for="" class="text-right col-md-4 col-form-label">作業週期:</label>
 								<div class="col-md-8">
 									<select id="" class="form-control" name="task-period">
