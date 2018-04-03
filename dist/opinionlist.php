@@ -159,7 +159,7 @@ if ($var['dt_responsed'] == '0000-00-00') {
 
 	$diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
 ?>
-							<span><?=$diff;?></span>
+							<span><?= round($diff,2);?></span>
 <?php
 }
 ?>					
