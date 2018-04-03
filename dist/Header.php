@@ -37,7 +37,7 @@
             </div>
             <ul class="sidemenu-nav">
                 <li>
-                    <a href="<?= $urlName ?>/index.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="index">
+                    <a href="<?= $urlName ?>/kpi.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="index">
                         <i class="far fa-chart-bar"></i>
                         <span>效能管理</span>
                     </a>
@@ -61,7 +61,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?= $urlName ?>/longTerm-repairs.php" class="d-flex sidemenu-link align-items-center" title="長期維護" data-type="longTerm-repairs">
+                    <a href="<?= $urlName ?>/longTerm-repairs/budget.php" class="d-flex sidemenu-link align-items-center" title="長期維護" data-type="longTerm-repairs">
                         <i class="far fa-address-book"></i>
                         <span>長期修繕</span>
                     </a>

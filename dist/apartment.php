@@ -35,10 +35,10 @@ if (strlen($_SESSION['account']) == 0) {
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
-                </li>
-                <li class="nav-item">
+				</li>
+                <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-                </li>
+                </li> -->
 			</ul>
 			<div id="assets-tab" class="d-flex flex-column px-3">
 				<form action="" class="col-md-8 col-sm-12">

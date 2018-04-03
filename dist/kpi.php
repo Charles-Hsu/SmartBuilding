@@ -1,38 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php 
+include('./config.php');
+include('./Header.php'); 
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>SmartBuilding</title>
-	<link href="./css/reset.css" rel="stylesheet">
-	<link href="./css/bootstrap.min.css" rel="stylesheet">
-	<link href="./css/fontawesome.css" rel="stylesheet">
-	<link href="./css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
-	<link href="./css/dataTables.bootstrap4.min.css" rel="stylesheet">
-	<link href="./css/index.css" rel="stylesheet">
-	<script src="./js/lib/jquery-3.1.1.min.js"></script>
-	<script src="./js/popper.min.js"></script>
-	<script src="./js/bootstrap.min.js"></script>
-	<script src="./js/bootstrap-datepicker.min.js"></script>
-    <script src="./js/bootstrap-datepicker.zh-TW.min.js"></script>
-	<script src="./js/jquery.dataTables.min.js"></script>
-    <script src="./js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
-</head>
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-<?php
-	require 'lib/DBAccess.class.php';
-    require 'config/config.admin.php';
 ?>
-<body class="d-flex" style="background-color: #dcdcdc;">
-<div class="content-main container-fluid">
-        <div class="row p-3 content-wrapper">
-            <div class="col-12 content-wrapper-col">
+<!-- 內容切換區 -->
+<nav class="index-nav my-3">
+    <a class="active" href="./kpi.php">KPI</a>
+    <a class="" href="./space-management.php">空間變更</a>
+    <a class="" href="./announcement.php">公告</a>
+    <a class="" href="./management.php">管理辦法</a>
+    <a class="" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./opinionlist.php">住戶意見</a>
+</nav>
 <div class="row mb-3">
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
@@ -43,7 +27,7 @@
         </div>
     </div>
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
@@ -54,7 +38,7 @@
         </div>
     </div>
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
@@ -65,7 +49,7 @@
         </div>
     </div>
     <div class="col-md-3 col-6 mt-3">
-        <div class="card h-100">
+        <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
                 <div class="text-center w-100">
@@ -76,6 +60,174 @@
         </div>
     </div>
 </div>
+
+
+
+<table>
+<tbody>
+    <tr>
+        <th><b>會議召開及執行率</b></th>
+    </tr>
+    <tr>
+        <td>區權會</td>
+    </tr>
+    <tr>
+        <td>1. 召開次數÷ 規約規定次數</td>
+    </tr>
+    <tr>
+        <td>2. 執行記錄÷ 會議記錄事項</td>
+    </tr>
+    <tr>
+        <td>管委會</td>
+    </tr>
+    <tr>
+        <td>1. 召開次數÷ 規約規定次數</td>
+    </tr>
+    <tr>
+        <td>2. 執行記錄÷ 會議記錄事項</td>
+    </tr>
+</tbody>
+
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th><b>保全員教育訓練達成率</b></th>
+    </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td>1. 護照人數÷ 在職人數</td>
+    </tr>
+    <tr>
+        <td>2. 受訓人數÷ 在職人數</td>
+    </tr>
+</tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th><b>派駐人員合格率</b></th>
+    </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td>1. 現場主管合格人數÷ 編制人數</td>
+    </tr>
+    <tr>
+        <td>2. 保全員合格人數÷ 編制人數</td>
+    </tr>
+</tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th><b>掛號信正確執行率</b></th>
+    </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td>1. 登錄件數 ÷ 郵局送達清冊件數</td>
+    </tr>
+    <tr>
+        <td>2. 遺失件數 ÷ 郵局送達清冊件數</td>
+    </tr>
+</tbody>
+</table>
+
+
+<table>
+<tbody>
+    <tr>
+        <th><b>住戶費用率</b></th>
+    </tr>
+    <tr>
+        <td>住戶管理費繳交達成率</td>
+    </tr>
+    <tr>
+        <td>1. 每期繳交管理費戶數÷ 總戶數</td>
+    </tr>
+    <tr>
+        <td>2. 實收÷ 應收</td>
+    </tr>
+    <tr>
+        <td>住戶裝潢保證收繳率</td>
+    </tr>
+    <tr>
+        <td>繳交保證金戶數÷ 裝潢戶數</td>
+    </tr>
+</tbody>
+</table>
+
+
+<table>
+    <thead>
+    <tr>
+        <th><b>管理服務中心的總體滿意度</b></th>
+    </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td>統計回收問卷之分數總和 ÷ 份數 = 平均滿意度</td>
+    </tr>
+</tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th><b>住戶交辦事項執行率</b></th>
+    </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td>回復件數 ÷ 登錄件數</td>
+
+    </tr>
+    <tr>
+        <td>完成件數 ÷ 登錄件數</td>
+    </tr>
+</tbody>
+</table>
+
+<?php
+$sql = 'SELECT COUNT(*) as total FROM opinions';
+$data = $db->getRow($sql);
+$total = $data['total'];
+$sql = "SELECT count(*) AS completed FROM `opinions` WHERE dt_completed <> '0000-00-00'";
+$data = $db->getRow($sql);
+$completed = $data['completed'];
+
+
+
+//$completed = $data['completed'];
+
+echo 'total = ' . $total . '<br>';
+echo 'completed = ' . $completed . '<br>';
+
+?>
+
+
+<table>
+    <thead>
+    <tr>
+        <th><b>公有財產之登錄</b></th>
+    </tr>
+    </thead>
+<tbody>
+    <tr>
+        <td>回復件數 ÷ 登錄件數</td>
+    </tr>
+    <tr>
+        <td>完成件數 ÷ 登錄件數</td>
+    </tr>
+</tbody>
+</table>
+
+
 <div class="row mb-3">
     <div class="col-12">
         <div class="card card-chartbar">
@@ -86,6 +238,9 @@
         </div>
     </div>
 </div>
+
+
+
 <div class="row mb-3">
     <div class="col-lg-8 col-12">
         <div class="card card-chartbar">
@@ -239,10 +394,4 @@ var myPieChart = new Chart(apartment,{
 });
 
 </script>
-            </div>
-        </div>
-    </div>
-	<script src="./js/app.js"></script>
-</body>
-
-</html>
+<?php include('./Footer.php'); ?>

@@ -32,10 +32,12 @@ session_start();
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
-                </li>
+				</li>
+<!--				
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-                </li>
+				</li>
+-->				
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/apartment/publicutil-create.php" class="btn add-asset-btn mb-3">

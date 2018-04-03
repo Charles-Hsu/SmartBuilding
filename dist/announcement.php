@@ -33,12 +33,12 @@ if (strlen($_SESSION['account']) == 0) {
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
-    <a class="" href="./index.php">KPI</a>
-    <a class="" href="./space-management.php">空間變更申請</a>
+    <a class="" href="./kpi.php">KPI</a>
+    <a class="" href="./space-management.php">空間變更</a>
     <a class="active" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
     <a class="" href="./overduelist.php">欠繳清單</a>
-    <a class="" href="./opinionlist.php">住戶意見處理</a>
+    <a class="" href="./opinionlist.php">住戶意見</a>
 </nav>
 <div class="row">
 <!--

@@ -37,33 +37,55 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 			</ul>
 			<div id="assets-tab" class="row mr-0 ml-0">
+<!--				
 				<div class="repairs-menu col-2">
 					<ul class="repairs-menu-bar d-flex flex-column align-items-center">
 						<li><a href="<?= $urlName ?>/operation/repairs-normal.php" class="active">一般維修</a></li>
 						<li><a href="<?= $urlName ?>/operation/repairs-abnormal.php" class="">異常回報</a></li>
 					</ul>
 				</div>
+-->				
 				<div class="repairs-content col-10">
 					<div class="assets-create-title mb-3">
 						<a href="<?= $urlName ?>/operation/repairs-normal.php" class="assets-create-icon fas fa-chevron-left"></a>
-						<span>新增一般維修</span>
+						<span>新增維修作業</span>
 					</div>
 					<div class="row justify-content-lg-start justify-content-center">
 						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
 							<form class="assets-create-form" action="" method="POST">
+<!--								
 								<div class="form-group row">
 									<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 									<div class="col-md-8 d-flex align-items-center">
 										<span>XXXXXX</span>
 									</div>
 								</div>
+-->								
 								<div class="form-group row">
 									<label for="repairs-contractor" class="text-right col-md-4 col-form-label">
-										<span class="important">*</span>承包廠商:</label>
+										<span class="important">*</span>承包廠商:
+									</label>
 									<div class="col-md-8">
-										<input type="text" class="form-control" name="repairs-contractor" id="repairs-contractor">
+									<select id="innerswim-reply" class="form-control" name="contract-id">
+
+<?php
+$sql = "SELECT * FROM contract";
+//echo $sql;
+$data = $db->getRows($sql);
+//var_dump($data);
+
+foreach($data as $var) {
+?>
+										<option value="<?=$var['id'];?>"> <?=$var['name'];?> </option>
+<?php
+}
+?>									
+  									</select>
 									</div>
 								</div>
+
+
+
 								<div class="form-group row">
 									<label for="repairs-content" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>維修內容:</label>
@@ -71,6 +93,7 @@ if (strlen($_SESSION['account']) == 0) {
 										<input type="text" class="form-control" name="repairs-content" id="repairs-content">
 									</div>
 								</div>
+								
 								<div class="form-group row">
 									<label for="repairs-amount" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>維修金額:</label>

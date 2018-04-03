@@ -31,10 +31,12 @@ if (strlen($_SESSION['account']) == 0) {
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
-                </li>
+				</li>
+<!--				
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-                </li>
+				</li>
+-->				
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">

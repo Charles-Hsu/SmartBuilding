@@ -53,7 +53,7 @@
                         //alert("You pressed a key inside the input field");
                         //document.getElementById("demo").innerHTML = 5 + 6;
                         //window.location.href = "http://stackoverflow.com";
-                        window.location.href = "./index.php";
+                        window.location.href = "./kpi.php";
                     //}
                 </script>';
 

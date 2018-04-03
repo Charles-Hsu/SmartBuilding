@@ -61,23 +61,20 @@ $data = $data[0];
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-            <ul class="nav nav-pills mb-3">
+			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget.php">預算計畫</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget.php">財務籌措</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/longTerm-repairs/bank-acc.php">銀行專戶</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/apartment/bank-acc.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<a href="<?= $urlName ?>/longTerm-repairs/bank-acc.php" class="assets-create-icon fas fa-chevron-left"></a>
 					<span>編輯銀行專戶</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
@@ -144,7 +141,7 @@ $data = $data[0];
 									銀行餘額:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="bankacc-balance" value="<?=$data['account_balance'];?>">
+									<input type="text" class="form-control" name="bankacc-balance" value="<?=number_format($data['account_balance']);?>">
 								</div>
 							</div>
 							<div class="form-group row">

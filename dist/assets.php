@@ -4,7 +4,7 @@ include('./Header.php');
 ?>
 <?php 
 //$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
-$sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.status_no = b.id';
+$sql = 'SELECT a.*, b.name AS status, c.category AS cat FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND c.id=a.asset_category';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
@@ -48,6 +48,10 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">收管理費</a>
+				</li>
+
 				<!--
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
@@ -63,6 +67,7 @@ if (strlen($_SESSION['account']) == 0) {
 						<tr>
 							<th>資產編號</th>
 							<th>資產名稱</th>
+							<th>資產類別</th>
 							<th>使用狀態</th>
 							<th>價格</th>
 							<th>數量</th>
@@ -82,8 +87,9 @@ if (strlen($_SESSION['account']) == 0) {
 						<tr>
 							<td><span><?=$var[asset_no]?></span></td>
 							<td><span><?=$var[asset_name]?></span></td>
+							<td><span><?=$var[cat]?></span></td>
 							<td><span><?=$var[status]?></span></td>
-							<td><span><?=$var[price]?></span></td>
+							<td><span><?=number_format($var[price])?></span></td>
 							<td><span><?=$var[amount]?></span></td>
 							<td><a href="/smartbuilding/assets/asset-edit.php?asset_no=<?=$var[asset_no]?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>

@@ -36,11 +36,13 @@ $var = $data[0];
 if (count($_POST) > 0) {
 	var_dump($_POST);
 	$dt = strftime('%F'); 
-	$title = $_POST['household-title'];
-	$detail = $_POST['household-content'];
+	$type = $_POST['opinion-type'];
+	$content = $_POST['opinion-content'];
+
+	echo $content;
 	
-	$sql = "INSERT INTO `opinions` (`id`, `dt`, `household_id`, `title`, `detail`, `dt_completed`) VALUES (NULL, '";
-	$sql .= $dt . "', " . $id . ", '" . $title . "', '" . $detail . "', '0000-00-00')";
+	$sql = "INSERT INTO `opinions` (`id`, `dt`, `household_id`, `type`, `content`, `dt_completed`) VALUES (NULL, '";
+	$sql .= $dt . "', " . $id . ", '" . $type . "', '" . $content . "', '0000-00-00')";
 
 	echo $sql;
 				
@@ -96,20 +98,52 @@ if (count($_POST) > 0) {
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">                   
+
+
 							<div class="form-group row">
-								<label for="household-title" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>主旨:</label>
-								<div class="col-md-8">
-									<input type="text" class="form-control" name="household-title" id="household-title">
-								</div>
-							</div>
-							<div class="form-group row">
+<?
+$sql = 'SELECT id, type FROM opinion_type';
+$tt = $db->getRows($sql);
+//var_dump($data);
+?>								
+
+
+
 								<label for="household-content" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>總類:</label>
+								<div class="col-md-8">
+
+								<select name="opinion-type" id="opinion-type" class="form-control">
+<!--								
+									<option value="0">自聘</option>
+-->									
+<?php
+	//$sql = 'SELECT * FROM contract';
+	//$data = $db->getRows($sql);
+?>								
+<?php
+foreach($tt as $t) {
+	//	echo $var['Name'];
+	//echo $var['id'];
+?>
+										<option value="<?=$t['id'];?>"><?=$t['type'];?></option>
+<?php
+}
+?>
+
+									</select>								</div>
+							</div>
+
+
+
+							<div class="form-group row">
+								<label for="opinion-content" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>意見:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="household-content" id="household-content">
+									<input type="text" class="form-control" name="opinion-content" id="opinion-content">
 								</div>
 							</div>
+							
 							<div class="form-group row">
 								<label for="household-reply" class="text-right col-md-4 col-form-label">
 									反應住戶:</label>

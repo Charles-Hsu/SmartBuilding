@@ -106,7 +106,7 @@ if (strlen($_SESSION['account']) == 0) {
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/operation.php">例行作業</a>
 				</li>
 				<li class="nav-item">
@@ -114,15 +114,21 @@ if (strlen($_SESSION['account']) == 0) {
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
+                </li> -->
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/longTerm-repairs/budget.php">預算計畫</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget-planning.php">財務籌措</a>
                 </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/bank-acc.php">銀行專戶</a>
+				</li>			
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/operation/budget.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>年度預算</span>
+					<a href="<?= $urlName ?>/longTerm-repairs/budget.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>預算計畫</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
