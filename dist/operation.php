@@ -110,11 +110,7 @@ include('./Header.php');
     var my_year=my_date.getFullYear();
     var my_month=my_date.getMonth();
     var my_day=my_date.getDate();
-    $('#days').on('click','li',function(){
-        console.log($(this).closest('.calendar-wrap').find('#year').text())
-        console.log($(this).closest('.calendar-wrap').find('#month-num').text())
-        console.log($(this).text())
-    })
+
     $('#next').on('click',function(){
         my_month++;
         if(my_month > 11){
@@ -238,7 +234,7 @@ include('./Header.php');
             if(i < my_day && my_year == my_date.getFullYear() && my_month == my_date.getMonth() ){
                 str+=
 					`<li class="${i}" data-day="${i}">
-						<a href="operation-list.php?year=${my_year}&month=${my_month+1}&day=${i}" class="d-flex flex-column gray">
+						<a href="javascript:;" class="d-flex flex-column gray">
 							<span>${i}</span>
 							<div class="task-box d-flex flex-column"></div>
 						</a>

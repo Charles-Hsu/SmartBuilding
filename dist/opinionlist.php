@@ -65,7 +65,24 @@ if (strlen($_SESSION['account']) == 0) {
 <p>本月已處理件數:<span>32</span></p>
 <p>本月待處理件數:<span>1</span></p>
 <p>平均處理天數:<span>3.5</span></p>
-
+<div class="row">
+	<div class="col-6 mb-3">
+        <div class="card card-chartbar">
+            <div class="card-header">處理案件數</div>
+            <div class="card-body">
+				<canvas id="opinion-chart"></canvas>
+            </div>
+        </div>
+	</div>
+	<div class="col-6 mb-3">
+        <div class="card card-chartbar">
+            <div class="card-header">處理速度</div>
+            <div class="card-body">
+				<canvas id="opinionSpeed-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
 			<div id="assets-tab">
 
 				<table class="table asset-table">
@@ -218,5 +235,125 @@ $('.asset-table').DataTable({
     "order": [[0, 'desc']],
     //"order": [[0, 'asc']],
 })
+
+var randomData=()=>{
+    return Math.round(Math.random()*100)
+}
+var colorList={
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+};
+var colors = Chart.helpers.color;
+var months=["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+
+// 處理案件數
+var opinionChart = document.getElementById("opinion-chart").getContext('2d');
+var myChart = new Chart(opinionChart, {
+    type: 'bar',
+    data: {
+        labels: months,
+        datasets: [{
+            label: '住戶意見新增',
+            data: [
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(),
+                randomData(),
+            ],
+            backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
+            borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
+            borderWidth: 1
+        },{
+            label: '已回信',
+            data: [
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(),
+                randomData(),
+            ],
+            backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+            borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+            borderWidth: 1
+        },{
+            label: '已結案',
+            data: [
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(),
+                randomData(),
+            ],
+            backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+            borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+
+// 處理案件速度
+var opinionSpeedChart = document.getElementById("opinionSpeed-chart").getContext('2d');
+var myChart = new Chart(opinionSpeedChart, {
+    type: 'bar',
+    data: {
+        labels: months,
+        datasets: [{
+            label: '平均回報天數',
+            data: [
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(),
+                randomData(),
+            ],
+            backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
+            borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
+            borderWidth: 1
+        },{
+            label: '平均結案天數',
+            data: [
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(), 
+                randomData(),
+                randomData(),
+            ],
+            backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+            borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
 </script>
 <?php include('../Footer.php'); ?>
