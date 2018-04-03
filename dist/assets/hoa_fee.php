@@ -20,15 +20,31 @@ $sql = 'SELECT a.*, b.name AS status FROM assets a, asset_status b WHERE a.statu
 							<td><span><?=$var[resident]?></span></td>
 */
 
-$sql = 'SELECT SUM(fee) as total FROM hoa_fee WHERE fee_type = 1 OR fee_type = 1';
+$sql = 'SELECT SUM(fee) as total FROM hoa_fee_defined WHERE fee_type = 1 OR fee_type = 1';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRow($sql);
 
-var_dump($data);
+//var_dump($data);
+
 
 $total = $data['total'];
 session_start();
+
+
+$sql = 'SELECT has_generated FROM hoa_fee_added';
+$data = $db->getRows($sql);
+//var_dump($data);
+
+
+$has_generated = array();
+
+foreach ($data as $val) {
+    //echo $val['has_generated'] . '<br>';
+    array_push($has_generated, SUBSTR($val['has_generated'], 0, 7));
+}
+
+//var_dump($has_generated);
 
 //var_dump($data);
 ?>
@@ -76,12 +92,24 @@ $first_day_of_month = strtotime(date("Y-01-01"));
 //echo date('Y-m', $next_month);
 //echo date("Y");
 $i = 0;
+
+
+
+// if (in_array('2018-01', $has_generated)) {
+//     echo 'in_array';
+// }
+
+
 do {
     $Y_m = date('Y-m', $first_day_of_month);
+    $d = '';
+    if (in_array($Y_m, $has_generated)) {
+        $d = 'disabled';
+    }
 ?>
             <tr>
                 <td><?=$Y_m?></td>
-                <td><input type='checkbox' name='<?=$Y_m?>' disabled></td>
+                <td><input type='checkbox' name='<?=$Y_m?>' <?=$d;?>></td>
                 <td><?=number_format($total);?></td>
                 <td>1000</td>
             </tr>
@@ -95,7 +123,7 @@ do {
 ?>            
         </tbody>
     </table>
-    <input type="submit" value="收管理費">
+    <input type="submit" value="產生收費表單">
 </form>
 
 
