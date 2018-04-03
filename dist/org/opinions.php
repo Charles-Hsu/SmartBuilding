@@ -101,10 +101,9 @@ if ($var['dt_completed'] == '0000-00-00') {
 						<td>
 							
 <?php
-if ($var['dt_responsed'] == '0000-00-00') {
+if ($var['dt_responsed'] == NULL) {
 ?>						
-							<a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">確認
-							</a>
+							<button data-id="<?=$var['id'];?>" class="btn-reply btn btn-outline-primary">確認</button>
 <?php
 } else {
 ?>
@@ -119,10 +118,9 @@ if ($var['dt_responsed'] == '0000-00-00') {
 						<td>
 							
 <?php
-if ($var['dt_completed'] == '0000-00-00') {
+if ($var['dt_completed'] == NULL) {
 ?>						
-							<a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">結案
-							</a>
+							<button data-id="<?= $var['id'] ?>" class="btn-end btn btn-outline-secondary" disabled>結案</button>
 <?php
 } else {
 ?>
@@ -131,10 +129,6 @@ if ($var['dt_completed'] == '0000-00-00') {
 }
 ?>					
 						</td>
-						
-
-						<!-- <td><a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">結案</a></td>
-						</tr> -->
 <?php
 
 ?>
@@ -152,6 +146,80 @@ if ($var['dt_completed'] == '0000-00-00') {
 </div>
 
 <script>
+function getNowDate(){
+	var now=new Date();
+	var now_year=now.getFullYear();
+	var now_month=now.getMonth()+1;
+	var now_date=now.getDate();
+	var now_Hour=now.getHours();
+	var now_Min=now.getMinutes();
+	var now_Sec=now.getSeconds();
+	var now_array=[];
+	if(now_month < 10){
+		now_month='0'+now_month
+	}
+	if(now_date < 10){
+		now_date='0'+now_date
+	}
+	if(now_Hour<10){
+		now_Hour='0'+now_Hour
+	}
+	if(now_Min<10){
+		now_Min='0'+now_Min
+	}
+	if(now_Sec<10){
+		now_Sec='0'+now_Sec
+	}
+	var fullDate=`${now_year}-${now_month}-${now_date}`;
+	var fullTime=`${now_Hour}:${now_Min}:${now_Sec}`;
+	now_array=[fullDate,fullTime];
+	return now_array;
+}
+$('.btn-reply').on('click',function(){
+	var _this=$(this);
+	var str='';
+	$.ajax({
+		url:'../data/optinionsData.php',
+		method:'POST',
+		dataType:'JSON',
+		data:{
+			id:$(this).attr('data-id'),
+			fulldate:getNowDate()[0],
+			fulltime:getNowDate()[1],
+			opinionstype:'reply'
+		},
+		success:function(data){
+			if(data[0] == 'success'){
+				str=`<span>${getNowDate()[0]}</span>`;
+				_this.closest('td').html(str)
+				$('.btn-end').removeClass('btn-outline-secondary').addClass('btn-outline-primary').prop('disabled',false);
+			}
+		}
+	})
+})
+$('.btn-end').on('click',function(){
+	var _this=$(this);
+	var str='';
+	$.ajax({
+		url:'../data/optinionsData.php',
+		method:'POST',
+		dataType:'JSON',
+		data:{
+			id:$(this).attr('data-id'),
+			fulldate:getNowDate()[0],
+			fulltime:getNowDate()[1],
+			opinionstype:'end'
+
+		},
+		success:function(data){
+			if(data[0] == 'success'){
+				str=`<span>${getNowDate()[0]}</span>`;
+				_this.closest('td').html(str)
+			}
+		}
+	})
+})
+
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",

@@ -12,9 +12,9 @@ if(isset($_POST['year']) && isset($_POST['month']) && isset($_POST['day']) && is
     $sql='';
 
     if($db->insert($sql)){
-        echo $msg[0]='success';
+        $msg[0]='success';
     }else{
-        echo $msg[0]='error';
+        $msg[0]='error';
     }
 
     echo json_encode($msg);
