@@ -671,6 +671,7 @@ label.col-form-label .important {
 }
 .calendar-wrap .body .week-list ul{
     display: flex;
+    margin-bottom: 0;
 }
 .calendar-wrap .body .week-list ul li{
     flex-basis: calc(100% / 7);
@@ -678,6 +679,11 @@ label.col-form-label .important {
     font-size: 1.2rem;
     font-weight: bold;
     padding: .75rem;
+    background: #3c3c3c;
+    color: #fff;
+}
+.calendar-wrap .body .week-list ul li.holiday{
+    background-color: #bf0f0f;
 }
 .calendar-wrap .body .days-list{
     width: 100%;
@@ -685,41 +691,64 @@ label.col-form-label .important {
 .calendar-wrap .body .days-list ul{
     display: flex;
     flex-wrap: wrap;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 .calendar-wrap .body .days-list ul li{
     flex-basis: calc(100% / 7);
     position: relative;
-    padding: 1.25rem .75rem 1.25rem;
     text-align: center;
+    border: 1px solid #ddd;
+    height: calc(30px * 5);
+    border-left: 0;
+    border-bottom: 0;
 }
+
 .calendar-wrap .body .days-list ul li a:hover{
     background-color: #f5f5f5;
     text-decoration: none;
 }
 .calendar-wrap .body .days-list ul li a{
-    display: inline-block;
-    text-align: center;
+    display: block;
+    text-align: left;
     font-size: 1.2rem;
     font-weight: bold;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    border-radius: 50%;
     cursor: pointer;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
 }
-
+.calendar-wrap .body .days-list ul li a{
+    height: 100%;
+}
+.calendar-wrap .body .days-list ul li a span{
+    font-size: 12px;
+    padding: .3rem;
+    margin-bottom: 2px;
+}
+.calendar-wrap .body .days-list ul li a span:last-child{
+    margin-bottom: 0;
+}
+.calendar-wrap .body .days-list ul li a span.task{
+    background-color: #1f90e6;
+    color: #fff;
+}
 .calendar-wrap .body .days-list ul li a.gray{
     color:#ababab;
 }
 
 .calendar-wrap .body .days-list ul li a.today{
     color: rgb(60, 60, 60);
-    background: #dedede;
+    background: #f1f1f1;
 }
 .calendar-wrap .body .days-list ul li a.will{
     color:rgb(100, 100, 100);
+}
+.calendar-wrap .body .days-list ul li a div.task-box{
+    height: calc( 30px * 3);
+    overflow: hidden;
+}
+.calendar-wrap .body .days-list ul li a .task-length{
+    color:#636363;
 }
 .punch-table tbody tr td{
     text-align: center;
@@ -829,6 +858,23 @@ table.punch-table td.checktime label{
 
 .table td, .table th{
     vertical-align: middle;
+}
+.checktime {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #bdbdbd;
+    text-align: center;
+    line-height: 32px;
+}
+.checktime.oldtime{
+    background: #F7B32D;
+}
+.checktime.onwork{
+    background: #FCFA70;
+}
+.checktime.onwork.offwork{
+    background: #F7B32D;
 }
 @media (max-width:992px){
     .container-fluid{
