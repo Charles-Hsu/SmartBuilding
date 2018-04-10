@@ -33,7 +33,7 @@ foreach($data as $var) {
 			<td><span><?php echo $var[addr_no];?></span></td>
 			<td><span><?php echo $var[floor];?></span></td>
             <td><span><?php echo $var[holder];?></span></td>
-            <td><input type="checkbox"></td>
+            <td><input type="checkbox" class="meeting-holder" data-id="<?= $var[id] ?>"></td>
 		</tr>
 <?php
 	}
