@@ -33,6 +33,14 @@ session_start();
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
 				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
+				</li>				
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-resolution.php">決議事項</a>
+				</li>				
+
 <!--				
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>

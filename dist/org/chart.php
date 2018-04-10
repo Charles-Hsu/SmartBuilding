@@ -64,7 +64,7 @@ if (strlen($_SESSION['account']) == 0) {
 					</thead>
 					<tbody>
 					<?php
-	$sql = "SELECT a.edition, b.title, a.addr_no, a.floor, a.name FROM committee a, committee_role b WHERE a.role_id = b.id";
+	$sql = "SELECT c.name AS edition, b.title, a.addr_no, a.floor, a.name FROM committee a, committee_role b, session c WHERE a.role_id = b.id AND a.edition = c.id";
 	$data = $db->getRows($sql);
 	//var_dump($data);
 	foreach($data as $var) {

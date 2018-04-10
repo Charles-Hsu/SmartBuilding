@@ -22,7 +22,7 @@
     <div id="app" class="login-wrapper  p-5">
         <div class="row">
             <div class="col-12 login-main">
-                <h2 class="login-title text-center mb-4">易入門智慧建築系統</h2>
+                <h2 class="login-title text-center mb-4">智慧建築系統</h2>
                 <div class="d-flex login-sub-title justify-content-around mb-4">
                     <a href="login.php">登入系統</a>
                     <a href="javascript:;" class="active">註冊會員</a>

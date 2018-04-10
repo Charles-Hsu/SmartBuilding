@@ -23,21 +23,18 @@ session_start();
 					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/apartment/building.php">建築物</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
 				</li>
-
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
+					<a class="nav-link  active" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
 				</li>				
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-resolution.php">決議事項</a>
 				</li>								
 <!--				
-
-
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
 				</li>
@@ -45,7 +42,7 @@ session_start();
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/apartment/building-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增社區建築
+					<span>+</span>新增會議
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">

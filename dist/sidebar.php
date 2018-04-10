@@ -7,7 +7,7 @@
             </div>
             <ul class="sidemenu-nav">
                 <li>
-                    <a href="<?= $urlName ?>/kpi.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="index">
+                    <a href="<?= $urlName ?>/kpi.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="kpi">
                         <i class="far fa-chart-bar"></i>
                         <span>效能管理</span>
                     </a>
@@ -40,6 +40,12 @@
                     <a href="<?= $urlName ?>/apartment.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="apartment">
                         <i class="fas fa-home"></i>
                         <span>社區管理</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?= $urlName ?>/questionaire.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="questionaire">
+                        <i class="fas fa-home"></i>
+                        <span>問卷調查</span>
                     </a>
                 </li>
                 <li>

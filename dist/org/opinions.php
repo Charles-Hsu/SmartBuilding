@@ -106,8 +106,21 @@ if ($var['dt_responsed'] == NULL) {
 							<button data-id="<?=$var['id'];?>" class="btn-reply btn btn-outline-primary">確認</button>
 <?php
 } else {
+
+	if ($var['dt_responsed'] == '0000-00-00' || $var['dt_responsed'] == NULL) {
 ?>
+
+							<span><input type='checkbox' class="btn-reply btn btn-outline-primary">></span>
+
+<?php
+	} else {
+?>
+
 							<span><?=$var['dt_responsed'];?></span>
+
+<?php		
+	}
+?>
 <?php
 }
 ?>					
@@ -120,18 +133,27 @@ if ($var['dt_responsed'] == NULL) {
 <?php
 if ($var['dt_completed'] == NULL) {
 ?>						
-							<button data-id="<?= $var['id'] ?>" class="btn-end btn btn-outline-secondary" disabled>結案</button>
+							<button data-id="<?=$var['id'];?>" class="btn-end btn btn-outline-primary">結案</button>
 <?php
 } else {
+	if ($var['dt_completed'] == '0000-00-00' || $var['dt_completed'] == NULL) {
+?>
+							
+							<span><input type='checkbox' data-id="<?=$var['id'];?>" class="btn-end btn btn-outline-primary"></span>
+							
+<?php
+	} else {
 ?>
 							<span><?=$var['dt_completed'];?></span>
+<?php		
+	}
+?>
 <?php
 }
 ?>					
-						</td>
-<?php
-
-?>
+												
+												
+													</td>
 
 <?php
 
@@ -175,7 +197,11 @@ function getNowDate(){
 	now_array=[fullDate,fullTime];
 	return now_array;
 }
-$('.btn-reply').on('click',function(){
+// $('.btn-reply').on('click',function(){
+$('.btn-reply').on('change', function() {
+
+	//alert($(this).attr('data-id'));
+
 	var _this=$(this);
 	var str='';
 	$.ajax({
@@ -197,7 +223,7 @@ $('.btn-reply').on('click',function(){
 		}
 	})
 })
-$('.btn-end').on('click',function(){
+$('.btn-end').on('change',function(){
 	var _this=$(this);
 	var str='';
 	$.ajax({

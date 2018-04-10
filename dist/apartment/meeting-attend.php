@@ -3,11 +3,7 @@ include('../config.php');
 include('../Header.php'); 
 ?>
 <?php 
-$table = 'building';
-$sql = 'SELECT * FROM ' . $table;
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
@@ -23,59 +19,36 @@ session_start();
 					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/apartment/building.php">建築物</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
 				</li>
-
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
+					<a class="nav-link  active" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
 				</li>				
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-resolution.php">決議事項</a>
 				</li>								
 <!--				
-
-
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
 				</li>
 -->				
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/apartment/building-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增社區建築
-				</a>
-				<table class="table asset-table">
-					<thead class="thead-light">
-						<tr>
-							<th>名稱</th>
-							<th>地址</th>
-							<th>建築執照編號</th>
-							<th>發照日期</th>
-							<th>使用年限</th>
-							<th>編輯</th>
-						</tr>
-					</thead>
-					<tbody>
+				<a href="<?= $urlName ?>/apartment/meeting-man.php" class="btn add-asset-btn mb-3">
+					<span>+</span>出席狀況
+                </a>
+                
 <?php
-	 foreach($data as $building) {
+$meeting_type = $_GET[type];
+if ($meeting_type == 1 || $meeting_type == 2) {
+    include ('meeting-attend-holder.php');
+} else {
+    include ('meeting-attend-committee.php');
+}
 ?>
-
-						<tr>
-							<td><span><?=$building[name];?></span></td>
-							<td><span><?=$building[address];?></span></td>
-							<td><span><?=$building[license_no];?></span></td>
-							<td><span><?=$building[approved_date];?></span></td>
-							<td><span><?=$building[expired_years];?>年</span></td>
-							<td><a href="<?= $urlName ?>/apartment/building-edit.php?license_no=<?=$building[license_no];?>" class="btn btn-outline-secondary">修改</a></td>
-						</tr>
-<?php
-	 }
-?>
-					</tbody>
-				</table>
 			</div>
 		</div>
 	</div>
@@ -84,10 +57,8 @@ session_start();
 <script>
 $('.asset-table').DataTable({
 	"language": {
-		/*
 		"search": "搜尋_INPUT_",
 		"searchPlaceholder": "搜尋資產...",
-		*/
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",
@@ -101,10 +72,9 @@ $('.asset-table').DataTable({
 			"last": "最後一頁"
 		}
 	},
-	"searching": false,
 	"deferRender": true,
-	"processing": true,
-	"ordering": false,
+	"processing": true
 })
 </script>
+
 <?php include('../Footer.php'); ?>

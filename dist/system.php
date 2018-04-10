@@ -65,7 +65,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span>2018/3/19 09:30</span></td>
 							<td><span>組織管理</span></td>
 							<td><span>新增人員 Joe Lee</span></td>
-							<td><span>易入門股份有限公司</span></td>
+							<td><span>股份有限公司</span></td>
 						</tr>
 						<tr>
 							<td><span>2018/3/21 18:12</span></td>

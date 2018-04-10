@@ -33,7 +33,7 @@ if (strlen($_SESSION['account']) == 0) {
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
-    <a class="" href="./kpi.php">KPI</a>
+    <a class="" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
@@ -61,10 +61,10 @@ if (strlen($_SESSION['account']) == 0) {
 }
 */
 ?>
-<p>呈現總幹事的效率</p>
+<!-- <p>呈現總幹事的效率</p>
 <p>本月已處理件數:<span>32</span></p>
 <p>本月待處理件數:<span>1</span></p>
-<p>平均處理天數:<span>3.5</span></p>
+<p>平均處理天數:<span>3.5</span></p> -->
 <div class="row">
 	<div class="col-6 mb-3">
         <div class="card card-chartbar">
@@ -216,7 +216,7 @@ $diff = abs($dt_completed - strtotime($var['dt'])) / 24 / 3600 + 1;
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
-		"searchPlaceholder": "搜尋資產...",
+		"searchPlaceholder": "搜尋...",
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",
@@ -258,7 +258,7 @@ var myChart = new Chart(opinionChart, {
     data: {
         labels: months,
         datasets: [{
-            label: '住戶意見新增',
+            label: '住戶意見',
             data: [
                 randomData(), 
                 randomData(), 
@@ -271,7 +271,7 @@ var myChart = new Chart(opinionChart, {
             borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
             borderWidth: 1
         },{
-            label: '已回信',
+            label: '已回復',
             data: [
                 randomData(), 
                 randomData(), 
@@ -293,7 +293,7 @@ var myChart = new Chart(opinionChart, {
                 randomData(),
                 randomData(),
             ],
-            backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+            backgroundColor: colors('rgb(0, 153, 0)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderWidth: 1
         }]
@@ -317,7 +317,7 @@ var myChart = new Chart(opinionSpeedChart, {
     data: {
         labels: months,
         datasets: [{
-            label: '平均回報天數',
+            label: '平均回復天數',
             data: [
                 randomData(), 
                 randomData(), 
