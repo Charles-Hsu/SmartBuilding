@@ -261,7 +261,7 @@ label.col-form-label .important {
 
 .asset-table tbody td span {
     display: inline-block;
-    padding: .3rem .75rem;
+    /* padding: .3rem .75rem; */
     font-size: 1rem;
     line-height: 1.5;
 }
