@@ -7,6 +7,9 @@ include('../Header.php');
 //$sql = 'SELECT a.*, b.addr_no,b.floor FROM opinions a, household b WHERE a.id = b.id AND a.dt_completed = "0000-00-00"';
 
 $sql = 'SELECT a.*, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
+
+// $sql = 'SELECT a.*, b.addr_no,b.floor, a.content FROM opinions a, household b WHERE b.id = a.household_id';
+
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);

@@ -156,7 +156,6 @@ if ($var['dt_responsed'] == '0000-00-00') {
 							<span>未回復</span>
 <?php
 } else {
-
 	$diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
 ?>
 							<span><?= round($diff,2);?></span>
@@ -181,28 +180,24 @@ if ($var['dt_responsed'] == '0000-00-00') {
 						<td>
 							
 <?php
+$dt = strtotime($var['dt']);
 $dt_completed = strtotime(date('Y-m-d'));
-if ($var['dt_completed'] != '0000-00-00') {
-	$dt_completed = strtotime($var['dt_completed']);
-} else {
+$diff = abs($dt_completed - $dt) / 24 / 3600 + 1;
+
+// echo $diff;
+// echo strlen($var['dt_completed']);
+
+// if ($var['dt_completed'] != '0000-00-00' || $var['dt_completed'] != NULL || strlen($var['dt_completed']) != 0) {
+if (strlen($var['dt_completed']) != 0) {    
+    $dt_completed = strtotime($var['dt_completed']);
+    $diff = abs($dt_completed - $dt) / 24 / 3600 + 1;
+    //$diff = 10;
 }
-$diff = abs($dt_completed - strtotime($var['dt'])) / 24 / 3600 + 1;
+
 ?>
 							<span><?=$diff;?></span>
-<?php
-
-?>					
 						</td>
-						
-
-						<!-- <td><a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">結案</a></td>
-						</tr> -->
 <?php
-
-?>
-
-<?php
-
 }
 ?>
 
@@ -236,9 +231,28 @@ $('.asset-table').DataTable({
     //"order": [[0, 'asc']],
 })
 
-var randomData=()=>{
-    return Math.round(Math.random()*100)
+var opinionData=(x)=>{
+    var x = <?php echo $x+100; ?>;
+    return x;
+    // return Math.round(Math.random()*100)
 }
+
+var replyData=(x)=>{
+    return x;
+}
+
+var completedData=(x)=>{
+    return x;
+}
+
+var replySpeedData=(x)=>{
+    return x;
+}
+
+var completedSpeedData=(x)=>{
+    return x;
+}
+
 var colorList={
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',
@@ -260,12 +274,18 @@ var myChart = new Chart(opinionChart, {
         datasets: [{
             label: '住戶意見',
             data: [
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(),
-                randomData(),
+                opinionData(1),
+                opinionData(2),
+                opinionData(3), 
+                opinionData(4), 
+                opinionData(5),
+                opinionData(6),
+                opinionData(7),
+                opinionData(8),
+                opinionData(9),
+                opinionData(10),
+                opinionData(11),
+                opinionData(12),
             ],
             backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
@@ -273,12 +293,18 @@ var myChart = new Chart(opinionChart, {
         },{
             label: '已回復',
             data: [
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(),
-                randomData(),
+                replyData(1),
+                replyData(2), 
+                replyData(3), 
+                replyData(4), 
+                replyData(5),
+                replyData(6),
+                replyData(7),
+                replyData(8),
+                replyData(9),
+                replyData(10),
+                replyData(11),
+                replyData(12),
             ],
             backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
@@ -286,12 +312,18 @@ var myChart = new Chart(opinionChart, {
         },{
             label: '已結案',
             data: [
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(),
-                randomData(),
+                completedData(1),
+                completedData(2), 
+                completedData(3), 
+                completedData(4), 
+                completedData(5),
+                completedData(6),
+                completedData(7),
+                completedData(8),
+                completedData(9),
+                completedData(10),
+                completedData(11),
+                completedData(12),
             ],
             backgroundColor: colors('rgb(0, 153, 0)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
@@ -319,12 +351,18 @@ var myChart = new Chart(opinionSpeedChart, {
         datasets: [{
             label: '平均回復天數',
             data: [
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(),
-                randomData(),
+                replySpeedData(1),
+                replySpeedData(2), 
+                replySpeedData(3), 
+                replySpeedData(4), 
+                replySpeedData(5),
+                replySpeedData(6),
+                replySpeedData(7),
+                replySpeedData(8),
+                replySpeedData(9),
+                replySpeedData(10),
+                replySpeedData(11),
+                replySpeedData(12),
             ],
             backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
@@ -332,12 +370,18 @@ var myChart = new Chart(opinionSpeedChart, {
         },{
             label: '平均結案天數',
             data: [
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(),
-                randomData(),
+                completedSpeedData(1),
+                completedSpeedData(2), 
+                completedSpeedData(3), 
+                completedSpeedData(4), 
+                completedSpeedData(5),
+                completedSpeedData(6),
+                completedSpeedData(7),
+                completedSpeedData(8),
+                completedSpeedData(9),
+                completedSpeedData(10),
+                completedSpeedData(11),
+                completedSpeedData(12),
             ],
             backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
