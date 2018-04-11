@@ -58,11 +58,10 @@ $holder = $_GET['holder'];
 //$floor = $_GET['floor'];
 //$sql = 'SELECT * FROM household WHERE addr_no = "' . $addr_no . '" AND floor ="' . $floor . '"';
 // $sql = 'SELECT * FROM household WHERE id = ' . $id;
-$sql = "SELECT b.id, b.type, a.fee, a.m  FROM hoa_fee_record a, hoa_fee_type b WHERE hid = $id AND b.id = a.fee_type";
+$sql = "SELECT b.id, b.type, a.fee, a.m ,a.id as recordId FROM hoa_fee_record a, hoa_fee_type b WHERE hid = $id AND b.id = a.fee_type";
 
 $data = $db->getRows($sql);
 // var_dump($data);
-
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -120,7 +119,7 @@ $data = $db->getRows($sql);
 							<td><span><?=$var[m];?></span></td>
 							<td><span><?=$var[type];?></span></td>
                             <td><span><?=$var[fee];?></span></td>
-                            <td><span><input type = "checkbox" value="<?=$var[m];?>,<?=$var[id];?>"></span></td>
+                            <td><span><input type = "checkbox" id="<?php echo $var['recordId'] ?>" class="check-paid" value="<?=$var[m];?>,<?=$var[id];?>"></span></td>
 						</tr>
 <?php
 	}
@@ -137,10 +136,34 @@ $('.btn-same').on('click',function(e){
 	$('#household-name').val(_val)
 	e.preventDefault()
 })
-</script>
 
+$('.check-paid').on('change',function(){
+	var _this=$(this);
+	var recordId=_this.attr('id');
+	$.ajax({
+		url:'../data/household-feelistData.php',
+		method:'POST',
+		data:{
+			recordId
+		},
+		success:function(data){
+			try{
+				let _data=JSON.parse(data);
+				if(_data.success){
+					_this.closest('span').html(_data.data)
+				}else{
+					alert('請重新操作');
+				}
+			}catch(error){
+				alert(data)
+			}
+		},
+		error:function(error){
+			console.log(error)
+		}
+	})
+})
 
-<script>
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",

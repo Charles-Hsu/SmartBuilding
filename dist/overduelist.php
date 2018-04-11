@@ -57,7 +57,7 @@ if (strlen($_SESSION['account']) == 0) {
         </div>
     </div>
 -->    
-    <div id="assets-tab">
+    <div id="assets-tab" class="w-100">
 <!--            
 				<a href="/smartbuilding/assets/household-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增租售案件
