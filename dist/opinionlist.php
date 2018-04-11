@@ -45,11 +45,11 @@ if (strlen($_SESSION['account']) == 0) {
 
 //$sql = 'SELECT a.*, b.addr_no,b.floor FROM opinions a, household b WHERE a.id = b.id AND a.dt_completed = "0000-00-00"';
 
-$sql = 'SELECT a.*, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
+$sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
+
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
-
 
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
@@ -156,6 +156,7 @@ if ($var['dt_responsed'] == '0000-00-00') {
 							<span>未回復</span>
 <?php
 } else {
+
 	$diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
 ?>
 							<span><?= round($diff,2);?></span>
@@ -180,24 +181,28 @@ if ($var['dt_responsed'] == '0000-00-00') {
 						<td>
 							
 <?php
-$dt = strtotime($var['dt']);
 $dt_completed = strtotime(date('Y-m-d'));
-$diff = abs($dt_completed - $dt) / 24 / 3600 + 1;
-
-// echo $diff;
-// echo strlen($var['dt_completed']);
-
-// if ($var['dt_completed'] != '0000-00-00' || $var['dt_completed'] != NULL || strlen($var['dt_completed']) != 0) {
-if (strlen($var['dt_completed']) != 0) {    
-    $dt_completed = strtotime($var['dt_completed']);
-    $diff = abs($dt_completed - $dt) / 24 / 3600 + 1;
-    //$diff = 10;
+if ($var['dt_completed'] != '0000-00-00') {
+	$dt_completed = strtotime($var['dt_completed']);
+} else {
 }
-
+$diff = abs($dt_completed - strtotime($var['dt'])) / 24 / 3600 + 1;
 ?>
 							<span><?=$diff;?></span>
-						</td>
 <?php
+
+?>					
+						</td>
+						
+
+						<!-- <td><a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">結案</a></td>
+						</tr> -->
+<?php
+
+?>
+
+<?php
+
 }
 ?>
 
@@ -206,8 +211,73 @@ if (strlen($var['dt_completed']) != 0) {
 
 			</div>
 
-
+<?php $jsData=json_encode($data); ?>
 <script>
+var data=<?php echo $jsData ?>;
+var tempData={};
+var fullData=[]
+
+data.forEach((item)=>{
+    tempData[item.dt_month]=[]
+})
+for(var i=0;i<data.length;i++){
+    tempData[data[i].dt_month].push(data[i])
+}
+for(var i=1;i<=12;i++){
+    if(tempData[i] !== undefined){
+        var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,length:0}
+        for(var j=0;j<tempData[i].length;j++){
+            tempObj.month=tempData[i][j].dt_month
+            var dt=new Date(tempData[i][j].dt).valueOf();
+            var dt_res=new Date(tempData[i][j].dt_responsed).valueOf();
+
+            if(tempData[i][j].dt_completed != null){
+                var dt_com=new Date(tempData[i][j].dt_completed).valueOf();
+                tempObj.end += ((dt_com-dt)/ 24 / 3600 / 1000)+ 1;
+            }else{
+                tempObj.end +=0;
+            }
+            tempObj.reply += ((dt_res-dt)/ 24 / 3600 / 1000)+ 1;
+            tempObj.length++;
+            if(tempData[i][j].dt_completed){
+                tempObj.completed++
+            }
+            if(tempData[i][j].dt_responsed){
+                tempObj.responsed++;
+            }
+            if(tempData[i][j].content){
+                tempObj.content++;
+            }
+        }
+        fullData.push(tempObj)
+    }else{
+        var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,length:0}
+        fullData.push(tempObj)
+    }
+}
+var contentData=[];
+var completedData=[];
+var responsedData=[];
+var replyData=[];
+var endData=[];
+for(var i=0;i<fullData.length;i++){
+    contentData.push(fullData[i].content)
+    completedData.push(fullData[i].completed)
+    responsedData.push(fullData[i].responsed)
+    if(!isNaN(fullData[i].reply/fullData[i].length)){
+        replyData.push( (fullData[i].reply/fullData[i].length).toFixed(0) )
+    }else{
+        replyData.push(0)
+    }
+    if(!isNaN(fullData[i].end/fullData[i].length)){
+        endData.push(fullData[i].end/fullData[i].length)
+    }else{
+        endData.push(0)
+    }
+}
+// console.log(tempData)
+// console.log(tempData)
+// console.log(fullData)
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
@@ -231,28 +301,9 @@ $('.asset-table').DataTable({
     //"order": [[0, 'asc']],
 })
 
-var opinionData=(x)=>{
-    var x = <?php echo $x+100; ?>;
-    return x;
-    // return Math.round(Math.random()*100)
+var randomData=()=>{
+    return Math.round(Math.random()*100)
 }
-
-var replyData=(x)=>{
-    return x;
-}
-
-var completedData=(x)=>{
-    return x;
-}
-
-var replySpeedData=(x)=>{
-    return x;
-}
-
-var completedSpeedData=(x)=>{
-    return x;
-}
-
 var colorList={
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',
@@ -273,58 +324,19 @@ var myChart = new Chart(opinionChart, {
         labels: months,
         datasets: [{
             label: '住戶意見',
-            data: [
-                opinionData(1),
-                opinionData(2),
-                opinionData(3), 
-                opinionData(4), 
-                opinionData(5),
-                opinionData(6),
-                opinionData(7),
-                opinionData(8),
-                opinionData(9),
-                opinionData(10),
-                opinionData(11),
-                opinionData(12),
-            ],
+            data: contentData,
             backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
             borderWidth: 1
         },{
             label: '已回復',
-            data: [
-                replyData(1),
-                replyData(2), 
-                replyData(3), 
-                replyData(4), 
-                replyData(5),
-                replyData(6),
-                replyData(7),
-                replyData(8),
-                replyData(9),
-                replyData(10),
-                replyData(11),
-                replyData(12),
-            ],
+            data: completedData,
             backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderWidth: 1
         },{
             label: '已結案',
-            data: [
-                completedData(1),
-                completedData(2), 
-                completedData(3), 
-                completedData(4), 
-                completedData(5),
-                completedData(6),
-                completedData(7),
-                completedData(8),
-                completedData(9),
-                completedData(10),
-                completedData(11),
-                completedData(12),
-            ],
+            data: responsedData,
             backgroundColor: colors('rgb(0, 153, 0)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderWidth: 1
@@ -350,39 +362,13 @@ var myChart = new Chart(opinionSpeedChart, {
         labels: months,
         datasets: [{
             label: '平均回復天數',
-            data: [
-                replySpeedData(1),
-                replySpeedData(2), 
-                replySpeedData(3), 
-                replySpeedData(4), 
-                replySpeedData(5),
-                replySpeedData(6),
-                replySpeedData(7),
-                replySpeedData(8),
-                replySpeedData(9),
-                replySpeedData(10),
-                replySpeedData(11),
-                replySpeedData(12),
-            ],
+            data: replyData,
             backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
             borderWidth: 1
         },{
             label: '平均結案天數',
-            data: [
-                completedSpeedData(1),
-                completedSpeedData(2), 
-                completedSpeedData(3), 
-                completedSpeedData(4), 
-                completedSpeedData(5),
-                completedSpeedData(6),
-                completedSpeedData(7),
-                completedSpeedData(8),
-                completedSpeedData(9),
-                completedSpeedData(10),
-                completedSpeedData(11),
-                completedSpeedData(12),
-            ],
+            data: endData,
             backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderWidth: 1
