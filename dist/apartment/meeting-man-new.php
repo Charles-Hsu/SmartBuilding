@@ -1,17 +1,20 @@
 <?php 
 include('../config.php');
 include('../Header.php'); 
-?>
-<?php 
-$table = 'building';
-$sql = 'SELECT * FROM ' . $table;
+
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$data = $db->getRows($sql);
 session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
+
+if (count($_POST)) {
+	var_dump($_POST);
+	$dd = $_POST['meeting-date'];
+	$tp = $_POST['meeting-type'];
+	$ss = $_POST['session'];
+	$rd = $_POST['round'];
+	$sql = "INSERT INTO meetings (`id`, `date`, `meeting_type`, `session`, `round`) VALUES (NULL, '$dd', $tp, $ss, $rd)";
+	echo $sql;
+}
 
 ?>
 <!-- 內容切換區 -->
@@ -28,80 +31,111 @@ session_start();
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
 				</li>
+
 				<li class="nav-item">
-					<a class="nav-link  active" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
+					<a class="nav-link active" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
 				</li>				
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-resolution.php">決議事項</a>
-				</li>								
-<!--				
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-				</li>
--->				
+				</li>	
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/apartment/building-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增會議
-				</a>
-				<table class="table asset-table">
-					<thead class="thead-light">
-						<tr>
-							<th>名稱</th>
-							<th>地址</th>
-							<th>建築執照編號</th>
-							<th>發照日期</th>
-							<th>使用年限</th>
-							<th>編輯</th>
-						</tr>
-					</thead>
-					<tbody>
-<?php
-	 foreach($data as $building) {
-?>
-
-						<tr>
-							<td><span><?=$building[name];?></span></td>
-							<td><span><?=$building[address];?></span></td>
-							<td><span><?=$building[license_no];?></span></td>
-							<td><span><?=$building[approved_date];?></span></td>
-							<td><span><?=$building[expired_years];?>年</span></td>
-							<td><a href="<?= $urlName ?>/apartment/building-edit.php?license_no=<?=$building[license_no];?>" class="btn btn-outline-secondary">修改</a></td>
-						</tr>
-<?php
-	 }
-?>
-					</tbody>
-				</table>
+				<div class="assets-create-title mb-3">
+					<a href="<?= $urlName ?>/apartment/meeting-man.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>新增會議</span>
+				</div>
+				<div class="row justify-content-lg-start justify-content-center">
+					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
+						<form class="assets-create-form" action="" method="POST">
+							<div class="form-group row">
+								<label for="builds-name" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span></label>
+								<div class="col-md-8">
+									<select id="innerswim-reply" class="form-control" name="session">
+									<?php
+										$sql = "SELECT * FROM session";
+										$data = $db->getRows($sql);
+										foreach($data as $var) {
+									?>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+									<?php
+										}
+									?>									
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="builds-address" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span></label>
+								<div class="col-md-8">
+									<select id="innerswim-reply" class="form-control" name="round">
+									<?php
+									$sql = "SELECT * FROM round";
+									$data = $db->getRows($sql);
+									foreach($data as $var) {
+									?>
+										<option value="<?php echo $var['id'];?>"><?php echo $var['name'];?></option>
+									<?php
+									}
+									?>									
+									</select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="builds-license-num" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>
+								</label>
+								<div class="col-md-8">
+									<select id="innerswim-reply" class="form-control" name="meeting-type">
+									<?php
+									$sql = "SELECT * FROM meeting_type";
+									$data = $db->getRows($sql);
+									foreach($data as $var) {
+									?>
+										<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+									<?php
+									}
+									?>									
+	                                </select>
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="meeting-date" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>開會日期:
+								</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control datepicker" name="meeting-date" id="meeting-date" placeholder="開會日期..." >
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-8 offset-md-4">
+									<button class="btn btn-outline-secondary">新增</button>
+									<button class="btn btn-outline-secondary">取消</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
 <script>
-$('.asset-table').DataTable({
-	"language": {
-		/*
-		"search": "搜尋_INPUT_",
-		"searchPlaceholder": "搜尋資產...",
-		*/
-		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
-		"infoEmpty": "",
-		"emptyTable": "目前沒有資料",
-		"lengthMenu": "每頁顯示 _MENU_ 筆資料",
-		"zeroRecords": "搜尋無此資料",
-		"infoFiltered": " 搜尋結果 _MAX_ 筆資料",
-		"paginate": {
-			"previous": "上一頁",
-			"next": "下一頁",
-			"first": "第一頁",
-			"last": "最後一頁"
-		}
-	},
-	"searching": false,
-	"deferRender": true,
-	"processing": true,
-	"ordering": false,
-})
+	$(function() {
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+		if (dd < 10) {
+			dd = '0' + dd;
+		} 
+		if (mm < 10) {
+			mm = '0' + mm;
+		} 
+		var today = yyyy + '-' + mm + '-' + dd;
+   		$('#meeting-date').attr("value", today);
+	})
 </script>
-<?php include('../Footer.php'); ?>
+<?php 
+include(Document_root.'/Footer.php');
+?>

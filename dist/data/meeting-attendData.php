@@ -15,8 +15,9 @@ $t = date('H:i');
 $dt = date('Y-m-d H:i');
 
 class Msg{
-    public $success='';
-    public $any_data='';
+    public $success   = '';
+    public $any_data  = '';
+    public $att_rate  = '';
 }
 
 if( $meeting_type == 1 || $meeting_type == 2 ){
@@ -31,7 +32,22 @@ if( $meeting_type == 1 || $meeting_type == 2 ){
         // $db->insert($sql);
         $msg->success = true;
         $msg->any_data = $t;
-        // $any_data = $sql;
+
+        $sql = "SELECT COUNT(*) as c FROM meeting_att WHERE meeting_id = $meeting_id";
+        $var = $db->getRow($sql);
+        $total = $var[c];
+        
+        $sql = "SELECT COUNT(*) as c FROM meeting_att WHERE meeting_id = $meeting_id AND dt IS NOT NULL";
+        $var = $db->getRow($sql);
+        $att = $var[c];
+        $att_rate = number_format($att/$total*100, 1);
+
+        $msg->att_rate = $att_rate;
+
+        $sql = "UPDATE meetings SET att_rate='$att_rate' WHERE id='$meeting_id'";
+        if(!$db->update($sql)) {
+            // show error message
+        }
     } else {
         $msg->success = false;
     }

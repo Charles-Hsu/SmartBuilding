@@ -23,7 +23,7 @@ if (strlen($_SESSION['account']) == 0) {
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
-				<li class="nav-item">
+			<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
 				</li>
 				<li class="nav-item">
@@ -32,11 +32,13 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
 				</li>
-<!--				
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-				</li>
--->				
+
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
+				</li>				
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-resolution.php">決議事項</a>
+				</li>	
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">

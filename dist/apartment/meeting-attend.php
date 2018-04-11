@@ -75,7 +75,7 @@ $('.asset-table').DataTable({
 	"deferRender": true,
 	"processing": true
 })
-$('.meeting-holder').on('change',function(){
+$('.asset-table').on('change','.meeting-holder',function(){
     var id = $(this).attr('id');
     var att_id=$(this).attr('att-id');
     var meeting_id=$(this).attr('meeting-id');
@@ -94,7 +94,10 @@ $('.meeting-holder').on('change',function(){
 				var _data=JSON.parse(data)
 				
 				if(_data.success){
-					_this.closest('td').html(`<span>${_data.any_data}</span>`)
+                    _this.closest('td').html(`<span>${_data.any_data}</span>`)
+                    // _data.att_rate += 1;
+                    $('#assets-tab').find('.att-rate').text(_data.att_rate)
+                    // location.reload()
 				}else{
 					alert('請重新操作')
 				}

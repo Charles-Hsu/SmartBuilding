@@ -5,16 +5,16 @@ $meeting_type = $_GET['type'];
 $sql = "SELECT COUNT(*) as c FROM meeting_att WHERE meeting_id = $meeting_id";
 $var = $db->getRow($sql);
 $total = $var[c];
-echo $total;
+// echo $total;
 
 $sql = "SELECT COUNT(*) as c FROM meeting_att WHERE meeting_id = $meeting_id AND dt IS NOT NULL";
-echo $sql;
+// echo $sql;
 $var = $db->getRow($sql);
 $att = $var[c];
-echo $att;
+// echo $att;
 $att_rate = number_format($att/$total*100, 1);
 
-echo '出席率' . att_rate . ' %';
+// echo '出席率' . att_rate . ' %';
 
 $sql = "UPDATE meetings SET att_rate = $att_rate WHERE id = $meeting_id";
 $db->update($sql);
@@ -36,7 +36,7 @@ function timeFromString($str) {
 		<?php echo $var[round];?>
 		<?php echo $var[type];?>
 	</span>,
-	<span>目前出席率: <?php echo $var[att_rate];?> %</span>
+	<span>目前出席率: <span class="att-rate"><?php echo $var[att_rate];?></span> %</span>
 </div>
 <div>出席人員名單</div>
 <table class="table asset-table">
