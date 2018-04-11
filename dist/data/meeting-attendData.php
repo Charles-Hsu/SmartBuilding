@@ -14,8 +14,13 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 $t = date('H:i');
 $dt = date('Y-m-d H:i');
 
-if( $meeting_type == 1 || $meeting_type == 2 ){
+class Msg{
+    public $success='';
+    public $any_data='';
+}
 
+if( $meeting_type == 1 || $meeting_type == 2 ){
+    $msg=new Msg();
     // echo $att_id;
 
     // $sql = "INSERT INTO meeting_att (`id`, `meeting_id`, `att_id`, `dt`) VALUES (NULL, $meeting_id, $att_id,'" . "$dt" . "')";
@@ -24,24 +29,23 @@ if( $meeting_type == 1 || $meeting_type == 2 ){
     // $t = date_default_timezone_get();
     if($db->update($sql)) {
         // $db->insert($sql);
-        $msg[0]='success';
-        $any_data = $t;
+        $msg->success = true;
+        $msg->any_data = $t;
         // $any_data = $sql;
     } else {
-        $msg[0] = 'error';
+        $msg->success = false;
     }
-    $msg[1]=$any_data;
+
 } else {
+    $msg=new Msg();
     $sql="";
 
     if(true){
-        $msg[0] = 'success';
-        $any_data = $t;
+        $msg->success = true;
+        $msg->any_data = $t;
     }else{
-        $msg[0] = 'error';
+        $msg->success = false;
     }
-
-    $msg[1] = $any_data;
 }
 
 echo json_encode($msg);

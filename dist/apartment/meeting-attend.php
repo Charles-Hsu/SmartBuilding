@@ -83,23 +83,23 @@ $('.meeting-holder').on('change',function(){
 	$.ajax({
 		url:'../data/meeting-attendData.php',
 		method:'POST',
-		dataType:'json',
 		data:{
             id: id,
             att_id: att_id,
             meeting_id: meeting_id,
-			meeting_type: 1
+			meeting_type: <?php echo $_GET[type] ?>
 		},
 		success:function(data){
-			var new_date=new Date();
-			var new_hour=new_date.getHours();
-			var new_Min=new_date.getMinutes()
-			var new_Sec=new_date.getSeconds();
-			var time=`${new_hour}:${new_Min}:${new_Sec}`;
-			if(data[0] === 'success'){
-				_this.closest('td').html(`<span>${data[1]}</span>`)
-			}else{
-				alert('請重新操作')
+			try{
+				var _data=JSON.parse(data)
+				
+				if(_data.success){
+					_this.closest('td').html(`<span>${_data.any_data}</span>`)
+				}else{
+					alert('請重新操作')
+				}
+			}catch(error){
+				alert(data)
 			}
 		}
 	})

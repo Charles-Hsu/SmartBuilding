@@ -27,7 +27,7 @@ $var = $db->getRow($sql);
 	</thead>
 	<tbody>
 <?php
-$sql = "SELECT c.name AS edition, b.title, a.addr_no, a.floor, a.name FROM committee a, committee_role b, session c WHERE a.role_id = b.id AND a.edition = c.id";
+$sql = "SELECT c.name AS edition, b.title,a.role_id, a.addr_no, a.floor, a.name FROM committee a, committee_role b, session c WHERE a.role_id = b.id AND a.edition = c.id";
 $data = $db->getRows($sql);
 foreach($data as $var) {
 ?>
@@ -37,7 +37,7 @@ foreach($data as $var) {
 			<td><span><?php echo $var[addr_no];?></span></td>
 			<td><span><?php echo $var[floor];?></span></td>
             <td><span><?php echo $var[name];?></span></td>
-            <td><input type="checkbox"></td>
+            <td><input type="checkbox" class="meeting-holder" id="<?php echo $var[id] ?>"></td>
 		</tr>
 <?php
 	}

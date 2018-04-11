@@ -103,11 +103,11 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>處理天數</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody class="opinionlist_tbody">
 
 <?php
 foreach($data as $var) {
-	//var_dump($var);
+	// var_dump($var);
 
 ?>					
 						<tr>
@@ -166,20 +166,15 @@ if ($var['dt_responsed'] == '0000-00-00') {
 						</td>
 
 						<td>
-							
-							<?php
-							if ($var['dt_completed'] != '0000-00-00') {
+                            <?php
+							if ($var['dt_completed'] != '0000-00-00' && $var['dt_completed'] != null) {
 								$dt_completed = strtotime($var['dt_completed']);
-							
 							?>
-														<span><?=$var['dt_completed'];?></span>
-							<?php
-							} 
-							?>					
-													</td>
-
-						<td>
-							
+							    <span><?=$var['dt_completed'];?></span>
+							<?php } else { ?>
+                            <span class="un_completed"></span>
+                            <?php } ?>
+                        <td>
 <?php
 // echo $var[dt];
 $op_date = $var[dt];
@@ -191,7 +186,7 @@ if (strlen($var['dt_completed']) != 0) {
 }
 $diff = abs($dt_completed - strtotime($op_date)) / 24 / 3600 + 1;
 ?>
-							<span class="red" style="color:red"><?=$diff;?></span>
+							<span><?=$diff;?></span>
 <?php
 
 ?>					
@@ -217,7 +212,11 @@ $diff = abs($dt_completed - strtotime($op_date)) / 24 / 3600 + 1;
 <?php $jsData=json_encode($data); ?>
 
 <script>
-
+$('.opinionlist_tbody tr').each(function(i,item){
+    if($(item).find('td span').hasClass('un_completed')){
+        $(item).addClass('un_completed_red')
+    }
+})
 var data = <?php echo $jsData ?>;
 var tempData = {};
 var fullData = []
@@ -242,7 +241,8 @@ for(var i=1;i<=12;i++){
                 var dt_com=new Date(tempData[i][j].dt_completed).valueOf();
                 tempObj.end += ((dt_com-dt)/ 24 / 3600 / 1000)+ 1;
             }else{
-                tempObj.end +=0;
+                var dt_com=new Date().valueOf();
+                tempObj.end += ((dt_com-dt)/ 24 / 3600 / 1000)+ 1;
             }
             tempObj.reply += ((dt_res-dt)/ 24 / 3600 / 1000)+ 1;
             tempObj.length++;
@@ -277,7 +277,7 @@ for(var i=0; i<fullData.length; i++){
         replyData.push(0)
     }
     if(!isNaN (fullData[i].end / fullData[i].length)){
-        endData.push (fullData[i].end / fullData[i].length)
+        endData.push((fullData[i].end/fullData[i].length).toFixed(0))
     }else{
         endData.push(0)
     }
