@@ -879,6 +879,24 @@ table.punch-table td.checktime label{
 tr.un_completed_red{
     background: rgba(255, 7, 7, 0.25);
 }
+.buget-table tbody tr{
+    position: relative;
+}
+.asset-table tbody tr.amount-tr td {
+    padding: 0;
+}
+.amount-tr td .amount-box{
+    /* height: 0; */
+    /* overflow: hidden; */
+}
+.amount-head{
+    display: flex;
+    background-color: #1F90E6;
+}
+.amount-head div{
+    flex: 1;
+    text-align: center;
+}
 @media (max-width:992px){
     .container-fluid{
         width: calc(100% - 62px);
