@@ -51,9 +51,6 @@ session_start();
 						</tr>
 					</thead>
 					<tbody>
-
-
-
 <?php
 $sql = "SELECT a.meeting_type, a.id AS meeting_id, a.att_rate, a.date, b.name AS type, c.name AS session ,d.name AS round  FROM meetings a, meeting_type b, session c, round d WHERE a.meeting_type = b.id AND a.round = d.id AND a.session = c.id";
 $data = $db->getRows($sql);

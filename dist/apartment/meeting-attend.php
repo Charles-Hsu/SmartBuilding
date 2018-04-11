@@ -76,15 +76,19 @@ $('.asset-table').DataTable({
 	"processing": true
 })
 $('.meeting-holder').on('change',function(){
-	var _id=$(this).attr('data-id');
+    var id = $(this).attr('id');
+    var att_id=$(this).attr('att-id');
+    var meeting_id=$(this).attr('meeting-id');
 	var _this=$(this);
 	$.ajax({
 		url:'../data/meeting-attendData.php',
 		method:'POST',
 		dataType:'json',
 		data:{
-			id:_id,
-			meeting_type:1
+            id: id,
+            att_id: att_id,
+            meeting_id: meeting_id,
+			meeting_type: 1
 		},
 		success:function(data){
 			var new_date=new Date();
