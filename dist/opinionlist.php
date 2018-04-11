@@ -181,14 +181,17 @@ if ($var['dt_responsed'] == '0000-00-00') {
 						<td>
 							
 <?php
+// echo $var[dt];
+$op_date = $var[dt];
+// echo "'" . strlen($var[dt_completed]) . "'";
 $dt_completed = strtotime(date('Y-m-d'));
-if ($var['dt_completed'] != '0000-00-00') {
+if (strlen($var['dt_completed']) != 0) {
 	$dt_completed = strtotime($var['dt_completed']);
 } else {
 }
-$diff = abs($dt_completed - strtotime($var['dt'])) / 24 / 3600 + 1;
+$diff = abs($dt_completed - strtotime($op_date)) / 24 / 3600 + 1;
 ?>
-							<span><?=$diff;?></span>
+							<span class="red" style="color:red"><?=$diff;?></span>
 <?php
 
 ?>					
@@ -212,17 +215,21 @@ $diff = abs($dt_completed - strtotime($var['dt'])) / 24 / 3600 + 1;
 			</div>
 
 <?php $jsData=json_encode($data); ?>
+
 <script>
-var data=<?php echo $jsData ?>;
-var tempData={};
-var fullData=[]
+
+var data = <?php echo $jsData ?>;
+var tempData = {};
+var fullData = []
 
 data.forEach((item)=>{
     tempData[item.dt_month]=[]
 })
+
 for(var i=0;i<data.length;i++){
     tempData[data[i].dt_month].push(data[i])
 }
+
 for(var i=1;i<=12;i++){
     if(tempData[i] !== undefined){
         var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,length:0}
@@ -260,7 +267,7 @@ var completedData=[];
 var responsedData=[];
 var replyData=[];
 var endData=[];
-for(var i=0;i<fullData.length;i++){
+for(var i=0; i<fullData.length; i++){
     contentData.push(fullData[i].content)
     completedData.push(fullData[i].completed)
     responsedData.push(fullData[i].responsed)
@@ -269,8 +276,8 @@ for(var i=0;i<fullData.length;i++){
     }else{
         replyData.push(0)
     }
-    if(!isNaN(fullData[i].end/fullData[i].length)){
-        endData.push(fullData[i].end/fullData[i].length)
+    if(!isNaN (fullData[i].end / fullData[i].length)){
+        endData.push (fullData[i].end / fullData[i].length)
     }else{
         endData.push(0)
     }
@@ -330,13 +337,13 @@ var myChart = new Chart(opinionChart, {
             borderWidth: 1
         },{
             label: '已回復',
-            data: completedData,
+            data: responsedData,
             backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderWidth: 1
         },{
             label: '已結案',
-            data: responsedData,
+            data: completedData,
             backgroundColor: colors('rgb(0, 153, 0)').alpha(0.5).rgbString(),
             borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
             borderWidth: 1
