@@ -45,28 +45,22 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org/chart.php">組織管理團</a>
+					<a class="nav-link active" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/org/chart.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增組織管理團</span>
+					<span>新增委員</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-8col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST" enctype="multipart/form-data">
 							<div class="form-group row">
-								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
-								<div class="col-md-8 d-flex align-items-center">
-									<span>XXXXXX</span>
-								</div>
-							</div>
-							<div class="form-group row">
 								<label for="chart-session" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>屆別:</label>
 								<div class="col-md-8">
-									<select  class="form-control datepicker" name="chart-session" id="chart-session">
+									<select  class="form-control" name="chart-session" id="chart-session">
 										<option value="" selected>請選擇屆別</option>
 										<option value="">第一屆</option>
 										<option value="">第二屆</option>

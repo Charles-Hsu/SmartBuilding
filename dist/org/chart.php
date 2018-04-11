@@ -4,6 +4,12 @@ include('../Header.php');
 ?>
 <?php 
 
+
+if (count($_POST) > 0) {
+	echo "hello world";
+	var_dump($_POST);
+}
+
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
@@ -45,12 +51,15 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org/chart.php">組織管理團</a>
+					<a class="nav-link active" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/org/chart-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增委員
+				</a>
+				<a href="<?= $urlName ?>/org/chart-edit.php" class="btn add-asset-btn mb-3">
+					<span>+</span>委員會改選
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
@@ -60,33 +69,62 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>戶號</th>
 							<th>樓層</th>
 							<th>姓名</th>
+							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
 					<?php
-	$sql = "SELECT c.name AS edition, b.title, a.addr_no, a.floor, a.name FROM committee a, committee_role b, session c WHERE a.role_id = b.id AND a.edition = c.id";
-	$data = $db->getRows($sql);
-	//var_dump($data);
-	foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
+	$sql = "SELECT c.name AS session, b.title, a.addr_no, a.floor, a.name FROM committee a, committee_role b, session c WHERE a.role_id = b.id AND a.session = c.id";
 
+	$sql = "SELECT d.holder, d.addr_no, d.floor, c.name AS session_name, c.id AS session_id, b.title, b.id AS role_id FROM committee a, committee_role b, session c, household d WHERE a.role_id = b.id AND a.session = c.id AND d.id = a.holder_id";
+	
+	$data = $db->getRows($sql);
+	foreach($data as $var) {
+?>
 						<tr>
-							<td><span><?=$var[edition];?></span></td>
-							<td><span><?=$var[title];?></span></td>
-							<td><span><?=$var[addr_no];?></span></td>
-							<td><span><?=$var[floor];?></span></td>
-							<td><span><?=$var[name];?></span></td>
+							<td><span><input value="<?=$var['session_name'];?>" readonly></span></td>
+							<td><span><input value="<?=$var['title'];?>" readonly></span></td>
+							<td>
+								<span>
+									<select  class="form-control" name="committee-title" id="committee-titlen">
+									<?php
+									$sql = "SELECT distinct addr_no FROM `household`";
+									$dd = $db->getRows($sql);
+									$addr_no = $var['addr_no'];
+									foreach ($dd as $t) {
+									?>
+										<option value="<? echo $addr_no;?>" <?php echo !strcmp($t['addr_no'], $addr_no) ? "selected" : "";?>><? echo $addr_no;?></option>
+									<?php
+									}
+									?>
+									</select>
+								</span>
+							</td>
+							<td>
+								<span>
+								<select  class="form-control" name="committee-title" id="committee-titlen">
+									<?php
+									$sql = "SELECT distinct floor FROM `household`";
+									$dd = $db->getRows($sql);
+									$floor = $var['floor'];
+									foreach ($dd as $t) {
+									?>
+										<option value="<? echo $floor;?>" <?php echo !strcmp($t['floor'], $floor) ? "selected" : "";?>><? echo $floor;?></option>
+									<?php
+									}
+									?>
+									</select>
+								</span>
+							</td>
+							<td><span><input value="<?=$var['holder'];?>" readonly></span></td>
+							<td><span><a href="#">確認</a></td>
 						</tr>
 <?php
 	}
 ?>
 					</tbody>
 				</table>
+
 			</div>
 		</div>
 	</div>

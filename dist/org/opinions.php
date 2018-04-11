@@ -1,29 +1,11 @@
 <?php 
 include('../config.php');
 include('../Header.php'); 
-?>
-<?php 
-
-//$sql = 'SELECT a.*, b.addr_no,b.floor FROM opinions a, household b WHERE a.id = b.id AND a.dt_completed = "0000-00-00"';
 
 $sql = 'SELECT a.*, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
-
-// $sql = 'SELECT a.*, b.addr_no,b.floor, a.content FROM opinions a, household b WHERE b.id = a.household_id';
-
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
 $data = $db->getRows($sql);
-
-
 session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-/*
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-*/
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -52,7 +34,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">組織管理團</a>
+					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
@@ -68,101 +50,56 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>主旨</th>
 							<th>內容</th>
 							<th>回復</th>
-
-							<!--							
-							<th>結案日</th>
--->							
 							<th>結案</th>
 						</tr>
 					</thead>
 					<tbody>
-
-<?php
-foreach($data as $var) {
-	//var_dump($var);
-
-?>					
+						<?php
+						foreach($data as $var) {
+						?>					
 						<tr>
 						<td><span><?=$var['dt'];?></span></td>
 						<td><span><?=$var['addr_no'];?></span></td>
 						<td><span><?=$var['floor'];?></span></td>
 						<td><span><?=$var['type'];?></span></td>
 						<td><span><?=$var['content'];?></span></td>
-
-<?php
-/*
-$completed = 0;
-if ($var['dt_completed'] == '0000-00-00') {
-	echo '';
-} else {
-	$completed = 1;
-	echo $var['dt_completed'];
-}
-*/
-?>
-
 						<td>
-							
-<?php
-if ($var['dt_responsed'] == NULL) {
-?>						
+							<?php
+							if ($var['dt_responsed'] == NULL) {
+							?>						
 							<button data-id="<?=$var['id'];?>" class="btn-reply btn btn-outline-primary">確認</button>
-<?php
-} else {
-
-	if ($var['dt_responsed'] == '0000-00-00' || $var['dt_responsed'] == NULL) {
-?>
-
+							<?php
+							} else {
+								if ($var['dt_responsed'] == '0000-00-00' || $var['dt_responsed'] == NULL) {
+							?>
 							<span><input type='checkbox' class="btn-reply btn btn-outline-primary">></span>
-
-<?php
-	} else {
-?>
-
+							<?php
+								} else {
+							?>
 							<span><?=$var['dt_responsed'];?></span>
-
-<?php		
-	}
-?>
-<?php
-}
-?>					
-					
-					
+							<?php		
+								}
+							?>
+							<?php
+							}
+							?>					
 						</td>
-
 						<td>
-							
-<?php
-if ($var['dt_completed'] == NULL) {
-?>						
-							<button data-id="<?=$var['id'];?>" class="btn-end btn btn-outline-primary">結案</button>
-<?php
-} else {
-	if ($var['dt_completed'] == '0000-00-00' || $var['dt_completed'] == NULL) {
-?>
-							
+							<?php
+								if ($var['dt_completed'] == NULL) {
+							?>
 							<span><input type='checkbox' data-id="<?=$var['id'];?>" class="btn-end btn btn-outline-primary"></span>
-							
-<?php
-	} else {
-?>
+							<?php
+								} else {
+							?>
 							<span><?=$var['dt_completed'];?></span>
-<?php		
-	}
-?>
-<?php
-}
-?>					
-												
-												
-													</td>
-
-<?php
-
-}
-?>
-
+							<?php		
+								}
+							?>
+						</td>
+						<?php
+						} // foreach
+						?>
 					</tbody>
 				</table>
 			</div>
@@ -238,7 +175,6 @@ $('.btn-end').on('change',function(){
 			fulldate:getNowDate()[0],
 			fulltime:getNowDate()[1],
 			opinionstype:'end'
-
 		},
 		success:function(data){
 			if(data[0] == 'success'){
@@ -252,7 +188,7 @@ $('.btn-end').on('change',function(){
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
-		"searchPlaceholder": "搜尋資產...",
+		"searchPlaceholder": "搜尋住戶意見...",
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",

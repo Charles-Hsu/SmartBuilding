@@ -1,21 +1,10 @@
 <?php 
 include('../config.php');
 include('../Header.php'); 
-?>
-<?php 
 
-$sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$data = $db->getRows($sql);
 session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
 
 ?>
 <!-- 內容切換區 -->
@@ -45,64 +34,98 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org/chart.php">組織管理團</a>
+					<a class="nav-link active" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/org/chart.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>編輯組織管理團</span>
+					<span>改選委員</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-8col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
 							<div class="form-group row">
-								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
-								<div class="col-md-8 d-flex align-items-center">
-									<span>XXXXXX</span>
-								</div>
-							</div>
-							<div class="form-group row">
 								<label for="chart-session" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>屆別:</label>
 								<div class="col-md-8">
-									<select  class="form-control datepicker" name="chart-session" id="chart-session">
-										<option value="" selected>請選擇屆別</option>
-										<option value="">第一屆</option>
-										<option value="">第二屆</option>
+									<select  class="form-control" name="chart-session" id="chart-session">
+										<?php
+										$sql = "SELECT session FROM `committee` order by session desc limit 1";
+										$data = $db->getRow($sql);
+										$session_no = $data['session'];
+										$sql = "SELECT id,name FROM session WHERE id > $session_no ORDER BY id ASC LIMIT 2";
+										echo $sql;
+										$data = $db->getRows($sql);
+										foreach ($data as $var) {
+										?>
+										<option value="<? echo $var['id'];?>"><? echo $var['name'];?></option>
+										<?php
+										}
+										?>
 									</select>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="chart-note" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>備註:</label>
+									<span class="important">*</span>職稱:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="chart-note" id="chart-note">
+									<select  class="form-control" name="committee-title" id="committee-titlen">
+										<?php
+										$sql = "SELECT id,title FROM `committee_role`";
+										$data = $db->getRows($sql);
+										foreach ($data as $var) {
+										?>
+										<option value="<? echo $var['id'];?>"><? echo $var['title'];?></option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="mails-upload" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>檔案上傳:</label>
+									<span class="important">*</span>區權人:</label>
 								<div class="col-md-8">
-                                    <label for="mails-upload" class="files-upload">
-                                        <input name="mails-upload" type="file" id="mails-upload" class="form-control files-input" placeholder="點擊選擇欲上傳的檔案">
-                                        <span class="files-name-box">
-                                            <i class="fas fa-upload"></i>
-                                            <span class="files-name"></span>
-                                        </span>
-                                    </label>
+									<span>戶號：</span>
+									<select  class="form-control" name="committee-title" id="committee-titlen">
+										<?php
+										$sql = "SELECT distinct addr_no FROM `household`";
+										$data = $db->getRows($sql);
+										foreach ($data as $var) {
+										?>
+										<option value="<? echo $var['addr_no'];?>"><? echo $var['addr_no'];?></option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
+								<div class="col-md-8">
+									<span>樓層：</span>
+									<select  class="form-control" name="committee-title" id="committee-titlen">
+										<?php
+										$sql = "SELECT distinct floor FROM `household` ORDER BY floor*1 ASC";
+										$data = $db->getRows($sql);
+										foreach ($data as $var) {
+										?>
+										<option value="<? echo $var['floor'];?>"><? echo $var['floor'];?></option>
+										<?php
+										}
+										?>
+									</select>
+								</div>
+
+								<div class="col-md-8">
+									<span>姓名：</span><span></span>
+									<input type = "text" value="這裡要放選擇樓號和樓層後的區權人姓名，透過js去資料庫撈出來後更新" readonly> 
+								</div>
+
+
 							</div>
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
-                                    <a href="#">smartbuilding.sql</a>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-md-8 offset-md-4">
-									<button class="btn btn-primary">儲存更新</button>
-									<button class="btn btn-outline-secondary">取消更新</button>
-									<button class="btn btn-outline-danger">刪除該人員</button>
+									<button class="btn btn-primary">確認</button>
+									<button class="btn btn-outline-secondary">取消</button>
 								</div>
 							</div>
 						</form>

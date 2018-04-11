@@ -14,13 +14,13 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 $t = date('H:i');
 $dt = date('Y-m-d H:i');
 
-class Msg{
+class Msg {
     public $success   = '';
     public $any_data  = '';
     public $att_rate  = '';
 }
 
-if( $meeting_type == 1 || $meeting_type == 2 ){
+if( $meeting_type == 1 || $meeting_type == 2 ) {
     $msg=new Msg();
     // echo $att_id;
 

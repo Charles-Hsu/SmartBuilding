@@ -41,7 +41,7 @@ session_start();
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">組織管理團</a>
+					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
 			</ul>
 			<div id="assets-tab">

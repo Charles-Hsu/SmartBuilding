@@ -28,7 +28,6 @@ session_start();
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
 				</li>
-
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
 				</li>				
