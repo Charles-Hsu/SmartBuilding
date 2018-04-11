@@ -1,9 +1,33 @@
 <?php
 $meeting_id = $_GET['id'];
 $meeting_type = $_GET['type'];
+
+$sql = "SELECT COUNT(*) as c FROM meeting_att WHERE meeting_id = $meeting_id";
+$var = $db->getRow($sql);
+$total = $var[c];
+echo $total;
+
+$sql = "SELECT COUNT(*) as c FROM meeting_att WHERE meeting_id = $meeting_id AND dt IS NOT NULL";
+echo $sql;
+$var = $db->getRow($sql);
+$att = $var[c];
+echo $att;
+$att_rate = number_format($att/$total*100, 1);
+
+echo '出席率' . att_rate . ' %';
+
+$sql = "UPDATE meetings SET att_rate = $att_rate WHERE id = $meeting_id";
+$db->update($sql);
+
 $sql = "SELECT a.id AS meeting_id, a.att_rate, a.date,b.name AS type, c.name AS session ,d.name AS round  FROM meetings a, meeting_type b, session c, round d WHERE a.meeting_type = b.id AND a.round = d.id AND a.session = c.id AND a.id = $meeting_id";
 
 $var = $db->getRow($sql);
+
+function timeFromString($str) {
+	return date("H:i", strtotime($str));
+}
+
+
 ?>
 <div><?=$var[date];?></div>
 <div>
@@ -12,7 +36,7 @@ $var = $db->getRow($sql);
 		<?php echo $var[round];?>
 		<?php echo $var[type];?>
 	</span>,
-	<span>目前出席率:<?php echo number_format($var[att_rate],1);?> %</span>
+	<span>目前出席率: <?php echo $var[att_rate];?> %</span>
 </div>
 <div>出席人員名單</div>
 <table class="table asset-table">
@@ -38,7 +62,7 @@ foreach($data as $var) {
 <?php
 	if ($var[dt]) {
 ?>			
-			<td><?php echo $var[dt];?></td>
+			<td><?php echo timeFromString($var[dt]);?></td>
 <?php
 	} else {
 ?>
