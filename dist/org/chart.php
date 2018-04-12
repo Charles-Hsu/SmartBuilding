@@ -101,7 +101,7 @@ if (strlen($_SESSION['account']) == 0) {
 									$addr_no = $var['addr_no'];
 									foreach ($dd as $t) {
 									?>
-										<option value="<? echo $addr_no;?>" <?php echo !strcmp($t['addr_no'], $addr_no) ? "selected" : "";?>><? echo $addr_no;?></option>
+										<option value="<? echo $t['addr_no'];?>" <?php echo !strcmp($t['addr_no'], $addr_no) ? "selected" : "";?>><? echo $t['addr_no'];?></option>
 									<?php
 									}
 									?>
@@ -112,12 +112,12 @@ if (strlen($_SESSION['account']) == 0) {
 								<span>
 								<select class="form-control" name="floor" id="floor">
 									<?php
-									$sql = "SELECT distinct floor FROM `household`";
+									$sql = "SELECT distinct floor FROM `household` ORDER BY floor*1";
 									$dd = $db->getRows($sql);
 									$floor = $var['floor'];
 									foreach ($dd as $t) {
 									?>
-										<option value="<? echo $floor;?>" <?php echo !strcmp($t['floor'], $floor) ? "selected" : "";?>><? echo $floor;?></option>
+										<option value="<? echo $t['floor'];?>" <?php echo !strcmp($t['floor'], $floor) ? "selected" : "";?>><? echo $t['floor'];?></option>
 									<?php
 									}
 									?>
