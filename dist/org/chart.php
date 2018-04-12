@@ -69,6 +69,9 @@ if (strlen($_SESSION['account']) == 0) {
 				<a href="<?= $urlName ?>/org/chart-edit.php" class="btn add-asset-btn mb-3">
 					<span>+</span>委員會改選
 				</a>
+				<a href="<?= $urlName ?>/org/chart-committee-add.php" class="btn add-asset-btn mb-3">
+					<span>+</span>新增下一屆
+				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
@@ -81,14 +84,16 @@ if (strlen($_SESSION['account']) == 0) {
 						</tr>
 					</thead>
 					<tbody>
-					<?php
-	$sql = "SELECT c.name AS session, b.title, a.addr_no, a.floor, a.name FROM committee a, committee_role b, session c WHERE a.role_id = b.id AND a.session = c.id";
+						<?php
+							$sql = "SELECT session AS session_id FROM committee ORDER BY session DESC LIMIT 1";
+							$data = $db->getRow($sql);
+							$current_session_id = $data['session_id'];
 
-	$sql = "SELECT d.holder, d.addr_no, d.floor, c.name AS session_name, c.id AS session_id, b.title, b.id AS role_id FROM committee a, committee_role b, session c, household d WHERE a.role_id = b.id AND a.session = c.id AND d.id = a.holder_id";
-	
-	$data = $db->getRows($sql);
-	foreach($data as $var) {
-?>
+							$sql = "SELECT d.holder, d.addr_no, d.floor, c.name AS session_name, c.id AS session_id, b.title, b.id AS role_id FROM committee a, committee_role b, session c, household d WHERE a.role_id = b.id AND a.session = c.id AND d.id = a.holder_id AND a.session = $current_session_id";
+		
+							$data = $db->getRows($sql);
+							foreach($data as $var) {
+						?>
 						<tr>
 							<td><span><input value="<?=$var['session_name'];?>" readonly></span></td>
 							<td><span><input value="<?=$var['title'];?>" readonly></span></td>
