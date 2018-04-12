@@ -72,7 +72,7 @@ $data= $db->getRows($sql2);
 								<label for="builds-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span></label>
 								<div class="col-md-8">
-									<select id="innerswim-session" class="form-control" name="session">>
+									<select id="innerswim-session" class="form-control" name="session" disabled>
 									<?php
 										$sql = "SELECT * FROM session";
 										$data = $db->getRows($sql);
@@ -97,7 +97,7 @@ $data= $db->getRows($sql2);
 								<label for="builds-address" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span></label>
 								<div class="col-md-8">
-									<select id="innerswim-round" class="form-control" name="round">
+									<select id="innerswim-round" class="form-control" name="round" disabled>
 									<?php
 										$sql = "SELECT * FROM round";
 										$data = $db->getRows($sql);
