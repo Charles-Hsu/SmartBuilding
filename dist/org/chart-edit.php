@@ -87,37 +87,38 @@ session_start();
 								<label for="mails-upload" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>區權人:</label>
 								<div class="col-md-8">
-									<span>戶號：</span>
-									<select  class="form-control" name="committee-title" id="committee-titlen">
-										<?php
-										$sql = "SELECT distinct addr_no FROM `household`";
-										$data = $db->getRows($sql);
-										foreach ($data as $var) {
-										?>
-										<option value="<? echo $var['addr_no'];?>"><? echo $var['addr_no'];?></option>
-										<?php
-										}
-										?>
-									</select>
-								</div>
-								<div class="col-md-8">
-									<span>樓層：</span>
-									<select  class="form-control" name="committee-title" id="committee-titlen">
-										<?php
-										$sql = "SELECT distinct floor FROM `household` ORDER BY floor*1 ASC";
-										$data = $db->getRows($sql);
-										foreach ($data as $var) {
-										?>
-										<option value="<? echo $var['floor'];?>"><? echo $var['floor'];?></option>
-										<?php
-										}
-										?>
-									</select>
-								</div>
-
-								<div class="col-md-8">
-									<span>姓名：</span><span></span>
-									<input type = "text" value="這裡要放選擇樓號和樓層後的區權人姓名，透過js去資料庫撈出來後更新" readonly> 
+									<div class="row mr-0 ml-0">
+										<label class="col-form-label">戶號：</label>
+										<select  class="form-control" name="committee-title" id="committee-titlen">
+											<?php
+											$sql = "SELECT distinct addr_no FROM `household`";
+											$data = $db->getRows($sql);
+											foreach ($data as $var) {
+											?>
+											<option value="<? echo $var['addr_no'];?>"><? echo $var['addr_no'];?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+									<div class="row mr-0 ml-0">
+										<label class="col-form-label">樓層：</label>
+										<select  class="form-control" name="committee-title" id="committee-titlen">
+											<?php
+											$sql = "SELECT distinct floor FROM `household` ORDER BY floor*1 ASC";
+											$data = $db->getRows($sql);
+											foreach ($data as $var) {
+											?>
+											<option value="<? echo $var['floor'];?>"><? echo $var['floor'];?></option>
+											<?php
+											}
+											?>
+										</select>
+									</div>
+									<div class="row mr-0 ml-0">
+										<label class="col-form-label">姓名：</label>
+										<input type="text" class="form-control" value="這裡要放選擇樓號和樓層後的區權人姓名，透過js去資料庫撈出來後更新" readonly> 
+									</div>
 								</div>
 
 
