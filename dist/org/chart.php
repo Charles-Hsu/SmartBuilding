@@ -26,13 +26,6 @@ if (strlen($_SESSION['account']) == 0) {
 ?>
 <!-- 內容切換區 -->
 
-<style>
-	.disableClick {
-		pointer-events: none;
-	}
-</style>
-
-
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
@@ -83,7 +76,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>編輯</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody class="chart-tbody">
 						<?php
 							$sql = "SELECT session AS session_id FROM committee ORDER BY session DESC LIMIT 1";
 							$data = $db->getRow($sql);
@@ -95,42 +88,40 @@ if (strlen($_SESSION['account']) == 0) {
 							foreach($data as $var) {
 						?>
 						<tr>
-							<td><span><input value="<?=$var['session_name'];?>" readonly></span></td>
-							<td><span><input value="<?=$var['title'];?>" readonly></span></td>
-							<td>
-								<span>
-									<select  class="form-control" name="addr_no" id="addr_no">
-									<?php
-									$sql = "SELECT distinct addr_no FROM `household`";
-									$dd = $db->getRows($sql);
-									$addr_no = $var['addr_no'];
-									foreach ($dd as $t) {
-									?>
-										<option value="<? echo $t['addr_no'];?>" <?php echo !strcmp($t['addr_no'], $addr_no) ? "selected" : "";?>><? echo $t['addr_no'];?></option>
-									<?php
-									}
-									?>
-									</select>
-								</span>
+							<td><div><?=$var['session_name'];?></div></td>
+							<td class="data-title"><div id="title"><?=$var['title'];?></div></td>
+							<td class="data-addr_no">
+								<select  class="form-control" name="addr_no" id="addr_no" disabled>
+								<?php
+								$sql = "SELECT distinct addr_no FROM `household`";
+								$dd = $db->getRows($sql);
+								$addr_no = $var['addr_no'];
+								foreach ($dd as $t) {
+								?>
+									<option value="<?php echo $t['addr_no'];?>" <?php echo !strcmp($t['addr_no'], $addr_no) ? "selected" : "";?>><?php echo $t['addr_no'];?></option>
+								<?php
+								}
+								?>
+								</select>
 							</td>
-							<td>
-								<span>
-								<select class="form-control" name="floor" id="floor">
+							<td class="data-floor">
+								<select class="form-control" name="floor" id="floor" disabled>
 									<?php
 									$sql = "SELECT distinct floor FROM `household` ORDER BY floor*1";
 									$dd = $db->getRows($sql);
 									$floor = $var['floor'];
 									foreach ($dd as $t) {
 									?>
-										<option value="<? echo $t['floor'];?>" <?php echo !strcmp($t['floor'], $floor) ? "selected" : "";?>><? echo $t['floor'];?></option>
+										<option value="<?php echo $t['floor'];?>" <?php echo !strcmp($t['floor'], $floor) ? "selected" : "";?>><?php echo $t['floor'];?></option>
 									<?php
 									}
 									?>
-									</select>
-								</span>
+								</select>
 							</td>
-							<td><span><input value="<?=$var['holder'];?>" readonly></span></td>
-							<td><span><a href="#" class="disableClick">確認</a></td>
+							<td class="data-holder"><div id="holder"><?=$var['holder'];?></div></td>
+							<td>
+								<button class="btn btn-primary disableClick">修改</button>
+							</td>
 						</tr>
 <?php
 	}
@@ -143,17 +134,88 @@ if (strlen($_SESSION['account']) == 0) {
 	</div>
 </div>
 
-
+<?php
+$sql = "SELECT * FROM `household`";
+$data=$db->getRows($sql);
+?>
 <script>
+var chartData=<?php echo json_encode($data)  ?>;
 $('#addr_no').on('change',function(e){
 	// var _val=$('#household-own').val()
 	// $('#household-name').val(_val)
 	// e.preventDefault()
 	$("#addr_no").css("pointer-events", "auto");
 })
-</script>
+$('.chart-tbody').on('click','.disableClick',function(){
+	$(this).closest('tr').find('td select').prop('disabled',false)
+	var submitBtn=`
+		<div class="btn-group">
+			<button class="btn btn-success submitClick ">確認</button>
+			<button class="btn btn-secondry cancelClick ">取消</button>
+		</div>
+	`;
+	$(this).closest('td').html(submitBtn)
+})
 
-<script>
+$('.chart-tbody').on('click','.submitClick',function(){
+	var _this=$(this);
+	var data={};
+	var title=$(this).closest('tr').find('td #title').text()
+	var addr_no=$(this).closest('tr').find('td.data-addr_no #addr_no').val()
+	var floor=$(this).closest('tr').find('td.data-floor #floor').val()
+	var holder=$(this).closest('tr').find('td #holder').text()
+	data={title,addr_no,floor,holder}
+	console.log(data)
+	$.ajax({
+		url:'../data/chartData.php',
+		method:'POST',
+		data:data,
+		success:function(data){
+			try{
+				var _data=JSON.parse(data);
+				if(_data.success){
+					_this.closest('tr').find('td select').prop('disabled',true)
+					_this.closest('td').html("<button class='btn btn-primary disableClick'>修改</button>")
+					// console.log(_data.data)
+				}
+			}catch(error){
+				alert(data)
+			}
+		},
+		error:function(error){
+			console.log(error)
+		}
+	})
+})
+
+$('.chart-tbody').on('change','#addr_no',function(){
+	var addr_no=$(this).val();
+	var floor=$('#floor').val();
+	var getName=chartData.filter((item,index)=>{
+		return item.addr_no == addr_no && item.floor == floor;
+	})
+	if(getName.length > 0){
+		$('#holder').text(getName[0].holder)
+	}else{
+		$('#holder').text('')
+	}
+})
+$('.chart-tbody').on('change','#floor',function(){
+	var addr_no=$('#addr_no').val();
+	var floor=$(this).val();
+	var getName=chartData.filter((item,index)=>{
+		return item.addr_no == addr_no && item.floor == floor;
+	})
+	if(getName.length > 0){
+		$('#holder').text(getName[0].holder)
+	}else{
+		$('#holder').text('')
+	}
+})
+$('.chart-tbody').on('click','.cancelClick',function(){
+	$(this).closest('tr').find('td select').prop('disabled',true)
+	$(this).closest('td').html("<button class='btn btn-primary disableClick'>修改</button>")
+})
 
 $('.asset-table').DataTable({
 	"language": {
