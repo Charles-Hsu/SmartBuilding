@@ -25,6 +25,14 @@ if (strlen($_SESSION['account']) == 0) {
 
 ?>
 <!-- 內容切換區 -->
+
+<style>
+	.disableClick {
+		pointer-events: none;
+	}
+</style>
+
+
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
@@ -86,7 +94,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span><input value="<?=$var['title'];?>" readonly></span></td>
 							<td>
 								<span>
-									<select  class="form-control" name="committee-title" id="committee-titlen">
+									<select  class="form-control" name="addr_no" id="addr_no">
 									<?php
 									$sql = "SELECT distinct addr_no FROM `household`";
 									$dd = $db->getRows($sql);
@@ -102,7 +110,7 @@ if (strlen($_SESSION['account']) == 0) {
 							</td>
 							<td>
 								<span>
-								<select  class="form-control" name="committee-title" id="committee-titlen">
+								<select class="form-control" name="floor" id="floor">
 									<?php
 									$sql = "SELECT distinct floor FROM `household`";
 									$dd = $db->getRows($sql);
@@ -117,7 +125,7 @@ if (strlen($_SESSION['account']) == 0) {
 								</span>
 							</td>
 							<td><span><input value="<?=$var['holder'];?>" readonly></span></td>
-							<td><span><a href="#">確認</a></td>
+							<td><span><a href="#" class="disableClick">確認</a></td>
 						</tr>
 <?php
 	}
@@ -130,7 +138,18 @@ if (strlen($_SESSION['account']) == 0) {
 	</div>
 </div>
 
+
 <script>
+$('#addr_no').on('change',function(e){
+	// var _val=$('#household-own').val()
+	// $('#household-name').val(_val)
+	// e.preventDefault()
+	$("#addr_no").css("pointer-events", "auto");
+})
+</script>
+
+<script>
+
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
