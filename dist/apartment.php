@@ -42,9 +42,9 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-resolution.php">決議事項</a>
 				</li>				
-                <!-- <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-                </li> -->
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">規約設定</a>
+                </li>
 			</ul>
 			<div id="assets-tab" class="d-flex flex-column px-3">
 				<form action="" class="col-md-8 col-sm-12">

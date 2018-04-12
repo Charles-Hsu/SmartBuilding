@@ -33,14 +33,10 @@ session_start();
 				</li>				
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-resolution.php">決議事項</a>
-				</li>								
-<!--				
-
-
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-				</li>
--->				
+				</li>	
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">規約設定</a>
+                </li>							
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/apartment/building-create.php" class="btn add-asset-btn mb-3">

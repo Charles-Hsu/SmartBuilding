@@ -15,7 +15,8 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
     <a class="" href="./opinionlist.php">住戶意見</a>
 </nav>
 <div class="row mb-3">
-    <div class="col-md-3 col-6 mt-3">
+
+    <!-- <div class="col-md-3 col-6 mt-3">
         <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
@@ -25,8 +26,9 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-3 col-6 mt-3">
+    </div> -->
+
+    <!-- <div class="col-md-3 col-6 mt-3">
         <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
@@ -36,8 +38,8 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-3 col-6 mt-3">
+    </div> -->
+    <!-- <div class="col-md-3 col-6 mt-3">
         <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
@@ -47,8 +49,8 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-3 col-6 mt-3">
+    </div> -->
+    <!-- <div class="col-md-3 col-6 mt-3">
         <div class="kpiInfo-card card h-100">
             <div class="card-body d-flex align-items-center">
                 <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
@@ -58,10 +60,13 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 
-
+<?php
+    $sql = "SELECT * FROM apartment_settings";
+    $data = $db->getRow($sql);
+?>
 
 <table>
 <tbody>
@@ -72,7 +77,7 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
         <td>區權會</td>
     </tr>
     <tr>
-        <td>1. 召開次數÷ 規約規定次數</td>
+        <td>1. 召開次數÷ 規約規定次數 (<?php echo $data['holder_meeting_num']; ?>) </td>
     </tr>
     <tr>
         <td>2. 執行記錄÷ 會議記錄事項</td>
@@ -81,7 +86,7 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
         <td>管委會</td>
     </tr>
     <tr>
-        <td>1. 召開次數÷ 規約規定次數</td>
+        <td>1. 召開次數÷ 規約規定次數 (<?php echo $data['committee_meeting_num']; ?>)</td>
     </tr>
     <tr>
         <td>2. 執行記錄÷ 會議記錄事項</td>
@@ -114,10 +119,10 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
     </thead>
 <tbody>
     <tr>
-        <td>1. 現場主管合格人數÷ 編制人數</td>
+        <td>1. 現場主管合格人數÷ 編制人數 (<?php echo $data['op_man_num']; ?>)</td>
     </tr>
     <tr>
-        <td>2. 保全員合格人數÷ 編制人數</td>
+        <td>2. 保全員合格人數÷ 編制人數 (<?php echo $data['op_patrol_num']; ?>)</td>
     </tr>
 </tbody>
 </table>
