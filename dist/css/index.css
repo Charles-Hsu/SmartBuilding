@@ -897,6 +897,23 @@ tr.un_completed_red{
     flex: 1;
     text-align: center;
 }
+.chart-tbody tr td .form-control[readonly],
+.chart-tbody tr td .form-control:disabled{
+    background-color: transparent;
+    border: none;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+}
+
+.chart-tbody tr td .form-control[readonly]:focus,
+.chart-tbody tr td .form-control:disabled:focus{
+    box-shadow: none;
+}
+
+
+
+
 @media (max-width:992px){
     .container-fluid{
         width: calc(100% - 62px);
