@@ -30,7 +30,6 @@
 		$post_by = '管委會';
 
 		$sql = "INSERT INTO post (`id`, `date`, `post_by`, `content`) VALUES (NULL, '$date', '$post_by', '$content')";
-		echo $sql;
 
 		if ($db->insert($sql)) {
 			$message="新增成功";
