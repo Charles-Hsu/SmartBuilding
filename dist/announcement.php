@@ -60,13 +60,13 @@ $data = $db->getRows($sql);
 				foreach($data as $var) {
 			?>					
 			<tr>
-				<td><span><?=$var['date'];?></span></td>
-				<td><span><?=$var['content'];?></span></td>
+				<td class="announ-date"><span><?=$var['date'];?></span></td>
+				<td class="announ-content"><input type="text" class="form-control" value="<?=$var['content'];?>" readonly></td>
 				<?php
 					if ($_isAdmin) {
 				?>
-				<td><div><a href="#">編輯</a></div></td>
-				<td><div><a href="#">刪除</a></div></td>				
+				<td class="announ-edit" data-id="<?= $var[id] ?>"><a href="#" class="btn btn-primary btn-announEdit">編輯</a></td>
+				<td class="announ-del"><a href="#" data-id="<?= $var[id] ?>" class="btn btn-danger btn-announDel">刪除</a></td>				
 				<?php
 					}
 				?>
@@ -104,6 +104,72 @@ $('.asset-table').DataTable({
     "order": [[0, 'desc']],
     //"order": [[0, 'asc']],
 })
+$('.btn-announEdit').on('click',function(e){
+	e.preventDefault();
+	$(this).closest('tr').find('.announ-content input').prop('readonly',false);
+	$(this).closest('td').html('<a href="#" class="btn btn-success btn-announSave">保存</a>')
+})
 
+$('.announ-edit').on('click','.btn-announSave',function(e){
+	var _this=$(this);
+	var id=_this.closest('.announ-edit').attr('data-id');
+	var content=_this.closest('tr').find('.announ-content input').val();
+	e.preventDefault();
+	$.ajax({
+		url:'./data/announcementData.php',
+		method:'POST',
+		data:{
+			id,
+			content,
+			type:'PUT'
+		},
+		success:function(data){
+			try{
+				var _data=JSON.parse(data);
+				if(_data.success){
+					_this.closest('tr').find('.announ-content input').prop('readonly',true);
+					_this.closest('tr').find('.announ-edit').html('<a href="#" class="btn btn-primary btn-announEdit">編輯</a>')
+					alert('修改成功');
+				}else{
+					alert('請重新操作')
+				}
+			}catch(error){
+				alert(data)
+			}
+		},
+		error:function(error){
+			console.log(error)
+		}
+	})
+})
+
+$('.btn-announDel').on('click',function(e){
+	var id=$(this).attr('data-id');
+	e.preventDefault();
+	if(confirm('確定刪除??')){
+		$.ajax({
+			url:'./data/announcementData.php',
+			method:'POST',
+			data:{ id ,type:'DELETE'},
+			success:function(data){
+				try{
+					var _data=JSON.parse(data);
+					if(_data.success){
+						location.reload();
+					}else{
+						alert('請重新操作')
+					}
+				}catch(error){
+					alert(data)
+				}
+			},
+			error:function(err){
+				console.log(err)
+			}
+		})
+	}else{
+		return false;
+	}
+})
 </script>
 <?php include('../Footer.php'); ?>
