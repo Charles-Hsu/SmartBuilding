@@ -30,7 +30,7 @@ $sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM op
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
-
+// var_dump($data);
 
 ?>
 
@@ -80,15 +80,15 @@ if ($_isAdmin) {
             foreach($data as $var) {
         ?>					
             <tr>
-            <td><span><?=$var['dt'];?></span></td>
+            <td class="td_dt"><span><?=$var['dt'];?></span></td>
             <td><span><?=$var['addr_no'];?></span></td>
             <td><span><?=$var['floor'];?></span></td>
             <td><span><?=$var['content'];?></span></td>
-    		<td>
+    		<td class="td_responsed">
                 <?php
                     if (strlen($var['dt_responsed']) == 0) {
                 ?>						
-                <input type="checkbox">
+                <input type="checkbox" class="dt_responsed" data-id="<?= $var[household_id] ?>">
                 <?php
                     } else {
                         $diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
@@ -100,19 +100,21 @@ if ($_isAdmin) {
             </td>
 
 
-    		<td>
-                <?php
-                    if (strlen($var['dt_completed']) == 0) {
-                ?>						
-                <input type="checkbox">
-                <?php
-                    } else {
-                        $diff = abs(strtotime($var['dt_completed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
-                ?>
-				<span><?php echo round($diff,2);?></span>
-                <?php
-                    }
-                ?>					
+    		<td class="td_completed">
+            <?php
+                if (strlen($var['dt_completed']) == 0 && strlen($var['dt_responsed']) != 0) {
+            ?>						
+                <input type="checkbox" class="dt_completed" data-id="<?= $var[household_id] ?>">
+            <?php
+                } else if( strlen($var['dt_responsed']) == 0 ){
+            ?>
+                <input type="checkbox" class="dt_completed" data-id="<?= $var[household_id] ?>" disabled>
+            <?php
+                } else {
+                    $diff = abs(strtotime($var['dt_completed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
+            ?>
+                <span><?php echo round($diff,2);?></span>
+            <?php } ?>						
             </td>
         <?php
             }
@@ -140,21 +142,28 @@ data.forEach((item)=>{
 for(var i=0;i<data.length;i++){
     tempData[data[i].dt_month].push(data[i])
 }
-
+// console.log(tempData)
 for(var i=1;i<=12;i++){
     if(tempData[i] !== undefined){
-        var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,length:0}
+        var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,length:0,res:0}
         for(var j=0;j<tempData[i].length;j++){
             tempObj.month=tempData[i][j].dt_month
             var dt=new Date(tempData[i][j].dt).valueOf();
-            var dt_res=new Date(tempData[i][j].dt_responsed).valueOf();
-
+            
+            if(tempData[i][j].dt_responsed != null){
+                var dt_res=new Date(tempData[i][j].dt_responsed).valueOf();
+                tempObj.res += parseInt( ((dt_res-dt)/ 24 / 3600 / 1000)+ 1,0);
+            }else{
+                var dt_res=new Date().valueOf();
+                tempObj.res += parseInt( ((dt_res-dt)/ 24 / 3600 / 1000)+ 1,0);
+            }
+            
             if(tempData[i][j].dt_completed != null){
                 var dt_com=new Date(tempData[i][j].dt_completed).valueOf();
-                tempObj.end += ((dt_com-dt)/ 24 / 3600 / 1000)+ 1;
+                tempObj.end += parseInt( ((dt_com-dt)/ 24 / 3600 / 1000)+ 1,0);
             }else{
                 var dt_com=new Date().valueOf();
-                tempObj.end += ((dt_com-dt)/ 24 / 3600 / 1000)+ 1;
+                tempObj.end += parseInt( ((dt_com-dt)/ 24 / 3600 / 1000)+ 1,0);
             }
             tempObj.reply += ((dt_res-dt)/ 24 / 3600 / 1000)+ 1;
             tempObj.length++;
@@ -170,10 +179,11 @@ for(var i=1;i<=12;i++){
         }
         fullData.push(tempObj)
     }else{
-        var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,length:0}
+        var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,res:0,length:0}
         fullData.push(tempObj)
     }
 }
+// console.log(fullData)
 var contentData=[];
 var completedData=[];
 var responsedData=[];
@@ -194,9 +204,7 @@ for(var i=0; i<fullData.length; i++){
         endData.push(0)
     }
 }
-// console.log(tempData)
-// console.log(tempData)
-// console.log(fullData)
+// console.log(replyData,endData)
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
@@ -304,5 +312,68 @@ var myChart = new Chart(opinionSpeedChart, {
         }
     }
 });
+
+$('.opinionlist_tbody').on('click','.dt_responsed',function(){
+    var _this=$(this);
+    var household_id=_this.attr('data-id');
+    var dt=_this.closest('tr').find('.td_dt span').text()
+    console.log(dt)
+    $.ajax({
+        url:"./data/optionlistData.php",
+        method:"POST",
+        data:{
+            household_id,
+            dt,
+            type:"post_res"
+        },
+        success:function(data){
+            try{
+                var _data=JSON.parse(data);
+                if(_data.success){
+                    var reply_day=Math.round((new Date(_data.data).valueOf()-new Date(dt).valueOf())/(24*60*60*1000)+1)
+                    _this.closest('td').html(`<span>${reply_day}</span>`)
+                    $('.opinionlist_tbody').find('.td_completed input').prop('disabled',false)
+                }else{
+                    alert('請重新操作')
+                }
+            }catch(error){
+                alert(data);
+            }
+        },
+        error:function(){
+            console.log('Error')
+        }
+    })
+})
+
+$('.opinionlist_tbody').on('click','.dt_completed',function(){
+    var _this=$(this);
+    var household_id=_this.attr('data-id');
+    $.ajax({
+        url:"./data/optionlistData.php",
+        method:"POST",
+        data:{
+            household_id,
+            dt,
+            type:"post_com"
+        },
+        success:function(data){
+            try{
+                var _data=JSON.parse(data);
+                if(_data.success){
+                    var end_day=Math.round((new Date(_data.data).valueOf()-new Date(dt).valueOf())/(24*60*60*1000)+1)
+                    _this.closest('td').html(`<span>${end_day}</span>`)
+                }else{
+                    alert('請重新操作')
+                }
+            }catch(error){
+                alert(data);
+            }
+        },
+        error:function(){
+            console.log('Error')
+        }
+    })
+})
 </script>
 <?php include('../Footer.php'); ?>
