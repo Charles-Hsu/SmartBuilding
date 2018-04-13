@@ -13,8 +13,8 @@ if ($_isAdmin) {
 ?>
     <a class="active" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
+    <a class="" href="./announcement.php">公告</a>
 <?php
 }
 ?>    

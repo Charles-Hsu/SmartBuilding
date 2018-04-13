@@ -11,10 +11,10 @@ $_isAdmin = $_SESSION['admin'];
             </div>
             <ul class="sidemenu-nav">
                 <?php
-                $dest = "kpi.php";
-                if (!$_isAdmin) {
-                    $dest = "opinionlist.php";
-                }
+                    $dest = "kpi.php";
+                    if (!$_isAdmin) {
+                        $dest = "announcement.php";
+                    }
                 ?>            
                 <li>
                     <a href="<?php echo $urlName;?>/<?php echo $dest;?>" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="kpi">
@@ -23,7 +23,7 @@ $_isAdmin = $_SESSION['admin'];
                     </a>
                 </li>
                 <?php
-                if ($_isAdmin) {
+                    if ($_isAdmin) {
                 ?>
                 <li>
                     <a href="<?= $urlName ?>/assets.php" class="d-flex sidemenu-link align-items-center" title="資產管理" data-type="assets">
@@ -49,6 +49,9 @@ $_isAdmin = $_SESSION['admin'];
                         <span>長期修繕</span>
                     </a>
                 </li>
+                <?php
+                    }
+                ?>                
                 <li>
                     <a href="<?= $urlName ?>/apartment.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="apartment">
                         <i class="fas fa-home"></i>
@@ -61,6 +64,9 @@ $_isAdmin = $_SESSION['admin'];
                         <span>問卷調查</span>
                     </a>
                 </li>
+                <?php
+                     if ($_isAdmin) {
+                ?>                
                 <li>
                     <a href="<?= $urlName ?>/files.php" class="d-flex sidemenu-link align-items-center" title="社區檔案庫" data-type="files">
                         <i class="far fa-folder"></i>
@@ -80,7 +86,7 @@ $_isAdmin = $_SESSION['admin'];
                     </a>
                 </li>                
                 <?php
-                }
+                    }
                 ?>
                 <li>
                     <a href="<?= $urlName ?>/logout.php" class="d-flex sidemenu-link align-items-center" title="登出">

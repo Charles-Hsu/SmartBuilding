@@ -1,33 +1,41 @@
+<?php session_start(); ?>
 <?php 
-include('./config.php');
-include(Document_root.'/Header.php'); 
-
-if (count($_POST) > 0) {
-	var_dump($_POST);
-
-	echo '_FILES[files-upload][name]' . $_FILES['files-upload']['name'];
-	echo '_FILES[files-upload][tmp_name]' . $_FILES['files-upload']['tmp_name'];
-	//echo $_FILES['files-upload']['tmp_name'];
-
-	$handle = fopen($_FILES(['files-upload']['tmp_name']), 'r');
-
-
-
-	echo $handle;
-	echo "after handle";
-
-}
+	include('./config.php');
+	include('./Header.php'); 
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
+<?php
+	if ($_isAdmin) {
+?>
     <a class="" href="./kpi.php">數據管理</a>
     <a class="active" href="./space-management.php">空間變更</a>
-    <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
-	<a class="" href="./overduelist.php">欠繳清單</a>
-	<a class="" href="./opinionlist.php">住戶意見</a>
+<?php
+	}
+?>    
+    <a class="" href="./announcement.php">公告</a>
+    <a class="" href="./opinionlist.php">住戶意見</a>
+    <a class="" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./resolutions.php">決議事項</a>
 </nav>
+<?php 
+	if (count($_POST) > 0) {
+		var_dump($_POST);
+
+		echo '_FILES[files-upload][name]' . $_FILES['files-upload']['name'];
+		echo '_FILES[files-upload][tmp_name]' . $_FILES['files-upload']['tmp_name'];
+		//echo $_FILES['files-upload']['tmp_name'];
+
+		$handle = fopen($_FILES(['files-upload']['tmp_name']), 'r');
+
+		echo $handle;
+		echo "after handle";
+	}
+?>
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">

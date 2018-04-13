@@ -42,7 +42,7 @@ if(count($_POST)) {
         else {
             $_SESSION['admin'] = $data['role_id'];
             $_isAdmin = $_SESSION['admin'];
-            $url = "./opinionlist.php";
+            $url = "./announcement.php";
             if ($_isAdmin) {
                 $url = "./kpi.php";
             }

@@ -1,32 +1,28 @@
+<?php session_start(); ?>
 <?php 
 include('./config.php');
 include('./Header.php'); 
-?>
-<?php 
-
-$sql = 'SELECT * FROM assets';
+$_isAdmin = $_SESSION['admin'];
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
 
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
+<?php
+if ($_isAdmin) {
+?>
     <a class="" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./announcement.php">公告</a>
     <a class="active" href="./management.php">管理辦法</a>
-	<a class="" href="./overduelist.php">欠繳清單</a>
-	<a class="" href="./opinionlist.php">住戶意見</a>
+<?php
+}
+?>    
+    <a class="" href="./announcement.php">公告</a>
+    <a class="" href="./opinionlist.php">住戶意見</a>
+    <a class="" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./resolutions.php">決議事項</a>
 </nav>
+
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
