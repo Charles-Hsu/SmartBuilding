@@ -71,93 +71,55 @@ if ($_isAdmin) {
                 <th>樓層</th>
                 <!-- <th>種類</th> -->
                 <th>內容</th>
-                <th>回復天數</th>
-                <th>結案天數</th>
+                <th>回復/天數</th>
+                <th>結案/天數</th>
             </tr>
         </thead>
         <tbody class="opinionlist_tbody">
         <?php
-        foreach($data as $var) {
+            foreach($data as $var) {
         ?>					
             <tr>
             <td><span><?=$var['dt'];?></span></td>
             <td><span><?=$var['addr_no'];?></span></td>
             <td><span><?=$var['floor'];?></span></td>
-            <!-- <td><span><?=$var['type'];?></span></td> -->
             <td><span><?=$var['content'];?></span></td>
     		<td>
-            <?php
-            if ($var['dt_responsed'] == '0000-00-00') {
-            ?>						
-                <a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">確認
-                </a>
-            <?php
-            } else {
-            ?>
-                <span><?=$var['dt_responsed'];?></span>
-            <?php
-            }
-            ?>					
+                <?php
+                    if (strlen($var['dt_responsed']) == 0) {
+                ?>						
+                <input type="checkbox">
+                <?php
+                    } else {
+                        $diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
+                ?>
+				<span><?php echo round($diff,2);?></span>
+                <?php
+                    }
+                ?>					
             </td>
-            <td>
-<?php
-if ($var['dt_responsed'] == '0000-00-00') {
-?>						
-							<span>未回復</span>
-<?php
-} else {
 
-	$diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
-?>
-							<span><?= round($diff,2);?></span>
-<?php
-}
-?>					
-						</td>
 
-						<td>
-                            <?php
-							if ($var['dt_completed'] != '0000-00-00' && $var['dt_completed'] != null) {
-								$dt_completed = strtotime($var['dt_completed']);
-							?>
-							    <span><?=$var['dt_completed'];?></span>
-							<?php } else { ?>
-                            <span class="un_completed"></span>
-                            <?php } ?>
-                        <td>
-<?php
-// echo $var[dt];
-$op_date = $var[dt];
-// echo "'" . strlen($var[dt_completed]) . "'";
-$dt_completed = strtotime(date('Y-m-d'));
-if (strlen($var['dt_completed']) != 0) {
-	$dt_completed = strtotime($var['dt_completed']);
-} else {
-}
-$diff = abs($dt_completed - strtotime($op_date)) / 24 / 3600 + 1;
-?>
-							<span><?=$diff;?></span>
-<?php
-
-?>					
-						</td>
-						
-
-						<!-- <td><a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">結案</a></td>
-						</tr> -->
-<?php
-
-?>
-
-<?php
-
-}
-?>
-
-					</tbody>
-				</table>
-
-			</div>
+    		<td>
+                <?php
+                    if (strlen($var['dt_completed']) == 0) {
+                ?>						
+                <input type="checkbox">
+                <?php
+                    } else {
+                        $diff = abs(strtotime($var['dt_completed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
+                ?>
+				<span><?php echo round($diff,2);?></span>
+                <?php
+                    }
+                ?>					
+            </td>
+        <?php
+            }
+        ?>
+		</tbody>
+	</table>
+</div>
 
 <?php $jsData=json_encode($data); ?>
 

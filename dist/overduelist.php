@@ -13,13 +13,13 @@ if ($_isAdmin) {
 ?>
     <a class="" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
 <?php
 }
 ?>    
-    <a class="active" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./announcement.php">公告</a>
     <a class="" href="./opinionlist.php">住戶意見</a>
+    <a class="active" href="./overduelist.php">欠繳清單</a>
     <a class="" href="./resolutions.php">決議事項</a>
 </nav>
 
@@ -56,9 +56,9 @@ if ($_isAdmin) {
 						</tr>
 					</thead>
 					<tbody>
-
-
 <?php
+	$sql = "SELECT SUM(a.fee) AS unpaid_total, a.hid, c.addr_no, c.floor, c.holder, c.building FROM hoa_fee_record a, household c WHERE c.id = a.hid group by a.hid, c.addr_no, c.floor, c.holder, c.building";
+	$data = $db->getRows($sql);
 	foreach($data as $var) {
 //		echo $var[asset_no];
 //		echo $var[asset_name];
@@ -72,7 +72,7 @@ if ($_isAdmin) {
 							<td><span><?=$var[addr_no]?></span></td>
 							<td><span><?=$var[floor]?></span></td>
 							<td><span><?=$var[holder]?></span></td>
-							<td><span><?=number_format($var[fee])?></span></td>
+							<td><span><?=number_format($var[unpaid_total])?></span></td>
 							<!-- <td><span><a href='#'>清單</a></span></td> -->
 						</tr>
 <?php
