@@ -1,6 +1,6 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,64 +16,41 @@
 </head>
 
 <?php
-    session_start();
-    
-    $message="";
 
-	require 'lib/DBAccess.class.php';
-    require 'config/config.admin.php';
-    
-	//$sql = 'SELECT * FROM assets';
-	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-    //$data = $db->getRows($sql);
-    
-    if(count($_POST)>0) {
-        $_POST['username'];
-        $_POST['password'];
+$message="";
 
-        $sql =  "SELECT count(id) as count FROM users WHERE account='" . $_POST['username'] . "'";
-        //echo $sql;
+require 'lib/DBAccess.class.php';
+require 'config/config.admin.php';
 
-        $data = $db->getValue($sql);
-        //echo $data;
+$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-        if ($data == 0) {
-            $message = "使用者不存在";
-        } else {
-            $sql =  "SELECT count(id) as count FROM users WHERE account='" . $_POST['username'] . "' AND password='" . $_POST['password'] . "'";
-            //echo $sql;
-            $data = $db->getValue($sql);
-            //echo $data;
-            if ($data == 1) {
-                $_SESSION['account'] = $_POST['username'];
-
-                echo 
-                '<script>
-                    //document.onkeypress=function(e) {
-                        //alert("You pressed a key inside the input field");
-                        //document.getElementById("demo").innerHTML = 5 + 6;
-                        //window.location.href = "http://stackoverflow.com";
-                        window.location.href = "./kpi.php";
-                    //}
-                </script>';
-
-            } else {
-                $_SESSION['account'] = '';
-                $message = "帳號密碼錯誤";
-            }
-        }
-/*
-        if( $_POST["user_name"] == "admin" and $_POST["password"] == "admin") {
-            $_SESSION["user_id"] = 1001;
-            $_SESSION["user_name"] = $_POST["user_name"];
-            $_SESSION['loggedin_time'] = time();  
-        } else {
-            $message = "Invalid Username or Password!";
-        }
-*/        
+if(count($_POST)) {
+    $message = "";
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $sql =  "SELECT role_id FROM users WHERE account='$username'";
+    $data = $db->getRow($sql);
+    if (!$data) {
+        $message = "使用者不存在";
     }
+    else {
+        $sql = "SELECT role_id FROM users WHERE account='$username' AND password='$password'";
+        $data = $db->getRow($sql);
+        if (!$data) {
+            $message = "密碼錯誤";
+        }
+        else {
+            $_SESSION['admin'] = $data['role_id'];
+            $_isAdmin = $_SESSION['admin'];
+            $url = "./opinionlist.php";
+            if ($_isAdmin) {
+                $url = "./kpi.php";
+            }
+            header("Location: " . $url);
+        }
+    }
+}
 
-//	var_dump($data);
 ?>
 
 <body style="background-color: #f9f9f9;">

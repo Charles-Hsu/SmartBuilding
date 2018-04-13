@@ -1,70 +1,39 @@
+<?php session_start(); ?>
 <?php 
 include('./config.php');
 include('./Header.php'); 
-?>
-<?php 
-//$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
-$sql = 'SELECT a.id AS id,building,addr_no,floor,unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id AND a.unpaid_total != 0';
+$_isAdmin = $_SESSION['admin'];
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	echo 
-	'<script>
-		//document.onkeypress=function(e) {
-			//alert("You pressed a key inside the input field");
-			//document.getElementById("demo").innerHTML = 5 + 6;
-			//window.location.href = "http://stackoverflow.com";
-
-
-
-			//window.location.href = "./login.php";
-
-
-		//}
-	</script>';
-}
 
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
+<?php
+if ($_isAdmin) {
+?>
     <a class="" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
-    <a class="" href="./overduelist.php">欠繳清單</a>
+<?php
+}
+?>    
+    <a class="" href="./announcement.php">公告</a>
     <a class="active" href="./opinionlist.php">住戶意見</a>
+    <a class="" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./resolutions.php">決議事項</a>
 </nav>
 
 <?php 
 
-//$sql = 'SELECT a.*, b.addr_no,b.floor FROM opinions a, household b WHERE a.id = b.id AND a.dt_completed = "0000-00-00"';
-
-$sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
+$sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
 
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
 
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-/*
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-*/
+
 ?>
-<!-- <p>呈現總幹事的效率</p>
-<p>本月已處理件數:<span>32</span></p>
-<p>本月待處理件數:<span>1</span></p>
-<p>平均處理天數:<span>3.5</span></p> -->
+
 <div class="row">
 	<div class="col-6 mb-3">
         <div class="card card-chartbar">
@@ -83,73 +52,54 @@ if (strlen($_SESSION['account']) == 0) {
         </div>
     </div>
 </div>
-			<div id="assets-tab">
-
-				<table class="table asset-table">
-					<thead class="thead-light">
-						<tr>
-							<th>反應日期</th>
-							<th>戶號</th>
-							<th>樓層</th>
-							<th>主旨</th>
-							<th>內容</th>
-							<th>回復</th>
-							<th>回復天數</th>
-
-							<!--							
-							<th>結案日</th>
--->							
-							<th>結案</th>
-							<th>處理天數</th>
-						</tr>
-					</thead>
-					<tbody class="opinionlist_tbody">
-
+<div id="assets-tab">
 <?php
-foreach($data as $var) {
-	// var_dump($var);
-
-?>					
-						<tr>
-						<td><span><?=$var['dt'];?></span></td>
-						<td><span><?=$var['addr_no'];?></span></td>
-						<td><span><?=$var['floor'];?></span></td>
-						<td><span><?=$var['type'];?></span></td>
-						<td><span><?=$var['content'];?></span></td>
-
-<?php
-/*
-$completed = 0;
-if ($var['dt_completed'] == '0000-00-00') {
-	echo '';
-} else {
-	$completed = 1;
-	echo $var['dt_completed'];
-}
-*/
+if ($_isAdmin) {
 ?>
-
-						<td>
-							
-<?php
-if ($var['dt_responsed'] == '0000-00-00') {
-?>						
-							<a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">確認
-							</a>
-<?php
-} else {
-?>
-							<span><?=$var['dt_responsed'];?></span>
+    <a href="<?= $urlName ?>/op-add1.php" class="btn add-asset-btn mb-3">
+		<span>+</span>新增住戶意見
+	</a>
 <?php
 }
-?>					
-					
-					
-						</td>
+?>
 
-
-						<td>
-							
+    <table class="table asset-table">
+        <thead class="thead-light">
+            <tr>
+                <th>日期</th>
+                <th>戶號</th>
+                <th>樓層</th>
+                <!-- <th>種類</th> -->
+                <th>內容</th>
+                <th>回復天數</th>
+                <th>結案天數</th>
+            </tr>
+        </thead>
+        <tbody class="opinionlist_tbody">
+        <?php
+        foreach($data as $var) {
+        ?>					
+            <tr>
+            <td><span><?=$var['dt'];?></span></td>
+            <td><span><?=$var['addr_no'];?></span></td>
+            <td><span><?=$var['floor'];?></span></td>
+            <!-- <td><span><?=$var['type'];?></span></td> -->
+            <td><span><?=$var['content'];?></span></td>
+    		<td>
+            <?php
+            if ($var['dt_responsed'] == '0000-00-00') {
+            ?>						
+                <a href="<?=$urlName;?>/org/op-edit.php?id=<?=$var['id'];?>" class="btn btn-outline-secondary">確認
+                </a>
+            <?php
+            } else {
+            ?>
+                <span><?=$var['dt_responsed'];?></span>
+            <?php
+            }
+            ?>					
+            </td>
+            <td>
 <?php
 if ($var['dt_responsed'] == '0000-00-00') {
 ?>						

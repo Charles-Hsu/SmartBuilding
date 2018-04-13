@@ -1,63 +1,45 @@
+<?php session_start(); ?>
 <?php 
-include('./config.php');
-include('./Header.php'); 
-?>
-<?php 
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-if (count($_POST) > 0) {
-
-    $date = $_POST['post-date'];
-    $content = $_POST['post-content'];
-    $post_by = '管委會';
-
-    $sql = "INSERT INTO post (`id`, `date`, `post_by`, `content`) VALUES (NULL, '$date', '$post_by', '$content')";
-    echo $sql;
-
-    // if ($n = $db->insert($sql)) {
-    if ($db->insert($sql)) {
-        // echo "hello";
-        // echo $n;
-        $message="新增成功";
-    }
-}
-
-// $data = $db->getRows($sql);
-// var_dump($data);
-
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-
-if (strlen($_SESSION['account']) == 0) {
-	echo 
-	'<script>
-		//document.onkeypress=function(e) {
-			//alert("You pressed a key inside the input field");
-			//document.getElementById("demo").innerHTML = 5 + 6;
-			//window.location.href = "http://stackoverflow.com";
-
-
-
-			//window.location.href = "./login.php";
-
-
-		//}
-	</script>';
-}
-
+	include('./config.php');
+	include('./Header.php'); 
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
+<?php
+	if ($_isAdmin) {
+?>
     <a class="" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
-    <a class="active" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
-    <a class="" href="./overduelist.php">欠繳清單</a>
+<?php
+	}
+?>    
+    <a class="active" href="./announcement.php">公告</a>
     <a class="" href="./opinionlist.php">住戶意見</a>
+    <a class="" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./resolutions.php">決議事項</a>
 </nav>
 
+<?php 
+	if (count($_POST) > 0) {
+
+		$date = $_POST['post-date'];
+		$content = $_POST['post-content'];
+		$post_by = '管委會';
+
+		$sql = "INSERT INTO post (`id`, `date`, `post_by`, `content`) VALUES (NULL, '$date', '$post_by', '$content')";
+		echo $sql;
+
+		if ($db->insert($sql)) {
+			$message="新增成功";
+			$url = "./announcement.php";
+			// $url = "http://www.stackoverflow.com";
+			echo "<script>window.location.href = '" . $url . "'</script>";
+		}
+	}
+?>
 
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">

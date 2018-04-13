@@ -1,3 +1,7 @@
+<?php session_start(); ?>
+<?php 
+$_isAdmin = $_SESSION['admin'];
+?>
 <body class="d-flex">
     <div class="sidemenu">
         <div class="sidemenu-wrapper">
@@ -6,12 +10,21 @@
                 <span><?=$conf['sysname']?></span>
             </div>
             <ul class="sidemenu-nav">
+                <?php
+                $dest = "kpi.php";
+                if (!$_isAdmin) {
+                    $dest = "opinionlist.php";
+                }
+                ?>            
                 <li>
-                    <a href="<?= $urlName ?>/kpi.php" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="kpi">
+                    <a href="<?php echo $urlName;?>/<?php echo $dest;?>" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="kpi">
                         <i class="far fa-chart-bar"></i>
                         <span>效能管理</span>
                     </a>
                 </li>
+                <?php
+                if ($_isAdmin) {
+                ?>
                 <li>
                     <a href="<?= $urlName ?>/assets.php" class="d-flex sidemenu-link align-items-center" title="資產管理" data-type="assets">
                         <i class="fas fa-book"></i>
@@ -66,6 +79,9 @@
                         <span>作業紀錄</span>
                     </a>
                 </li>                
+                <?php
+                }
+                ?>
                 <li>
                     <a href="<?= $urlName ?>/logout.php" class="d-flex sidemenu-link align-items-center" title="登出">
                         <i class="fas fa-sign-out-alt"></i>

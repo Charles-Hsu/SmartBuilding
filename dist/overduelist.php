@@ -1,53 +1,28 @@
+<?php session_start(); ?>
 <?php 
 include('./config.php');
 include('./Header.php'); 
-?>
-<?php 
-//$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
-// $sql = 'SELECT a.id AS id,building,addr_no,floor,0 AS unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id AND a.unpaid_total != 0';
-
-$sql = "SELECT * FROM hoa_fee_record WHERE p IS NULL";
-
-$sql = "SELECT c.addr_no, c.floor, c.holder, b.id, b.type, a.fee, a.m  FROM hoa_fee_record a, hoa_fee_type b, household c WHERE hid = c.id AND b.id = a.fee_type AND a.p IS NULL";
-
-$sql = "SELECT c.building, c.addr_no, c.floor, c.holder, SUM(a.fee) AS fee  FROM hoa_fee_record a, hoa_fee_type b, household c WHERE hid = c.id AND b.id = a.fee_type AND a.p IS NULL GROUP BY c.addr_no, c.floor, c.holder";
-
-
+$_isAdmin = $_SESSION['admin'];
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-$data = $db->getRows($sql);
-// var_dump($data);
-
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-
-if (strlen($_SESSION['account']) == 0) {
-	echo 
-	'<script>
-		//document.onkeypress=function(e) {
-			//alert("You pressed a key inside the input field");
-			//document.getElementById("demo").innerHTML = 5 + 6;
-			//window.location.href = "http://stackoverflow.com";
-
-
-
-			//window.location.href = "./login.php";
-
-
-		//}
-	</script>';
-}
 
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
+<?php
+if ($_isAdmin) {
+?>
     <a class="" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
+<?php
+}
+?>    
     <a class="active" href="./overduelist.php">欠繳清單</a>
     <a class="" href="./opinionlist.php">住戶意見</a>
+    <a class="" href="./resolutions.php">決議事項</a>
 </nav>
+
 <div class="row">
 <!--
     <div class="col-12 pt-4 pl-4">

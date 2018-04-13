@@ -1,67 +1,27 @@
+<?php session_start(); ?>
 <?php 
 include('./config.php');
 include('./Header.php'); 
-
+$_isAdmin = $_SESSION['admin'];
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
+<?php
+if ($_isAdmin) {
+?>
     <a class="active" href="./kpi.php">數據管理</a>
     <a class="" href="./space-management.php">空間變更</a>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./management.php">管理辦法</a>
+<?php
+}
+?>    
     <a class="" href="./overduelist.php">欠繳清單</a>
     <a class="" href="./opinionlist.php">住戶意見</a>
+    <a class="" href="./resolutions.php">決議事項</a>
 </nav>
-<div class="row mb-3">
-
-    <!-- <div class="col-md-3 col-6 mt-3">
-        <div class="kpiInfo-card card h-100">
-            <div class="card-body d-flex align-items-center">
-                <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
-                <div class="text-center w-100">
-                    <div class="h5">社區資料</div>
-                    <div class="h4">2,000</div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="col-md-3 col-6 mt-3">
-        <div class="kpiInfo-card card h-100">
-            <div class="card-body d-flex align-items-center">
-                <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
-                <div class="text-center w-100">
-                    <div class="h5">社區資料</div>
-                    <div class="h3">2,000</div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <div class="col-md-3 col-6 mt-3">
-        <div class="kpiInfo-card card h-100">
-            <div class="card-body d-flex align-items-center">
-                <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
-                <div class="text-center w-100">
-                    <div class="h5">社區資料</div>
-                    <div class="h3">2,000</div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <div class="col-md-3 col-6 mt-3">
-        <div class="kpiInfo-card card h-100">
-            <div class="card-body d-flex align-items-center">
-                <i class="d-none d-md-block fas fa-home dashboard-icon"></i>
-                <div class="text-center w-100">
-                    <div class="h5">社區資料</div>
-                    <div class="h3">1,000</div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-</div>
 
 <?php
     $sql = "SELECT * FROM apartment_settings";
