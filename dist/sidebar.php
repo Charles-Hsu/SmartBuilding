@@ -68,9 +68,9 @@ $_isAdmin = $_SESSION['admin'];
                      if ($_isAdmin) {
                 ?>                
                 <li>
-                    <a href="<?= $urlName ?>/files.php" class="d-flex sidemenu-link align-items-center" title="社區檔案庫" data-type="files">
+                    <a href="<?= $urlName ?>/files.php" class="d-flex sidemenu-link align-items-center" title="社區檔案" data-type="files">
                         <i class="far fa-folder"></i>
-                        <span>社區檔案庫</span>
+                        <span>社區檔案</span>
                     </a>
                 </li>
                 <li>

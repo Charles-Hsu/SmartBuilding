@@ -27,13 +27,13 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/operation.php">例行作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/longTerm-repairs/repairs-normal.php">維護作業</a>
+					<a class="nav-link active" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/supplies.php">耗材管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget.php">年度預算</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
                 </li>
 			</ul>
 			<div id="assets-tab" class="row mr-0 ml-0">

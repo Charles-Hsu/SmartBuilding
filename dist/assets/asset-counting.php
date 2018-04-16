@@ -166,40 +166,43 @@ var_dump($data);
 					<span>資產盤點</span> <!--回上一頁'資產管理'-->
 				</div>
 
-
-				<table class="table asset-table">
-					<thead class="thead-light">
-						<tr>
-							<th>資產編號</th>
-							<th>資產名稱</th>
-							<th>資產類別</th>
-							<th>使用狀態</th>
-							<th>價格</th>
-							<th>數量</th>
-							<th>編輯</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php 
-							$sql = 'SELECT a.*, b.name AS status, c.category AS cat FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND c.id=a.asset_category';
-							$data = $db->getRows($sql);
-							foreach($data as $var) {
-						?>
-						<tr>
-							<td><span><?=$var[asset_no]?></span></td>
-							<td><span><?=$var[asset_name]?></span></td>
-							<td><span><?=$var[cat]?></span></td>
-							<td><span><?=$var[status]?></span></td>
-							<td><span><?=number_format($var[price])?></span></td>
-							<td><span><?=$var[amount]?></span></td>
-							<td><input type="checkbox" checked></td>
-						</tr>
-						<?php
-							}
-						?>
-					</tbody>
-				</table>
-
+				<form method="POST action="">
+					<table class="table asset-table">
+						<thead class="thead-light">
+							<tr>
+								<th>日期</th>
+								<th>資產編號</th>
+								<th>資產名稱</th>
+								<th>資產類別</th>
+								<th>使用狀態</th>
+								<!-- <th>價格</th> -->
+								<th>數量</th>
+								<th>編輯</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+								$sql = 'SELECT a.*, b.name AS status, c.category AS cat FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND c.id=a.asset_category';
+								$data = $db->getRows($sql);
+								foreach($data as $var) {
+							?>
+							<tr>
+								<td><span><?php echo date("Y-m-d");?></span></td>
+								<td><span><?=$var[asset_no]?></span></td>
+								<td><span><?=$var[asset_name]?></span></td>
+								<td><span><?=$var[cat]?></span></td>
+								<td><span><?=$var[status]?></span></td>
+								<!-- <td><span><?=number_format($var[price])?></span></td> -->
+								<td><span><?=$var[amount]?></span></td>
+								<td><input type="checkbox" checked></td>
+							</tr>
+							<?php
+								}
+							?>
+						</tbody>
+					</table>
+					<input type="submit" value="確認">
+				</form>
 
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">

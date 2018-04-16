@@ -42,10 +42,10 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link active" href="<?= $urlName ?>/apartment/building.php">建築物</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
                 </li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">規約設定</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
                 </li>			
 			</ul>
 			<div id="assets-tab">

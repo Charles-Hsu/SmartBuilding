@@ -147,27 +147,31 @@ for(var i=0;i<data.length;i++){
 for(var i=1;i<=12;i++){
     if(tempData[i] !== undefined){
         var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,length:0,res:0}
-        for(var j=0;j<tempData[i].length;j++){
-            tempObj.month=tempData[i][j].dt_month
-            var dt=new Date(tempData[i][j].dt).valueOf();
+
+        for (var j=0; j<tempData[i].length; j++){
+            tempObj.month = tempData[i][j].dt_month
+            var dt = new Date(tempData[i][j].dt).valueOf();
             
-            if(tempData[i][j].dt_responsed != null){
-                var dt_res=new Date(tempData[i][j].dt_responsed).valueOf();
-                tempObj.res += parseInt( ((dt_res-dt)/ 24 / 3600 / 1000)+ 1,0);
-            }else{
-                var dt_res=new Date().valueOf();
-                tempObj.res += parseInt( ((dt_res-dt)/ 24 / 3600 / 1000)+ 1,0);
+            if (tempData[i][j].dt_responsed != null){
+                var dt_res = new Date(tempData[i][j].dt_responsed).valueOf();
+                tempObj.res += parseInt( ((dt_res - dt)/24/3600/1000)+1, 0);
+            } else {
+                var dt_res = new Date().valueOf();
+                tempObj.res += parseInt( ((dt_res - dt)/24/3600/1000)+1, 0);
             }
-            if(tempData[i][j].dt_completed != null){
-                var dt_com=new Date(tempData[i][j].dt_completed).valueOf();
-                tempObj.end += parseInt( ((dt_com-dt)/ 24 / 3600 / 1000)+ 1,0);
-            }else{
-                var dt_com=new Date().valueOf();
-                tempObj.end += parseInt( ((dt_com-dt)/ 24 / 3600 / 1000)+ 1,0);
+
+            if (tempData[i][j].dt_completed != null){
+                var dt_com = new Date(tempData[i][j].dt_completed).valueOf();
+                tempObj.end += parseInt( ((dt_com - dt)/24/3600/1000)+1, 0);
+            } else {
+                var dt_com = new Date().valueOf();
+                tempObj.end += parseInt( ((dt_com - dt)/24/3600/1000)+1, 0);
             }
-            tempObj.reply += ((dt_res-dt)/ 24 / 3600 / 1000)+ 1;
+
+            tempObj.reply += ((dt_res-dt)/24/3600/1000)+1;
             tempObj.length++;
-            if(tempData[i][j].dt_completed){
+            
+            if (tempData[i][j].dt_completed){
                 tempObj.completed++
             }
             if(tempData[i][j].dt_responsed){
@@ -178,7 +182,7 @@ for(var i=1;i<=12;i++){
             }
         }
         fullData.push(tempObj)
-    }else{
+    } else {
         var tempObj={month:i,content:0,completed:0,responsed:0,reply:0,end:0,res:0,length:0}
         fullData.push(tempObj)
     }

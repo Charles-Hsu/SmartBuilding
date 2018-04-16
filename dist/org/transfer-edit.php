@@ -32,12 +32,7 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/household.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/works.php">工作日誌</a>
-                </li>
+ 
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
                 </li>

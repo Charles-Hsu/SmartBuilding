@@ -32,12 +32,7 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/household.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/works.php">工作日誌</a>
-                </li>
+
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
                 </li>
@@ -103,20 +98,19 @@ if (strlen($_SESSION['account']) == 0) {
 								</label>
 								<div class="col-md-8">
 									<select name="household-area" id="household-area" class="form-control">
-<?php
-	$sql = 'SELECT * FROM staff_role';
-	$data = $db->getRows($sql);
-?>								
-<?php
-foreach($data as $var) {
-	//	echo $var['Name'];
-	//echo $var['id'];
-?>
+										<?php
+											$sql = 'SELECT * FROM staff_role';
+											$data = $db->getRows($sql);
+										?>								
+										<?php
+										foreach($data as $var) {
+											//	echo $var['Name'];
+											//echo $var['id'];
+										?>
 										<option value="<?=$var['id'];?>"><?=$var['title'];?></option>
-<?php
-}
-?>
-
+										<?php
+										}
+										?>
 									</select>
 								</div>
 							</div>

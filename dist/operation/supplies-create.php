@@ -4,18 +4,11 @@ include('../Header.php');
 ?>
 <?php 
 
-$sql = 'SELECT * FROM assets';
+
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
 session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
 
 ?>
 <!-- 內容切換區 -->
@@ -44,14 +37,32 @@ if (strlen($_SESSION['account']) == 0) {
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+			
+
 							<div class="form-group row">
-								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
-								<div class="col-md-8 d-flex align-items-center">
-									<span>XXXXXX</span>
+								<label for="orgstaff-id" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>類別:
+								</label>
+								<div class="col-md-8">
+									<select name="household-area" id="household-area" class="form-control">
+										<?php
+											$sql = 'SELECT * FROM supply_type';
+											$data = $db->getRows($sql);
+										?>								
+										<?php
+										foreach($data as $var) {
+											//	echo $var['Name'];
+											//echo $var['id'];
+										?>
+										<option value="<?=$var['id'];?>"><?=$var['type'];?></option>
+										<?php
+										}
+										?>
+									</select>
 								</div>
 							</div>
--->							
+
+
 							<div class="form-group row">
 								<label for="supplies-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>耗材名稱:</label>
@@ -66,6 +77,10 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control" name="supplies-no" id="supplies-no">
 								</div>
 							</div>
+
+
+
+
                             <div class="form-group row">
 								<label for="supplies-brands" class="text-right col-md-4 col-form-label">
 									品牌:

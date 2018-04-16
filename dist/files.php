@@ -13,10 +13,6 @@ session_start();
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
 
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -24,36 +20,34 @@ if (strlen($_SESSION['account']) == 0) {
 		<div class="files-wrapper">
 			<div id="assets-tab">
 				<a href="./files/files-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增文件檔案
+					<span>+</span>新增檔案
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
+							<th>文件種類</th>
 							<th>文件名稱</th>
 							<th>檔案名稱</th>
 							<th>下載</th>
-							<th>編輯</th>
 						</tr>
 					</thead>
 					<tbody>
-<?php
-	//foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
-
+						<?php
+							$sql = "SELECT a.desc,a.path,b.type,b.id FROM files a, file_type b WHERE a.type = b.id";
+							// echo $sql;
+							$data = $db->getRows($sql);
+							foreach($data as $var) {
+						?>
 						<tr>
-							<td><span>smartbuilding資料庫</span></td>
-							<td><span>smartbuilding.sql</span></td>
-							<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
-							<td><a href="/smartbuilding/files/files-edit.php" class="btn btn-outline-secondary">編輯</a></td>
+							<td><span><?php echo $var['type']; ?></span></td>
+							<td><span><?php echo $var['desc']; ?></span></td>
+							<td><span><?php echo $var['path']; ?></span></td>
+							<!-- <td><a href="<?php echo $var['id']/$var['path']; ?>" class="btn btn-primary" download>開啟檔案</a></td> -->
+							<td><a href="<?php echo "files/". $var['id'] . "/" . $var['path'];   ?>">開啟檔案</a></td>
 						</tr>
-<?php
-	// }
-?>
+						<?php
+							}
+						?>
 					</tbody>
 				</table>
 			</div>

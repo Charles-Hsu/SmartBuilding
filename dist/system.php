@@ -22,22 +22,7 @@ if (strlen($_SESSION['account']) == 0) {
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-        <!--
-            <ul class="nav nav-pills mb-3">
-				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/operation.php">例行作業</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/#">年度預算</a>
-                </li>
-			</ul>
-        -->            
+
 			<div id="assets-tab">
             
 				<a href="#" class="btn add-asset-btn mb-3">
