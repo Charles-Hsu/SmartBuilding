@@ -481,7 +481,7 @@ label.col-form-label .important {
 }
 .index-nav a.active{
     color:#1F90E6;
-    border-bottom:1px solid #1F90E6;
+    border-bottom: 3px solid #1F90E6;
 }
 .index-nav a:hover{
     text-decoration: none;
@@ -910,10 +910,20 @@ tr.un_completed_red{
 .chart-tbody tr td .form-control:disabled:focus{
     box-shadow: none;
 }
-
-
-
-
+.announ-date{
+    width: 110px;
+}
+.announ-edit,
+.announ-del{
+    width: 80px;
+}
+.announ-content input.form-control[readonly]{
+    background-color: transparent;
+    border: none;
+}
+.announ-content input.form-control[readonly]:focus{
+    box-shadow: none;
+}
 @media (max-width:992px){
     .container-fluid{
         width: calc(100% - 62px);
