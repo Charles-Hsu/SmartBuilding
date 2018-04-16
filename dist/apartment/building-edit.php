@@ -89,12 +89,12 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control datepicker" name="builds-license" value=<?=$data['approved_date'];?> readonly>
 								</div>
 							</div>
-							<div class="form-group row">
+							<!-- <div class="form-group row">
 								<label for="builds-yeaer" class="text-right col-md-4 col-form-label">使用年限:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="builds-yeaer"  value=<?=$data['expired_years'];?>>
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存更新</button>

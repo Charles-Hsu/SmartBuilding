@@ -11,7 +11,7 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 <?php
 if ($_isAdmin) {
 ?>
-    <a class="" href="./kpi.php">數據管理</a>
+    <a class="" href="./kpi.php">績效指標</a>
     <a class="" href="./space-management.php">空間變更</a>
     <a class="" href="./management.php">管理辦法</a>
 <?php

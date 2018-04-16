@@ -49,8 +49,8 @@ session_start();
 							<th>地址</th>
 							<th>建築執照編號</th>
 							<th>發照日期</th>
-							<th>使用年限</th>
-							<th>編輯</th>
+							<!-- <th>使用年限</th> -->
+							<!-- <th>編輯</th> -->
 						</tr>
 					</thead>
 					<tbody>
@@ -63,8 +63,8 @@ session_start();
 							<td><span><?=$building[address];?></span></td>
 							<td><span><?=$building[license_no];?></span></td>
 							<td><span><?=$building[approved_date];?></span></td>
-							<td><span><?=$building[expired_years];?>年</span></td>
-							<td><a href="<?= $urlName ?>/apartment/building-edit.php?license_no=<?=$building[license_no];?>" class="btn btn-outline-secondary">修改</a></td>
+							<!-- <td><span><?=$building[expired_years];?>年</span></td> -->
+							<!-- <td><a href="<?= $urlName ?>/apartment/building-edit.php?license_no=<?=$building[license_no];?>" class="btn btn-outline-secondary">修改</a></td> -->
 						</tr>
 <?php
 	 }
