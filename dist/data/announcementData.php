@@ -1,17 +1,18 @@
 <?php
 require '../lib/DBAccess.class.php';
 require '../config/config.admin.php';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-$type=$_POST['type'];
-$id=$_POST['id'];
-$content=$_POST['content'];
+$db   = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+$type = $_POST['type'];
+$id   = $_POST['id'];
+$content = $_POST['content'];
+
 class Msg{
     public $success='';
     public $data='';
 }
 
 if($type == "DELETE"){
-    $sql="DELETE FROM `post` WHERE `post`.`id` = $id ";
+    $sql="DELETE FROM `post` WHERE `id` = $id ";
 
     $msg=new Msg();
     if($db->delete($sql)){

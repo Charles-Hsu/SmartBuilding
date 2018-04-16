@@ -1,36 +1,11 @@
+<?php session_start(); ?>
 <?php 
-include('./config.php');
-include('./Header.php'); 
+	include('./config.php');
+	include('./Header.php'); 
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
-<?php 
-//$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
-$sql = 'SELECT a.*, b.name AS status, c.category AS cat FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND c.id=a.asset_category';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	echo 
-	'<script>
-		//document.onkeypress=function(e) {
-			//alert("You pressed a key inside the input field");
-			//document.getElementById("demo").innerHTML = 5 + 6;
-			//window.location.href = "http://stackoverflow.com";
-
-
-
-			//window.location.href = "./login.php";
-
-
-		//}
-	</script>';
-}
-
-?>
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
@@ -51,16 +26,17 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
 				</li>
-
-				<!--
-				<li class="nav-item">
-					<a class="nav-link" href="/smartbuilding/assets/infrastructure.php">公共設施</a>
-				</li>
--->
 			</ul>
+			<?php 
+				$sql = 'SELECT a.*, b.name AS status, c.category AS cat FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND c.id=a.asset_category';
+				$data = $db->getRows($sql);
+			?>
 			<div id="assets-tab">
 				<a href="./assets/asset-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增資產
+				</a>
+				<a href="./assets/asset-counting.php" class="btn add-asset-btn mb-3">
+					<span>+</span>資產盤點
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">

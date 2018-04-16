@@ -19,8 +19,7 @@ if ($_isAdmin) {
 ?>    
     <a class="" href="./announcement.php">公告</a>
     <a class="active" href="./opinionlist.php">住戶意見</a>
-    <a class="" href="./overduelist.php">欠繳清單</a>
-    <a class="" href="./resolutions.php">決議事項</a>
+    <a class="" href="./overduelist.php">欠繳費用</a>
 </nav>
 
 <?php 
@@ -98,8 +97,6 @@ if ($_isAdmin) {
                     }
                 ?>					
             </td>
-
-
     		<td class="td_completed">
             <?php
                 if (strlen($var['dt_completed']) == 0 && strlen($var['dt_responsed']) != 0) {
@@ -123,7 +120,10 @@ if ($_isAdmin) {
 	</table>
 </div>
 
-<?php $jsData=json_encode($data); ?>
+<?php $jsData=json_encode($data); 
+    // var_dump($data);
+    // echo $jsData;
+?>
 
 <script>
 $('.opinionlist_tbody tr').each(function(i,item){
@@ -132,6 +132,7 @@ $('.opinionlist_tbody tr').each(function(i,item){
     }
 })
 var data = <?php echo $jsData ?>;
+// var data = "";
 var tempData = {};
 var fullData = []
 
@@ -157,7 +158,6 @@ for(var i=1;i<=12;i++){
                 var dt_res=new Date().valueOf();
                 tempObj.res += parseInt( ((dt_res-dt)/ 24 / 3600 / 1000)+ 1,0);
             }
-            
             if(tempData[i][j].dt_completed != null){
                 var dt_com=new Date(tempData[i][j].dt_completed).valueOf();
                 tempObj.end += parseInt( ((dt_com-dt)/ 24 / 3600 / 1000)+ 1,0);

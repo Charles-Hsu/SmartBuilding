@@ -18,9 +18,8 @@ if ($_isAdmin) {
 <?php
 }
 ?>    
-    <a class="" href="./overduelist.php">欠繳清單</a>
+    <a class="" href="./overduelist.php">欠繳費用</a>
     <a class="active" href="./opinionlist.php">住戶意見</a>
-    <a class="" href="./resolutions.php">決議事項</a>
 </nav>
 <div id="assets-tab">
 	<div class="assets-create-title mb-3">
