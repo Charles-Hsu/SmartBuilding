@@ -90,6 +90,7 @@ $(function(){
     }
     var nowdate=now.getDate();
     $('.datepicker').val(`${year}-${month}-${nowdate}`);
+    var getDataDate=$('.datepicker').val();
     var public_util_type=<?php echo $public_util_type ?>;
     var checkArr=[];
     var checkArrTime=[];
@@ -109,56 +110,11 @@ $(function(){
                 <div class="who">{{who}}</div>
             </label>
         </div>`;
-
-    $.ajax({
-        url:'../data/publicutil-appointmentData.php',
-        method:'POST',
-        data:{
-            method_type:'get',
-            public_util_type,
-            reserveDate:$('.datepicker').val()
-        },
-        success:function(data){
-            try{
-                var _data=JSON.parse(data);
-                if(_data.success){
-                    reserve_time.forEach((item)=>{
-                        tempData[item]=[]
-                    })
-                    for(var i=0;i<_data.data.length;i++){
-                        if( tempData[_data.data[i].time] != undefined ){
-                            tempData[_data.data[i].time].push(_data.data[i])
-                        }
-                    }
-                    for(var i=0;i<reserve_time.length;i++){
-                        if(tempData[reserve_time[i]].length > 0){
-                            str_html+=str.replace("{{who}}",`${tempData[reserve_time[i]][0].addr_no}_${tempData[reserve_time[i]][0].floor}`)
-                                    .replace("{{time}}",`${reserve_time2[i]}`)
-                                    .replace("{{has_time}}",'disabled checked')
-                                    .replace("{{appointment_id}}",`appointment_${i}`)
-                                    .replace("{{appointment_ids}}",`appointment_${i}`)
-                        }else{
-                            str_html+=str.replace("{{who}}",'')
-                                    .replace("{{time}}",`${reserve_time2[i]}`)
-                                    .replace("{{has_time}}",'')
-                                    .replace("{{appointment_id}}",`appointment_${i}`)
-                                    .replace("{{appointment_ids}}",`appointment_${i}`)
-                        }
-                        $('.appointment-box').html(str_html)
-                    }
-                }else{
-                    alert(_data.data);
-                }
-
-            }catch(error){
-                alert(data)
-            }
-        },
-        error:function(error){
-            console.log(error)
-        }
+    $('.mask').on('click',function(){
+        $('.mask').hide();
+        $('.reserve-model').hide();
     })
-
+    loadData(public_util_type,getDataDate,reserve_time,str,reserve_time2);
     $('.appointment-btn').on('click',function(e){
         e.preventDefault();
         checkArr=[];
@@ -238,59 +194,60 @@ $(function(){
         }
     })
     $('.datepicker').on('change',function(){
-        $.ajax({
-            url:'../data/publicutil-appointmentData.php',
-            method:'POST',
-            data:{
-                method_type:'get',
-                public_util_type,
-                reserveDate:$('.datepicker').val()
-            },
-            success:function(data){
-                try{
-                    var _data=JSON.parse(data);
-                    if(_data.success){
-                        tempData={};
-                        str_html='';
-                        reserve_time.forEach((item)=>{
-                            tempData[item]=[]
-                        })
-                        $('.appointment-box').html('')
-                        for(var i=0;i<_data.data.length;i++){
-                            if( tempData[_data.data[i].time] != undefined ){
-                                tempData[_data.data[i].time].push(_data.data[i])
-                            }
-                        }
-                        for(var i=0;i<reserve_time.length;i++){
-                            if(tempData[reserve_time[i]].length > 0){
-                                str_html+=str.replace("{{who}}",`${tempData[reserve_time[i]][0].addr_no}_${tempData[reserve_time[i]][0].floor}`)
-                                        .replace("{{time}}",`${reserve_time2[i]}`)
-                                        .replace("{{has_time}}",'disabled checked')
-                                        .replace("{{appointment_id}}",`appointment_${i}`)
-                                        .replace("{{appointment_ids}}",`appointment_${i}`)
-                            }else{
-                                str_html+=str.replace("{{who}}",'')
-                                        .replace("{{time}}",`${reserve_time2[i]}`)
-                                        .replace("{{has_time}}",'')
-                                        .replace("{{appointment_id}}",`appointment_${i}`)
-                                        .replace("{{appointment_ids}}",`appointment_${i}`)
-                            }
-                            $('.appointment-box').html(str_html)
-                        }
-                    }else{
-                        alert(_data.data);
-                    }
-
-                }catch(error){
-                    alert(data)
-                }
-            },
-            error:function(error){
-                console.log(error)
-            }
-        })
+        loadData(public_util_type,$(this).val(),reserve_time,str,reserve_time2);
     })
 })
+function loadData(public_util_type,date,reserve_time,str,reserve_time2){
+    $.ajax({
+        url:'../data/publicutil-appointmentData.php',
+        method:'POST',
+        data:{
+            method_type:'get',
+            public_util_type:public_util_type,
+            reserveDate:date
+        },
+        success:function(data){
+            try{
+                var _data=JSON.parse(data);
+                if(_data.success){
+                    var tempData={};
+                    var str_html='';
+                    reserve_time.forEach((item)=>{
+                        tempData[item]=[]
+                    })
+                    for(var i=0;i<_data.data.length;i++){
+                        if( tempData[_data.data[i].time] != undefined ){
+                            tempData[_data.data[i].time].push(_data.data[i])
+                        }
+                    }
+                    for(var i=0;i<reserve_time.length;i++){
+                        if(tempData[reserve_time[i]].length > 0){
+                            str_html+=str.replace("{{who}}",`${tempData[reserve_time[i]][0].addr_no}_${tempData[reserve_time[i]][0].floor}`)
+                                    .replace("{{time}}",`${reserve_time2[i]}`)
+                                    .replace("{{has_time}}",'disabled checked')
+                                    .replace("{{appointment_id}}",`appointment_${i}`)
+                                    .replace("{{appointment_ids}}",`appointment_${i}`)
+                        }else{
+                            str_html+=str.replace("{{who}}",'')
+                                    .replace("{{time}}",`${reserve_time2[i]}`)
+                                    .replace("{{has_time}}",'')
+                                    .replace("{{appointment_id}}",`appointment_${i}`)
+                                    .replace("{{appointment_ids}}",`appointment_${i}`)
+                        }
+                        $('.appointment-box').html(str_html)
+                    }
+                }else{
+                    alert(_data.data);
+                }
+            }catch(error){
+                console.log(data)
+            }
+        },
+        error:function(error){
+            console.log(error)
+        }
+    })
+}
 </script>
 <?php 
 include(Document_root.'/Footer.php');
