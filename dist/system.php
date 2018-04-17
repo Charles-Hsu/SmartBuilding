@@ -1,8 +1,8 @@
-<?php 
+<?php
 include('./config.php');
-include('./Header.php'); 
+include('./Header.php');
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -24,9 +24,9 @@ if (strlen($_SESSION['account']) == 0) {
 		<div class="asset-manage-wrapper">
 
 			<div id="assets-tab">
-            
+
 				<a href="#" class="btn add-asset-btn mb-3">
-					<span></span>作業紀錄
+					<span>+</span>作業紀錄
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
@@ -63,13 +63,13 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span>會議</span></td>
 							<td><span>管委會開會</span></td>
 							<td><span>管委會</span></td>
-						</tr>                        
+						</tr>
 						<tr>
 							<td><span>2018/3/22 08:12</span></td>
 							<td><span>資產管理</span></td>
 							<td><span>新增增產測試資產A</span></td>
 							<td><span>八萬一管理公司</span></td>
-						</tr>                        
+						</tr>
 
 <?php
 	//}
