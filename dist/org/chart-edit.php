@@ -1,6 +1,6 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
@@ -22,9 +22,6 @@ session_start();
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
 
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
@@ -112,7 +109,7 @@ session_start();
 									</div>
 									<div class="row mr-0 ml-0">
 										<label class="col-form-label">姓名：</label>
-										<input type="text" class="form-control" value="這裡要放選擇樓號和樓層後的區權人姓名，透過js去資料庫撈出來後更新" readonly> 
+										<input type="text" class="form-control" value="這裡要放選擇樓號和樓層後的區權人姓名，透過js去資料庫撈出來後更新" readonly>
 									</div>
 								</div>
 
@@ -131,6 +128,6 @@ session_start();
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

@@ -1,5 +1,5 @@
 <?php session_start(); ?>
-<?php 
+<?php
 $_isAdmin = $_SESSION['admin'];
 ?>
 <body class="d-flex">
@@ -15,7 +15,7 @@ $_isAdmin = $_SESSION['admin'];
                     if (!$_isAdmin) {
                         $dest = "announcement.php";
                     }
-                ?>            
+                ?>
                 <li>
                     <a href="<?php echo $urlName;?>/<?php echo $dest;?>" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="kpi">
                         <i class="far fa-chart-bar"></i>
@@ -51,9 +51,9 @@ $_isAdmin = $_SESSION['admin'];
                 </li>
                 <?php
                     }
-                ?>                
+                ?>
                 <li>
-                    <a href="<?= $urlName ?>/apartment.php" class="d-flex sidemenu-link align-items-center" title="社區資料" data-type="apartment">
+                    <a href="<?= $urlName ?>/apartment/mails.php" class="d-flex sidemenu-link align-items-center" title="社區管理" data-type="apartment">
                         <i class="fas fa-home"></i>
                         <span>社區管理</span>
                     </a>
@@ -66,7 +66,7 @@ $_isAdmin = $_SESSION['admin'];
                 </li>
                 <?php
                      if ($_isAdmin) {
-                ?>                
+                ?>
                 <li>
                     <a href="<?= $urlName ?>/files.php" class="d-flex sidemenu-link align-items-center" title="社區檔案" data-type="files">
                         <i class="far fa-folder"></i>
@@ -84,7 +84,7 @@ $_isAdmin = $_SESSION['admin'];
                         <i class="fas fa-cog"></i>
                         <span>作業紀錄</span>
                     </a>
-                </li>                
+                </li>
                 <?php
                     }
                 ?>

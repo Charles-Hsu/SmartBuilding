@@ -1,58 +1,69 @@
 <?php session_start(); ?>
 <?php 
-include('./config.php');
-include('./Header.php'); 
-$_isAdmin = $_SESSION['admin'];
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
+	include('./config.php');
+	include('./Header.php'); 
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
-<nav class="index-nav my-3">
-<?php
-if ($_isAdmin) {
-?>
-    <a class="active" href="./kpi.php">績效指標</a>
-    <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./management.php">管理辦法</a>
-    <a class="" href="./announcement.php">公告</a>
-<?php
-}
-?>    
-    <a class="" href="./opinionlist.php">住戶意見</a>
-    <a class="" href="./overduelist.php">欠繳費用</a>
-</nav>
-
-<?php
-    $sql = "SELECT * FROM apartment_settings";
-    $data = $db->getRow($sql);
-?>
-
-<table>
-<tbody>
-    <tr>
-        <th><b>會議召開及執行率</b></th>
-    </tr>
-    <tr>
-        <td>區權會</td>
-    </tr>
-    <tr>
-        <td>1. 召開次數÷ 規約規定次數 (<?php echo $data['holder_meeting_num']; ?>) </td>
-    </tr>
-    <tr>
-        <td>2. 執行記錄÷ 會議記錄事項</td>
-    </tr>
-    <tr>
-        <td>管委會</td>
-    </tr>
-    <tr>
-        <td>1. 召開次數÷ 規約規定次數 (<?php echo $data['committee_meeting_num']; ?>)</td>
-    </tr>
-    <tr>
-        <td>2. 執行記錄÷ 會議記錄事項</td>
-    </tr>
-</tbody>
-
-</table>
+<div class="row">
+	<div class="col-12 p-4">
+		<div class="asset-manage-wrapper">
+			<ul class="nav nav-pills mb-3">
+				<?php
+					if ($_isAdmin) {
+				?>			
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+				</li>
+				<?php
+					}
+				?>    				
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>				
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>				
+			</ul>
+            <?php
+                $sql = "SELECT * FROM apartment_settings";
+                $data = $db->getRow($sql);
+            ?>
+            <table>
+                <tbody>
+                    <tr>
+                        <th><b>會議召開及執行率</b></th>
+                    </tr>
+                    <tr>
+                        <td>區權會</td>
+                    </tr>
+                    <tr>
+                        <td>1. 召開次數÷ 規約規定次數 (<?php echo $data['holder_meeting_num']; ?>) </td>
+                    </tr>
+                    <tr>
+                        <td>2. 執行記錄÷ 會議記錄事項</td>
+                    </tr>
+                    <tr>
+                        <td>管委會</td>
+                    </tr>
+                    <tr>
+                        <td>1. 召開次數÷ 規約規定次數 (<?php echo $data['committee_meeting_num']; ?>)</td>
+                    </tr>
+                    <tr>
+                        <td>2. 執行記錄÷ 會議記錄事項</td>
+                    </tr>
+                </tbody>
+            </table>
 
 <table>
     <thead>

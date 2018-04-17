@@ -1,46 +1,39 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-?>
-<?php 
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-
-if (count($_POST)) {
-	$holder_meeting_num = $_POST['holder-meeting-num'];
-	$committee_meeting_num = $_POST['committee-meeting-num'];
-	$op_man_num = $_POST['op-man-num'];
-	$op_patrol_num = $_POST['op-patrol-num'];
-	$sql = "UPDATE apartment_settings SET holder_meeting_num = $holder_meeting_num, committee_meeting_num = $committee_meeting_num, op_man_num = $op_man_num, op_patrol_num = $op_patrol_num";
-	$data = $db->update($sql);
-}
-
-
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-            <ul class="nav nav-pills mb-3">
+			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/mails.php">郵件紀錄</a>
+                </li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
+				</li>
+				<?php
+					if ($_isAdmin) {
+				?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>				
-				<li class="nav-item">
+                <li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>			
+                </li>
+				<?php
+					}
+				?>
 			</ul>
 			<?php
 				$sql = "SELECT * FROM `apartment_settings`";
@@ -73,7 +66,7 @@ if (count($_POST)) {
 							現場保全員編制人數:
 						</label>
 						<input type="number"  class="form-contorl col-md-8 col-8" name="op-patrol-num" value="<?php echo $data['op_patrol_num']; ?>">
-					</div>					
+					</div>
 
 					<div class="form-group row">
 						<div class="col-md-8 offset-md-4 col-12">

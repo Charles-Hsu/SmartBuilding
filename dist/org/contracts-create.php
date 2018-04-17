@@ -1,8 +1,8 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -32,10 +32,7 @@ if (strlen($_SESSION['account']) == 0) {
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
- 
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
+
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
@@ -52,7 +49,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<div class="row justify-content-center">
 						<div class="col-12">
 							<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 								<span class="edit-title mb-3">資產資料</span>
 								<div class="form-group row">
 									<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
@@ -60,8 +57,8 @@ if (strlen($_SESSION['account']) == 0) {
 										<span>XXXXXX</span>
 									</div>
 								</div>
--->								
-							
+-->
+
 								<div class="form-group row">
 									<label for="contracts-name" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>廠商名稱:</label>
@@ -75,15 +72,15 @@ if (strlen($_SESSION['account']) == 0) {
 									<span class="important">*</span>合約類別:
 								</label>
 								<div class="col-md-8">
-									
+
 								<select name="household-area" id="household-area" class="form-control">
-<!--								
+<!--
 									<option value="0">自聘</option>
--->									
+-->
 <?php
 	$sql = 'SELECT * FROM contract_item';
 	$data = $db->getRows($sql);
-?>								
+?>
 <?php
 foreach($data as $var) {
 	//	echo $var['Name'];
@@ -101,7 +98,7 @@ foreach($data as $var) {
 							</div>
 
 
-<!--								
+<!--
 								<div class="form-group row">
 									<label for="contracts-engname" class="text-right col-md-4 col-form-label">
 										廠商英文名稱:
@@ -126,7 +123,7 @@ foreach($data as $var) {
 										<input type="text" class="form-control datepicker" name="contract-createdate" id="contract-createdate">
 									</div>
 								</div>
--->								
+-->
 								<div class="form-group row">
 									<label for="contract-email" class="text-right col-md-4 col-form-label">
 										Email:
@@ -159,9 +156,9 @@ foreach($data as $var) {
 										<input type="text" class="form-control" name="contract-web" id="contract-web">
 									</div>
 								</div>
-<!--								
+<!--
 								<span class="edit-title mb-3">聯絡方式</span>
--->								
+-->
 								<div class="form-group row">
 									<label for="contract-person" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>聯絡人:
@@ -188,7 +185,7 @@ foreach($data as $var) {
 						</div>
 					</div>
 				</div>
-<!--				
+<!--
 				<div class="col-5">
 					<a href="<?= $urlName ?>/org/contracts-addpaper.php" class="btn btn-primary mb-3">新增廠商合約</a>
 					<dvi class="card contracts-paper">
@@ -218,7 +215,7 @@ foreach($data as $var) {
 						</div>
 					</dvi>
 				</div>
--->				
+-->
 			</div>
 		</div>
 	</div>

@@ -1,8 +1,8 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 ?>
-<?php 
+<?php
 
 $staff_no = $_GET['no'];
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -55,9 +55,6 @@ session_start();
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
 
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
@@ -73,14 +70,14 @@ session_start();
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="orgstaff-name" class="text-right col-md-4 col-form-label">
 									姓名:</label>
@@ -127,7 +124,7 @@ session_start();
 									<input type="text" class="form-control datepicker" value="<?=$staff['on_board_date'];?>" readonly>
 								</div>
 							</div>
-							
+
 							<div class="form-group row">
 								<label for="orgstaff-traindate" class="text-right col-md-4 col-form-label">
 									在職訓練完成日期:
@@ -137,7 +134,7 @@ session_start();
 								</div>
 							</div>
 
-							
+
 							<div class="form-group row">
 								<label for="orgstaff-resigned" class="text-right col-md-4 col-form-label">
 									離職日:
@@ -146,7 +143,7 @@ session_start();
 									<input type="text" class="form-control datepicker" name="orgstaff-resigned" id="orgstaff-resigned" value="<?=$staff['quit_date'];?>">
 								</div>
 							</div>
-					
+
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-outline-secondary">更新</button>
@@ -160,6 +157,6 @@ session_start();
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

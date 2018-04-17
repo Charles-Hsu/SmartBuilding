@@ -4,47 +4,38 @@
 	include('./Header.php'); 
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
 ?>
 <!-- 內容切換區 -->
-<nav class="index-nav my-3">
-<?php
-	if ($_isAdmin) {
-?>
-    <a class="" href="./kpi.php">績效指標</a>
-    <a class="active" href="./space-management.php">空間變更</a>
-    <a class="" href="./management.php">管理辦法</a>
-<?php
-	}
-?>    
-    <a class="" href="./announcement.php">公告</a>
-    <a class="" href="./opinionlist.php">住戶意見</a>
-    <a class="" href="./overduelist.php">欠繳費用</a>
-</nav>
-<?php 
-	if (count($_POST) > 0) {
-		var_dump($_POST);
-
-		echo '_FILES[files-upload][name]' . $_FILES['files-upload']['name'];
-		echo '_FILES[files-upload][tmp_name]' . $_FILES['files-upload']['tmp_name'];
-		//echo $_FILES['files-upload']['tmp_name'];
-
-		$handle = fopen($_FILES(['files-upload']['tmp_name']), 'r');
-
-		echo $handle;
-		echo "after handle";
-	}
-?>
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
+			<ul class="nav nav-pills mb-3">
+				<?php
+					if ($_isAdmin) {
+				?>			
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+				</li>
+				<?php
+					}
+				?>    				
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>				
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>				
+			</ul>
 			<div id="assets-tab">
-<!--			
-				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/index.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>空間變更申請</span>
-				</div>
--->				
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST" enctype="multipart/form-data">

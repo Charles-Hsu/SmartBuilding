@@ -1,39 +1,39 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-?>
-<?php 
-$table = 'building';
-$sql = 'SELECT * FROM ' . $table;
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-            <ul class="nav nav-pills mb-3">
+			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/mails.php">郵件紀錄</a>
+                </li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
+				</li>
+				<?php
+					if ($_isAdmin) {
+				?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/apartment/building.php">建築物</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>				
-				<li class="nav-item">
+                <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>							
+                </li>
+				<?php
+					}
+				?>
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/apartment/building-create.php" class="btn add-asset-btn mb-3">

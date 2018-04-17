@@ -18,6 +18,8 @@
 <?php
 
 $message="";
+$_isAdmin = FALSE;
+$_isMan = FALSE;
 
 require 'lib/DBAccess.class.php';
 require 'config/config.admin.php';
@@ -28,6 +30,27 @@ if(count($_POST)) {
     $message = "";
     $username = $_POST['username'];
     $password = $_POST['password'];
+
+    $data = explode("-", $username);
+    // echo "<script>alert(" . COUNT($data) .");</script>";
+    var_dump($data);
+
+    echo COUNT($data);
+
+    if (COUNT($data) > 1) {
+        // $_SESSION['addr_no'] = $data[0];
+        $n = COUNT($data) - 1;
+        $floor = $data[$n];
+        // $_SESSION['floor'] = $floor;
+        $addr_no = str_replace("-".$floor, "", $username);
+        echo "addr_no = $addr_no";
+        echo "floor = $floor ";
+        $_SESSION['addr_no'] = $addr_no;
+        $_SESSION['floor'] = $floor;
+        // echo "<script>alert(addr_no" . $addr_no .");</script>";
+        // echo "<script>alert(floor" . $floor .");</script>";
+    }
+
     $sql =  "SELECT role_id FROM users WHERE account='$username'";
     $data = $db->getRow($sql);
     if (!$data) {
@@ -40,8 +63,13 @@ if(count($_POST)) {
             $message = "密碼錯誤";
         }
         else {
-            $_SESSION['admin'] = $data['role_id'];
-            $_isAdmin = $_SESSION['admin'];
+            $role_id = intval($data['role_id']);
+            // echo "<script>alert($role_id);</script>";
+            if ($role_id == 1) {
+                $_SESSION['admin'] = 1;
+            } else if ($role_id == 2) {
+                $_SESSION['staff'] = 1;
+            }
             $url = "./announcement.php";
             if ($_isAdmin) {
                 $url = "./kpi.php";

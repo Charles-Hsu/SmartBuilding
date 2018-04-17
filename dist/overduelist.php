@@ -6,100 +6,106 @@
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
-<nav class="index-nav my-3">
-	<?php
-		if ($_isAdmin) {
-	?>
-    <a class="" href="./kpi.php">績效指標</a>
-    <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./management.php">管理辦法</a>
-	<?php
-		}
-	?>    
-    <a class="" href="./announcement.php">公告</a>
-    <a class="" href="./opinionlist.php">住戶意見</a>
-    <a class="active" href="./overduelist.php">欠繳費用</a>
-</nav>
-<?php 
-	$sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
-	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-	$data = $db->getRows($sql);
-?>
 <div class="row">
-	<div class="col-6 mb-3">
-        <div class="card card-chartbar">
-            <div class="card-header">應繳已繳 (每月)</div>
-            <div class="card-body">
-				<canvas id="overdue-bar-chart"></canvas>
-            </div>
-        </div>
-	</div>
-	<div class="col-6 mb-3">
-        <div class="card card-chartbar">
-            <div class="card-header">已繳未繳 (比例)</div>
-            <div class="card-body">
-				<canvas id="overdue-pi-chart"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div id="assets-tab" class="w-100">
-		<table class="table asset-table">
-			<thead class="thead-light">
-				<tr>
-					<th>大樓</th>
-					<th>戶號</th>
-					<th>樓層</th>
-					<th>區權人</th>
-					<th>欠繳總額</th>
-				</tr>
-			</thead>
-			<tbody>
+	<div class="col-12 p-4">
+		<div class="asset-manage-wrapper">
+			<ul class="nav nav-pills mb-3">
 				<?php
-					$sql = "SELECT SUM(fee) AS overdue_total FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NULL";
-					$data = $db->getRow($sql);
-					$overdue_total = $data['overdue_total'];
-					
-					$sql = "SELECT SUM(fee) AS paid_fee_total FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL";
-					$data = $db->getRow($sql);
-					$paid_fee_total = $data['paid_fee_total'];
-
-					// echo intval(date('m'));
-					
-
-					// 每月已繳總計 for 應繳已繳(每月) 的 bar chart 用的資料
-					$fee_per_month = (intval($overdue_total) + intval($paid_fee_total)) / intval(date('m'));
-					$sql = "SELECT m,MONTH(m) as month ,SUM(fee) AS paid_fee FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL GROUP BY MONTH(m)";
-					$paid_fee_per_month = $db->getRows($sql);
-
-					// var_dump($paid_fee_per_month);
-
-					// 每月未繳總計
-					// $sql = "SELECT m,SUM(fee) AS overdue FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NULL GROUP BY MONTH(m)";
-					// $data = $db->getRows($sql);
-					// var_dump($data);
-
-					$sql = "SELECT SUM(a.fee) AS unpaid_total, a.hid, c.addr_no, c.floor, c.holder, c.building FROM hoa_fee_record a, household c WHERE c.id = a.hid group by a.hid, c.addr_no, c.floor, c.holder, c.building";
-					$data = $db->getRows($sql);
-					foreach($data as $var) {
-				?>
-				<tr>
-					<td><span><?=$var[building]?></span></td>
-					<td><span><?=$var[addr_no]?></span></td>
-					<td><span><?=$var[floor]?></span></td>
-					<td><span><?=$var[holder]?></span></td>
-					<td><span><?=number_format($var[unpaid_total])?></span></td>
-				</tr>
+					if ($_isAdmin) {
+				?>			
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+				</li>
 				<?php
 					}
-				?>
-			</tbody>
-		</table>
+				?>    				
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>				
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>				
+			</ul>
+			<?php 
+				$sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
+				$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+				$data = $db->getRows($sql);
+			?>
+			<div class="row">
+				<div class="col-6 mb-3">
+					<div class="card card-chartbar">
+						<div class="card-header">應繳已繳 (每月)</div>
+						<div class="card-body">
+							<canvas id="overdue-bar-chart"></canvas>
+						</div>
+					</div>
+				</div>
+				<div class="col-6 mb-3">
+					<div class="card card-chartbar">
+						<div class="card-header">已繳未繳 (比例)</div>
+						<div class="card-body">
+							<canvas id="overdue-pi-chart"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div id="assets-tab" class="w-100">
+					<table class="table asset-table">
+						<thead class="thead-light">
+							<tr>
+								<th>大樓</th>
+								<th>戶號</th>
+								<th>樓層</th>
+								<th>區權人</th>
+								<th>欠繳總額</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								$sql = "SELECT SUM(fee) AS overdue_total FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NULL";
+								$data = $db->getRow($sql);
+								$overdue_total = $data['overdue_total'];
+								
+								$sql = "SELECT SUM(fee) AS paid_fee_total FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL";
+								$data = $db->getRow($sql);
+								$paid_fee_total = $data['paid_fee_total'];
+								// 每月已繳總計 for 應繳已繳(每月) 的 bar chart 用的資料
+								$fee_per_month = (intval($overdue_total) + intval($paid_fee_total)) / intval(date('m'));
+								$sql = "SELECT m,MONTH(m) as month ,SUM(fee) AS paid_fee FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL GROUP BY MONTH(m)";
+								$paid_fee_per_month = $db->getRows($sql);
+								$sql = "SELECT SUM(a.fee) AS unpaid_total, a.hid, c.addr_no, c.floor, c.holder, c.building FROM hoa_fee_record a, household c WHERE c.id = a.hid group by a.hid, c.addr_no, c.floor, c.holder, c.building";
+								$data = $db->getRows($sql);
+								foreach($data as $var) {
+							?>
+							<tr>
+								<td><span><?=$var[building]?></span></td>
+								<td><span><?=$var[addr_no]?></span></td>
+								<td><span><?=$var[floor]?></span></td>
+								<td><span><?=$var[holder]?></span></td>
+								<td><span><?=number_format($var[unpaid_total])?></span></td>
+							</tr>
+							<?php
+								}
+							?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<?php $paid_fee_per_month_data=json_encode($paid_fee_per_month); ?>
+		</div>
 	</div>
 </div>
-<?php $paid_fee_per_month_data=json_encode($paid_fee_per_month); ?>
+
 <script>
 var fee_per_month=<?php echo $fee_per_month ?>;
 var fee_per_monthArray=[];

@@ -1,8 +1,8 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -37,9 +37,6 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
                 <li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/org/works.php">工作日誌</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
                 </li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>

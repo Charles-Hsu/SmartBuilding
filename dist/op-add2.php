@@ -1,99 +1,95 @@
 <?php session_start(); ?>
 <?php 
-
 	include('./config.php');
 	include('./Header.php'); 
-
 	$_isAdmin = $_SESSION['admin'];
-
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-	if (count($_POST)) {
-		$opinion_type = $_POST['opinion-type'];
-		$opinion_content = $_POST['opinion-content'];
-		$opinion_date = $_POST['opinion-date'];
-		$holder_id = $_POST['holder-id'];
-		$who = $_POST['who'];
-		$sql = "INSERT INTO opinions (`id`,`dt`,`household_id`,`household_type`,`type`,`content`,`dt_responsed`,`dt_completed`) VALUES (NULL, '$opinion_date', $holder_id, )";
-
-		echo $sql;
-
-		if ($db->insert($sql)) {
-			$message="新增成功";
-			$url = "./opinionlist.php";
-			// $url = "http://www.stackoverflow.com";
-			echo "<script>window.location.href = '" . $url . "'</script>";
-		}
-	}
-
 ?>
 <!-- 內容切換區 -->
-<nav class="index-nav my-3">
-<?php
-if ($_isAdmin) {
-?>
-    <a class="" href="./kpi.php">績效指標</a>
-    <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./announcement.php">公告</a>
-    <a class="" href="./management.php">管理辦法</a>
-<?php
-}
-?>    
-    <a class="" href="./overduelist.php">欠繳費用</a>
-    <a class="active" href="./opinionlist.php">住戶意見</a>
-</nav>
-<div id="assets-tab">
-	<div class="assets-create-title mb-3">
-		<a href="<?= $urlName ?>/op-add1.php" class="assets-create-icon fas fa-chevron-left"></a>
-		<span>新增住戶意見 (意見)</span>
-	</div>
-	<div class="row justify-content-lg-start justify-content-center">
-		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
-			<table class="table asset-table">
-				<thead class="thead-light">
-					<tr>
-						<th>大樓</th>
-						<th>戶號</th>
-						<th>樓層</th>
-						<th>區權人</th>
-						<th>現住戶</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
-						$holder_id = $_GET['id'];
-						$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-						$sql = "SELECT a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id AND a.id = '$holder_id'";
-						$var = $db->getRow($sql);
-					?>
-					<tr>
-						<td><span><?php echo $var[building];?></span></td>
-						<td><span><?php echo $var[addr_no];?></span></td>
-						<td><span><?php echo $var[floor];?></span></td>
-						<td><span><?php echo $var[holder];?></span></td>
-						<td><span><?php echo $var[resident];?></span></td>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
-
-
-
-
+<div class="row">
+	<div class="col-12 p-4">
+		<div class="asset-manage-wrapper">
+			<ul class="nav nav-pills mb-3">
+				<?php
+					if ($_isAdmin) {
+				?>			
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+				</li>
+				<?php
+					}
+				?>    				
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>				
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>				
+			</ul>
+			<?php
+				if (count($_POST)) {
+					$opinion_type = $_POST['opinion-type'];
+					$opinion_content = $_POST['opinion-content'];
+					$opinion_date = $_POST['opinion-date'];
+					$holder_id = $_POST['holder-id'];
+					$who = $_POST['who'];
+					$sql = "INSERT INTO opinions (`id`,`dt`,`household_id`,`household_type`,`type`,`content`,`dt_responsed`,`dt_completed`) VALUES (NULL, '$opinion_date', $holder_id, )";
+					if ($db->insert($sql)) {
+						$message="新增成功";
+						$url = "./opinionlist.php";
+						// $url = "http://www.stackoverflow.com";
+						echo "<script>window.location.href = '" . $url . "'</script>";
+					}
+				}
+			?>
+			<div id="assets-tab">
+				<div class="assets-create-title mb-3">
+					<a href="<?= $urlName ?>/op-add1.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>新增住戶意見 (意見)</span>
+				</div>
+				<div class="row justify-content-lg-start justify-content-center">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
+						<table class="table asset-table">
+							<thead class="thead-light">
+								<tr>
+									<th>大樓</th>
+									<th>戶號</th>
+									<th>樓層</th>
+									<th>區權人</th>
+									<th>現住戶</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php 
+									$holder_id = $_GET['id'];
+									$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+									$sql = "SELECT a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id AND a.id = '$holder_id'";
+									$var = $db->getRow($sql);
+								?>
+								<tr>
+									<td><span><?php echo $var[building];?></span></td>
+									<td><span><?php echo $var[addr_no];?></span></td>
+									<td><span><?php echo $var[floor];?></span></td>
+									<td><span><?php echo $var[holder];?></span></td>
+									<td><span><?php echo $var[resident];?></span></td>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-							<!--
-							<div class="form-group row">
-								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
-								<div class="col-md-9 d-flex align-items-center">
-									<span>XXXXXX</span>
-								</div>
-							</div>
-							-->
 							<input name="holder-id" value="<?php echo $holder_id;?>" hidden>
 							<div class="form-group row">
 								<label for="opinion-type" class="text-right col-md-3 col-form-label">
@@ -102,15 +98,13 @@ if ($_isAdmin) {
 								<div class="col-md-9">
 									<select class="custom-select" name="opinion-type">
 										<?php
-										$sql =  "SELECT * FROM opinion_type";
-										$data1 = $db->getRows($sql);
-										foreach($data1 as $var) {
-										//	echo $var['Name'];
-										//echo $var['id'];
+											$sql =  "SELECT * FROM opinion_type";
+											$data1 = $db->getRows($sql);
+											foreach($data1 as $var) {
 										?>
-											<option value="<?=$var['id'];?>"><?=$var['type'];?></option>
+										<option value="<?=$var['id'];?>"><?=$var['type'];?></option>
 										<?php
-										}
+											}
 										?>
 									</select>
 								</div>
@@ -138,13 +132,13 @@ if ($_isAdmin) {
 								<div class="col-md-9">
 									<select class="custom-select" name="who">
 										<?php
-										$sql =  "SELECT * FROM whois";
-										$data = $db->getRows($sql);
-										foreach($data as $var) {
+											$sql =  "SELECT * FROM whois";
+											$data = $db->getRows($sql);
+											foreach($data as $var) {
 										?>
 											<option value="<?=$var['id'];?>"><?=$var['who'];?></option>
 										<?php
-										}
+											}
 										?>							
 									</select>
 								</div>
@@ -158,6 +152,10 @@ if ($_isAdmin) {
 						</form>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
 

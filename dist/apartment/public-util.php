@@ -1,45 +1,40 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-?>
-<?php 
-$table = 'facilities';
-$sql = 'SELECT * FROM ' . $table . ' ORDER BY id ASC';
-//echo $sql;
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-
-//if (strlen($_SESSION['account']) == 0) {
-//	header('Location: ' . '/smartbuilding/login.php');
-//}
-
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$pre_url = "$urlName/apartment";
 ?>
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-            <ul class="nav nav-pills mb-3">
+			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
+					<a class="nav-link" href="<?php echo $pre_url . "/mails.php";?>">郵件紀錄</a>
+                </li>
+				<li class="nav-item">
+					<a class="nav-link active" href="#">公設預約</a>
+				</li>
+				<?php
+					if ($_isAdmin) {
+				?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?php echo $pre_url . "/meeting-man.php";?>">會議管理</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
+					<a class="nav-link" href="<?php echo $pre_url . "/building.php";?>">建築物</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
+					<a class="nav-link" href="<?php echo $pre_url . ".php";?>">基本資料</a>
 				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>				
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>			
+                <li class="nav-item">
+					<a class="nav-link" href="<?php echo $pre_url . "/settings.php";?>">參數設定</a>
+                </li>
+				<?php
+					}
+				?>
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/apartment/publicutil-create.php" class="btn add-asset-btn mb-3">
@@ -48,9 +43,6 @@ session_start();
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-<!--							
-							<th>#</th>
--->						
 							<th>設施名稱</th>
 							<th>費用</th>
 							<th>備註</th>
@@ -59,43 +51,22 @@ session_start();
 						</tr>
 					</thead>
 					<tbody>
-<?php
-	// foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
-<?php
-	 foreach($data as $facility) {
-?>
-
+						<?php
+							$sql = 'SELECT *  FROM facilities ORDER BY id ASC';
+							$data = $db->getRows($sql);
+							$pre_url = "$urlName/apartment/publicutil";
+							foreach($data as $facility) {
+						?>
 						<tr>
-<!--
-							<td><span><?=$facility[id];?></span></td>
--->
 							<td><span><?=$facility[name];?></span></td>
 							<td><span><?=$facility[charge];?></span></td>
 							<td><span><?=$facility[comment];?></span></td>
-							<td><a href="<?= $urlName ?>/apartment/publicutil-appointment.php?id=<?=$facility[id];?>" class="btn btn-outline-secondary">預約</a></td>
-							<td><a href="<?= $urlName ?>/apartment/publicutil-edit.php?id=<?=$facility[id];?>" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="<?php echo $pre_url."-appointment.php?id=".$facility['id'];?>" class="btn btn-outline-secondary">預約</a></td>
+							<td><a href="<?php echo $pre_url."-edit.php?id=".$facility['id'];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
-<?php
-	 }
-?>
-<!--
-						<tr>
-							<td><span>KTV - 娛樂室</span></td>
-							<td><span>400</span></td>
-							<td><span>最多10人同時使用</span></td>
-							<td><a href="<?= $urlName ?>/apartment/publicutil-appointment.php" class="btn btn-outline-secondary">預約</a></td>
-							<td><a href="<?= $urlName ?>/apartment/publicutil-edit.php" class="btn btn-outline-secondary">修改</a></td>
-						</tr>
--->						
-<?php
-	// }
-?>
+						<?php
+							}
+						?>
 					</tbody>
 				</table>
 			</div>

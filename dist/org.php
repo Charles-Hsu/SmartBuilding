@@ -1,8 +1,8 @@
-<?php 
+<?php
 include('./config.php');
-include('./Header.php'); 
+include('./Header.php');
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT a.name AS staffname,a.mobile,a.no,b.title,c.name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -31,10 +31,7 @@ session_start();
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
-                <!-- <li class="nav-item">
+                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
                 <li class="nav-item">

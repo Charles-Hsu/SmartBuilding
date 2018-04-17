@@ -1,6 +1,6 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 
 $sql = 'SELECT a.*, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -22,9 +22,6 @@ session_start();
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
 
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
@@ -51,7 +48,7 @@ session_start();
 					<tbody>
 						<?php
 						foreach($data as $var) {
-						?>					
+						?>
 						<tr>
 						<td><span><?=$var['dt'];?></span></td>
 						<td><span><?=$var['addr_no'];?></span></td>
@@ -61,7 +58,7 @@ session_start();
 						<td>
 							<?php
 							if ($var['dt_responsed'] == NULL) {
-							?>						
+							?>
 							<button data-id="<?=$var['id'];?>" class="btn-reply btn btn-outline-primary">確認</button>
 							<?php
 							} else {
@@ -72,12 +69,12 @@ session_start();
 								} else {
 							?>
 							<span><?=$var['dt_responsed'];?></span>
-							<?php		
+							<?php
 								}
 							?>
 							<?php
 							}
-							?>					
+							?>
 						</td>
 						<td>
 							<?php
@@ -88,7 +85,7 @@ session_start();
 								} else {
 							?>
 							<span><?=$var['dt_completed'];?></span>
-							<?php		
+							<?php
 								}
 							?>
 						</td>

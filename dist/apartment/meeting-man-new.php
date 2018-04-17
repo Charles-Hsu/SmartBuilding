@@ -1,45 +1,39 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-session_start();
-
-if (count($_POST)) {
-	var_dump($_POST);
-	$dd = $_POST['meeting-date'];
-	$tp = $_POST['meeting-type'];
-	$ss = $_POST['session'];
-	$rd = $_POST['round'];
-	$sql = "INSERT INTO meetings (`id`, `date`, `meeting_type`, `session`, `round`) VALUES (NULL, '$dd', $tp, $ss, $rd)";
-	echo $sql;
-}
-$sql2 = "SELECT * FROM `meetings`";
-$data= $db->getRows($sql2);
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-            <ul class="nav nav-pills mb-3">
+			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment/mails.php">郵件紀錄</a>
+                </li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
+				</li>
+				<?php
+					if ($_isAdmin) {
+				?>
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公設預約</a>
+					<a class="nav-link" href="<?= $urlName ?>/apartment.php">基本資料</a>
 				</li>
-
-				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>
-				<li class="nav-item">
+                <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>														
-
+                </li>
+				<?php
+					}
+				?>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">

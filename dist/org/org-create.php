@@ -1,8 +1,8 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -33,9 +33,6 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
 
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
@@ -50,16 +47,16 @@ if (strlen($_SESSION['account']) == 0) {
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
-		
+
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="orgstaff-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>姓名:</label>
@@ -99,7 +96,7 @@ if (strlen($_SESSION['account']) == 0) {
 										<?php
 											$sql = 'SELECT * FROM staff_role';
 											$data = $db->getRows($sql);
-										?>								
+										?>
 										<?php
 											foreach($data as $var) {
 											//	echo $var['Name'];
@@ -121,15 +118,15 @@ if (strlen($_SESSION['account']) == 0) {
 									<span class="important">*</span>所屬物業公司(或自聘):
 								</label>
 								<div class="col-md-8">
-									
+
 								<select name="household-area" id="household-area" class="form-control">
-<!--								
+<!--
 									<option value="0">自聘</option>
--->									
+-->
 <?php
 	$sql = 'SELECT * FROM contract';
 	$data = $db->getRows($sql);
-?>								
+?>
 <?php
 foreach($data as $var) {
 	//	echo $var['Name'];
@@ -147,7 +144,7 @@ foreach($data as $var) {
 							</div>
 
 
-							
+
 							<div class="form-group row">
 								<label for="orgstaff-toworkdate" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>到職日:
@@ -156,7 +153,7 @@ foreach($data as $var) {
 									<input type="text" class="form-control datepicker" name="orgstaff-toworkdate" id="orgstaff-toworkdate">
 								</div>
 							</div>
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="orgstaff-traindate" class="text-right col-md-4 col-form-label">
 									在職訓練完成日期:
@@ -173,7 +170,7 @@ foreach($data as $var) {
 									<input type="text" class="form-control datepicker" name="orgstaff-resigned" id="orgstaff-resigned">
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-outline-secondary">新增</button>
@@ -200,6 +197,6 @@ foreach($data as $var) {
 	}
 	$('.datepicker').val(`${now_year}-${now_month}-${now_date}`)
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

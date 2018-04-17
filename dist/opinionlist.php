@@ -1,124 +1,133 @@
 <?php session_start(); ?>
 <?php 
-include('./config.php');
-include('./Header.php'); 
-$_isAdmin = $_SESSION['admin'];
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
+	include('./config.php');
+	include('./Header.php'); 
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
-<nav class="index-nav my-3">
-<?php
-if ($_isAdmin) {
-?>
-    <a class="" href="./kpi.php">績效指標</a>
-    <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./management.php">管理辦法</a>
-<?php
-}
-?>    
-    <a class="" href="./announcement.php">公告</a>
-    <a class="active" href="./opinionlist.php">住戶意見</a>
-    <a class="" href="./overduelist.php">欠繳費用</a>
-</nav>
-
-<?php 
-
-$sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-// var_dump($data);
-
-?>
-
 <div class="row">
-	<div class="col-6 mb-3">
-        <div class="card card-chartbar">
-            <div class="card-header">處理案件數</div>
-            <div class="card-body">
-				<canvas id="opinion-chart"></canvas>
+	<div class="col-12 p-4">
+		<div class="asset-manage-wrapper">
+			<ul class="nav nav-pills mb-3">
+				<?php
+					if ($_isAdmin) {
+				?>			
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+				</li>
+				<?php
+					}
+				?>    				
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>				
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>				
+			</ul>
+            <?php
+                $sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
+                $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+                $data = $db->getRows($sql);
+            ?>
+            <div class="row">
+                <div class="col-6 mb-3">
+                    <div class="card card-chartbar">
+                        <div class="card-header">處理案件數</div>
+                        <div class="card-body">
+                            <canvas id="opinion-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 mb-3">
+                    <div class="card card-chartbar">
+                        <div class="card-header">處理速度</div>
+                        <div class="card-body">
+                            <canvas id="opinionSpeed-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-	</div>
-	<div class="col-6 mb-3">
-        <div class="card card-chartbar">
-            <div class="card-header">處理速度</div>
-            <div class="card-body">
-				<canvas id="opinionSpeed-chart"></canvas>
-            </div>
+            <div id="assets-tab">
+            <?php
+                if ($_isAdmin) {
+            ?>
+            <a href="<?= $urlName ?>/op-add1.php" class="btn add-asset-btn mb-3">
+                <span>+</span>新增住戶意見
+            </a>
+            <?php
+                }
+            ?>
+            <table class="table asset-table">
+                <thead class="thead-light">
+                    <tr>
+                        <th>日期</th>
+                        <th>戶號</th>
+                        <th>樓層</th>
+                        <!-- <th>種類</th> -->
+                        <th>內容</th>
+                        <th>回復/天數</th>
+                        <th>結案/天數</th>
+                    </tr>
+                </thead>
+                <tbody class="opinionlist_tbody">
+                    <?php
+                        foreach($data as $var) {
+                    ?>					
+                    <tr>
+                    <td class="td_dt"><span><?=$var['dt'];?></span></td>
+                    <td><span><?=$var['addr_no'];?></span></td>
+                    <td><span><?=$var['floor'];?></span></td>
+                    <td><span><?=$var['content'];?></span></td>
+                    <td class="td_responsed">
+                        <?php
+                            if (strlen($var['dt_responsed']) == 0) {
+                        ?>						
+                        <input type="checkbox" class="dt_responsed" data-id="<?= $var[household_id] ?>">
+                        <?php
+                            } else {
+                                $diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
+                        ?>
+                        <span><?php echo round($diff,2);?></span>
+                        <?php
+                            }
+                        ?>					
+                    </td>
+                    <td class="td_completed">
+                        <?php
+                            if (strlen($var['dt_completed']) == 0 && strlen($var['dt_responsed']) != 0) {
+                        ?>						
+                        <input type="checkbox" class="dt_completed" data-id="<?= $var[household_id] ?>">
+                        <?php
+                            } else if( strlen($var['dt_responsed']) == 0 ){
+                        ?>
+                        <input type="checkbox" class="dt_completed" data-id="<?= $var[household_id] ?>" disabled>
+                        <?php
+                            } else {
+                                $diff = abs(strtotime($var['dt_completed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
+                        ?>
+                        <span><?php echo round($diff,2);?></span>
+                        <?php } ?>						
+                    </td>
+                    <?php
+                        }
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-<div id="assets-tab">
-<?php
-if ($_isAdmin) {
-?>
-    <a href="<?= $urlName ?>/op-add1.php" class="btn add-asset-btn mb-3">
-		<span>+</span>新增住戶意見
-	</a>
-<?php
-}
-?>
 
-    <table class="table asset-table">
-        <thead class="thead-light">
-            <tr>
-                <th>日期</th>
-                <th>戶號</th>
-                <th>樓層</th>
-                <!-- <th>種類</th> -->
-                <th>內容</th>
-                <th>回復/天數</th>
-                <th>結案/天數</th>
-            </tr>
-        </thead>
-        <tbody class="opinionlist_tbody">
-        <?php
-            foreach($data as $var) {
-        ?>					
-            <tr>
-            <td class="td_dt"><span><?=$var['dt'];?></span></td>
-            <td><span><?=$var['addr_no'];?></span></td>
-            <td><span><?=$var['floor'];?></span></td>
-            <td><span><?=$var['content'];?></span></td>
-    		<td class="td_responsed">
-                <?php
-                    if (strlen($var['dt_responsed']) == 0) {
-                ?>						
-                <input type="checkbox" class="dt_responsed" data-id="<?= $var[household_id] ?>">
-                <?php
-                    } else {
-                        $diff = abs(strtotime($var['dt_responsed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
-                ?>
-				<span><?php echo round($diff,2);?></span>
-                <?php
-                    }
-                ?>					
-            </td>
-    		<td class="td_completed">
-            <?php
-                if (strlen($var['dt_completed']) == 0 && strlen($var['dt_responsed']) != 0) {
-            ?>						
-                <input type="checkbox" class="dt_completed" data-id="<?= $var[household_id] ?>">
-            <?php
-                } else if( strlen($var['dt_responsed']) == 0 ){
-            ?>
-                <input type="checkbox" class="dt_completed" data-id="<?= $var[household_id] ?>" disabled>
-            <?php
-                } else {
-                    $diff = abs(strtotime($var['dt_completed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
-            ?>
-                <span><?php echo round($diff,2);?></span>
-            <?php } ?>						
-            </td>
-        <?php
-            }
-        ?>
-		</tbody>
-	</table>
-</div>
 
 <?php $jsData=json_encode($data); 
     // var_dump($data);

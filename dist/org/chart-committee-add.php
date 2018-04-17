@@ -1,6 +1,6 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
@@ -8,7 +8,7 @@ session_start();
 
 function newCommittee($db, $current_session) {
 	$sql = "SELECT `role_id`, `holder_id`, `session`
-				FROM committee 
+				FROM committee
 				WHERE session = $current_session";
 	echo $sql;
 	var_dump($db);
@@ -46,9 +46,6 @@ if (count($_POST)) {
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
 
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
@@ -104,6 +101,6 @@ if (count($_POST)) {
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

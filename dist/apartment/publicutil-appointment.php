@@ -8,11 +8,13 @@ $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $data = $db->getRows($sql);
+$public_util_type=$_GET['id'];
 session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
-
+$sql="SELECT * FROM `facilities` WHERE id = $public_util_type";
+$facilities_name=$db->getRow($sql);
 
 ?>
 <!-- 內容切換區 -->
@@ -40,162 +42,256 @@ session_start();
 				</div>
                 <form action="" method="POST" class="form-row">
                     <div class="col-12 d-flex align-items-center mb-3">
-                        <div class="title mr-3">游泳池 - SPA池</div>
+                        <div class="title mr-3"><?php echo $facilities_name['name']; ?></div>
                         <div class="date">
                             <input type="text" name="appointment-date" class="datepicker form-control" placeholder="請輸入日期...">
                         </div>
                         <button type="submit" class="btn btn-outline-primary appointment-btn ml-auto">確認</button>
                     </div>
-                    <div class="col-12">
-                        <div class="appointment-list">
-                            <input type="checkbox" name="0" id="appointment_0" checked disabled>
+                    <div class="col-12 appointment-box">
+                        <!-- <div class="appointment-list">
+                            <input type="checkbox" class="appointment_check" name="0" id="appointment_0">
                             <label for="appointment_0" class="appointment-label">
-                                <div class="time">08:00 - 09:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who">215_251</div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="1" id="appointment_1">
-                            <label for="appointment_1" class="appointment-label">
-                                <div class="time">09:00 - 10:00</div>
+                                <div class="time">08:00-09:00</div>
                                 <div class="check-wrap">
                                     <span class="check"></span>
                                     <span>已預約</span>
                                 </div>
                                 <div class="who"></div>
                             </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="2" id="appointment_2">
-                            <label for="appointment_2" class="appointment-label">
-                                <div class="time">11:00 - 12:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="3" id="appointment_3">
-                            <label for="appointment_3" class="appointment-label">
-                                <div class="time">11:00 - 12:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="4" id="appointment_4">
-                            <label for="appointment_4" class="appointment-label">
-                                <div class="time">12:00 - 13:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="5" id="appointment_5">
-                            <label for="appointment_5" class="appointment-label">
-                                <div class="time">13:00 - 14:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="6" id="appointment_6">
-                            <label for="appointment_6" class="appointment-label">
-                                <div class="time">14:00 - 15:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="7" id="appointment_7">
-                            <label for="appointment_7" class="appointment-label">
-                                <div class="time">15:00 - 16:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="8" id="appointment_8">
-                            <label for="appointment_8" class="appointment-label">
-                                <div class="time">16:00 - 17:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="9" id="appointment_9">
-                            <label for="appointment_9" class="appointment-label">
-                                <div class="time">17:00 - 18:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="10" id="appointment_10">
-                            <label for="appointment_10" class="appointment-label">
-                                <div class="time">18:00 - 19:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="11" id="appointment_11">
-                            <label for="appointment_11" class="appointment-label">
-                                <div class="time">19:00 - 20:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
-                        <div class="appointment-list">
-                            <input type="checkbox" name="12" id="appointment_12">
-                            <label for="appointment_12" class="appointment-label">
-                                <div class="time">20:00 - 21:00</div>
-                                <div class="check-wrap">
-                                    <span class="check"></span>
-                                    <span>已預約</span>
-                                </div>
-                                <div class="who"></div>
-                            </label>
-                        </div>
+                        </div> -->
                     </div>
                 </form>
 			</div>
 		</div>
-	</div>
+    </div>
+    <div class="reserve-model">
+        <div class="card">
+            <div class="card-header">
+                <div class="title text-center">預約公共設施</div>
+            </div>
+            <div class="card-body">
+                <input type="text" id="household-num" name="household-num" class="form-control mb-3" placeholder="填寫戶號...">
+                <input type="text" id="household-floor" name="household-floor" class="form-control mb-3" placeholder="填寫樓層...">
+                <button class="btn btn-primary btn-block reserve-submit">送出</button>
+            </div>
+        </div>
+    </div>
+    <div class="mask"></div>
 </div>
+
+<script>
+$(function(){
+    var now=new Date();
+    var year=now.getFullYear();
+    var month=now.getMonth()+1;
+    if(month < 10){
+        month='0'+month;
+    }
+    var nowdate=now.getDate();
+    $('.datepicker').val(`${year}-${month}-${nowdate}`);
+    var public_util_type=<?php echo $public_util_type ?>;
+    var checkArr=[];
+    var checkArrTime=[];
+    var reserve_time2=['09:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00']
+    var reserve_time=['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00']
+    var tempData={};
+    var str_html='';
+    var str=`
+        <div class="appointment-list">
+            <input type="checkbox" id="{{appointment_id}}" class="appointment_check" {{has_time}}>
+            <label for="{{appointment_ids}}" class="appointment-label">
+                <div class="time">{{time}}</div>
+                <div class="check-wrap">
+                    <span class="check"></span>
+                    <span>已預約</span>
+                </div>
+                <div class="who">{{who}}</div>
+            </label>
+        </div>`;
+
+    $.ajax({
+        url:'../data/publicutil-appointmentData.php',
+        method:'POST',
+        data:{
+            method_type:'get',
+            public_util_type,
+            reserveDate:$('.datepicker').val()
+        },
+        success:function(data){
+            try{
+                var _data=JSON.parse(data);
+                if(_data.success){
+                    reserve_time.forEach((item)=>{
+                        tempData[item]=[]
+                    })
+                    for(var i=0;i<_data.data.length;i++){
+                        if( tempData[_data.data[i].time] != undefined ){
+                            tempData[_data.data[i].time].push(_data.data[i])
+                        }
+                    }
+                    for(var i=0;i<reserve_time.length;i++){
+                        if(tempData[reserve_time[i]].length > 0){
+                            str_html+=str.replace("{{who}}",`${tempData[reserve_time[i]][0].addr_no}_${tempData[reserve_time[i]][0].floor}`)
+                                    .replace("{{time}}",`${reserve_time2[i]}`)
+                                    .replace("{{has_time}}",'disabled checked')
+                                    .replace("{{appointment_id}}",`appointment_${i}`)
+                                    .replace("{{appointment_ids}}",`appointment_${i}`)
+                        }else{
+                            str_html+=str.replace("{{who}}",'')
+                                    .replace("{{time}}",`${reserve_time2[i]}`)
+                                    .replace("{{has_time}}",'')
+                                    .replace("{{appointment_id}}",`appointment_${i}`)
+                                    .replace("{{appointment_ids}}",`appointment_${i}`)
+                        }
+                        $('.appointment-box').html(str_html)
+                    }
+                }else{
+                    alert(_data.data);
+                }
+
+            }catch(error){
+                alert(data)
+            }
+        },
+        error:function(error){
+            console.log(error)
+        }
+    })
+
+    $('.appointment-btn').on('click',function(e){
+        e.preventDefault();
+        checkArr=[];
+        checkArrTime=[];
+        $('.appointment_check').each(function(item){
+            if($(this).prop('checked') == true && $(this).prop('disabled') != true){
+                checkArr.push($(this).closest('.appointment-list').find('.time').text())
+            }
+        })
+        for(var i=0;i<checkArr.length;i++){
+            checkArrTime.push(checkArr[i].split('-')[0])
+        }
+        $('.mask').show();
+        $('.reserve-model').show();
+    })
+    $('.reserve-submit').on('click',function(){
+        var _this=$(this);
+        if($('#household-num').val().length > 0 || $('#household-floor').val().length > 0){
+            $.ajax({
+                url:'../data/publicutil-appointmentData.php',
+                method:'POST',
+                data:{
+                    public_util_type,
+                    checkArrTime,
+                    household_num:_this.closest('.card-body').find('#household-num').val(),
+                    household_floor:_this.closest('.card-body').find('#household-floor').val(),
+                    method_type:'update',
+                    reserveDate:$('.datepicker').val()
+                },
+                success:function(data){
+                    try{
+                        var _data=JSON.parse(data);
+                        if(_data.success){
+                            $('.mask').hide();
+                            $('.reserve-model').hide();
+                            tempData={};
+                            str_html='';
+                            reserve_time.forEach((item)=>{
+                                tempData[item]=[]
+                            })
+                            $('.appointment-box').html('')
+                            for(var i=0;i<_data.data.length;i++){
+                                if( tempData[_data.data[i].time] != undefined ){
+                                    tempData[_data.data[i].time].push(_data.data[i])
+                                }
+                            }
+                            for(var i=0;i<reserve_time.length;i++){
+                                if(tempData[reserve_time[i]].length > 0){
+                                    str_html+=str.replace("{{who}}",`${tempData[reserve_time[i]][0].addr_no}_${tempData[reserve_time[i]][0].floor}`)
+                                            .replace("{{time}}",`${reserve_time2[i]}`)
+                                            .replace("{{has_time}}",'disabled checked')
+                                            .replace("{{appointment_id}}",`appointment_${i}`)
+                                            .replace("{{appointment_ids}}",`appointment_${i}`)
+                                }else{
+                                    str_html+=str.replace("{{who}}",'')
+                                            .replace("{{time}}",`${reserve_time2[i]}`)
+                                            .replace("{{has_time}}",'')
+                                            .replace("{{appointment_id}}",`appointment_${i}`)
+                                            .replace("{{appointment_ids}}",`appointment_${i}`)
+                                }
+                                $('.appointment-box').html(str_html)
+                            }
+                        }else{
+                            alert(_data.data);
+                        }
+
+                    }catch(error){
+                        alert(data)
+                    }
+                },
+                error:function(error){
+                    console.log(error)
+                }
+            })
+        }else{
+            alert('請確定輸入!')
+        }
+    })
+    $('.datepicker').on('change',function(){
+        $.ajax({
+            url:'../data/publicutil-appointmentData.php',
+            method:'POST',
+            data:{
+                method_type:'get',
+                public_util_type,
+                reserveDate:$('.datepicker').val()
+            },
+            success:function(data){
+                try{
+                    var _data=JSON.parse(data);
+                    if(_data.success){
+                        tempData={};
+                        str_html='';
+                        reserve_time.forEach((item)=>{
+                            tempData[item]=[]
+                        })
+                        $('.appointment-box').html('')
+                        for(var i=0;i<_data.data.length;i++){
+                            if( tempData[_data.data[i].time] != undefined ){
+                                tempData[_data.data[i].time].push(_data.data[i])
+                            }
+                        }
+                        for(var i=0;i<reserve_time.length;i++){
+                            if(tempData[reserve_time[i]].length > 0){
+                                str_html+=str.replace("{{who}}",`${tempData[reserve_time[i]][0].addr_no}_${tempData[reserve_time[i]][0].floor}`)
+                                        .replace("{{time}}",`${reserve_time2[i]}`)
+                                        .replace("{{has_time}}",'disabled checked')
+                                        .replace("{{appointment_id}}",`appointment_${i}`)
+                                        .replace("{{appointment_ids}}",`appointment_${i}`)
+                            }else{
+                                str_html+=str.replace("{{who}}",'')
+                                        .replace("{{time}}",`${reserve_time2[i]}`)
+                                        .replace("{{has_time}}",'')
+                                        .replace("{{appointment_id}}",`appointment_${i}`)
+                                        .replace("{{appointment_ids}}",`appointment_${i}`)
+                            }
+                            $('.appointment-box').html(str_html)
+                        }
+                    }else{
+                        alert(_data.data);
+                    }
+
+                }catch(error){
+                    alert(data)
+                }
+            },
+            error:function(error){
+                console.log(error)
+            }
+        })
+    })
+})
+</script>
 <?php 
 include(Document_root.'/Footer.php');
 ?>

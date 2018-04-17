@@ -1,8 +1,8 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -29,9 +29,6 @@ session_start();
 					<a class="nav-link active" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
 
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
@@ -45,7 +42,7 @@ session_start();
 				</a>
 				<a href="<?= $urlName ?>/org/contract-man.php" class="btn add-asset-btn mb-3">
 					<span>+</span>協約管理
-				</a>				
+				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
@@ -72,7 +69,7 @@ foreach($data as $var) {
 							<td><span><?=$var['contact_phone'];?></span></td>
 							<td><a href="<?= $urlName ?>/org/contracts-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
-					
+
 <?php
 }
 ?>

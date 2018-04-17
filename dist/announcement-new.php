@@ -6,39 +6,49 @@
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
-<nav class="index-nav my-3">
-<?php
-	if ($_isAdmin) {
-?>
-    <a class="" href="./kpi.php">績效指標</a>
-    <a class="" href="./space-management.php">空間變更</a>
-    <a class="" href="./management.php">管理辦法</a>
-<?php
-	}
-?>    
-    <a class="active" href="./announcement.php">公告</a>
-    <a class="" href="./opinionlist.php">住戶意見</a>
-    <a class="" href="./overduelist.php">欠繳費用</a>
-</nav>
-
-<?php 
-	if (count($_POST) > 0) {
-
-		$date = $_POST['post-date'];
-		$content = $_POST['post-content'];
-		$post_by = '管委會';
-
-		$sql = "INSERT INTO post (`id`, `date`, `post_by`, `content`) VALUES (NULL, '$date', '$post_by', '$content')";
-
-		if ($db->insert($sql)) {
-			$message="新增成功";
-			$url = "./announcement.php";
-			// $url = "http://www.stackoverflow.com";
-			echo "<script>window.location.href = '" . $url . "'</script>";
-		}
-	}
-?>
-
+<div class="row">
+	<div class="col-12 p-4">
+		<div class="asset-manage-wrapper">
+			<ul class="nav nav-pills mb-3">
+				<?php
+					if ($_isAdmin) {
+				?>			
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+				</li>
+				<?php
+					}
+				?>    				
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>				
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>				
+			</ul>
+			<?php 
+				if (count($_POST) > 0) {
+					$date = $_POST['post-date'];
+					$content = $_POST['post-content'];
+					$post_by = '管委會';
+					$sql = "INSERT INTO post (`id`, `date`, `post_by`, `content`) VALUES (NULL, '$date', '$post_by', '$content')";
+					if ($db->insert($sql)) {
+						$message="新增成功";
+						$url = "./announcement.php";
+						// $url = "http://www.stackoverflow.com";
+						echo "<script>window.location.href = '" . $url . "'</script>";
+					}
+				}
+			?>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="./announcement.php" class="assets-create-icon fas fa-chevron-left"></a>
@@ -46,10 +56,7 @@
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
-
-
 						<form class="post-create-form" id="post-create-form" action="" method="POST">
-                        <!-- <form action="" method="POST"> -->
 							<div class="form-group row">
 								<label for="post-date" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>公告日期:
@@ -77,12 +84,12 @@
 								</div>
 							</div>
                         </form>
-                        
-                        <!-- <textarea rows="3" cols="48" name="post-content" form="post-create-form">輸入公告內容...</textarea> -->
-
-
-
-
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
 
