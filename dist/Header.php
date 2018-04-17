@@ -12,7 +12,7 @@
 	<link href="<?= $urlName ?>/css/bootstrap-datepicker3.standalone.min.css" rel="stylesheet">
 	<link href="<?= $urlName ?>/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 	<link href="<?= $urlName ?>/css/jquery.cxcalendar.css" rel="stylesheet">
-	<link href="<?= $urlName ?>/css/index.css" rel="stylesheet">
+	<link href="<?= $urlName ?>/css/index.css?<?php echo time() ?>" rel="stylesheet">
 	<script src="<?= $urlName ?>/js/lib/jquery-3.1.1.min.js"></script>
 	<script src="<?= $urlName ?>/js/popper.min.js"></script>
 	<script src="<?= $urlName ?>/js/bootstrap.min.js"></script>

@@ -32,11 +32,13 @@ $get[strtolower($get_key)] = get_str($get_var);
 /* 过滤所有POST过来的变量 */
 foreach ($_POST as $post_key=>$post_var) 
 { 
-if (is_numeric($post_var)) { 
-$post[strtolower($post_key)] = get_int($post_var); 
-} else { 
-$post[strtolower($post_key)] = get_str($post_var); 
-} 
+	if (is_numeric($post_var)) { 
+		$post[strtolower($post_key)] = get_int($post_var); 
+	} else if(is_string($post_var)){ 
+		$post[strtolower($post_key)] = get_str($post_var); 
+	} else{
+		return $post_var;
+	}
 } 
     
 /* 过滤函数 */
