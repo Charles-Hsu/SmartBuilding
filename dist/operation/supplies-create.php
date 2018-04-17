@@ -32,7 +32,7 @@ session_start();
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/operation/supplies.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>耗材管理</span>
+					<span>新增耗材</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">

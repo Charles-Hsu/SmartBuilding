@@ -32,9 +32,9 @@ session_start();
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
@@ -43,6 +43,9 @@ session_start();
 				<a href="<?= $urlName ?>/org/contracts-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增廠商
 				</a>
+				<a href="<?= $urlName ?>/org/contract-man.php" class="btn add-asset-btn mb-3">
+					<span>+</span>協約管理
+				</a>				
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>

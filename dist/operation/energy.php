@@ -22,54 +22,54 @@ if (strlen($_SESSION['account']) == 0) {
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-			<ul class="nav nav-pills mb-3">
+            <ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org.php">人員</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation.php">例行作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/patrol.php">勤務管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/opinions.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org/works.php">工作日誌</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
-                </li>
-                <!-- <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
-                </li> -->
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
+					<a class="nav-link active" href="<?= $urlName ?>/operation/energy.php">節約能源</a>
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/org/works-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增工作日誌
+				<a href="<?= $urlName ?>/operation/supplies-create.php" class="btn add-asset-btn mb-3">
+					<span>+</span>新增耗材
 				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>工作日誌日期</th>
-							<th>日誌日期</th>
-							<th>檔案名稱</th>
-							<th>下載</th>
+							<th>耗材名稱</th>
+							<th>耗材編號</th>
+							<th>價格</th>
+							<th>品牌</th>
 							<th>修改</th>
 						</tr>
 					</thead>
 					<tbody>
+<?php
+	//foreach($data as $var) {
+//		echo $var[asset_no];
+//		echo $var[asset_name];
+//		echo $var[status];
+//		echo $var[price];
+//		echo '<br>';
+?>
+
 						<tr>
-							<td><span>2018-03-02</span></td>
-							<td><span>測試</span></td>
-							<td><span>測試</span></td>
-							<td><a href="#" class="btn btn-primary" download>下載檔案</a></td>
-							<td><a href="<?= $urlName ?>/org/works-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><span>日光燈管</span></td>
+							<td><span>00002</span></td>
+							<td><span>5000</span></td>
+							<td><span>飛利浦</span></td>
+							<td><a href="<?= $urlName ?>/operation/supplies-edit.php" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
+<?php
+	//}
+?>
 					</tbody>
 				</table>
 			</div>

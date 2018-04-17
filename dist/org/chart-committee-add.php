@@ -49,9 +49,9 @@ if (count($_POST)) {
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>

@@ -33,7 +33,7 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link active" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/energy.php">節約能源</a>
                 </li>
 			</ul>
 			<div id="assets-tab">

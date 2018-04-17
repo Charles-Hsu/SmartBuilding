@@ -23,20 +23,19 @@ if (strlen($_SESSION['account']) == 0) {
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-            <ul class="nav nav-pills mb-3">
-
+			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/operation/budget.php">預算計畫</a>
+					<a class="nav-link active" href="<?= $urlName ?>/longTerm-repairs/budget.php">年度預算</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/budget-planning.php">財務籌措</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget-planning.php">財務籌措</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/bank-acc.php">銀行專戶</a>
-                </li>				
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/bank-acc.php">銀行專戶</a>
+                </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/operation/budget-create.php" class="btn add-asset-btn mb-3">
+				<a href="<?= $urlName ?>/longTerm-repairs/budget-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>預算編列
 				</a>
 				<table class="table asset-table">

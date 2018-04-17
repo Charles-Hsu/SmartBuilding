@@ -36,9 +36,9 @@ if (strlen($_SESSION['account']) == 0) {
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/mails.php">郵件紀錄</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
@@ -90,8 +90,6 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control" name="orgstaff-id" id="orgstaff-id">
 								</div>
 							</div>
-
-
 							<div class="form-group row">
 								<label for="orgstaff-id" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>職稱:
@@ -103,13 +101,13 @@ if (strlen($_SESSION['account']) == 0) {
 											$data = $db->getRows($sql);
 										?>								
 										<?php
-										foreach($data as $var) {
+											foreach($data as $var) {
 											//	echo $var['Name'];
 											//echo $var['id'];
 										?>
 										<option value="<?=$var['id'];?>"><?=$var['title'];?></option>
 										<?php
-										}
+											}
 										?>
 									</select>
 								</div>

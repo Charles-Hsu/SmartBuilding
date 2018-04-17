@@ -33,18 +33,10 @@ if (strlen($_SESSION['account']) == 0) {
 					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
                 </li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/budget.php">年度預算</a>
+					<a class="nav-link" href="<?= $urlName ?>/operation/energy.php">節約能源</a>
                 </li>
 			</ul>
 			<div id="assets-tab" class="row mr-0 ml-0">
-<!--				
-				<div class="repairs-menu col-2">
-					<ul class="repairs-menu-bar d-flex flex-column align-items-center">
-						<li><a href="<?= $urlName ?>/operation/repairs-normal.php" class="active">一般維修</a></li>
-						<li><a href="<?= $urlName ?>/operation/repairs-abnormal.php" class="">異常回報</a></li>
-					</ul>
-				</div>
--->				
 				<div class="repairs-content col-10">
 					<a href="<?= $urlName ?>/operation/repairs-normal-create.php" class="btn add-asset-btn mb-3">
 						<span>+</span>新增維修作業

@@ -131,6 +131,9 @@ if (count($_POST) > 0) {
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/operation/#">年度預算</a>
                 </li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/operation/energy.php">節約能源</a>
+                </li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">

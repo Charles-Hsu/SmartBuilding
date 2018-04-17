@@ -63,7 +63,7 @@ $data = $data[0];
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget.php">預算計畫</a>
+					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget.php">年度預算</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/longTerm-repairs/budget.php">財務籌措</a>
