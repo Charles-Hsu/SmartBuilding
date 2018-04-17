@@ -1,14 +1,12 @@
-<?php 
+<?php
+session_start();
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 ?>
-<?php 
+<?php
 
-$sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$data = $db->getRows($sql);
-session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
@@ -37,39 +35,30 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/operation/supplies-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增耗材
-				</a>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>耗材名稱</th>
-							<th>耗材編號</th>
-							<th>價格</th>
-							<th>品牌</th>
-							<th>修改</th>
+							<th>年月</th>
+							<th>電費</th>
 						</tr>
 					</thead>
+					<?php
+						$sql = "SELECT yyyymm,fee FROM elect_fee";
+						// echo $sql;
+						$data = $db->getRows($sql);
+						// var_dump($data);
+					?>
 					<tbody>
-<?php
-	//foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
-
+						<?php
+							foreach ($data AS $var) {
+						?>
 						<tr>
-							<td><span>日光燈管</span></td>
-							<td><span>00002</span></td>
-							<td><span>5000</span></td>
-							<td><span>飛利浦</span></td>
-							<td><a href="<?= $urlName ?>/operation/supplies-edit.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><?php echo $var['yyyymm'];?></td>
+							<td><?php echo $var['fee'];?></td>
 						</tr>
-<?php
-	//}
-?>
+						<?php
+							}
+						?>
 					</tbody>
 				</table>
 			</div>

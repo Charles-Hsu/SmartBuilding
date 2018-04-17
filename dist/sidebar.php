@@ -73,16 +73,16 @@ $_isAdmin = $_SESSION['admin'];
                         <span>社區檔案</span>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="<?= $urlName ?>/profile.php" class="d-flex sidemenu-link align-items-center" title="個人資料" data-type="profile">
                         <i class="far fa-smile"></i>
                         <span>個人資料</span>
                     </a>
-                </li>
+                </li> -->
                 <li>
                     <a href="<?= $urlName ?>/system.php" class="d-flex sidemenu-link align-items-center" title="個人資料" data-type="system">
                         <i class="fas fa-cog"></i>
-                        <span>作業紀錄</span>
+                        <span>資安管理</span>
                     </a>
                 </li>
                 <?php
