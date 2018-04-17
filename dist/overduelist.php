@@ -120,7 +120,7 @@ paid_fee_per_monthDataObj.forEach((item)=>{
 })
 
 
-for(var i=0;i<12;i++){
+for(var i=0;i<paid_fee_per_monthData.length;i++){
 	fee_per_monthArray.push(fee_per_month);
 }
 
