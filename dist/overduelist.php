@@ -67,12 +67,13 @@
 					$paid_fee_total = $data['paid_fee_total'];
 
 					// echo intval(date('m'));
-					// var_dump($fee_per_month);
+					
 
 					// 每月已繳總計 for 應繳已繳(每月) 的 bar chart 用的資料
 					$fee_per_month = (intval($overdue_total) + intval($paid_fee_total)) / intval(date('m'));
-					$sql = "SELECT m,SUM(fee) AS paid_fee FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL GROUP BY MONTH(m)";
+					$sql = "SELECT m,MONTH(m) as month ,SUM(fee) AS paid_fee FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL GROUP BY MONTH(m)";
 					$paid_fee_per_month = $db->getRows($sql);
+
 					// var_dump($paid_fee_per_month);
 
 					// 每月未繳總計
@@ -98,7 +99,30 @@
 		</table>
 	</div>
 </div>
+<?php $paid_fee_per_month_data=json_encode($paid_fee_per_month); ?>
 <script>
+var fee_per_month=<?php echo $fee_per_month ?>;
+var fee_per_monthArray=[];
+var paid_fee_per_monthData=<?php echo $paid_fee_per_month_data ?>;
+var paid_fee_per_monthDataObj=[];
+var paid_fee_per_monthArray=[];
+for(var i=0;i<12;i++){
+	paid_fee_per_monthDataObj[i]={paid_fee:0};
+}
+
+paid_fee_per_monthData.forEach((item)=>{
+	paid_fee_per_monthDataObj[item.month-1].paid_fee+=parseInt(item.paid_fee);
+})
+
+
+paid_fee_per_monthDataObj.forEach((item)=>{
+	paid_fee_per_monthArray.push(item.paid_fee)
+})
+
+
+for(var i=0;i<paid_fee_per_monthData.length;i++){
+	fee_per_monthArray.push(fee_per_month);
+}
 
 var randomData=()=>{
     return Math.round(Math.random()*100)
@@ -144,9 +168,45 @@ var colorList={
     grey: 'rgb(201, 203, 207)'
 };
 
-// 圖表3
+// 應繳已繳(每月)
+var colors = Chart.helpers.color;
+var months=["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
+var overdueBarChart=document.getElementById('overdue-bar-chart');
+var overdueBarChartCtx=overdueBarChart.getContext('2d');
+var myBarCahrt=new Chart(overdueBarChart,{
+	type:'bar',
+	data:{
+		labels:months,
+		datasets:[{
+				label:"應收",
+				data:fee_per_monthArray,
+				backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
+				borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
+				borderWidth: 1
+			},{
+				label:"已收",
+				data:paid_fee_per_monthArray,
+				backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+				borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
+				borderWidth: 1
+			}
+		]
+	},
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+})
+
+// 已繳未繳
 var apartment = document.getElementById("overdue-pi-chart");
-apartment.height=200;
+apartment.height=150;
 var apartmentCtx=apartment.getContext('2d');
 var myPieChart = new Chart(apartment,{
     type: 'pie',
@@ -157,7 +217,7 @@ var myPieChart = new Chart(apartment,{
             backgroundColor:[
                 colorList.green,
                 colorList.red,
-             ]
+            ]
         }]
     },
     options: {
