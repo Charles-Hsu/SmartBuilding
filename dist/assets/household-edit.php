@@ -102,34 +102,23 @@ $household = $db->getRow($sql);
 							</div>
 							<div class="form-group row">
 								<label for="household-use" class="text-right col-lg-6 col-md-3 col-form-label">
-									<span class="important">*</span>房子用途:</label>
+									<span class="important">*</span>房子用途:
+								</label>
 								<div class="col-lg-6 col-md-9">
 									<select name="household-use" id="household-use" class="form-control">
-<!--
-										<option value="" selected>選擇用途</option>
--->
-
-<?php
-$sql =  "SELECT id,name FROM household_purpose";
-$data = $db->getRows($sql);
-foreach($data as $var) {
-//	echo $var['Name'];
-//echo $var['id'];
-
-	$selected = "";
-	if ($var['id'] == $household['purpose']) {
-		$selected = 'selected';
-	}
-?>
-
-									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
-<?php
-}
-?>
-<!--
-										<option value="住宅用">住宅用</option>
-										<option value="商業用">商業用</option>
--->
+										<?php
+											$sql =  "SELECT id,name FROM household_purpose";
+											$data = $db->getRows($sql);
+											foreach($data as $var) {
+												$selected = "";
+												if ($var['id'] == $household['purpose']) {
+													$selected = 'selected';
+												}
+										?>
+										<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
+										<?php
+											}
+										?>
 									</select>
 								</div>
 							</div>

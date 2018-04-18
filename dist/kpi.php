@@ -68,54 +68,63 @@
                     </tr>
                 </tbody>
             </table>
-
-<table>
-    <thead>
-    <tr>
-        <th><b>保全員教育訓練達成率</b></th>
-    </tr>
-    </thead>
-<tbody>
-    <tr>
-        <td>1. 護照人數÷ 在職人數</td>
-    </tr>
-    <tr>
-        <td>2. 受訓人數÷ 在職人數</td>
-    </tr>
-</tbody>
-</table>
-
-<table>
-    <thead>
-    <tr>
-        <th><b>派駐人員合格率</b></th>
-    </tr>
-    </thead>
-<tbody>
-    <tr>
-        <td>1. 現場主管合格人數÷ 編制人數 (<?php echo $data['op_man_num']; ?>)</td>
-    </tr>
-    <tr>
-        <td>2. 保全員合格人數÷ 編制人數 (<?php echo $data['op_patrol_num']; ?>)</td>
-    </tr>
-</tbody>
-</table>
-
-<table>
-    <thead>
-    <tr>
-        <th><b>掛號信正確執行率</b></th>
-    </tr>
-    </thead>
-<tbody>
-    <tr>
-        <td>1. 登錄件數 ÷ 郵局送達清冊件數</td>
-    </tr>
-    <tr>
-        <td>2. 遺失件數 ÷ 郵局送達清冊件數</td>
-    </tr>
-</tbody>
-</table>
+            <table>
+                <thead>
+                    <tr>
+                        <th><b>保全員教育訓練達成率</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <?php
+                            $sql = "SELECT count(*) FROM staff WHERE quit_date IS NULL OR quit_date = '0000-00-00'";
+                            $n = $db->getValue($sql);
+                            $sql = "SELECT count(*) FROM staff WHERE (quit_date IS NULL OR quit_date = '0000-00-00') AND license != 0";
+                            $l = $db->getValue($sql);
+                        ?>
+                        <td>1. 護照人數 (<?php echo $l; ?>) ÷ 在職人數 (<?php echo $n; ?>) = <?php echo number_format($l/$n*100,1); ?>%</td>
+                    </tr>
+                    <tr>
+                        <?php
+                            $sql = "SELECT count(*) FROM staff WHERE quit_date IS NULL OR quit_date = '0000-00-00'";
+                            $n = $db->getValue($sql);
+                            $sql = "SELECT count(*) FROM staff WHERE (trained_date IS NOT NULL OR trained_date != '0000-00-00') AND (quit_date IS NULL OR quit_date = '0000-00-00')";
+                            $l = $db->getValue($sql);
+                        ?>
+                        <td>2. 受訓人數 (<?php echo $l; ?>) ÷ 在職人數 (<?php echo $n; ?>) = <?php echo number_format($l/$n*100,1); ?>%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                <tr>
+                    <th><b>派駐人員合格率</b></th>
+                </tr>
+                </thead>
+            <tbody>
+                <tr>
+                    <td>1. 現場主管合格人數÷ 編制人數 (<?php echo $data['op_man_num']; ?>)</td>
+                </tr>
+                <tr>
+                    <td>2. 保全員合格人數÷ 編制人數 (<?php echo $data['op_patrol_num']; ?>)</td>
+                </tr>
+            </tbody>
+            </table>
+        <table>
+            <thead>
+                <tr>
+                    <th><b>掛號信正確執行率</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. 登錄件數 ÷ 郵局送達清冊件數</td>
+                </tr>
+                <tr>
+                    <td>2. 遺失件數 ÷ 郵局送達清冊件數</td>
+                </tr>
+            </tbody>
+        </table>
 
 
 <table>

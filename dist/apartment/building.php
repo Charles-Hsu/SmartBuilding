@@ -57,21 +57,20 @@
 						</tr>
 					</thead>
 					<tbody>
-<?php
-	 foreach($data as $building) {
-?>
-
+						<?php
+							$sql = "SELECT id,name,address,license_no,approved_date FROM building";
+							$data = $db->getRows($sql);
+							foreach($data as $building) {
+						?>
 						<tr>
 							<td><span><?=$building[name];?></span></td>
 							<td><span><?=$building[address];?></span></td>
 							<td><span><?=$building[license_no];?></span></td>
 							<td><span><?=$building[approved_date];?></span></td>
-							<!-- <td><span><?=$building[expired_years];?>年</span></td> -->
-							<!-- <td><a href="<?= $urlName ?>/apartment/building-edit.php?license_no=<?=$building[license_no];?>" class="btn btn-outline-secondary">修改</a></td> -->
 						</tr>
-<?php
-	 }
-?>
+						<?php
+							}
+						?>
 					</tbody>
 				</table>
 			</div>

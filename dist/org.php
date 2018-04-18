@@ -9,16 +9,7 @@
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
-<?php
 
-$sql = 'SELECT a.name AS staffname,a.mobile,a.no,b.title,c.name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id';
-
-
-$data = $db->getRows($sql);
-
-
-
-?>
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
@@ -49,33 +40,42 @@ $data = $db->getRows($sql);
 						<tr>
 							<th>姓名</th>
 							<th>手機號碼</th>
-							<th>員工編號</th>
+							<th>工號</th>
 							<th>職稱</th>
-							<th>所屬物業公司</th>
+							<th>物業公司</th>
+							<th>到職日</th>
+							<th>訓練完成日</th>
 							<th>修改</th>
 						</tr>
 					</thead>
-					<tbody>
-<?php
-foreach($data as $staff) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
+					<?php
+						$sql = 'SELECT a.id AS id, a.name AS staffname,a.mobile,a.no,b.title,c.name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id';// AND c.id = 1';
 
+						$sql = "SELECT a.quit_date, a.trained_date, a.on_board_date, identify, a.id AS `staff_id`, a.name AS `staff_name`, a.mobile, a.no AS staff_no, b.title, c.name AS corp_name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id";
+
+						$data = $db->getRows($sql);
+					?>
+					<tbody>
+						<?php foreach($data as $staff) { ?>
 						<tr>
-							<td><span><?=$staff['staffname'];?></span></td>
+							<td><span><?=$staff['staff_name'];?></span></td>
 							<td><span><?=$staff['mobile'];?></span></td>
-							<td><span><?=$staff['no'];?></span></td>
+							<td><span><?=$staff['staff_no'];?></span></td>
 							<td><span><?=$staff['title'];?></span></td>
-							<td><span><?=$staff['name'];?></span></td>
-							<td><a href="<?= $urlName ?>/org/org-edit.php?no=<?=$staff['no'];?>" class="btn btn-outline-secondary">修改</a></td>
+							<td><span><?=$staff['corp_name'];?></span></td>
+							<td><span><?=$staff['on_board_date'];?></span></td>
+							<?php
+								if (strlen($staff['trained_date']) == 0 || $staff['trained_date'] == '0000-00-00') {
+									$trained_date = "";
+								}
+								else {
+									$trained_date = $staff['trained_date'];
+								}
+							?>
+							<td><span><?php echo $trained_date;?></span></td>
+							<td><a href="<?= $urlName ?>/org/org-edit.php?id=<?=$staff['staff_id'];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
-<?php
-}
-?>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>

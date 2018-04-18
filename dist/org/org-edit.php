@@ -11,35 +11,28 @@
 ?>
 <?php
 
-$staff_no = $_GET['no'];
+	$staff_id = $_GET['id'];
 
-if (count($_POST) > 0) {
+	if (count($_POST) > 0) {
+		// var_dump($_POST);
+		$para = array();
+		$para['mobile'] = $_POST['orgstaff-phone'];
+		$para['corp'] = $_POST['orgstaff-company'];
+		$para['trained_date'] = $_POST['orgstaff-traindate'];
+		$para['quit_date'] = $_POST['orgstaff-resigned'];
+		$para['license'] = $_POST['license'];
 
-	$para = array();
-	$para['mobile'] = $_POST['orgstaff-phone'];
-	$para['corp'] = $_POST['orgstaff-company'];
-	$para['trained_date'] = $_POST['orgstaff-traindate'];
-	$para['quit_date'] = $_POST['orgstaff-resigned'];
+		// $sql = 'UPDATE staff SET mobile = "' . $para['mobile'] . '", corp = "' . $para['corp'] . '", trained_date = "' . $para['trained_date'] . '", quit_date = "' . $para['quit_date'] . '", license = "' . $para['license'] . '" WHERE id = "' . $staff_id . '"';
+		$sql = 'UPDATE staff SET mobile = "' . $para['mobile'] . '", trained_date = "' . $para['trained_date'] . '", quit_date = "' . $para['quit_date'] . '", license = "' . $para['license'] . '" WHERE id = "' . $staff_id . '"';
 
-	$sql = 'UPDATE staff SET mobile = "' . $para['mobile'] . '", corp = "' . $para['corp'] . '", trained_date = "' . $para['trained_date'] . '", quit_date = "' . $para['quit_date'] . '" WHERE no = "' . $staff_no . '"';
+		// echo $sql;
 
-	//echo $sql;
-	$db->update($sql);
-}
+		$db->update($sql);
+	}
 
+	$sql = "SELECT a.id AS staff_id, a.name AS staff_name, a.mobile, a.no AS staff_no, b.title, c.name AS contract_name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id" ;
 
-
-$sql = 'SELECT * FROM staff WHERE no = "' . $staff_no . '"';
-//echo $sql;
-
-
-
-$data = $db->getRows($sql);
-//var_dump($data);
-$staff = $data[0];
-//var_dump($staff);
-
-
+	$staff = $db->getRow($sql);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -68,29 +61,32 @@ $staff = $data[0];
 					<a href="<?= $urlName ?>/org.php" class="assets-create-icon fas fa-chevron-left"></a>
 					<span>修改職員資料</span>
 				</div>
+				<?php
+					$staff_id = $_GET['id'];
+					$sql = "SELECT a.id AS staff_id, a.name AS staff_name, a.mobile, a.no AS staff_no, b.title, c.name AS contract_name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id" ;
+
+					"SELECT identify, a.id AS `staff_id`, a.name AS `staff_name`, a.mobile, a.no AS staff_no, b.title, c.name AS contract_name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id and a.id = 3" ;
+
+					$sql = "SELECT a.license, a.quit_date, a.trained_date, a.on_board_date, identify, a.id AS `staff_id`, a.name AS `staff_name`, a.mobile, a.no AS staff_no, b.title, c.name AS corp_name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id and a.id = " . $staff_id;
+
+					$staff = $db->getRow($sql);
+				?>
+
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--
-							<div class="form-group row">
-								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
-								<div class="col-md-8 d-flex align-items-center">
-									<span>XXXXXX</span>
-								</div>
-							</div>
--->
 							<div class="form-group row">
 								<label for="orgstaff-name" class="text-right col-md-4 col-form-label">
 									姓名:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" value="<?=$staff['name'];?>" readonly>
+									<input type="text" class="form-control" value="<?=$staff['staff_name'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="orgstaff-num" class="text-right col-md-4 col-form-label">
 									員工編號:</label>
 								<div class="col-md-8">
-								<input type="text" class="form-control" value="<?=$staff['no'];?>" readonly>
+								<input type="text" class="form-control" value="<?=$staff['staff_no'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -114,7 +110,32 @@ $staff = $data[0];
 									所屬物業公司:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="orgstaff-company" id="orgstaff-company" value="<?=$staff['corp'];?>">
+									<input readonly type="text" class="form-control" name="orgstaff-company" id="orgstaff-company" value="<?=$staff['corp_name'];?>">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="orgstaff-company" class="text-right col-md-4 col-form-label">
+									證照:
+								</label>
+								<div class="col-md-8">
+									<select id="innerswim-reply" class="form-control" name="license">
+										<?php
+											$sql = "SELECT * FROM license_type";
+											$data = $db->getRows($sql);
+
+											foreach($data as $var) {
+												echo "var[id]=" . $var['id'];
+												echo "staff[license]=" . $staff['license'];
+												$selected = "";
+												if ($var['id'] == $staff['license']) {
+													$selected = "selected";
+												}
+										?>
+										<option <?php echo $selected;?> value="<?=$var['id'];?>"><?=$var['type'];?></option>
+										<?php
+											}
+										?>
+									</select>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -125,23 +146,37 @@ $staff = $data[0];
 									<input type="text" class="form-control datepicker" value="<?=$staff['on_board_date'];?>" readonly>
 								</div>
 							</div>
-
 							<div class="form-group row">
 								<label for="orgstaff-traindate" class="text-right col-md-4 col-form-label">
 									在職訓練完成日期:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="orgstaff-traindate" id="orgstaff-traindate" value="<?=$staff['trained_date'];?>">
+									<?php
+										if (strlen($staff['trained_date']) == 0 || $staff['trained_date'] == '0000-00-00') {
+											$trained_date = "";
+										}
+										else {
+											$trained_date = $staff['trained_date'];
+										}
+									?>
+									<input type="text" class="form-control datepicker" name="orgstaff-traindate" id="orgstaff-traindate" value="<?=$trained_date;?>">
 								</div>
 							</div>
-
-
 							<div class="form-group row">
 								<label for="orgstaff-resigned" class="text-right col-md-4 col-form-label">
 									離職日:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="orgstaff-resigned" id="orgstaff-resigned" value="<?=$staff['quit_date'];?>">
+									<?php
+										if (strlen($staff['quit_date']) == 0 || $staff['quit_date'] == '0000-00-00') {
+											$quit_date = "";
+										}
+										else {
+											$quit_date = $staff['quit_date'];
+										}
+									?>
+
+									<input type="text" class="form-control datepicker" name="orgstaff-resigned" id="orgstaff-resigned" value="<?php echo $quit_date;?>">
 								</div>
 							</div>
 

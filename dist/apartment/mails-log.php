@@ -18,6 +18,8 @@
 		$addr_no = $_SESSION['addr_no'];
 		$floor = $_SESSION['floor'];
 	}
+	$house_id = 0;
+	$house_id = $_GET['id'];
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -53,13 +55,13 @@
 				<?php
 					if ($_isAdmin || $_isStaff) {
 				?>
-				<!-- <a href="<?php echo $urlName;?>/org/mails-create.php" class="btn add-asset-btn mb-3">
+				<a href="<?php echo $urlName;?>/apartment/mails.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增郵件紀錄
-				</a> -->
+				</a>
 				<?php
 					}
 				?>
-				<table class="table asset-table">
+				<table class="table asset-tableX">
 					<thead class="thead-light">
 						<tr>
 							<th>大樓</th>
@@ -68,14 +70,14 @@
 							<!-- <th>住戶狀態</th> -->
 							<th>區權人</th>
 							<th>現住戶</th>
-							<th>郵件數</th>
-							<th>紀錄</th>
+							<!-- <th>郵件數</th> -->
+							<!-- <th>紀錄</th> -->
 							<!-- <th>產權</th> -->
 						</tr>
 					</thead>
 					<tbody>
 						<?php
-							$sql = 'SELECT house_id,building,addr_no,floor,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id';
+							$sql = 'SELECT house_id,building,addr_no,floor,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id AND a.id = ' . $house_id;
 							if (!$_isAdmin && !$_isStaff) {
 								$addr_no = $_SESSION['addr_no'];
 								$floor = $_SESSION['floor'];
@@ -91,19 +93,61 @@
 							<td><span><?php echo $var[floor];?></span></td>
 							<td><span><?php echo $var[holder];?></span></td>
 							<td><span><?php echo $var[resident];?></span></td>
-							<td>
-								<span>
-								<?php
-									$rdonly = "readonly";
-									if ($_isAdmin || $_isStaff) {
-										$rdonly = "";
-									}
-								?>
-									<input type="number" min="0" step="1" class="mail_num form-control" data-id="<?php echo $var[house_id] ?>"
-										value="<?php echo $var[mail_num];?>" <?php echo $rdonly;?> />
-								</span>
-							</td>
-							<td><a href="./mails-log.php?id=<?php echo $var['house_id'];?>">查看</a></td>
+						</tr>
+						<?php
+							}
+						?>
+					</tbody>
+				</table>
+			</div>
+
+
+
+			<div id="assets-tab">
+				<?php
+					if ($_isAdmin || $_isStaff) {
+				?>
+				<!-- <a href="<?php echo $urlName;?>/org/mails-create.php" class="btn add-asset-btn mb-3">
+					<span>+</span>新增郵件紀錄
+				</a> -->
+				<?php
+					}
+				?>
+				<table class="table asset-table">
+					<thead class="thead-light">
+						<tr>
+							<th>日期</th>
+							<th>郵件數</th>
+							<!-- <th>樓層</th> -->
+							<!-- <th>住戶狀態</th> -->
+							<!-- <th>區權人</th> -->
+							<!-- <th>現住戶</th> -->
+							<!-- <th>郵件數</th> -->
+							<!-- <th>紀錄</th> -->
+							<!-- <th>產權</th> -->
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+							$sql = 'SELECT house_id,building,addr_no,floor,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id';
+							if (!$_isAdmin && !$_isStaff) {
+								$addr_no = $_SESSION['addr_no'];
+								$floor = $_SESSION['floor'];
+								$sql = 'SELECT house_id,building,addr_no,floor,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id AND a.addr_no = "' .$addr_no. '" AND a.floor = ' . $floor;
+							}
+							// echo $sql;
+							$sql = 'SELECT COUNT(*) n,dd FROM `mails_log` WHERE house_id = ' . $house_id . ' GROUP BY dd';
+							$data = $db->getRows($sql);
+							foreach($data as $var) {
+						?>
+						<tr>
+							<!-- <td><span><?php echo $var[building];?></span></td> -->
+							<!-- <td><span><?php echo $var[addr_no];?></span></td> -->
+							<td><span><?php echo $var[dd];?></span></td>
+							<td><span><?php echo $var[n];?></span></td>
+							<!-- <td><span><?php echo $var[floor];?></span></td> -->
+							<!-- <td><span><?php echo $var[holder];?></span></td> -->
+							<!-- <td><span><?php echo $var[resident];?></span></td> -->
 						</tr>
 						<?php
 							}
@@ -119,7 +163,7 @@
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
-		"searchPlaceholder": "搜尋資產...",
+		"searchPlaceholder": "搜尋日期...",
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
 		"infoEmpty": "",
 		"emptyTable": "目前沒有資料",
@@ -134,7 +178,8 @@ $('.asset-table').DataTable({
 		}
 	},
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+    "order": [[0, 'desc']],
 })
 $('.mail_num').on('change',function(){
 	var _this=$(this);
