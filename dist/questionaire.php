@@ -1,26 +1,13 @@
-<?php 
-include('./config.php');
-include('./Header.php'); 
-?>
-<?php 
-
-$sql = 'SELECT * FROM apartment';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-$data = $data[0];
-
-//var_dump($data);
-
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-/*
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-*/
+<?php session_start(); ?>
+<?php
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -38,7 +25,7 @@ if (strlen($_SESSION['account']) == 0) {
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>				
+				</li>
                 <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
                 </li> -->

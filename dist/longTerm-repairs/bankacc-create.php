@@ -1,12 +1,19 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-<?php 
+<?php
 
 $table = 'bank_acc';
 $sql = 'SELECT * FROM ' . $table . ' ORDER BY id DESC LIMIT 1';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 //echo $sql;
 $data = $db->getRows($sql);
 $data = $data[0];
@@ -36,9 +43,9 @@ if (count($_POST) > 0) {
 //				echo $key;
 //				echo $value;
 		$fields = $fields . "`" . $key . "`,";
-		$values = $values . "'" . $value . "',"; 
+		$values = $values . "'" . $value . "',";
 	}
-/*			
+/*
 	echo "<br>";
 	echo $fields;
 	echo "<br>";
@@ -47,7 +54,7 @@ if (count($_POST) > 0) {
 	echo strlen($fields)-1;
 	echo "<br>";
 	//echo substr($fields, 0, strlen($fields)-1);
-*/			
+*/
 	$fields = substr($fields, 0, strlen($fields)-1);
 	$values = substr($values, 0, strlen($values)-1);
 
@@ -55,9 +62,9 @@ if (count($_POST) > 0) {
 	echo $values;
 
 	$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
-				
+
 	echo $sql;
-				
+
 	if ($db->insert($sql)) {
 				//if ($db->insertRow($table, $data)) {
 		$message="新增成功";
@@ -89,14 +96,14 @@ if (count($_POST) > 0) {
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="bankacc-use" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>專戶用途:</label>
@@ -116,15 +123,15 @@ if (count($_POST) > 0) {
 
 
 
-									
+
 								<select name="bankacc-type" id=""bankacc-type" class="form-control">
-<!--								
+<!--
 									<option value="0">自聘</option>
--->									
+-->
 <?php
 	$sql = 'SELECT * FROM bank_acc_type';
 	$data = $db->getRows($sql);
-?>								
+?>
 <?php
 foreach($data as $var) {
 	//	echo $var['Name'];
@@ -139,7 +146,7 @@ foreach($data as $var) {
 ?>
 <!--
 										<option value="2" selected>定期存款</option>
--->										
+-->
 										<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['type'];?></option>
 <?php
 }
@@ -147,13 +154,13 @@ foreach($data as $var) {
 
 									</select>
 
-					
-								
-								
-								
-								
-								
-								
+
+
+
+
+
+
+
 								</div>
 							</div>
 
@@ -244,8 +251,8 @@ foreach($data as $var) {
 
 
 
-	
+
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

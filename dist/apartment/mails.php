@@ -2,6 +2,12 @@
 <?php
 	include('../config.php');
 	include('../Header.php');
+
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+
 	$_isAdmin = intval($_SESSION['admin']);
 	$_isStaff = intval($_SESSION['staff']);
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);

@@ -1,12 +1,17 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
 
-session_start();
 
-$message = "";
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+<?php
 
 if(count($_POST)>0) {
 
@@ -18,7 +23,7 @@ if(count($_POST)>0) {
 	$data['purpose'] = $_POST['household-use'];
 
 
-//echo "household-use = " . $_POST['household-use'] . "<br>"; 
+//echo "household-use = " . $_POST['household-use'] . "<br>";
 
 
 	$data['status'] = $_POST['household-status'];
@@ -39,9 +44,9 @@ if(count($_POST)>0) {
 	$data['used_for'] = $_POST['assets-use-state'];
 
     $sql = 'UPDATE household SET purpose = ' . $data["purpose"] . ', status = ' . $data['status'] . ', holder = "' . $data['holder'] . '", resident = "' . $data['resident'] . '", due = "' . $data['due'] . '", parking_lot_due = "' . $data['parking_lot_due'] . '", buy_date = "' . $data['buy_date'] . '", used_for = ' . $data['used_for'] . ' WHERE addr_no = "' . $data['addr_no'] . '" AND floor = "' . $data['floor'] . '"';
-    
+
 	//echo $sql;
-	
+
 	if ($db->insert($sql)) {
 	//if ($db->insertRow($table, $data)) {
 		$message="修改成功";
@@ -77,7 +82,7 @@ $data = $db->getRows($sql);
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/sellrent.php">租售管理</a>
                 </li>
-                
+
 
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
@@ -189,6 +194,6 @@ $('.asset-table').DataTable({
 })
 </script>
 
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

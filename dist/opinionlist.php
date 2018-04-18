@@ -1,7 +1,11 @@
 <?php session_start(); ?>
-<?php 
+<?php
 	include('./config.php');
-	include('./Header.php'); 
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
@@ -10,9 +14,18 @@
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>
 				<?php
 					if ($_isAdmin) {
-				?>			
+				?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
 				</li>
@@ -24,16 +37,7 @@
 				</li>
 				<?php
 					}
-				?>    				
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>				
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>				
+				?>
 			</ul>
             <?php
                 $sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
@@ -83,7 +87,7 @@
                 <tbody class="opinionlist_tbody">
                     <?php
                         foreach($data as $var) {
-                    ?>					
+                    ?>
                     <tr>
                     <td class="td_dt"><span><?=$var['dt'];?></span></td>
                     <td><span><?=$var['addr_no'];?></span></td>
@@ -92,7 +96,7 @@
                     <td class="td_responsed">
                         <?php
                             if (strlen($var['dt_responsed']) == 0) {
-                        ?>						
+                        ?>
                         <input type="checkbox" class="dt_responsed" data-id="<?= $var[household_id] ?>">
                         <?php
                             } else {
@@ -101,12 +105,12 @@
                         <span><?php echo round($diff,2);?></span>
                         <?php
                             }
-                        ?>					
+                        ?>
                     </td>
                     <td class="td_completed">
                         <?php
                             if (strlen($var['dt_completed']) == 0 && strlen($var['dt_responsed']) != 0) {
-                        ?>						
+                        ?>
                         <input type="checkbox" class="dt_completed" data-id="<?= $var[household_id] ?>">
                         <?php
                             } else if( strlen($var['dt_responsed']) == 0 ){
@@ -117,7 +121,7 @@
                                 $diff = abs(strtotime($var['dt_completed']) - strtotime($var['dt'])) / 24 / 3600 + 1;
                         ?>
                         <span><?php echo round($diff,2);?></span>
-                        <?php } ?>						
+                        <?php } ?>
                     </td>
                     <?php
                         }
@@ -129,7 +133,7 @@
 </div>
 
 
-<?php $jsData=json_encode($data); 
+<?php $jsData=json_encode($data);
     // var_dump($data);
     // echo $jsData;
 ?>
@@ -160,7 +164,7 @@ for(var i=1;i<=12;i++){
         for (var j=0; j<tempData[i].length; j++){
             tempObj.month = tempData[i][j].dt_month
             var dt = new Date(tempData[i][j].dt).valueOf();
-            
+
             if (tempData[i][j].dt_responsed != null){
                 var dt_res = new Date(tempData[i][j].dt_responsed).valueOf();
                 tempObj.res += parseInt( ((dt_res - dt)/24/3600/1000)+1, 0);
@@ -179,7 +183,7 @@ for(var i=1;i<=12;i++){
 
             tempObj.reply += ((dt_res-dt)/24/3600/1000)+1;
             tempObj.length++;
-            
+
             if (tempData[i][j].dt_completed){
                 tempObj.completed++
             }

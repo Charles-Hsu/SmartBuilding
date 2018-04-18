@@ -1,11 +1,15 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-
-<?php 
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+<?php
 
 if (count($_POST) > 0) {
     //var_dump($_POST);
@@ -146,7 +150,7 @@ do {
                 <td><input type='checkbox' name='<?=$Y_m?>' <?=$d;?>></td>
 <?php
     }
-?>                
+?>
                 <td><?=number_format($total);?></td>
 <?php
         $Y_m_d = date('Y-m-d', $first_day_of_month);
@@ -157,7 +161,7 @@ do {
 
         //var_dump($p);
 
-?>                
+?>
                 <td><?=number_format($paid);?></td>
                 <td><?=number_format($total - $paid);?></td>
             </tr>
@@ -168,7 +172,7 @@ do {
 
 } while ($i < 12);
 
-?>            
+?>
         </tbody>
     </table>
     <input type="submit" value="產生收費表單">
@@ -207,6 +211,6 @@ $('.asset-table').DataTable({
 </script>
 
 
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

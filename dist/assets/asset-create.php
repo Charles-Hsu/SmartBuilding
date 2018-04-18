@@ -1,36 +1,29 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
-
-session_start();
-
-$message = "";
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-if(count($_POST)>0) {
-	/*
-	echo 'assets-no = ' . $_POST['assets-no'] . '<br>';
-	echo 'assets-name = ' . $_POST['assets-name'] . '<br>';
-	echo 'assets-sort = ' . $_POST['assets-sort'] . '<br>';
-	echo 'assets-price = ' . $_POST['assets-price'] . '<br>';
-	echo 'assets-amount = ' . $_POST['assets-amount'] . '<br>';
-	echo 'assets-man = ' . $_POST['assets-man'] . '<br>';
-	echo 'assets-buy-date = ' . $_POST['assets-buy-date'] . '<br>';
-	echo 'assets-use-state = ' . $_POST['assets-use-state'] . '<br>';
-	*/
-	$sql =  "SELECT count(*) AS n FROM assets WHERE asset_no='" . $_POST['assets-no']. "'";
-	$data = $db->getValue($sql);
-
-	if ($data != 0) {
-		$message="資產編號重複";
-	} else {
-		$sql =  "SELECT count(*) AS n FROM assets WHERE asset_name='" . $_POST['assets-name']. "'";
-		$data = $db->getValue($sql);
-		if ($data != 0) {
-			$message="資產名稱重複";
-		}
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
 	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
+
+<?php
+	if(count($_POST)>0) {
+		$sql =  "SELECT count(*) AS n FROM assets WHERE asset_no='" . $_POST['assets-no']. "'";
+		$data = $db->getValue($sql);
+
+		if ($data != 0) {
+			$message="資產編號重複";
+		} else {
+			$sql =  "SELECT count(*) AS n FROM assets WHERE asset_name='" . $_POST['assets-name']. "'";
+			$data = $db->getValue($sql);
+			if ($data != 0) {
+				$message="資產名稱重複";
+			}
+		}
 	//echo " message = [" . $message . "]";
 	if ($message == "") {
 		if ($_POST['assets-no'] == "") {
@@ -51,7 +44,7 @@ if(count($_POST)>0) {
 			echo 'assets-man = ' . $_POST['assets-man'] . '<br>';
 			echo 'assets-buy-date = ' . $_POST['assets-buy-date'] . '<br>';
 			echo 'assets-use-state = ' . $_POST['assets-use-state'] . '<br>';
-*/		
+*/
 			$table = 'assets';
 			$data = array();
 			$data['asset_no'] = $_POST['assets-no'];
@@ -70,9 +63,9 @@ if(count($_POST)>0) {
 //				echo $key;
 //				echo $value;
 				$fields = $fields . "`" . $key . "`,";
-				$values = $values . "'" . $value . "',"; 
+				$values = $values . "'" . $value . "',";
 			}
-/*			
+/*
 			echo "<br>";
 			echo $fields;
 			echo "<br>";
@@ -81,23 +74,23 @@ if(count($_POST)>0) {
 			echo strlen($fields)-1;
 			echo "<br>";
 			//echo substr($fields, 0, strlen($fields)-1);
-*/			
+*/
 			$fields = substr($fields, 0, strlen($fields)-1);
-/*			
+/*
 			echo $fields;
 			echo "<br>";
 			echo strlen($values)-1;
 			echo "<br>";
 			//echo substr($values, 0, strlen($values)-1);
-*/			
+*/
 			$values = substr($values, 0, strlen($values)-1);
-/*			
+/*
 			echo "<br>";
-*/			
+*/
 			$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
-/*			
+/*
 			echo $sql;
-*/			
+*/
 			if ($db->insert($sql)) {
 			//if ($db->insertRow($table, $data)) {
 				$message="新增成功";
@@ -161,11 +154,11 @@ var_dump($data);
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
 				</li>
-<!--				
+<!--
 				<li class="nav-item">
 					<a class="nav-link" href="infrastructure.php">公共設施</a>
 				</li>
--->				
+-->
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
@@ -204,7 +197,7 @@ var_dump($data);
 								</label>
 								<div class="col-md-9">
 									<select class="custom-select" name="assets-use-state">
-<!--										
+<!--
 										<option selected>選取狀態</option>
 -->
 <?php
@@ -223,7 +216,7 @@ foreach($data1 as $var) {
 										<option value="One">One</option>
 										<option value="Two">Two</option>
 										<option value="Three">Three</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -262,7 +255,7 @@ foreach($data1 as $var) {
 								</label>
 								<div class="col-md-9">
 									<select class="custom-select" name="assets-use-state">
-<!--										
+<!--
 										<option selected>選取狀態</option>
 -->
 <?php
@@ -281,7 +274,7 @@ foreach($data as $var) {
 										<option value="One">One</option>
 										<option value="Two">Two</option>
 										<option value="Three">Three</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -305,6 +298,6 @@ foreach($data as $var) {
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

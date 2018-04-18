@@ -1,7 +1,11 @@
 <?php session_start(); ?>
-<?php 
+<?php
 	include('./config.php');
-	include('./Header.php'); 
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
@@ -27,7 +31,7 @@
 					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
 				</li>
 			</ul>
-			<?php 
+			<?php
 				$sql = 'SELECT a.*, b.name AS status, c.category AS cat FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND c.id=a.asset_category';
 				$data = $db->getRows($sql);
 			?>

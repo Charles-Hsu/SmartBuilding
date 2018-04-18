@@ -1,14 +1,12 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-?>
-<?php 
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -26,16 +24,16 @@ session_start();
 				</li>
 				<li class="nav-item">
 					<a class="nav-link  active" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>				
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>					
+                </li>
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/apartment/meeting-man.php" class="btn add-asset-btn mb-3">
 					<span>+</span>出席狀況
                 </a>
-                
+
 <?php
 $meeting_type = $_GET[type];
 if ($meeting_type == 1 || $meeting_type == 2) {
@@ -87,7 +85,7 @@ $('.asset-table').on('change', '.meeting-holder', function() {
 		success:function(data){
 			try {
 				var _data = JSON.parse(data)
-				
+
 				if (_data.success){
                     _this.closest('td').html(`<span>${_data.any_data}</span>`)
                     // _data.att_rate += 1;
@@ -96,7 +94,7 @@ $('.asset-table').on('change', '.meeting-holder', function() {
 				} else {
 					alert('請重新操作')
 				}
-				
+
 			} catch (error){
 				alert(data)
 			}

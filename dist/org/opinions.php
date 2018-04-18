@@ -1,11 +1,17 @@
+<?php session_start(); ?>
 <?php
-include('../config.php');
-include('../Header.php');
-
-$sql = 'SELECT a.*, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-$data = $db->getRows($sql);
-session_start();
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
+<?php
+	$sql = 'SELECT a.*, b.addr_no,b.floor, c.type, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id AND c.id = a.type';
+	$data = $db->getRows($sql);
 ?>
 <!-- 內容切換區 -->
 <div class="row">

@@ -1,13 +1,18 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
 
-session_start();
 
+<?php
 $message = "";
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
 if(count($_POST)>0) {
 
 //	var_dump($_POST);
@@ -18,7 +23,7 @@ if(count($_POST)>0) {
 	$data['purpose'] = $_POST['household-use'];
 
 
-//echo "household-use = " . $_POST['household-use'] . "<br>"; 
+//echo "household-use = " . $_POST['household-use'] . "<br>";
 
 
 	$data['status'] = $_POST['household-status'];
@@ -39,9 +44,9 @@ if(count($_POST)>0) {
 	$data['used_for'] = $_POST['assets-use-state'];
 
     $sql = 'UPDATE household SET purpose = ' . $data["purpose"] . ', status = ' . $data['status'] . ', holder = "' . $data['holder'] . '", resident = "' . $data['resident'] . '", due = "' . $data['due'] . '", parking_lot_due = "' . $data['parking_lot_due'] . '", buy_date = "' . $data['buy_date'] . '", used_for = ' . $data['used_for'] . ' WHERE addr_no = "' . $data['addr_no'] . '" AND floor = "' . $data['floor'] . '"';
-    
+
 	//echo $sql;
-	
+
 	if ($db->insert($sql)) {
 	//if ($db->insertRow($table, $data)) {
 		$message="修改成功";
@@ -80,14 +85,14 @@ $household = $db->getRow($sql);
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-lg-6 col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-lg-6 col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
 									所屬大樓:</label>
@@ -100,9 +105,9 @@ $household = $db->getRow($sql);
 									<span class="important">*</span>房子用途:</label>
 								<div class="col-lg-6 col-md-9">
 									<select name="household-use" id="household-use" class="form-control">
-<!--									
+<!--
 										<option value="" selected>選擇用途</option>
--->							
+-->
 
 <?php
 $sql =  "SELECT id,name FROM household_purpose";
@@ -124,7 +129,7 @@ foreach($data as $var) {
 <!--
 										<option value="住宅用">住宅用</option>
 										<option value="商業用">商業用</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -133,9 +138,9 @@ foreach($data as $var) {
 									<span class="important">*</span>房子狀態:</label>
 								<div class="col-lg-6 col-md-9">
 									<select name="household-status" id="household-status" class="form-control">
-<!--									
+<!--
 										<option value="" selected>選擇用途</option>
--->									
+-->
 <?php
 $sql =  "SELECT id,name FROM household_status";
 $data = $db->getRows($sql);
@@ -150,11 +155,11 @@ foreach($data as $var) {
 									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
 <?php
 }
-?>	
+?>
 <!--
 										<option value="自用">自用</option>
 										<option value="出租">出租</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -245,9 +250,9 @@ foreach($data as $var) {
 								</label>
 								<div class="col-lg-6 col-md-9">
 									<select class="custom-select" name="assets-use-state">
-<!--									
+<!--
 										<option selected>選取狀態</option>
--->										
+-->
 <?php
 $sql =  "SELECT id,name FROM household_used_for";
 $data = $db->getRows($sql);
@@ -262,11 +267,11 @@ foreach($data as $var) {
 									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
 <?php
 }
-?>	
+?>
 <!--
 										<option value="自用">自用</option>
 										<option value="租賃">租賃</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -295,6 +300,6 @@ $('.btn-same').on('click',function(e){
 	e.preventDefault()
 })
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

@@ -1,17 +1,24 @@
-<?php 
-include('./config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <?php
 
-session_start();
+
 
 //echo $_SESSION['account'] . '<br>';
 
 //$_SESSION['account'] = 'charles'; // for test only
 
 $sql = 'SELECT * FROM users WHERE account = "' . $_SESSION['account'] . '"';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 /*
 echo $_SESSION['account'] . '<br>';
 echo $sql . '<br>';
@@ -89,6 +96,6 @@ var_dump($data);
         </div>
     </div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

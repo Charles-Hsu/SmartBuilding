@@ -1,20 +1,19 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-<?php 
+<?php
 
-$sql = 'SELECT * FROM assets';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-$public_util_type=$_GET['id'];
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-$sql="SELECT * FROM `facilities` WHERE id = $public_util_type";
-$facilities_name=$db->getRow($sql);
+    $public_util_type=$_GET['id'];
+    $sql = "SELECT * FROM `facilities` WHERE id = $public_util_type";
+    $facilities_name=$db->getRow($sql);
 
 ?>
 <!-- 內容切換區 -->
@@ -33,7 +32,7 @@ $facilities_name=$db->getRow($sql);
                 </li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>			
+                </li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
@@ -249,6 +248,6 @@ function loadData(public_util_type,date,reserve_time,str,reserve_time2){
     })
 }
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

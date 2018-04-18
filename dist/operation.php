@@ -1,6 +1,13 @@
-<?php 
-include('./config.php');
-include('./Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -34,8 +41,8 @@ include('./Header.php');
 									<span class="ml-3">月</span>
 									<i id="next" class="ml-5 fas fa-angle-right"></i>
 								</div>
-								
-								
+
+
 							</div>
 							<div class="body">
 								<div class="week-list">

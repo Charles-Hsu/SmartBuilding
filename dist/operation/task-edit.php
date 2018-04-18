@@ -1,52 +1,25 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-<?php 
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$id = 0;
-
-if ($_GET) {
-	$id = $_GET['id'];
-}
-
-
-if (count($_POST) > 0) {
-    //var_dump($_POST);
-
-
-//    $sql = "UPDATE assets SET status_no=" . $_POST['assets-use-status'] . " WHERE asset_no = '" . $_POST['assets-no'] . "'";
-	//echo $sql;
-
-    $sql = "UPDATE tasks SET dt = '" . $_POST['op-dt'] . "' WHERE id = '" . $_POST['task-id'] . "'";
-    //echo $sql;
-	$db->update($sql);
-
-
-  
-}
-
-
-//$id = 90;
-
-
-$sql = 'SELECT a.id AS taks_id, a.dt AS dt, a.descript, b.item, c.name AS contractor FROM tasks a, contract_item b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id AND a.id = ' . $id;
-
-
-
-$data = $db->getRow($sql);
-
-
-//var_dump($data);
-
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-
-
+<?php
+	$id = 0;
+	if ($_GET) {
+		$id = $_GET['id'];
+	}
+	if (count($_POST) > 0) {
+		$sql = "UPDATE tasks SET dt = '" . $_POST['op-dt'] . "' WHERE id = '" . $_POST['task-id'] . "'";
+		$db->update($sql);
+	}
+	$sql = 'SELECT a.id AS taks_id, a.dt AS dt, a.descript, b.item, c.name AS contractor FROM tasks a, contract_item b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id AND a.id = ' . $id;
+	$data = $db->getRow($sql);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -71,7 +44,7 @@ session_start();
 					<a href="<?= $urlName ?>/operation.php" class="assets-create-icon fas fa-chevron-left"></a>
 					<span>修改例行作業</span>
                 </div>
-                
+
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
@@ -80,14 +53,14 @@ session_start();
                             <input type="hidden" name="task-id" value="<?=$id;?>">
 
 
-<!--                            
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
                             </div>
--->                            
+-->
 
 <?php
 $var = $data;
@@ -102,7 +75,7 @@ $var = $data;
 									<input type="text" class="form-control datepicker" name="op-dt" value="<?=$var['dt'];?>">
 								</div>
                             </div>
-                            
+
 
 							<div class="form-group row">
 								<label for="operation-type" class="text-right col-md-4 col-form-label">
@@ -131,9 +104,9 @@ $var = $data;
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存</button>
                                     <button class="btn btn-outline-secondary">取消</button>
-<!--                                    
+<!--
                                     <button class="btn btn-outline-danger">刪除該人員</button>
--->                                    
+-->
 								</div>
 							</div>
 						</form>
@@ -143,6 +116,6 @@ $var = $data;
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

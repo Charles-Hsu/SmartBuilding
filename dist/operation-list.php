@@ -1,11 +1,17 @@
-<?php 
-include('./config.php');
-include('./Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
-<?php 
+<?php
 
-//$sql = 'SELECT * FROM assets';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 
 $curmonth = $_GET['month'];
 $curyear = $_GET['year'];
@@ -49,7 +55,7 @@ if (strlen($_SESSION['account']) == 0) {
 			<div id="assets-tab">
 			<!--
 				<a href="<?= $urlName ?>/calendar-addlist.php" class="btn add-asset-btn mb-3">
-			-->				
+			-->
 				<a href="<?= $urlName ?>/calendar-addlist.php?year=<?= $curyear ?>&month=<?= $curmonth ?>&day=<?= $curday ?>" class="btn add-asset-btn mb-3">
 					<span>+</span>新增例行作業
 				</a>
@@ -59,9 +65,9 @@ if (strlen($_SESSION['account']) == 0) {
 							<th></th>
 							<th>作業項目</th>
 							<th>作業類別</th>
-<!--							
+<!--
 							<th>作業週期</th>
--->							
+-->
 							<th>承包廠商</th>
 							<th>作業金額</th>
 							<th>修改</th>
@@ -133,7 +139,7 @@ $('.check_input').on('change',function(){
 	$('#checkModal').modal('show')
 	var _type=$(this).attr('name');
 	$('#checkModal').attr('data-type',_type)
-	
+
 })
 $('.btn-cancel').on('click',function(){
 	var _type=$(this).closest('#checkModal').attr('data-type');
@@ -158,7 +164,7 @@ $('#btn-send').on('click',function(){
 			}else{
 				alert('error')
 			}
-			
+
 		},
 		error:function(){
 

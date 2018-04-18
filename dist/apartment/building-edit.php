@@ -1,8 +1,14 @@
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
+
+if (!$_SESSION['online']) {
+	$url = "./login.php";
+	header("Location: " . $url);
+}
+
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT * FROM assets';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -46,7 +52,7 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>			
+                </li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
@@ -99,9 +105,9 @@ if (strlen($_SESSION['account']) == 0) {
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存更新</button>
 									<button class="btn btn-outline-secondary">取消更新</button>
-<!--									
+<!--
 									<button class="btn btn-outline-danger">刪除該建築</button>
--->									
+-->
 								</div>
 							</div>
 						</form>
@@ -111,6 +117,6 @@ if (strlen($_SESSION['account']) == 0) {
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

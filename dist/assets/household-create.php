@@ -1,12 +1,18 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
 
-session_start();
+<?php
 
 $message = "";
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 if(count($_POST)>0) {
 
@@ -34,14 +40,14 @@ if(count($_POST)>0) {
 
 	foreach ($data as $key => $value) {
 		$fields = $fields . "`" . $key . "`,";
-		$values = $values . "'" . $value . "',"; 
+		$values = $values . "'" . $value . "',";
 	}
 
 	$fields = substr($fields, 0, strlen($fields)-1);
 	$values = substr($values, 0, strlen($values)-1);
 	$sql = 'INSERT INTO household (' . $fields . ') ' . ' VALUES (' . $values . ')';
 	echo $sql;
-	
+
 	if ($db->insert($sql)) {
 	//if ($db->insertRow($table, $data)) {
 		$message="新增成功";
@@ -88,14 +94,14 @@ if(count($_POST)>0) {
 
 			foreach ($data as $key => $value) {
 				$fields = $fields . "`" . $key . "`,";
-				$values = $values . "'" . $value . "',"; 
+				$values = $values . "'" . $value . "',";
 			}
 
 			$fields = substr($fields, 0, strlen($fields)-1);
 			$values = substr($values, 0, strlen($values)-1);
 			$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
 			echo $sql;
-			
+
 			if ($db->insert($sql)) {
 			//if ($db->insertRow($table, $data)) {
 				$message="新增成功";
@@ -126,7 +132,7 @@ if(count($_POST)>0) {
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
-				</li>				
+				</li>
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
@@ -136,14 +142,14 @@ if(count($_POST)>0) {
 				<div class="row justify-content-between">
 					<div class="col-lg-5 col-6">
 						<form class="householdCreate-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-lg-6 col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-lg-6 col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="household-area" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>所屬大樓:</label>
@@ -165,7 +171,7 @@ foreach($data as $var) {
 										<option value="" selected>選擇大樓</option>
 										<option value="AA">忠孝樓</option>
 										<option value="BB">仁愛樓</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -174,9 +180,9 @@ foreach($data as $var) {
 									<span class="important">*</span>房子用途:</label>
 								<div class="col-md-8">
 									<select name="household-use" id="household-use" class="form-control">
-<!--									
+<!--
 										<option value="" selected>選擇用途</option>
--->							
+-->
 
 <?php
 $sql =  "SELECT id,name FROM household_purpose";
@@ -192,7 +198,7 @@ foreach($data as $var) {
 <!--
 										<option value="住宅用">住宅用</option>
 										<option value="商業用">商業用</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -201,9 +207,9 @@ foreach($data as $var) {
 									<span class="important">*</span>房子狀態:</label>
 								<div class="col-md-8">
 									<select name="household-status" id="household-status" class="form-control">
-<!--									
+<!--
 										<option value="" selected>選擇用途</option>
--->									
+-->
 <?php
 $sql =  "SELECT id,name FROM household_status";
 $data = $db->getRows($sql);
@@ -214,11 +220,11 @@ foreach($data as $var) {
 									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
 <?php
 }
-?>	
+?>
 <!--
 										<option value="自用">自用</option>
 										<option value="出租">出租</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -287,14 +293,14 @@ foreach($data as $var) {
 									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
 								</div>
 							</div>
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="household-park-amount" class="text-right col-md-4 col-form-label">帶看費用:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="assets-buy-date" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>購置日期:
@@ -309,9 +315,9 @@ foreach($data as $var) {
 								</label>
 								<div class="col-md-8">
 									<select class="custom-select" name="assets-use-state">
-<!--									
+<!--
 										<option selected>選取狀態</option>
--->										
+-->
 <?php
 $sql =  "SELECT id,name FROM household_used_for";
 $data = $db->getRows($sql);
@@ -322,11 +328,11 @@ foreach($data as $var) {
 									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
 <?php
 }
-?>	
+?>
 <!--
 										<option value="自用">自用</option>
 										<option value="租賃">租賃</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -343,7 +349,7 @@ foreach($data as $var) {
 
 						</form>
 					</div>
-<!--					
+<!--
 					<div class="col-lg-6 col-6">
 						<nav class="mb-3 householdInner-menu">
 							<a href="javascript:;" class="active"><i class="fas fa-list-ul mr-2"></i>規費紀錄</a>
@@ -414,7 +420,7 @@ foreach($data as $var) {
 							</div>
 						</div>
 					</div>
--->					
+-->
 				</div>
 			</div>
 		</div>
@@ -506,6 +512,6 @@ $('.householdLease-table').DataTable({
 	"processing": true
 })
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

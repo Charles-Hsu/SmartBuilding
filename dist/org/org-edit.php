@@ -1,11 +1,17 @@
+<?php session_start(); ?>
 <?php
-include('../config.php');
-include('../Header.php');
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
 <?php
 
 $staff_no = $_GET['no'];
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 if (count($_POST) > 0) {
 
@@ -33,11 +39,6 @@ $data = $db->getRows($sql);
 $staff = $data[0];
 //var_dump($staff);
 
-
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
 
 ?>
 <!-- 內容切換區 -->

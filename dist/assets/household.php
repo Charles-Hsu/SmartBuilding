@@ -1,8 +1,15 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
-session_start();
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
+
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
@@ -43,12 +50,11 @@ session_start();
 						</tr>
 					</thead>
 					<tbody>
-<?php 
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-$sql = 'SELECT a.id AS id,building,addr_no,floor,"1100" as unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
-$data = $db->getRows($sql);
-foreach($data as $var) {
-?>
+						<?php
+							$sql = 'SELECT a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+							$data = $db->getRows($sql);
+							foreach($data as $var) {
+						?>
 						<tr>
 							<td><span><?php echo $var[building];?></span></td>
 							<td><span><?php echo $var[addr_no];?></span></td>
@@ -57,26 +63,26 @@ foreach($data as $var) {
 							<td><span><?php echo $var[holder];?></span></td>
 							<td><span><?php echo $var[resident];?></span></td>
 							<td>
-<?php 
-	$sql = "SELECT SUM(fee) AS s FROM hoa_fee_record WHERE hid = $var[id] AND p IS NULL";
-	$s = $db->getRow($sql);
-	$s = $s['s'];
-?>
+								<?php
+									$sql = "SELECT SUM(fee) AS s FROM hoa_fee_record WHERE hid = $var[id] AND p IS NULL";
+									$s = $db->getRow($sql);
+									$s = $s['s'];
+								?>
 								<span><?php echo number_format($s);?></span>
 							</td>
 							<td>
-<?php 
+<?php
 	if($var[unpaid_total] != 0) {
 		if (false) {
-?>			
+?>
 								<a href="#" data-id="<?php echo $var[id];?>" class="show-details btn btn-outline-secondary">顯示</a>
-<?php								
+<?php
 		} else {
 ?>
 
-								<a href="/smartbuilding/assets/household-fee-list.php?id=<?php echo $var[id];?>&floor=<?php echo $var[floor];?>&addr_no=<?php echo $var[addr_no]?>&holder=<?php echo $var[holder];?>" class="btn btn-outline-secondary">顯示</a> 
+								<a href="/smartbuilding/assets/household-fee-list.php?id=<?php echo $var[id];?>&floor=<?php echo $var[floor];?>&addr_no=<?php echo $var[addr_no]?>&holder=<?php echo $var[holder];?>" class="btn btn-outline-secondary">顯示</a>
 <?php
-		}									
+		}
 	}
 ?>
 							</td>
@@ -106,7 +112,7 @@ foreach($data as $var) {
 			</tr>
 		</thead>
 		<tbody id="details-tbody">
-			
+
 		</tbody>
 	</table>
 </div>
@@ -182,6 +188,6 @@ $('.asset-table').DataTable({
 	"processing": true,
 })
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

@@ -1,22 +1,19 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-<?php 
+
+<?php
 
 $sql = 'SELECT a.*,b.type FROM bank_acc a, bank_acc_type b WHERE a.account_type = b.id';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
 $data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -43,9 +40,9 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>專戶用途</th>
 							<th>專戶類型</th>
 							<th>銀行名稱</th>
-<!--							
+<!--
 							<th>銀行編號</th>
--->							
+-->
 							<th>帳戶名稱</th>
 							<th>帳戶編號</th>
 							<th>帳戶餘額</th>

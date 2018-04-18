@@ -1,12 +1,18 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
 
-session_start();
 
+<?php
 $message = "";
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $id = $_GET['id'];
 
@@ -15,9 +21,9 @@ if(count($_POST)>0) {
     //var_dump($_POST);
     $datetime = $_POST['agent_datetime'];
 	$agent_id = $_POST['agent-id'];
-	
+
 //    echo $datetime;
-   /* 
+   /*
     INSERT INTO `real_estate_agent_event` (`id`, `dt`, `realestate_id`, `agent_id`) VALUES (NULL, '2018-03-22 05:25:23', '1', '5');
     */
 
@@ -36,7 +42,7 @@ if(count($_POST)>0) {
 	$data['purpose'] = $_POST['household-use'];
 
 
-//echo "household-use = " . $_POST['household-use'] . "<br>"; 
+//echo "household-use = " . $_POST['household-use'] . "<br>";
 
 
 	$data['status'] = $_POST['household-status'];
@@ -57,9 +63,9 @@ if(count($_POST)>0) {
 	$data['used_for'] = $_POST['assets-use-state'];
 
     $sql = 'UPDATE household SET purpose = ' . $data["purpose"] . ', status = ' . $data['status'] . ', holder = "' . $data['holder'] . '", resident = "' . $data['resident'] . '", due = "' . $data['due'] . '", parking_lot_due = "' . $data['parking_lot_due'] . '", buy_date = "' . $data['buy_date'] . '", used_for = ' . $data['used_for'] . ' WHERE addr_no = "' . $data['addr_no'] . '" AND floor = "' . $data['floor'] . '"';
-    
+
 	//echo $sql;
-	
+
 	if ($db->insert($sql)) {
 	//if ($db->insertRow($table, $data)) {
 		$message="修改成功";
@@ -102,14 +108,14 @@ $household = $db->getRow($sql);
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-lg-6 col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-lg-6 col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
 									所屬大樓:</label>
@@ -142,14 +148,14 @@ $household = $db->getRow($sql);
 								</div>
 							</div>
 
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="household-props" class="text-right col-lg-6 col-md-3 col-form-label">區權比例:</label>
 								<div class="col-lg-6 col-md-9">
 									<input type="text" class="form-control" value="<?=$household['owner_percentage']?>" readonly>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="household-sqft" class="text-right col-lg-6 col-md-3 col-form-label">坪數:</label>
 								<div class="col-lg-6 col-md-9">
@@ -173,9 +179,9 @@ $household = $db->getRow($sql);
 								<label class="text-right col-lg-6 col-md-3 col-form-label">仲介公司:</label>
 								<div class="col-lg-6 col-md-9">
                                 <select name="agent-id" class="form-control">
-<!--									
+<!--
 										<option value="" selected>選擇用途</option>
--->							
+-->
 
 <?php
 /*
@@ -197,7 +203,7 @@ foreach($data as $var) {
 <!--
 										<option value="住宅用">住宅用</option>
 										<option value="商業用">商業用</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -241,7 +247,7 @@ foreach($data as $var) {
 			</div>
 		</div>
     </div>
-    
+
 <?php
     $sql = 'SELECT *, b.name FROM real_estate_agent_event a, real_estate_agent b WHERE household_id = ' . $id . ' AND agent_id = b.id';
     //echo $sql;
@@ -321,6 +327,6 @@ $('.datatable').DataTable({
     //"order": [[0, 'asc']],
 })
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

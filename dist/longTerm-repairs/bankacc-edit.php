@@ -1,11 +1,18 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-<?php 
+
+<?php
 
 $sql = '';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $table = 'bank_acc';
 $id = 0;
@@ -23,8 +30,8 @@ if(count($_POST)>0) {
 	//$comment = utf8_encode($comment);
 	//echo $comment;
 
-	
-	$sql =  "UPDATE " . $table . " SET account_balance='" . $balance . "', comment = '" . $comment . "' WHERE id = " . $id; 
+
+	$sql =  "UPDATE " . $table . " SET account_balance='" . $balance . "', comment = '" . $comment . "' WHERE id = " . $id;
 
 	//echo $sql;
 
@@ -80,14 +87,14 @@ $data = $data[0];
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="bankacc-use" class="text-right col-md-4 col-form-label">
 									專戶用途:</label>
@@ -110,7 +117,7 @@ $data = $data[0];
 									<input type="text" class="form-control datepicker" name="bankaccount-name" value="<?=$data['account_name'];?>" readonly>
 								</div>
 							</div>
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="bankacc-code" class="text-right col-md-4 col-form-label">
 									銀行代碼:
@@ -119,7 +126,7 @@ $data = $data[0];
 									<input type="text" class="form-control" name="bankacc-code" value="<?=$data['bank_no'];?>" readonly>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="bank-name" class="text-right col-md-4 col-form-label">
 									銀行名稱:
@@ -156,7 +163,7 @@ $data = $data[0];
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存更新</button>
 									<button class="btn btn-outline-secondary">取消更新</button>
-<!--									
+<!--
 									<button class="btn btn-outline-danger">刪除該建築</button>
 -->
 								</div>
@@ -168,6 +175,6 @@ $data = $data[0];
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

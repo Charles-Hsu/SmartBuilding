@@ -11,10 +11,7 @@ $_isAdmin = $_SESSION['admin'];
             </div>
             <ul class="sidemenu-nav">
                 <?php
-                    $dest = "kpi.php";
-                    if (!$_isAdmin) {
-                        $dest = "announcement.php";
-                    }
+                    $dest = "announcement.php";
                 ?>
                 <li>
                     <a href="<?php echo $urlName;?>/<?php echo $dest;?>" class="d-flex sidemenu-link align-items-center" title="效能管理" data-type="kpi">

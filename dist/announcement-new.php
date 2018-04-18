@@ -1,7 +1,11 @@
 <?php session_start(); ?>
-<?php 
+<?php
 	include('./config.php');
-	include('./Header.php'); 
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
@@ -12,7 +16,7 @@
 			<ul class="nav nav-pills mb-3">
 				<?php
 					if ($_isAdmin) {
-				?>			
+				?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
 				</li>
@@ -24,18 +28,18 @@
 				</li>
 				<?php
 					}
-				?>    				
+				?>
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>				
+				</li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>				
+                </li>
 			</ul>
-			<?php 
+			<?php
 				if (count($_POST) > 0) {
 					$date = $_POST['post-date'];
 					$content = $_POST['post-content'];
@@ -73,8 +77,8 @@
                                 <!--  -->
                                     <textarea rows="3" cols="48" name="post-content" form="post-create-form" placeholder="輸入公告內容..."></textarea>
                                 </div>
-                                
-                                
+
+
 
 							</div>
 							<div class="form-group row">
@@ -100,10 +104,10 @@ var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
 if(dd < 10){
     dd = '0' + dd;
-} 
+}
 if(mm < 10){
     mm = '0' + mm;
-} 
+}
 var today = yyyy + '-' + mm + '-' + dd;
 
 $(document).ready(function() {
@@ -113,6 +117,6 @@ $(document).ready(function() {
 
 
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

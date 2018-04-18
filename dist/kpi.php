@@ -1,7 +1,11 @@
 <?php session_start(); ?>
-<?php 
+<?php
 	include('./config.php');
-	include('./Header.php'); 
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
@@ -10,9 +14,18 @@
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>
 				<?php
 					if ($_isAdmin) {
-				?>			
+				?>
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/kpi.php">績效指標</a>
 				</li>
@@ -24,16 +37,7 @@
 				</li>
 				<?php
 					}
-				?>    				
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>				
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>				
+				?>
 			</ul>
             <?php
                 $sql = "SELECT * FROM apartment_settings";
@@ -306,10 +310,10 @@ var myChart = new Chart(asset, {
         datasets: [{
             label: '# of Votes',
             data: [
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(), 
+                randomData(),
+                randomData(),
+                randomData(),
+                randomData(),
                 randomData(),
                 randomData(),
             ],
@@ -319,10 +323,10 @@ var myChart = new Chart(asset, {
         },{
             label: '# of Votes',
             data: [
-                randomData(), 
-                randomData(), 
-                randomData(), 
-                randomData(), 
+                randomData(),
+                randomData(),
+                randomData(),
+                randomData(),
                 randomData(),
                 randomData(),
             ],

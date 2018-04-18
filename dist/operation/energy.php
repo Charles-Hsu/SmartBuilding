@@ -1,20 +1,13 @@
+<?php session_start(); ?>
 <?php
-session_start();
-include('../config.php');
-include('../Header.php');
-?>
-<?php
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
 <!-- 內容切換區 -->
 <div class="row">

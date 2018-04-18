@@ -1,11 +1,15 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-<?php 
-
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+<?php
 
 if (count($_POST) > 0) {
 	var_dump($_POST);
@@ -43,7 +47,7 @@ if (strlen($_SESSION['account']) == 0) {
 <script>
 	var bank_data=<?php echo json_encode($data) ?>;
 	// var _var = $('#acc_id').val();
-/*	
+/*
 	bank_data.forEach(function(item,index) {
 		if (item.id == _val) {
 			$('#bank_name').val(item.bank_name);
@@ -52,7 +56,7 @@ if (strlen($_SESSION['account']) == 0) {
 			$('#account_balance').val(item.str);
 		}
 	})
-*/	
+*/
 	$(function(){
 		var _val = $('#acc_id').val();
 		bank_data.forEach(function(item,index) {
@@ -80,7 +84,7 @@ if (strlen($_SESSION['account']) == 0) {
 				$('#account_balance').val('#account_balance')
 			}
 		});
-/*		
+/*
 		$('#acc_id').on('change',function(){
 			var _val=$(this).val();
 			console.log(_val)
@@ -97,8 +101,8 @@ if (strlen($_SESSION['account']) == 0) {
 				$('#account_purpose').val('')
 				$('#account_balance').val('')
 			}
-		});		
-*/		
+		});
+*/
 	})
 </script>
 <!-- 內容切換區 -->
@@ -124,14 +128,14 @@ if (strlen($_SESSION['account']) == 0) {
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="budget-title" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>預算名稱:</label>
@@ -139,7 +143,7 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control" name="budget-title" id="budget-title" placeholder="預算名稱...">
 								</div>
 							</div>
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="supplies-no" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>預算總類:</label>
@@ -147,7 +151,7 @@ if (strlen($_SESSION['account']) == 0) {
 									<input type="text" class="form-control" name="supplies-no" id="supplies-no">
 								</div>
 							</div>
--->							
+-->
                             <div class="form-group row">
 								<label for="budget-amount" class="text-right col-md-4 col-form-label">
 								<span class="important">*</span>預算金額:
@@ -165,12 +169,12 @@ if (strlen($_SESSION['account']) == 0) {
 <!--
 										<option value="" selected>選擇帳戶</option>
 -->
-<?php 
+<?php
 foreach($data as $value) {
 ?>
 										<option value="<?= $value['id'] ?>"><?=$value['account_name'];?></option>
-<?php 
-} 
+<?php
+}
 ?>
 									</select>
 								</div>
@@ -215,8 +219,8 @@ foreach($data as $value) {
 								<div class="col-md-8">
 									<input type="text" class="form-control datepicker datepicker1" name="planning_date">
 								</div>
-							</div>								
-							
+							</div>
+
 
 
 							<div class="form-group row">
@@ -227,7 +231,7 @@ foreach($data as $value) {
 									<input type="text" class="form-control" name="budget_years" id="budget_years" value="5">
 								</div>
 							</div>
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="supplies-unit" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>單位:</label>
@@ -263,7 +267,7 @@ foreach($data as $value) {
 									<input type="text" class="form-control" name="supplies-note" id="supplies-note">
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-outline-secondary">新增</button>
@@ -292,6 +296,6 @@ foreach($data as $value) {
 	$('.datepicker1').val(`${now_year}-${now_month}-${now_date}`)
 
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

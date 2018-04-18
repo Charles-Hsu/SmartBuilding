@@ -1,6 +1,13 @@
+<?php session_start(); ?>
 <?php
-include('../config.php');
-include('../Header.php');
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
 <?php
 
@@ -11,12 +18,11 @@ if (count($_POST) > 0) {
     //var_dump($_POST);
 }
 
-//$sql = 'SELECT * FROM assets';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 $sql = 'SELECT a.staff_id,a.dt,b.name FROM `staff_work_time` a, staff b WHERE b.id = a.staff_id';
 
 $data = $db->getRows($sql);
-session_start();
+
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //var_dump($data);

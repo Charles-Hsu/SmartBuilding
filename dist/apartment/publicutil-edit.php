@@ -1,34 +1,28 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-?>
-<?php 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 
-//$sql = 'SELECT * FROM assets';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$sql = '';
 
-$sql = '';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	if ($_GET) {
+		$id = $_GET['id'];
+		//echo $license_no;
+		$table = 'facilities';
+		$sql = 'SELECT * FROM ' . $table . ' WHERE id = "' . $id . '"';
+		//echo $sql;
+		$data = $db->getRows($sql);
+		$data = $data[0];
+	}
 
-
-if ($_GET) {
-	$id = $_GET['id'];
-	//echo $license_no;
-	$table = 'facilities';
-	$sql = 'SELECT * FROM ' . $table . ' WHERE id = "' . $id . '"';
-	//echo $sql;
 	$data = $db->getRows($sql);
 	$data = $data[0];
-}
-
-$data = $db->getRows($sql);
-$data = $data[0];
-//$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-var_dump($data);
-
 
 ?>
 <!-- 內容切換區 -->
@@ -57,14 +51,14 @@ var_dump($data);
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="community" class="text-right col-md-3 col-form-label">所屬社區:</label>
 								<div class="col-md-9 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
 							</div>
--->							
+-->
 							<div class="form-group row">
 								<label for="publicutil-name" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>設施名稱:</label>
@@ -88,9 +82,9 @@ var_dump($data);
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-primary">儲存更新</button>
 									<button class="btn btn-outline-secondary">取消更新</button>
-<!--									
+<!--
 									<button class="btn btn-outline-danger">刪除該公設</button>
--->									
+-->
 								</div>
 							</div>
 						</form>
@@ -100,6 +94,6 @@ var_dump($data);
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

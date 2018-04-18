@@ -2,8 +2,15 @@
 <?php
 	include('../config.php');
 	include('../Header.php');
+
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 ?>
 <!-- 內容切換區 -->
 <div class="row">

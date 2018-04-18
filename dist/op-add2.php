@@ -1,7 +1,11 @@
 <?php session_start(); ?>
-<?php 
+<?php
 	include('./config.php');
-	include('./Header.php'); 
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
@@ -12,7 +16,7 @@
 			<ul class="nav nav-pills mb-3">
 				<?php
 					if ($_isAdmin) {
-				?>			
+				?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
 				</li>
@@ -24,16 +28,16 @@
 				</li>
 				<?php
 					}
-				?>    				
+				?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>				
+				</li>
                 <li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>				
+                </li>
 			</ul>
 			<?php
 				if (count($_POST)) {
@@ -69,7 +73,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php 
+								<?php
 									$holder_id = $_GET['id'];
 									$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 									$sql = "SELECT a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id AND a.id = '$holder_id'";
@@ -139,7 +143,7 @@
 											<option value="<?=$var['id'];?>"><?=$var['who'];?></option>
 										<?php
 											}
-										?>							
+										?>
 									</select>
 								</div>
 							</div>
@@ -166,10 +170,10 @@ var mm = today.getMonth()+1; //January is 0!
 var yyyy = today.getFullYear();
 if(dd < 10){
     dd = '0' + dd;
-} 
+}
 if(mm < 10){
     mm = '0' + mm;
-} 
+}
 var today = yyyy + '-' + mm + '-' + dd;
 
 $(document).ready(function() {
@@ -180,6 +184,6 @@ $(document).ready(function() {
 
 </script>
 
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

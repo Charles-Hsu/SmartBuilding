@@ -1,22 +1,13 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-?>
-<?php 
-
-$sql = 'SELECT * FROM assets';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -37,14 +28,14 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 			</ul>
 			<div id="assets-tab" class="row mr-0 ml-0">
-<!--				
+<!--
 				<div class="repairs-menu col-2">
 					<ul class="repairs-menu-bar d-flex flex-column align-items-center">
 						<li><a href="<?= $urlName ?>/operation/repairs-normal.php" class="active">一般維修</a></li>
 						<li><a href="<?= $urlName ?>/operation/repairs-abnormal.php" class="">異常回報</a></li>
 					</ul>
 				</div>
--->				
+-->
 				<div class="repairs-content col-10">
 					<div class="assets-create-title mb-3">
 						<a href="<?= $urlName ?>/operation/repairs-normal.php" class="assets-create-icon fas fa-chevron-left"></a>
@@ -53,14 +44,14 @@ if (strlen($_SESSION['account']) == 0) {
 					<div class="row justify-content-lg-start justify-content-center">
 						<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
 							<form class="assets-create-form" action="" method="POST">
-<!--								
+<!--
 								<div class="form-group row">
 									<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 									<div class="col-md-8 d-flex align-items-center">
 										<span>XXXXXX</span>
 									</div>
 								</div>
--->								
+-->
 								<div class="form-group row">
 									<label for="repairs-contractor" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>承包廠商:
@@ -79,7 +70,7 @@ foreach($data as $var) {
 										<option value="<?=$var['id'];?>"> <?=$var['name'];?> </option>
 <?php
 }
-?>									
+?>
   									</select>
 									</div>
 								</div>
@@ -93,7 +84,7 @@ foreach($data as $var) {
 										<input type="text" class="form-control" name="repairs-content" id="repairs-content">
 									</div>
 								</div>
-								
+
 								<div class="form-group row">
 									<label for="repairs-amount" class="text-right col-md-4 col-form-label">
 										<span class="important">*</span>維修金額:</label>
@@ -138,6 +129,6 @@ foreach($data as $var) {
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

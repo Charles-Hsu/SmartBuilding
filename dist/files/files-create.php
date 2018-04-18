@@ -1,9 +1,15 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
-
-$message = "";
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
+<?php
 
 if (count($_POST) > 0) {
 	var_dump($_POST);
@@ -35,7 +41,7 @@ if (count($_POST) > 0) {
 			$message = "檔案上傳失敗";
 			echo $message;
 	  	}
-	}	
+	}
 
 }
 
@@ -111,6 +117,6 @@ if (count($_POST) > 0) {
         $('.files-name').text(_name)
     })
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

@@ -1,15 +1,13 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
-?>
-<?php 
-
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-$data = $db->getRows($sql);
-session_start();
-
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -37,7 +35,7 @@ session_start();
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
-			
+
 
 							<div class="form-group row">
 								<label for="orgstaff-id" class="text-right col-md-4 col-form-label">
@@ -48,7 +46,7 @@ session_start();
 										<?php
 											$sql = 'SELECT * FROM supply_type';
 											$data = $db->getRows($sql);
-										?>								
+										?>
 										<?php
 										foreach($data as $var) {
 											//	echo $var['Name'];
@@ -145,6 +143,6 @@ session_start();
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

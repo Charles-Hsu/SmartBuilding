@@ -1,31 +1,13 @@
-<?php 
-include('./config.php');
-include('./Header.php'); 
-?>
-<?php 
-
-//$sql = 'SELECT * FROM assets';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-// $curmonth = date('m');
-// $curyear = date('Y');
-
-// echo $curmonth;
-// echo $curyear;
-
-// $sql = 'SELECT a.id AS task_id, a.dt AS dt, a.descript, b.item, c.name FROM tasks a, contract_item b, contract c WHERE a.category_id = b.id AND a.contract_id = c.id AND MONTH(a.dt) = ' . $curmonth . ' AND YEAR(a.dt) = ' . $curyear;
-
-// echo $sql;
-//$data = $db->getRows($sql);
-//session_start();
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//	var_dump($data);
-/*
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-*/
+<?php session_start(); ?>
+<?php
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -46,7 +28,7 @@ if (strlen($_SESSION['account']) == 0) {
 			<div id="assets-tab">
 			<!--
 				<a href="<?= $urlName ?>/calendar-addlist.php" class="btn add-asset-btn mb-3">
-			-->				
+			-->
 				<a href="<?= $urlName ?>/calendar-records.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增例行作業
 				</a>
@@ -56,9 +38,9 @@ if (strlen($_SESSION['account']) == 0) {
 							<th></th>
 							<th>作業項目</th>
 							<th>作業類別</th>
-<!--							
+<!--
 							<th>作業週期</th>
--->							
+-->
 							<th>承包廠商</th>
 							<th>作業金額</th>
 							<th>修改</th>
@@ -130,7 +112,7 @@ $('.check_input').on('change',function(){
 	$('#checkModal').modal('show')
 	var _type=$(this).attr('name');
 	$('#checkModal').attr('data-type',_type)
-	
+
 })
 $('.btn-cancel').on('click',function(){
 	var _type=$(this).closest('#checkModal').attr('data-type');
@@ -155,7 +137,7 @@ $('#btn-send').on('click',function(){
 			}else{
 				alert('error')
 			}
-			
+
 		},
 		error:function(){
 

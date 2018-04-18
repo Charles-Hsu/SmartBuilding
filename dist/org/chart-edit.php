@@ -1,11 +1,13 @@
+<?php session_start(); ?>
 <?php
-include('../config.php');
-include('../Header.php');
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-session_start();
-
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
 <!-- 內容切換區 -->
 <div class="row">

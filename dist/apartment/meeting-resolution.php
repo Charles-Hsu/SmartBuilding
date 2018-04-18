@@ -1,10 +1,13 @@
 <?php session_start(); ?>
-<?php 
-include('../config.php');
-include('../Header.php'); 
-$_isAdmin = $_SESSION['admin'];
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
@@ -18,7 +21,7 @@ if ($_isAdmin) {
     <a class="" href="./management.php">管理辦法</a>
 <?php
 }
-?>    
+?>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./opinionlist.php">住戶意見</a>
     <a class="" href="./overduelist.php">欠繳費用</a>
@@ -27,11 +30,11 @@ if ($_isAdmin) {
 
 
 
-<?php 
+<?php
 include('../config.php');
-include('../Header.php'); 
+include('../Header.php');
 ?>
-<?php 
+<?php
 $table = 'building';
 $sql = 'SELECT * FROM ' . $table;
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
@@ -59,10 +62,10 @@ session_start();
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>				
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/apartment/settings.php">參數設定</a>
-                </li>					
+                </li>
 			</ul>
 			<div id="assets-tab">
 				<a href="<?= $urlName ?>/apartment/building-create.php" class="btn add-asset-btn mb-3">

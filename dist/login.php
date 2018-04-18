@@ -63,6 +63,7 @@ if(count($_POST)) {
             $message = "密碼錯誤";
         }
         else {
+            $_SESSION['online'] = TRUE;
             $role_id = intval($data['role_id']);
             // echo "<script>alert($role_id);</script>";
             if ($role_id == 1) {

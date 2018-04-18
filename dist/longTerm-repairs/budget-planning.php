@@ -1,11 +1,18 @@
-<?php 
-include('../config.php');
-include('../Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 ?>
-<?php 
+<?php
 
 $sql = 'SELECT a.*,b.type FROM bank_acc a, bank_acc_type b WHERE a.account_type = b.id';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
 
 $data = $db->getRows($sql);
 session_start();
@@ -34,11 +41,11 @@ if (strlen($_SESSION['account']) == 0) {
                 </li>
 			</ul>
 			<div id="assets-tab">
-<!--                
+<!--
 				<a href="<?= $urlName ?>/longTerm-repairs/bankacc-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>財務籌措
                 </a>
--->                
+-->
 
 				<table class="table asset-table">
 					<thead class="thead-light">
@@ -46,9 +53,9 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>專戶用途</th>
 							<th>專戶類型</th>
 							<th>銀行名稱</th>
-<!--							
+<!--
 							<th>銀行編號</th>
--->							
+-->
 							<th>帳戶名稱</th>
 							<th>帳戶編號</th>
 							<th>帳戶餘額</th>
@@ -105,9 +112,9 @@ if ($data1) {
 	<th>預算名稱</th>
 	<th>編列日期</th>
 	<th>預算金額</th>
-<!--							
+<!--
 	<th>銀行編號</th>
--->							
+-->
 	<!-- <th>帳戶銀行</th>
 	<th>帳戶編號</th> -->
 	<!-- <th>帳戶餘額</th>
@@ -145,11 +152,11 @@ foreach($data1 as $var) {
 
 </tbody>
 </table>
-	
+
 </tr>
 
 
-<?php	
+<?php
 }
 
 
@@ -158,7 +165,7 @@ foreach($data1 as $var) {
 
 
 
-						
+
 
 <?php
 	 }

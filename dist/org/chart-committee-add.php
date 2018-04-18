@@ -1,34 +1,36 @@
+<?php session_start(); ?>
 <?php
-include('../config.php');
-include('../Header.php');
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
-session_start();
-
-function newCommittee($db, $current_session) {
-	$sql = "SELECT `role_id`, `holder_id`, `session`
-				FROM committee
-				WHERE session = $current_session";
-	echo $sql;
-	var_dump($db);
-	$data = $db->getRows($sql);
-	var_dump($data);
-	foreach($data AS $var) {
-		$n = $var[session]*1+1;
-		$sql = "INSERT INTO committee (`id`,`role_id`,`holder_id`,`session`)
-				VALUES (NULL, $var[role_id], $var[holder_id], $n)";
-		echo $sql;
-		$db->insert($sql);
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
 	}
-}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
 
-if (count($_POST)) {
-	var_dump($_POST);
-	$current_session = $_POST['current_session_id'];
-	echo $current_session;
-	newCommittee($db, $current_session);
-}
+<?php
+
+	function newCommittee($db, $current_session) {
+		$sql = "SELECT `role_id`, `holder_id`, `session`
+					FROM committee
+					WHERE session = $current_session";
+		$data = $db->getRows($sql);
+		foreach($data AS $var) {
+			$n = $var[session]*1+1;
+			$sql = "INSERT INTO committee (`id`,`role_id`,`holder_id`,`session`)
+					VALUES (NULL, $var[role_id], $var[holder_id], $n)";
+			$db->insert($sql);
+		}
+	}
+
+	if (count($_POST)) {
+		var_dump($_POST);
+		$current_session = $_POST['current_session_id'];
+		echo $current_session;
+		newCommittee($db, $current_session);
+	}
 
 ?>
 <!-- 內容切換區 -->

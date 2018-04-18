@@ -1,14 +1,17 @@
-<?php 
-include('./config.php');
-include('./Header.php');
+<?php session_start(); ?>
+<?php
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
-<?php 
+<?php
 
-$sql = 'SELECT * FROM assets';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$data = $db->getRows($sql);
-session_start();
 //echo "_SESSION['account'] = " . $_SESSION['account'];
 //echo strlen($_SESSION['account']);
 //	var_dump($data);
@@ -56,7 +59,7 @@ if (count($_POST) > 0) {
 			$day0 = strtotime("+3 month", $day0);
 		} else if ($per == 4) { // every year
 			$day0 = strtotime("+1 year", $day0);
-		}  
+		}
 		$datestr = date('Y-m-d', day0);
 
 		$sql = "INSERT INTO `tasks` (`id`, `dt`, `category_id`, `contract_id`, `descript`) VALUES (NULL, '" . $dtstr . "', " . $catid . ", " . $conid . ", '" . $desc . "')";
@@ -79,7 +82,7 @@ if (count($_POST) > 0) {
 //	$next_day = strtotime("+1 day", $start_day);
 //	echo $start_day;
 
-/*	
+/*
 	$date1 = date_create('2013-03-15');
 	$date2 = date_create('2013-12-12');
 	$diff = date_diff($date1, $date2);
@@ -97,7 +100,7 @@ if (count($_POST) > 0) {
 	echo $start_day;
 	echo date ('Y-m-d', $start_day);
 	echo date ('Y-m-d', $next_day);
-*/	
+*/
 
 
 /*
@@ -110,7 +113,7 @@ if (count($_POST) > 0) {
 		//if ($db->insertRow($table, $data)) {
 		$message="新增成功";
 	}
-*/	
+*/
 }
 
 ?>
@@ -162,7 +165,7 @@ foreach($data as $var) {
 										<option value="<?=$var['id'];?>"><?=$var['item'];?></option>
 <?php
 }
-?>									
+?>
                                 	</select>
 								</div>
 							</div>
@@ -182,7 +185,7 @@ foreach($data as $var) {
 										<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
 <?php
 }
-?>									
+?>
                                     </select>
                                 </div>
 							</div>
@@ -216,14 +219,14 @@ $sql = "SELECT * FROM task_repeat";
 $data = $db->getRows($sql);
 //var_dump($data);
 foreach ($data as $var) {
-?>									
-										<option value="<?=$var['id'];?>"><?=$var['duration'];?></option>							
+?>
+										<option value="<?=$var['id'];?>"><?=$var['duration'];?></option>
 <?php
 }
-?>							
+?>
                                     </select>
 								</div>
-								
+
 
                             </div>
 							<div class="form-group row">
@@ -259,6 +262,6 @@ foreach ($data as $var) {
 </script>
 
 
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

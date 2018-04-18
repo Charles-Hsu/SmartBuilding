@@ -32,8 +32,8 @@
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/org/contracts-create.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增廠商
+				<a href="<?= $urlName ?>/org/contracts.php" class="btn add-asset-btn mb-3">
+					<span>+</span>廠商自評
 				</a>
 				<!-- <a href="<?= $urlName ?>/org/contract-man.php" class="btn add-asset-btn mb-3">
 					<span>+</span>協約管理

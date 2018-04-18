@@ -1,7 +1,11 @@
 <?php session_start(); ?>
-<?php 
+<?php
 	include('./config.php');
-	include('./Header.php'); 
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
@@ -10,9 +14,18 @@
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>
 				<?php
 					if ($_isAdmin) {
-				?>			
+				?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
 				</li>
@@ -24,18 +37,9 @@
 				</li>
 				<?php
 					}
-				?>    				
-				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>				
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>				
+				?>
 			</ul>
-			<?php 
+			<?php
 				$sql = 'SELECT * FROM post';
 				$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 				$data = $db->getRows($sql);
@@ -45,7 +49,7 @@
 					if ($_isAdmin) {
 				?>
 				<a href="<?= $urlName ?>/announcement-new.php" class="btn add-asset-btn mb-3">
-				<span>+</span>新增公告	
+				<span>+</span>新增公告
 				</a>
 				<?php
 					}
@@ -68,7 +72,7 @@
 					<tbody class="opinionlist_tbody">
 						<?php
 							foreach($data as $var) {
-						?>					
+						?>
 						<tr>
 							<td class="announ-date"><span><?=$var['date'];?></span></td>
 							<td class="announ-content"><input type="text" class="form-control" value="<?=$var['content'];?>" readonly></td>
@@ -76,7 +80,7 @@
 								if ($_isAdmin) {
 							?>
 							<td class="announ-edit" data-id="<?= $var[id] ?>"><a href="#" class="btn btn-primary btn-announEdit">編輯</a></td>
-							<td class="announ-del"><a href="#" data-id="<?= $var[id] ?>" class="btn btn-danger btn-announDel">刪除</a></td>				
+							<td class="announ-del"><a href="#" data-id="<?= $var[id] ?>" class="btn btn-danger btn-announDel">刪除</a></td>
 							<?php
 								}
 							?>

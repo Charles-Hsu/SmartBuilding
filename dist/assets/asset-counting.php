@@ -1,12 +1,15 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
 
-session_start();
-
-$message = "";
-
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$message = "";
 
 if(count($_POST)>0) {
 	/*
@@ -51,7 +54,7 @@ if(count($_POST)>0) {
 			echo 'assets-man = ' . $_POST['assets-man'] . '<br>';
 			echo 'assets-buy-date = ' . $_POST['assets-buy-date'] . '<br>';
 			echo 'assets-use-state = ' . $_POST['assets-use-state'] . '<br>';
-*/		
+*/
 			$table = 'assets';
 			$data = array();
 			$data['asset_no'] = $_POST['assets-no'];
@@ -70,9 +73,9 @@ if(count($_POST)>0) {
 //				echo $key;
 //				echo $value;
 				$fields = $fields . "`" . $key . "`,";
-				$values = $values . "'" . $value . "',"; 
+				$values = $values . "'" . $value . "',";
 			}
-/*			
+/*
 			echo "<br>";
 			echo $fields;
 			echo "<br>";
@@ -81,23 +84,23 @@ if(count($_POST)>0) {
 			echo strlen($fields)-1;
 			echo "<br>";
 			//echo substr($fields, 0, strlen($fields)-1);
-*/			
+*/
 			$fields = substr($fields, 0, strlen($fields)-1);
-/*			
+/*
 			echo $fields;
 			echo "<br>";
 			echo strlen($values)-1;
 			echo "<br>";
 			//echo substr($values, 0, strlen($values)-1);
-*/			
+*/
 			$values = substr($values, 0, strlen($values)-1);
-/*			
+/*
 			echo "<br>";
-*/			
+*/
 			$sql = 'INSERT INTO ' . $table . ' (' . $fields . ') ' . ' VALUES (' . $values . ')';
-/*			
+/*
 			echo $sql;
-*/			
+*/
 			if ($db->insert($sql)) {
 			//if ($db->insertRow($table, $data)) {
 				$message="新增成功";
@@ -181,7 +184,7 @@ var_dump($data);
 							</tr>
 						</thead>
 						<tbody>
-							<?php 
+							<?php
 								$sql = 'SELECT a.*, b.name AS status, c.category AS cat FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND c.id=a.asset_category';
 								$data = $db->getRows($sql);
 								foreach($data as $var) {
@@ -236,6 +239,6 @@ $('.asset-table').DataTable({
 	"processing": true
 })
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

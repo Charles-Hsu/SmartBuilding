@@ -1,33 +1,31 @@
-<?php 
-include('../config.php');
-include(Document_root.'/Header.php'); 
+<?php session_start(); ?>
+<?php
+	include('../config.php');
+	include('../Header.php');
+	if (!$_SESSION['online']) {
+		$url = "$urlName/login.php";
+		header("Location: " . $url);
+	}
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	$_isAdmin = $_SESSION['admin'];
+?>
 
-$sql = '';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+<?php
 
-$data = "";
+	$sql = '';
 
-//SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND a.asset_no = 'AST0001A';
+	if (count($_POST) > 0) {
+		// ["assets-use-status"]=> string(9) "使用中" ["assets-watch"]=> string(0) "" ["assets-scrap-date"]=> string(0) ""
+		$sql = "UPDATE assets SET status_no=" . $_POST['assets-use-status'] . " WHERE asset_no = '" . $_POST['assets-no'] . "'";
+		$db->update($sql);
+	}
 
-if (count($_POST) > 0) {
-	// ["assets-use-status"]=> string(9) "使用中" ["assets-watch"]=> string(0) "" ["assets-scrap-date"]=> string(0) ""
-	$sql = "UPDATE assets SET status_no=" . $_POST['assets-use-status'] . " WHERE asset_no = '" . $_POST['assets-no'] . "'";
-	//echo $sql;
-	$db->update($sql);
-}
-
-if ($_GET) {
-	$asset_no = $_GET['asset_no'];
-	//echo $asset_no;
-	// SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND a.asset_no = 'AST0001A';
-	$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
-	//echo $sql;
-	$data = $db->getRows($sql);
-	$data = $data[0];
-	//var_dump($data);
-}
-
-//var_dump($data);
+	if ($_GET) {
+		$asset_no = $_GET['asset_no'];
+		$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
+		$data = $db->getRows($sql);
+		$data = $data[0];
+	}
 
 ?>
 <!-- 內容切換區 -->
@@ -41,11 +39,11 @@ if ($_GET) {
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/household.php">住戶管理</a>
 				</li>
-<!--				
+<!--
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/reserve.php">公共設施預約</a>
 				</li>
--->				
+-->
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
@@ -133,11 +131,11 @@ foreach($option as $var) {
 echo $var['name'];
 echo $var['id'];
 ?>
-									<option 
+									<option
 									<?php if ($data['status_no'] == $var['id']) {
 										echo 'selected';
 									}
-									?> 
+									?>
 									value="<?=$var['id'];?>"><?=$var['name'];?></option>
 <?php
 }
@@ -148,7 +146,7 @@ echo $var['id'];
 										<option value="One">One</option>
 										<option value="Two">Two</option>
 										<option value="Three">Three</option>
--->										
+-->
 									</select>
 								</div>
 							</div>
@@ -165,7 +163,7 @@ echo $var['id'];
 									<input type="text" class="form-control" name="assets-watch" id="assets-watch" placeholder="移交人...">
 								</div>
 							</div>
-<!--							
+<!--
 							<div class="form-group row">
 								<label for="assets-use-state" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>使用狀態:
@@ -179,7 +177,7 @@ echo $var['id'];
 									</select>
 								</div>
 							</div>
--->							
+-->
 							<span class="edit-title mb-3">資產報廢</span>
 							<div class="form-group row">
 								<label for="assets-scrap-date" class="text-right col-md-3 col-form-label">
@@ -205,6 +203,6 @@ echo $var['id'];
 </div>
 </div>
 
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>

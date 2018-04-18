@@ -1,10 +1,13 @@
 <?php session_start(); ?>
-<?php 
-include('./config.php');
-include('./Header.php'); 
-$_isAdmin = $_SESSION['admin'];
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-
+<?php
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
 <!-- 內容切換區 -->
 <nav class="index-nav my-3">
@@ -16,13 +19,13 @@ if ($_isAdmin) {
     <a class="" href="./management.php">管理辦法</a>
 <?php
 }
-?>    
+?>
     <a class="" href="./announcement.php">公告</a>
     <a class="" href="./opinionlist.php">住戶意見</a>
     <a class="" href="./overduelist.php">欠繳費用</a>
 </nav>
 
-<?php 
+<?php
 
 $sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
 
@@ -77,7 +80,7 @@ if ($_isAdmin) {
         <tbody class="opinionlist_tbody">
         <?php
             foreach($data as $var) {
-        ?>					
+        ?>
             <tr>
             <td><span><?=$var['dt'];?></span></td>
             <td><span><?=$var['addr_no'];?></span></td>
@@ -86,7 +89,7 @@ if ($_isAdmin) {
     		<td>
                 <?php
                     if (strlen($var['dt_responsed']) == 0) {
-                ?>						
+                ?>
                 <input type="checkbox">
                 <?php
                     } else {
@@ -95,14 +98,14 @@ if ($_isAdmin) {
 				<span><?php echo round($diff,2);?></span>
                 <?php
                     }
-                ?>					
+                ?>
             </td>
 
 
     		<td>
                 <?php
                     if (strlen($var['dt_completed']) == 0) {
-                ?>						
+                ?>
                 <input type="checkbox">
                 <?php
                     } else {
@@ -111,7 +114,7 @@ if ($_isAdmin) {
 				<span><?php echo round($diff,2);?></span>
                 <?php
                     }
-                ?>					
+                ?>
             </td>
         <?php
             }

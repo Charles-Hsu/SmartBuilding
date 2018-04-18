@@ -1,6 +1,12 @@
 <?php
 include('../config.php');
 include('../Header.php');
+
+if (!$_SESSION['online']) {
+	$url = "$urlName/login.php";
+	header("Location: " . $url);
+}
+
 ?>
 <?php
 

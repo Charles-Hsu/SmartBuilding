@@ -1,7 +1,11 @@
 <?php session_start(); ?>
-<?php 
+<?php
 	include('./config.php');
-	include('./Header.php'); 
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
@@ -10,9 +14,18 @@
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>
 				<?php
 					if ($_isAdmin) {
-				?>			
+				?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
 				</li>
@@ -24,18 +37,9 @@
 				</li>
 				<?php
 					}
-				?>    				
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>				
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>				
+				?>
 			</ul>
-			<?php 
+			<?php
 				$sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
 				$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 				$data = $db->getRows($sql);
@@ -75,7 +79,7 @@
 								$sql = "SELECT SUM(fee) AS overdue_total FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NULL";
 								$data = $db->getRow($sql);
 								$overdue_total = $data['overdue_total'];
-								
+
 								$sql = "SELECT SUM(fee) AS paid_fee_total FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL";
 								$data = $db->getRow($sql);
 								$paid_fee_total = $data['paid_fee_total'];
@@ -231,6 +235,6 @@ var myPieChart = new Chart(apartment,{
     }
 });
 </script>
-<?php 
+<?php
 include(Document_root.'/Footer.php');
 ?>
