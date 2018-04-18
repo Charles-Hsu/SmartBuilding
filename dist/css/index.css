@@ -917,11 +917,13 @@ tr.un_completed_red{
 .announ-del{
     width: 80px;
 }
-.announ-content input.form-control[readonly]{
+.announ-content input.form-control[readonly],
+.mail_num.form-control[readonly]{
     background-color: transparent;
     border: none;
 }
-.announ-content input.form-control[readonly]:focus{
+.announ-content input.form-control[readonly]:focus,
+.mail_num.form-control[readonly]:focus{
     box-shadow: none;
 }
 .reserve-model{
