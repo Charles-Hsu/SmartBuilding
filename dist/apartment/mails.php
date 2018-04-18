@@ -93,7 +93,7 @@
 										$rdonly = "";
 									}
 								?>
-									<input type="number" min="0" step="1"
+									<input type="number" min="0" step="1" class="mail_num form-control" data-id="<?php echo $var[house_id] ?>"
 										value="<?php echo $var[mail_num];?>" <?php echo $rdonly;?> />
 								</span>
 							</td>
@@ -129,6 +129,32 @@ $('.asset-table').DataTable({
 	},
 	"deferRender": true,
 	"processing": true
+})
+$('.mail_num').on('change',function(){
+	var _this=$(this);
+	$.ajax({
+		url:'../data/mailsData.php',
+		method:'POST',
+		data:{
+			id:_this.attr('data-id'),
+			mail_num:_this.val()
+		},
+		success:function(data){
+			try{
+				var _data=JSON.parse(data);
+				if(_data.success){
+					console.log(_data.data)
+				}else{
+					// alert('請重新操作')
+				}
+			}catch(error){
+				alert(data)
+			}
+		},
+		error:function(error){
+			console.log(error)
+		}
+	})
 })
 </script>
 <?php include('../Footer.php'); ?>
