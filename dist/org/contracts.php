@@ -52,7 +52,7 @@
 					</thead>
 					<tbody>
 						<?php
-							$sql = 'SELECT score,dt,name,contact_person,contact_phone,b.item AS item FROM contract a, contract_item b WHERE a.id != 0 AND a.contract_item = b.id';
+							$sql = 'SELECT a.id AS contract_id, score,dt,name,contact_person,contact_phone,b.item AS item FROM contract a, contract_item b WHERE a.id != 0 AND a.contract_item = b.id';
 							//echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
@@ -68,14 +68,14 @@
 											echo $var['score'];
 										}
 										else {
-											echo "<a href='./contract-eval.php'>自評</a>";
+											echo "<a href='./contract-eval.php?contract_id=$var[contract_id]'>自評</a>";
 										}
 									?>
 								</span>
 							</td>
 							<td><span><?php echo $var['contact_person'];?></span></td>
 							<td><span><?php echo $var['contact_phone'];?></span></td>
-							<td><a href="<?= $urlName ?>/org/contracts-editpaper.php" class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="<?= $urlName ?>/org/contracts-editpaper.php?contract_id=" <?php echo $var['contract_id'];?> class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 
 <?php
