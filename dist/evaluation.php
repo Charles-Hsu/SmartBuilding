@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php
-	include('../config.php');
-	include('../Header.php');
+	include('./config.php');
+	include('./Header.php');
 	if (!$_SESSION['online']) {
 		$url = "$urlName/login.php";
 		header("Location: " . $url);
@@ -10,26 +10,36 @@
 	$_isAdmin = $_SESSION['admin'];
 	$contract_id = $_GET['contract_id'];
 ?>
-<!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org.php">人員</a>
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/patrol.php">勤務管理</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
-                </li>
-
-                <!-- <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
-                </li> -->
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>
+				<?php
+					if ($_isAdmin) {
+				?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+				</li>
+				<?php
+					}
+				?>
+                <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
                 </li>
 			</ul>
 			<div id="assets-tab">

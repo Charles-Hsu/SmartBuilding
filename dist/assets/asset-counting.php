@@ -169,7 +169,7 @@ var_dump($data);
 					<span>資產盤點</span> <!--回上一頁'資產管理'-->
 				</div>
 
-				<form method="POST action="">
+				<form method="POST" action="">
 					<table class="table asset-table">
 						<thead class="thead-light">
 							<tr>
@@ -177,7 +177,7 @@ var_dump($data);
 								<th>資產編號</th>
 								<th>資產名稱</th>
 								<th>資產類別</th>
-								<th>使用狀態</th>
+								<!-- <th>使用狀態</th> -->
 								<!-- <th>價格</th> -->
 								<th>數量</th>
 								<th>編輯</th>
@@ -194,7 +194,7 @@ var_dump($data);
 								<td><span><?=$var[asset_no]?></span></td>
 								<td><span><?=$var[asset_name]?></span></td>
 								<td><span><?=$var[cat]?></span></td>
-								<td><span><?=$var[status]?></span></td>
+								<!-- <td><span><?=$var[status]?></span></td> -->
 								<!-- <td><span><?=number_format($var[price])?></span></td> -->
 								<td><span><?=$var[amount]?></span></td>
 								<td><input type="checkbox" checked></td>

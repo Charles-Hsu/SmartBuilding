@@ -56,10 +56,10 @@ if (strlen($_SESSION['account']) == 0) {
 <!--
 							<th>銀行編號</th>
 -->
-							<th>帳戶名稱</th>
+							<!-- <th>帳戶名稱</th> -->
 							<th>帳戶編號</th>
 							<th>帳戶餘額</th>
-							<th>預算需求</th>
+							<th>決算數</th>
 							<th>執行率</th>
 						</tr>
 					</thead>
@@ -72,7 +72,7 @@ if (strlen($_SESSION['account']) == 0) {
 							<td><span><?=$account[account_purpose];?></span></td>
 							<td><span><?=$account[type];?></span></td>
 							<td><span><?=$account[bank_name];?></span></td>
-							<td><span><?=$account[account_name];?></span></td>
+							<!-- <td><span><?=$account[account_name];?></span></td> -->
 							<td><span><?=$account[account_number];?></span></td>
 							<td><span><?=number_format($account[account_balance]);?></span></td>
 

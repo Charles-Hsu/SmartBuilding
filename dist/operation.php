@@ -15,18 +15,23 @@
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
 				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/operation/energy.php">節約能源</a>
+                </li>
+				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/operation.php">例行作業</a>
 				</li>
+                <?php
+                    if ($_isAdmin) {
+                ?>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/operation/repairs-normal.php">維護作業</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/operation/supplies.php">耗材管理</a>
                 </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/operation/energy.php">節約能源</a>
-                </li>
-			</ul>
+                <?php
+					}
+                ?>			</ul>
 			<div id="assets-tab">
 				<div class="row">
 

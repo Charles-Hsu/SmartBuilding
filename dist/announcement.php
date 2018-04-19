@@ -38,6 +38,9 @@
 				<?php
 					}
 				?>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+                </li>
 			</ul>
 			<?php
 				$sql = 'SELECT * FROM post';

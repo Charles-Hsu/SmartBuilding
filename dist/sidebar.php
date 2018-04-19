@@ -34,12 +34,18 @@ $_isAdmin = $_SESSION['admin'];
                         <span>組織管理</span>
                     </a>
                 </li>
+                <?php
+                    }
+                ?>
                 <li>
-                    <a href="<?= $urlName ?>/operation.php" class="d-flex sidemenu-link align-items-center" title="維運管理" data-type="operation">
+                    <a href="<?= $urlName ?>/operation/energy.php" class="d-flex sidemenu-link align-items-center" title="維運管理" data-type="operation">
                         <i class="far fa-address-book"></i>
                         <span>維運管理</span>
                     </a>
                 </li>
+                <?php
+                    if ($_isAdmin) {
+                ?>
                 <li>
                     <a href="<?= $urlName ?>/longTerm-repairs/budget.php" class="d-flex sidemenu-link align-items-center" title="長期維護" data-type="longTerm-repairs">
                         <i class="far fa-address-book"></i>

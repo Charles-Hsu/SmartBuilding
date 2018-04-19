@@ -118,7 +118,8 @@
 									證照:
 								</label>
 								<div class="col-md-8">
-									<select id="innerswim-reply" class="form-control" name="license">
+									<input type="text" value="用打勾的跳頁顯示數量(良民證)">
+									<!-- <select id="innerswim-reply" class="form-control" name="license">
 										<?php
 											$sql = "SELECT * FROM license_type";
 											$data = $db->getRows($sql);
@@ -135,7 +136,7 @@
 										<?php
 											}
 										?>
-									</select>
+									</select> -->
 								</div>
 							</div>
 							<div class="form-group row">

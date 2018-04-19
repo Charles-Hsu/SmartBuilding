@@ -38,6 +38,9 @@
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
                 </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">品質管理</a>
+                </li>
 			</ul>
 			<?php
 				if (count($_POST) > 0) {

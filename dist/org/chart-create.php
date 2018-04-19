@@ -48,9 +48,9 @@
 							</div>
 							<div class="form-group row">
 								<label for="chart-note" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>備註:</label>
+									<span class="important">*</span>備註(備1,到備3):</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="chart-note" id="chart-note">
+									<input type="text" class="form-control" name="chart-note" id="chart-note" >
 								</div>
 							</div>
 							<div class="form-group row">

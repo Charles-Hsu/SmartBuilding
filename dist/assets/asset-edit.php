@@ -22,7 +22,7 @@
 
 	if ($_GET) {
 		$asset_no = $_GET['asset_no'];
-		$sql = 'SELECT a.*, b.name FROM assets a, asset_status b WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '"';
+		$sql = 'SELECT a.*, b.name, c.category FROM assets a, asset_status b, asset_category c WHERE a.status_no = b.id AND asset_no = "' . $asset_no . '" AND c.id = a.asset_category';
 		$data = $db->getRows($sql);
 		$data = $data[0];
 	}
@@ -81,7 +81,7 @@
 							<div class="form-group row">
 								<label for="assets-sort" class="text-right col-md-3 col-form-label">分類:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="assets-sort" id="assets-sort" value="<?=$data['asset_category'];?>" readonly>
+									<input type="text" class="form-control" name="assets-sort" id="assets-sort" value="<?=$data['category'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -93,7 +93,7 @@
 							<div class="form-group row">
 								<label for="assets-amount" class="text-right col-md-3 col-form-label">數量:</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="assets-amount" id="assets-amount" value="<?=$data['amount'];?>" readonly>
+									<input type="number" min="0" class="form-control" name="assets-amount" id="assets-amount" value="<?=$data['amount'];?>">
 								</div>
 							</div>
 							<div class="form-group row">
@@ -114,12 +114,6 @@
 								<label for="assets-use-state" class="text-right col-md-3 col-form-label">
 									使用狀態:
 								</label>
-
-
-
-
-
-
 								<div class="col-md-9">
 									<select class="custom-select" name="assets-use-status">
 
@@ -150,7 +144,7 @@ echo $var['id'];
 									</select>
 								</div>
 							</div>
-							<span class="edit-title mb-3">資產移交</span>
+							<!-- <span class="edit-title mb-3">資產移交</span>
 							<div class="form-group row">
 								<label for="assets-watch" class="text-right col-md-3 col-form-label">監交人:</label>
 								<div class="col-md-9">
@@ -162,7 +156,7 @@ echo $var['id'];
 								<div class="col-md-9">
 									<input type="text" class="form-control" name="assets-watch" id="assets-watch" placeholder="移交人...">
 								</div>
-							</div>
+							</div> -->
 <!--
 							<div class="form-group row">
 								<label for="assets-use-state" class="text-right col-md-3 col-form-label">
@@ -178,7 +172,7 @@ echo $var['id'];
 								</div>
 							</div>
 -->
-							<span class="edit-title mb-3">資產報廢</span>
+							<!-- <span class="edit-title mb-3">資產報廢</span>
 							<div class="form-group row">
 								<label for="assets-scrap-date" class="text-right col-md-3 col-form-label">
 									報廢日期:
@@ -186,12 +180,12 @@ echo $var['id'];
 								<div class="col-md-9">
 									<input type="text" class="form-control datepicker" name="assets-scrap-date" id="assets-scrap-date" placeholder="報廢日期..." >
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group row">
 								<div class="col-md-9 offset-md-3">
 									<button class="btn btn-primary">儲存更新</button>
 									<button class="btn btn-outline-secondary">取消更新</button>
-									<button class="btn btn-outline-danger">刪除該資產</button>
+									<!-- <button class="btn btn-outline-danger">刪除該資產</button> -->
 								</div>
 							</div>
 						</form>
