@@ -9,6 +9,7 @@
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 	$_isAdmin = $_SESSION['admin'];
 	$contract_id = $_GET['contract_id'];
+
 ?>
 <div class="row">
 	<div class="col-12 p-4">
@@ -42,272 +43,158 @@
 					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
                 </li>
 			</ul>
-			<div id="assets-tab">
-				<a href="<?= $urlName ?>/org/contracts.php" class="btn add-asset-btn mb-3">
-					<span>+</span>廠商自評
-				</a>
-				<!-- <a href="<?= $urlName ?>/org/contract-man.php" class="btn add-asset-btn mb-3">
-					<span>+</span>協約管理
-				</a> -->
-				<table class="table asset-table">
-					<thead class="thead-light">
-						<tr>
-							<th>合約日期</th>
-							<th>廠商名稱</th>
-							<th>合約類別</th>
-							<!-- <th>評分</th> -->
-							<th>聯絡人</th>
-							<th>聯絡方式</th>
-							<!-- <th>修改</th> -->
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-							$sql = "SELECT score,dt,name,contact_person,contact_phone,b.item AS item FROM contract a, contract_item b WHERE a.id != 0 AND a.contract_item = b.id AND a.id = $contract_id";
-							// echo $sql;
-							$data = $db->getRows($sql);
-							foreach($data as $var) {
-						?>
-						<tr>
-							<td><span><?php echo $var['dt'];?></span></td>
-							<td><span><?php echo $var['name'];?></span></td>
-							<td><span><?php echo $var['item'];?></span></td>
-							<td><span><?php echo $var['contact_person'];?></span></td>
-							<td><span><?php echo $var['contact_phone'];?></span></td>
-						</tr>
-						<?php
-						}
-						?>
-					</tbody>
-				</table>
-			</div>
 
-
-
-				<div class="row justify-content-lg-start justify-content-center">
-					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
-						<form class="assets-create-form" action="" method="POST">
-							<!-- 標題 -->
-							<div class="form-group row">
-								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">招標:</label>
-							</div>
-							<!-- 標題end -->
-
-							<!-- 點選 -->
-							<div class="form-group row">
-								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
-									準備招標文件(4分):</label>
-								<div class="col-lg-6 col-md-9">
-                    				<input type="number" min="1" max="4" class="form-control" value="1" >
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
-									準備招標文件:</label>
-								<div class="col-lg-6 col-md-9">
-                    				<input type="number" min="1" max="4" class="form-control" value="1" >
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
-									準備招標文件:</label>
-								<div class="col-lg-6 col-md-9">
-                    				<input type="number" min="1" max="4" class="form-control" value="1" >
-								</div>
-							</div>
-							<!-- 點選end -->
+				<div class="row justify-content-center">
+					<div class="col-lg-10">
+						<form class="evaluation-form" action="" method="POST">
 
 							<!-- 標題 -->
-							<div class="form-group row">
-								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">契約:</label>
-							</div>
+							<div class="evaluation-wrap w-100"></div>
 							<!-- 標題end -->
 
-							<div class="form-group row">
-								<label for="household-use" class="text-right col-lg-6 col-md-3 col-form-label">
-									<span class="important">*</span>房子用途:
-								</label>
-								<div class="col-lg-6 col-md-9">
-									<select name="household-use" id="household-use" class="form-control">
-										<?php
-											$sql =  "SELECT id,name FROM household_purpose";
-											$data = $db->getRows($sql);
-											foreach($data as $var) {
-												$selected = "";
-												if ($var['id'] == $household['purpose']) {
-													$selected = 'selected';
-												}
-										?>
-										<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
-										<?php
-											}
-										?>
-									</select>
+							<div class="form-group row mt-3">
+								<div class="col-12">
+									<button class="btn btn-primary evaluation-btn mr-3">確認</button>
+									<div class="total-points d-inline font-weight-bold">總分: <span>0</span></div>
 								</div>
 							</div>
-							<div class="form-group row">
-								<label for="household-status" class="text-right col-lg-6 col-md-3 col-form-label">
-									<span class="important">*</span>房子狀態:</label>
-								<div class="col-lg-6 col-md-9">
-									<select name="household-status" id="household-status" class="form-control">
-<!--
-										<option value="" selected>選擇用途</option>
--->
-<?php
-$sql =  "SELECT id,name FROM household_status";
-$data = $db->getRows($sql);
-foreach($data as $var) {
-//	echo $var['Name'];
-//echo $var['id'];
-	$selected = "";
-	if ($var['id'] == $household['status']) {
-		$selected = 'selected';
-	}
-?>
-									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
-<?php
-}
-?>
-<!--
-										<option value="自用">自用</option>
-										<option value="出租">出租</option>
--->
-									</select>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-num" class="text-right col-lg-6 col-md-3 col-form-label">
-									戶號:
-								</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" value="<?=$household['addr_no'];?>" readonly>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-floor" class="text-right col-lg-6 col-md-3 col-form-label">
-									樓層:
-								</label>
-								<div class="col-lg-6 col-md-9">
-                                <input type="text" class="form-control" value="<?=$household['floor'];?>" readonly>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-own" class="text-right col-lg-6 col-md-3 col-form-label">
-									<span class="important">*</span>區權人:
-								</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-own" id="household-own" value="<?=$household['holder'];?>">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-name" class="text-right col-lg-4 offset-lg-2 col-md-3 col-form-label">
-									<span class="important">*</span>住戶姓名:
-								</label>
-								<div class="col-lg-4 col-md-6">
-									<input type="text" class="form-control" name="household-name" id="household-name" value="<?=$household['resident'];?>">
-								</div>
-								<div class="col-lg-2 col-md-3 pl-0 ">
-									<button class="btn btn-primary btn-same">同區權人</button>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-props" class="text-right col-lg-6 col-md-3 col-form-label">區權比例:</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" value="<?=$household['owner_percentage']?>" readonly>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-sqft" class="text-right col-lg-6 col-md-3 col-form-label">坪數:</label>
-								<div class="col-lg-6 col-md-9">
-                                <input type="text" class="form-control" value="<?=$household['space'];?>" readonly>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-style" class="text-right col-lg-6 col-md-3 col-form-label">房型:</label>
-								<div class="col-lg-6 col-md-9">
-                                <input type="text" class="form-control" value="<?=$household['house_type'];?>" readonly>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-guard-amount" class="text-right col-lg-6 col-md-3 col-form-label">應收管理費金額:</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-guard-amount" id="household-guard-amount" value="<?=$household['due'];?>">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="household-park-amount" class="text-right col-lg-6 col-md-3 col-form-label">應收停車費金額:</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" value="<?=$household['parking_lot_due'];?>">
-								</div>
-							</div>
-<!--
-							<div class="form-group row">
-								<label for="household-park-amount" class="text-right col-md-4 col-form-label">帶看費用:</label>
-								<div class="col-md-8">
-									<input type="text" class="form-control" name="household-park-amount" id="household-park-amount" placeholder="應收停車費金額..." value="">
-								</div>
-							</div>
--->
-							<div class="form-group row">
-								<label for="assets-buy-date" class="text-right col-lg-6 col-md-3 col-form-label">
-									購置日期:
-								</label>
-								<div class="col-lg-6 col-md-9">
-									<input type="text" class="form-control datepicker" name="assets-buy-date" id="assets-buy-date" value="<?=$household['buy_date'];?>" >
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="assets-use-state" class="text-right col-lg-6 col-md-3 col-form-label">
-									使用狀態:
-								</label>
-								<div class="col-lg-6 col-md-9">
-									<select class="custom-select" name="assets-use-state">
-<!--
-										<option selected>選取狀態</option>
--->
-<?php
-$sql =  "SELECT id,name FROM household_used_for";
-$data = $db->getRows($sql);
-foreach($data as $var) {
-//	echo $var['Name'];
-//echo $var['id'];
-    $selected = "";
-    if ($var['id'] == $household['used_for']) {
-        $selected = 'selected';
-    }
-?>
-									<option value="<?=$var['id'];?>" <?=$selected;?>><?=$var['name'];?></option>
-<?php
-}
-?>
-<!--
-										<option value="自用">自用</option>
-										<option value="租賃">租賃</option>
--->
-									</select>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col-lg-6 offset-lg-6 col-md-6 offset-md-3">
-									<button class="btn assets-btn assets-add-btn">更新</button>
-									<button class="btn assets-btn assets-cancel-btn">取消</button>
-								</div>
-							</div>
-<?php if($message!="") { ?>
-                   		<div class="message"><?php echo $message; ?></div>
-<?php } ?>
-
-
 						</form>
 					</div>
 				</div>
-
-
 		</div>
 	</div>
 </div>
 
 <script>
+var evaluationTitle=[
+	'1.公寓大廈一般事務管理服務類',
+	'2.建築物及基地之維護修繕',
+	'3.建築物附屬設備之檢查及修護',
+	'4.公寓大廈環境衛生類',
+	'5.公寓大廈安全防災管理維護類',
+	'6.財務管理類',
+	'7.生活服務與商業支援類',
+]
+var evaluationText=[
+	[
+		{sub_title:'1-1區分所有權人會議作業流程',radio_name:'1_1'},
+		{sub_title:'1-2管理委員會會議作業流程',radio_name:'1_2'},
+		{sub_title:'1-3管理服務人委任管理流程',radio_name:'1_3'},
+		{sub_title:'1-4管理服務人員訓練流程',radio_name:'1_4'},
+		{sub_title:'1-5公寓大廈管理組織申請報備流程',radio_name:'1_5'},
+		{sub_title:'1-6室內裝修管理',radio_name:'1_6'},
+		{sub_title:'1-7公文管理流程',radio_name:'1_7'},
+		{sub_title:'1-8共用鑰匙管理流程',radio_name:'1_8'},
+		{sub_title:'1-9掛號信件處理流程',radio_name:'1_9'},
+		{sub_title:'1-10住戶管理費催繳作業流程',radio_name:'1_10'},
+		{sub_title:'1-11住戶滿意度作業流程',radio_name:'1_11'},
+		{sub_title:'1-12住戶搬入遷出作業流程',radio_name:'1_12'},
+		{sub_title:'1-13住戶反映事項作業流程',radio_name:'1_13'},
+		{sub_title:'1-14社區財產作業流程',radio_name:'1_14'},
+	],
+	[
+		{sub_title:'2-1住戶違規處理作業流程',radio_name:'2_1'},
+		{sub_title:'2-2建築物及基地管理維護修繕作業流程',radio_name:'2_1'},
+	],
+	[
+		{sub_title:'3-1公寓大廈停車場管理作業流程',radio_name:'3_1'},
+		{sub_title:'3-2共用設施保養維護作業流程',radio_name:'3_2'},
+	],
+	[
+		{sub_title:'4-1公寓大廈環境清潔作業流程',radio_name:'4_1'},
+		{sub_title:'4-2公寓大廈環境綠化美化作業流程',radio_name:'4_2'},
+		{sub_title:'4-3公寓大廈資源回收作業流程',radio_name:'4_3'},
+		{sub_title:'4-4公寓大廈病媒防治作業流程',radio_name:'4_4'},
+	],
+	[
+		{sub_title:'5-1公寓大廈安全管理作業流程',radio_name:'5_1'},
+		{sub_title:'5-2公寓大廈安全防災作業流程',radio_name:'5_2'},
+		{sub_title:'5-3公寓大廈安全維護作業流程',radio_name:'5_3'},
+		{sub_title:'5-4公寓大廈緊急事做處理作業流程',radio_name:'5_4'},
+	],
+	[
+		{sub_title:'6-1財務計畫作業流程',radio_name:'6_1'},
+		{sub_title:'6-2零用金支出請款流程',radio_name:'6_2'},
+		{sub_title:'6-3管理費繳交流程',radio_name:'6_3'},
+		{sub_title:'6-4請款支出流程',radio_name:'6_4'},
+		{sub_title:'6-5裝潢保證金作業流程',radio_name:'6_5'},
+		{sub_title:'6-6遙控器、感應卡作業流程',radio_name:'6_6'},
+		{sub_title:'6-7管理費作業流程',radio_name:'6_7'},
+		{sub_title:'6-8公共基金管理作業流程',radio_name:'6_8'},
+	],
+	[
+		{sub_title:'7-1社區社團作業流程',radio_name:'7_1'},
+		{sub_title:'7-2社區櫃台作業流程:訪客接待',radio_name:'7_2'},
+		{sub_title:'7-3社區櫃台作業流程:衣物送洗',radio_name:'7_3'},
+		{sub_title:'7-4社區櫃台作業流程:代叫計程車',radio_name:'7_4'},
+		{sub_title:'7-5社區櫃台作業流程:代辦事項',radio_name:'7_5'},
+	]
+]
+var strTitles='';
+var strs='';
+var strAll='';
+var strTitle=`
+<div class="form-group evaluation-title row my-3">
+	<h5 class="text-center col-12 font-weight-bold">{{item_title}}</h5>
+</div>
+`;
+
+var str=`
+<div class="evaluation-item d-flex flex-wrap">
+	<div class="evaluation-item-group evaluation-item-title  d-flex w-100">
+		<div class="title w-25">服務項目</div>
+		<div class="point w-25">分數</div>
+		<div class="rules w-25">配分原則</div>
+		<div class="check w-25">考核</div>
+	</div>
+	<div class="evaluation-item-group d-flex w-100">
+		<div class="title w-25">{{sub_title}}</div>
+		<div class="point w-25">1</div>
+		<div class="rules w-25">
+			<div>1分:重大疏漏</div>
+			<div>2分:部分疏失</div>
+			<div>3分:完全符合</div>
+		</div>
+		<div class="check w-25">
+			<div class="form-check form-check-inline">
+				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-1" value="1">
+				<label class="form-check-label" for="{{radio_name}}-1">
+					1分
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-2" value="2">
+				<label class="form-check-label" for="{{radio_name}}-2">
+					2分
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-3" value="3">
+				<label class="form-check-label" for="{{radio_name}}-3">
+					3分
+				</label>
+			</div>
+		</div>
+	</div>
+</div>
+`;
+for(var i=0;i<evaluationTitle.length;i++){
+	strTitles='';
+	strs='';
+	strAll='';
+	strTitles+=strTitle.replace('{{item_title}}',evaluationTitle[i])
+	for(var j=0;j<evaluationText[i].length;j++){
+		strs+=str
+		.replace('{{sub_title}}',evaluationText[i][j].sub_title)
+		.replace(/{{radio_name}}/g,evaluationText[i][j].radio_name)
+	}
+	strAll+=strTitles+strs;
+	$('.evaluation-wrap').append(strAll);
+	console.log(evaluationTitle[i])
+}
+
+// $('.evaluation-wrap').html(strAll)
+
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
@@ -328,5 +215,17 @@ $('.asset-table').DataTable({
 	"deferRender": true,
 	"processing": true
 })
+var total_points=[];
+$('.evaluation-wrap').on('click','.point-check',function(){
+	var _val=$(this).val();
+	var total_point=0;
+	$(this).closest('.evaluation-item-group').find('.point').text(_val)
+	$('.point-check').each(function(i,item){
+		if($(this).prop('checked')){
+			total_point+=parseInt($(this).val());
+		}
+	})
+	$('.total-points > span').text(total_point)
+})
 </script>
-<?php include('../Footer.php'); ?>
+<?php include(Document_root.'/Footer.php'); ?>
