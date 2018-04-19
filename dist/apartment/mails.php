@@ -62,7 +62,7 @@
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>大樓</th>
+							<th>代碼</th>
 							<th>戶號</th>
 							<th>樓層</th>
 							<!-- <th>住戶狀態</th> -->

@@ -82,7 +82,7 @@
                             $sql = "SELECT count(*) FROM staff WHERE (quit_date IS NULL OR quit_date = '0000-00-00') AND license != 0";
                             $l = $db->getValue($sql);
                         ?>
-                        <td>1. 護照人數 (<?php echo $l; ?>) ÷ 在職人數 (<?php echo $n; ?>) = <?php echo number_format($l/$n*100,1); ?>%</td>
+                        <td>1. 證照人數 (<?php echo $l; ?>) ÷ 在職人數 (<?php echo $n; ?>) = <?php echo number_format($l/$n*100,1); ?>%</td>
                     </tr>
                     <tr>
                         <?php
@@ -103,17 +103,17 @@
                 </thead>
             <tbody>
                 <tr>
-                    <td>1. 現場主管合格人數÷ 編制人數 (<?php echo $data['op_man_num']; ?>)</td>
+                    <td>1. 現場主管合格人數(良民證 + 事物管理人員證照 + option:防火管理員證照)÷ 編制人數 (<?php echo $data['op_man_num']; ?>)</td>
                 </tr>
                 <tr>
-                    <td>2. 保全員合格人數÷ 編制人數 (<?php echo $data['op_patrol_num']; ?>)</td>
+                    <td>2. 保全員合格人數(職前:良民證馬上申請,在職訓練完成:交管,設備操作) ÷ 編制人數 (<?php echo $data['op_patrol_num']; ?>)</td>
                 </tr>
             </tbody>
             </table>
         <table>
             <thead>
                 <tr>
-                    <th><b>掛號信正確執行率</b></th>
+                    <th><b>掛號信正確執行率 (每月)</b></th>
                 </tr>
             </thead>
             <tbody>

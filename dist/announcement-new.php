@@ -71,15 +71,21 @@
 							</div>
                             <div class="form-group row">
 								<label for="assets-no" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>公告內容:</label>
+									<span class="important">*</span>公告標題:</label>
 								<div class="col-md-9">
 									<!-- <input type="text" class="form-control" name="assets-no" id="assets-no" value="<?=$data['asset_no'];?>" placeholder="資產編號..."> -->
                                 <!--  -->
-                                    <textarea rows="3" cols="48" name="post-content" form="post-create-form" placeholder="輸入公告內容..."></textarea>
+                                    <input type="text" name="post-content" form="form-control" placeholder="輸入公告標題...">
                                 </div>
-
-
-
+							</div>
+                            <div class="form-group row">
+								<label for="assets-no" class="text-right col-md-3 col-form-label">
+									<span class="important">*</span>上傳檔案:</label>
+								<div class="col-md-9">
+									<!-- <input type="text" class="form-control" name="assets-no" id="assets-no" value="<?=$data['asset_no'];?>" placeholder="資產編號..."> -->
+                                <!--  -->
+                                    <textarea rows="3" cols="48" name="post-content" form="post-create-form" placeholder="限 PDF 或圖片檔..."></textarea>
+                                </div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-9 offset-md-3">

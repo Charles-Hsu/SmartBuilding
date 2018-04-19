@@ -58,7 +58,7 @@
 					<thead class="thead-light">
 						<tr>
 							<th>公告日期</th>
-							<th>公告內容</th>
+							<th>公告標題</th>
 							<?php
 								if ($_isAdmin) {
 							?>
