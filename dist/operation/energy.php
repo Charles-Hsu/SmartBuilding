@@ -27,6 +27,16 @@
 					<a class="nav-link active" href="<?= $urlName ?>/operation/energy.php">節約能源</a>
                 </li>
 			</ul>
+
+			<div class="energy-col mb-3">
+				<div class="card h-100">
+					<div class="card-header">節約能源</div>
+					<div class="card-body h-100">
+						<canvas id="energy-chart"></canvas>
+					</div>
+				</div>
+			</div>
+
 			<div id="assets-tab">
 				<table class="table asset-table">
 					<thead class="thead-light">
@@ -39,7 +49,6 @@
 						$sql = "SELECT yyyymm,fee FROM elect_fee";
 						// echo $sql;
 						$data = $db->getRows($sql);
-						// var_dump($data);
 					?>
 					<tbody>
 						<?php
@@ -60,6 +69,29 @@
 </div>
 
 <script>
+var energyData=<?php echo json_encode($data) ?>;
+var energyYears=[];
+var energyYear=[];
+var energyObj={};
+var datasets=[];
+for(var i=0;i<energyData.length;i++){
+	energyYears.push(energyData[i].yyyymm.substr(0,4))
+}
+energyYears.forEach((item,index)=>{
+	if(energyObj[item]){
+		energyObj[item]=[];
+	}else{
+		energyObj[item]=[];
+	}
+})
+energyData.forEach((item,index)=>{
+	energyObj[item.yyyymm.substr(0,4)].push(item.fee)
+})
+for(var i=0;i<energyYears.length;i++){
+	if(energyYear.indexOf(energyYears[i]) === -1){
+		energyYear.push(energyYears[i])
+	}
+}
 $('.asset-table').DataTable({
 	"language": {
 		"search": "搜尋_INPUT_",
@@ -80,5 +112,38 @@ $('.asset-table').DataTable({
 	"deferRender": true,
 	"processing": true
 })
+
+var colors = Chart.helpers.color;
+var colorsArray=['rgba(255, 182, 185, 0.5)','rgba(250, 227, 217,0.5)','rgba(187, 222, 214,0.5)','rgba(97, 192, 191,0.5)']
+for(var i=0;i<energyYear.length;i++){
+	datasets.push({
+		label:energyYear[i],
+		data: energyObj[energyYear[i]],
+		backgroundColor: colorsArray[i],
+		borderColor: colorsArray[i],
+		borderWidth: 1
+	})
+}
+
+var energy = document.getElementById("energy-chart");
+energy.height=100;
+var energyCtx=energy.getContext('2d');
+var energyChart = new Chart(energy, {
+    type: 'bar',
+    data: {
+        labels: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        datasets: datasets
+    },
+    options: {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
 </script>
 <?php include('../Footer.php'); ?>
