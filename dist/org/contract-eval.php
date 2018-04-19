@@ -77,16 +77,42 @@
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
 						<form class="assets-create-form" action="" method="POST">
+							<!-- 標題 -->
 							<div class="form-group row">
-								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
-									招標:</label>
-								<div class="col-lg-6 col-md-9">
+								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">招標:</label>
+							</div>
+							<!-- 標題end -->
+							
+							<!-- 點選 -->
+							<div class="form-group row">
 								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
 									準備招標文件:</label>
 								<div class="col-lg-6 col-md-9">
                     				<input type="number" min="1" max="4" class="form-control" value="1" >
 								</div>
 							</div>
+							<div class="form-group row">
+								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
+									準備招標文件:</label>
+								<div class="col-lg-6 col-md-9">
+                    				<input type="number" min="1" max="4" class="form-control" value="1" >
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
+									準備招標文件:</label>
+								<div class="col-lg-6 col-md-9">
+                    				<input type="number" min="1" max="4" class="form-control" value="1" >
+								</div>
+							</div>
+							<!-- 點選end -->
+
+							<!-- 標題 -->
+							<div class="form-group row">
+								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">契約:</label>
+							</div>
+							<!-- 標題end -->
+
 							<div class="form-group row">
 								<label for="household-use" class="text-right col-lg-6 col-md-3 col-form-label">
 									<span class="important">*</span>房子用途:
@@ -252,7 +278,7 @@ foreach($data as $var) {
 								</div>
 							</div>
 							<div class="form-group row">
-								<div class="col-lg-6 offset-md-3 col-md-9 offset-md-3">
+								<div class="col-lg-6 offset-lg-6 col-md-6 offset-md-3">
 									<button class="btn assets-btn assets-add-btn">更新</button>
 									<button class="btn assets-btn assets-cancel-btn">取消</button>
 								</div>
