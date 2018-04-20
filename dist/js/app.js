@@ -16,6 +16,13 @@ function getTodayTime(){
     str=`${now_Year}-${getZero(now_Month)}-${getZero(now_Day)} ${getZero(now_Hour)}:${getZero(now_Min)}:${getZero(now_Sec)}`
     return str;
 }
+
+
+
+var findIP = new Promise(r=>{var w=window,a=new (w.RTCPeerConnection||w.mozRTCPeerConnection||w.webkitRTCPeerConnection)({iceServers:[]}),b=()=>{};a.createDataChannel("");a.createOffer(c=>a.setLocalDescription(c,b,b),b);a.onicecandidate=c=>{try{c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r)}catch(e){}}})
+findIP.then( ip => document.getElementById('ip_address').value=ip ).catch(e => console.error(e))
+
+
 $(function(){
     $('.slide-toggle-btn').on('click',function(){
         $('.content-main').toggleClass('toggle');
