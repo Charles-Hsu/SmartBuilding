@@ -67,7 +67,7 @@
 					<table class="table asset-table">
 						<thead class="thead-light">
 							<tr>
-								<th>大樓</th>
+								<th>門號代碼</th>
 								<th>戶號</th>
 								<th>樓層</th>
 								<th>區權人</th>
@@ -87,12 +87,12 @@
 								$fee_per_month = (intval($overdue_total) + intval($paid_fee_total)) / intval(date('m'));
 								$sql = "SELECT m,MONTH(m) as month ,SUM(fee) AS paid_fee FROM hoa_fee_record WHERE YEAR(m) = YEAR(CURDATE()) AND p IS NOT NULL GROUP BY MONTH(m)";
 								$paid_fee_per_month = $db->getRows($sql);
-								$sql = "SELECT SUM(a.fee) AS unpaid_total, a.hid, c.addr_no, c.floor, c.holder, c.building FROM hoa_fee_record a, household c WHERE c.id = a.hid group by a.hid, c.addr_no, c.floor, c.holder, c.building";
+								$sql = "SELECT SUM(a.fee) AS unpaid_total, c.short_id, a.hid, c.addr_no, c.floor, c.holder, c.building FROM hoa_fee_record a, household c WHERE c.id = a.hid group by a.hid, c.addr_no, c.floor, c.holder, c.building, c.short_id";
 								$data = $db->getRows($sql);
 								foreach($data as $var) {
 							?>
 							<tr>
-								<td><span><?=$var[building]?></span></td>
+								<td><span><?php echo strtoupper($var[short_id]);?></span></td>
 								<td><span><?=$var[addr_no]?></span></td>
 								<td><span><?=$var[floor]?></span></td>
 								<td><span><?=$var[holder]?></span></td>

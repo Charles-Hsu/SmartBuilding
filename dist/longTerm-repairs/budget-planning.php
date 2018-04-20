@@ -61,13 +61,13 @@ if (strlen($_SESSION['account']) == 0) {
 							<th>帳戶餘額</th>
 							<th>決算數</th>
 							<th>執行率</th>
+							<!-- <th>詳細內容</th> -->
 						</tr>
 					</thead>
 					<tbody>
-<?php
-	 foreach($data as $account) {
-?>
-
+						<?php
+							foreach($data as $account) {
+						?>
 						<tr>
 							<td><span><?=$account[account_purpose];?></span></td>
 							<td><span><?=$account[type];?></span></td>
@@ -75,102 +75,56 @@ if (strlen($_SESSION['account']) == 0) {
 							<!-- <td><span><?=$account[account_name];?></span></td> -->
 							<td><span><?=$account[account_number];?></span></td>
 							<td><span><?=number_format($account[account_balance]);?></span></td>
-
-<?php
-$sql = 'SELECT SUM(a.amount) as total FROM budget a, bank_acc b WHERE a.bank_acc_no = ' . $account[id];
-$tt = $db->getRow($sql);
-//var_dump($tt);
-$required = $tt['total'] == 0 ? '' : number_format($tt['total']);
-
-$formatter = new NumberFormatter('en_US', NumberFormatter::PERCENT);
-$p = $formatter->format($account['account_balance']/$tt['total']);
-$p = $p == 0 ? '' : $p;
-
-
-?>
+							<?php
+								$sql = 'SELECT SUM(a.amount) as total FROM budget a, bank_acc b WHERE a.bank_acc_no = ' . $account[id];
+								$tt = $db->getRow($sql);
+								//var_dump($tt);
+								$required = $tt['total'] == 0 ? '' : number_format($tt['total']);
+								$formatter = new NumberFormatter('en_US', NumberFormatter::PERCENT);
+								$p = $formatter->format($account['account_balance']/$tt['total']);
+								$p = $p == 0 ? '' : $p;
+							?>
 							<td><?=$required;?></td>
-							<td><?=$p;?></td>
-
+							<td><a href="budget-planning-detail.php?bank_acc_no=<?php echo $account['id'];?>"><?=$p;?></a></td>
+							<!-- <td><a href="">詳細內容</a></td> -->
 						</tr>
-
-<?php
-$sql = 'SELECT a.name,a.planning_dt AS dt,a.amount,b.bank_name,b.account_number,b.account_purpose,b.account_balance FROM budget a, bank_acc b WHERE a.bank_acc_no = b.id AND a.bank_acc_no = ' . $account['id'];
-$data1 = $db->getRows($sql);
-
-if ($data1) {
-
-?>
-
-						<tr>
+						<?php
+							// $sql = 'SELECT a.name,a.planning_dt AS dt,a.amount,b.bank_name,b.account_number,b.account_purpose,b.account_balance FROM budget a, bank_acc b WHERE a.bank_acc_no = b.id AND a.bank_acc_no = ' . $account['id'];
+							// $data1 = $db->getRows($sql);
+							// if ($data1) {
+						?>
+						<!-- <tr>
 							<td></td>
 							<td colspan=3>
-
-
-<table class="table asset-table">
-<thead class="thead-light">
-<tr>
-	<th>預算名稱</th>
-	<th>編列日期</th>
-	<th>預算金額</th>
-<!--
-	<th>銀行編號</th>
--->
-	<!-- <th>帳戶銀行</th>
-	<th>帳戶編號</th> -->
-	<!-- <th>帳戶餘額</th>
-	<th>執行率</th> -->
-</tr>
-</thead>
-<tbody>
-<?php
-
-//var_dump($data);
-foreach($data1 as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-
-//$english_format_number = number_format($number);
-// $formatter = new NumberFormatter('en_US', NumberFormatter::PERCENT);
-// $p = $formatter->format($var['account_balance']/$var['amount']);
-?>
-
-<tr>
-	<td><span><?=$var['name'];?></span></td>
-	<td><span><?=$var['dt'];?></span></td>
-	<td><span><?=number_format($var['amount']);?></span></td>
-	<!-- <td><span><?=$var['bank_name'];?></span></td>
-	<td><span><?=$var['account_number'];?></span></td>
-	<td><span><?=number_format($var['account_balance']);?></span></td>
-	<td><span><?=$p;?></span></td> -->
-</tr>
-<?php
-}
-?>
-
-</tbody>
-</table>
-
-</tr>
-
-
-<?php
-}
-
-
-
-?>
-
-
-
-
-
-<?php
-	 }
-?>
-
+							<table class="table asset-table">
+							<thead class="thead-light">
+							<tr>
+								<th>預算名稱</th>
+								<th>編列日期</th>
+								<th>預算金額</th>
+							</tr>
+							</thead>
+							<tbody> -->
+								<?php
+									// foreach($data1 as $var) {
+								?>
+								<!-- <tr>
+									<td><span><?=$var['name'];?></span></td>
+									<td><span><?=$var['dt'];?></span></td>
+									<td><span><?=number_format($var['amount']);?></span></td>
+								</tr> -->
+								<?php
+									// }
+								?>
+							<!-- </tbody>
+							</table>
+							</tr> -->
+							<?php
+								// }
+							?>
+						<?php
+							}
+						?>
 					</tbody>
 				</table>
 			</div>

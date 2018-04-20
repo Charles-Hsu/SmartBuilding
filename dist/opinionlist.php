@@ -40,7 +40,7 @@
 				?>
 			</ul>
             <?php
-                $sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
+                $sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.short_id, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
                 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
                 $data = $db->getRows($sql);
             ?>
@@ -76,6 +76,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th>日期</th>
+                        <th>門牌代號</th>
                         <th>戶號</th>
                         <th>樓層</th>
                         <!-- <th>種類</th> -->
@@ -90,6 +91,7 @@
                     ?>
                     <tr>
                     <td class="td_dt"><span><?=$var['dt'];?></span></td>
+                    <td><span><?php echo strtoupper($var[short_id]);?></span></td>
                     <td><span><?=$var['addr_no'];?></span></td>
                     <td><span><?=$var['floor'];?></span></td>
                     <td><span><?=$var['content'];?></span></td>

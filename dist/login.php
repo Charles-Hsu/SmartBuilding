@@ -23,6 +23,7 @@ $_isMan = FALSE;
 
 require 'lib/DBAccess.class.php';
 require 'config/config.admin.php';
+require 'lib/utils.php';
 
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
@@ -30,12 +31,13 @@ if(count($_POST)) {
     $message = "";
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $ip = "192.168.1.201";
 
     $data = explode("-", $username);
     // echo "<script>alert(" . COUNT($data) .");</script>";
-    var_dump($data);
+    // var_dump($data);
 
-    echo COUNT($data);
+    // echo COUNT($data);
 
     if (COUNT($data) > 1) {
         // $_SESSION['addr_no'] = $data[0];
@@ -43,8 +45,8 @@ if(count($_POST)) {
         $floor = $data[$n];
         // $_SESSION['floor'] = $floor;
         $addr_no = str_replace("-".$floor, "", $username);
-        echo "addr_no = $addr_no";
-        echo "floor = $floor ";
+        // echo "addr_no = $addr_no";
+        // echo "floor = $floor ";
         $_SESSION['addr_no'] = $addr_no;
         $_SESSION['floor'] = $floor;
         // echo "<script>alert(addr_no" . $addr_no .");</script>";
@@ -75,6 +77,10 @@ if(count($_POST)) {
             if ($_isAdmin) {
                 $url = "./kpi.php";
             }
+            $username = $_POST['username'];
+            $_SESSION['username'] = $username;
+            $_SESSION['ip'] = $ip;
+            my_log($db, $ip, $username, "使用者登入");
             header("Location: " . $url);
         }
     }

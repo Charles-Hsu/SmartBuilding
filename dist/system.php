@@ -8,6 +8,18 @@
 	}
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+
+	$range = 1; // default
+	if (COUNT($_POST)) {
+		// var_dump($_POST);
+		$range = $_POST['range'];
+		$from = date('Y-m-d', strtotime("-" . $range . " days"));
+		$sql = "SELECT dt,ip,username,message FROM system_log WHERE dt > '$from'";
+		// echo $sql;
+		$data = $db->getRows($sql);
+		// var_dump($data);
+	}
+
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -19,52 +31,52 @@
 				<a href="#" class="btn add-asset-btn mb-3">
 					<span>+</span>作業紀錄
 				</a>
+
+				<form action="" method="POST">
+					<div>
+						<?php if($range==1) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="1" <?php echo $checked;?>>當天
+					</div>
+					<div>
+						<?php if($range==3) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="3" <?php echo $checked;?>>三天
+					</div>
+					<div>
+						<?php if($range==7) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="7" <?php echo $checked;?>>當週
+					</div>
+					<div>
+						<?php if($range==31) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="31" <?php echo $checked;?>>一個月
+					</div>
+					<div>
+						<span>
+							<input type="submit" value="確認">
+						</span>
+					</div>
+				</form>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-                            <th>作業時間</th>
-							<th>作業類別</th>
-							<th>作業項目</th>
-							<th>作業人員</th>
+                            <th>時間</th>
+							<th>主機</th>
+							<th>帳號</th>
+							<th>內容</th>
 						</tr>
 					</thead>
 					<tbody>
-<?php
-	//foreach($data as $var) {
-//		echo $var[asset_no];
-//		echo $var[asset_name];
-//		echo $var[status];
-//		echo $var[price];
-//		echo '<br>';
-?>
+						<?php
+							foreach($data as $var) {
+						?>
 						<tr>
-							<td><span>2018/3/19 09:30</span></td>
-							<td><span>組織管理</span></td>
-							<td><span>新增人員 Joe Lee</span></td>
-							<td><span>股份有限公司</span></td>
+							<td><span><?php echo $var['dt'];?></span></td>
+							<td><span><?php echo $var['ip'];?></span></td>
+							<td><span><?php echo $var['username'];?></span></td>
+							<td><span><?php echo $var['message'];?></span></td>
 						</tr>
-						<tr>
-							<td><span>2018/3/21 18:12</span></td>
-							<td><span>清潔</span></td>
-							<td><span>清理忠孝樓</span></td>
-							<td><span>素環清有限公司</span></td>
-						</tr>
-						<tr>
-							<td><span>2018/3/21 18:22</span></td>
-							<td><span>會議</span></td>
-							<td><span>管委會開會</span></td>
-							<td><span>管委會</span></td>
-						</tr>
-						<tr>
-							<td><span>2018/3/22 08:12</span></td>
-							<td><span>資產管理</span></td>
-							<td><span>新增增產測試資產A</span></td>
-							<td><span>八萬一管理公司</span></td>
-						</tr>
-
-<?php
-	//}
-?>
+						<?php
+							}
+						?>
 					</tbody>
 				</table>
 			</div>

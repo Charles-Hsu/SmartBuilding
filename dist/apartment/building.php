@@ -60,7 +60,7 @@
 					<tbody>
 						<?php
 							$sql = "SELECT alias_name,id,name,address,license_no,approved_date FROM building";
-							echo $sql;
+							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $building) {
 						?>
