@@ -62,9 +62,9 @@
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>代碼</th>
-							<th>戶號</th>
-							<th>樓層</th>
+							<th>門號代碼</th>
+							<!-- <th>戶號</th>
+							<th>樓層</th> -->
 							<!-- <th>住戶狀態</th> -->
 							<th>區權人</th>
 							<th>現住戶</th>
@@ -75,20 +75,23 @@
 					</thead>
 					<tbody>
 						<?php
-							$sql = 'SELECT house_id,building,addr_no,floor,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id';
+							$sql = 'SELECT short_id,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id';
 							if (!$_isAdmin && !$_isStaff) {
 								$addr_no = $_SESSION['addr_no'];
 								$floor = $_SESSION['floor'];
-								$sql = 'SELECT house_id,building,addr_no,floor,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id AND a.addr_no = "' .$addr_no. '" AND a.floor = ' . $floor;
+								// $sql = 'SELECT house_id,building,addr_no,floor,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id AND a.addr_no = "' .$addr_no. '" AND a.floor = ' . $floor;
+
+								$sql = 'SELECT short_id,holder,resident,b.mail_num FROM household a, mails b WHERE b.house_id = a.id AND a.addr_no = "' .$addr_no. '" AND a.floor = ' . $floor;
+
 							}
 							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
 						?>
 						<tr>
-							<td><span><?php echo $var[building];?></span></td>
-							<td><span><?php echo $var[addr_no];?></span></td>
-							<td><span><?php echo $var[floor];?></span></td>
+							<td><span><?php echo $var[short_id];?></span></td>
+							<!-- <td><span><?php echo $var[addr_no];?></span></td>
+							<td><span><?php echo $var[floor];?></span></td> -->
 							<td><span><?php echo $var[holder];?></span></td>
 							<td><span><?php echo $var[resident];?></span></td>
 							<td>

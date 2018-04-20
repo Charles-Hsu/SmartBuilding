@@ -13,12 +13,14 @@
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
+
+
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org.php">人員</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/#">勤務管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/org/patrol.php">勤務管理</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
@@ -31,20 +33,22 @@
 					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
 			</ul>
+
+
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/org/contracts-create.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增廠商合約</span>
+					<span>修改廠商合約</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-8col-md-8 col-sm-8 col-xs-12 col-12">
-						<form class="assets-create-form" action="" method="GET">
-							<div class="form-group row">
+						<form class="assets-create-form" action="" method="POST">
+							<!-- <div class="form-group row">
 								<label for="community" class="text-right col-md-4 col-form-label">所屬社區:</label>
 								<div class="col-md-8 d-flex align-items-center">
 									<span>XXXXXX</span>
 								</div>
-							</div>
+							</div> -->
                             <div class="form-group row">
 								<label for="paper-title" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>合約標題:</label>

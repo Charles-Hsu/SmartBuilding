@@ -8,8 +8,11 @@
 	}
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 	$_isAdmin = $_SESSION['admin'];
-	$contract_id = $_GET['contract_id'];
-
+	// $contract_id = $_GET['contract_id'];
+	// echo COUNT($_POST);
+	// if (COUNT($_POST)) {
+	// 	var_dump($_POST);
+	// }
 ?>
 <div class="row">
 	<div class="col-12 p-4">

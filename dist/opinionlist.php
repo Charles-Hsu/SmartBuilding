@@ -38,6 +38,9 @@
 				<?php
 					}
 				?>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+                </li>
 			</ul>
             <?php
                 $sql = 'SELECT a.*,MONTH(a.dt) AS dt_month, b.short_id, b.addr_no,b.floor, a.content FROM opinions a, household b, opinion_type c WHERE b.id = a.household_id';
@@ -76,7 +79,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th>日期</th>
-                        <th>門牌代號</th>
+                        <th>門牌代碼</th>
                         <th>戶號</th>
                         <th>樓層</th>
                         <!-- <th>種類</th> -->
@@ -141,6 +144,9 @@
 ?>
 
 <script>
+
+// console.log(location);
+
 $('.opinionlist_tbody tr').each(function(i,item){
     if($(item).find('td span').hasClass('un_completed')){
         $(item).addClass('un_completed_red')
@@ -249,7 +255,8 @@ $('.asset-table').DataTable({
 
 var randomData=()=>{
     return Math.round(Math.random()*100)
-}
+};
+
 var colorList={
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',
@@ -363,7 +370,7 @@ $('.opinionlist_tbody').on('click','.dt_responsed',function(){
             console.log('Error')
         }
     })
-})
+});
 
 $('.opinionlist_tbody').on('click','.dt_completed',function(){
     var _this=$(this);
@@ -395,4 +402,4 @@ $('.opinionlist_tbody').on('click','.dt_completed',function(){
     })
 })
 </script>
-<?php include('../Footer.php'); ?>
+<?php include('./Footer.php'); ?>

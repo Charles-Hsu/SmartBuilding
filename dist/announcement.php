@@ -121,6 +121,7 @@ $('.asset-table').DataTable({
     "order": [[0, 'desc']],
     //"order": [[0, 'asc']],
 })
+
 $('.btn-announEdit').on('click',function(e){
 	e.preventDefault();
 	$(this).closest('tr').find('.announ-content input').prop('readonly',false);
@@ -189,4 +190,4 @@ $('.btn-announDel').on('click',function(e){
 	}
 })
 </script>
-<?php include('../Footer.php'); ?>
+<?php include('./Footer.php'); ?>

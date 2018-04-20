@@ -13,6 +13,7 @@
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
+
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
@@ -38,7 +39,11 @@
 				<?php
 					}
 				?>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+                </li>
 			</ul>
+
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="<?= $urlName ?>/opinionlist.php" class="assets-create-icon fas fa-chevron-left"></a>
@@ -49,7 +54,7 @@
 						<table class="table asset-table">
 							<thead class="thead-light">
 								<tr>
-									<th>大樓</th>
+									<th>門牌代碼</th>
 									<th>戶號</th>
 									<th>樓層</th>
 									<th>區權人</th>
@@ -61,11 +66,15 @@
 								<?php
 									$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 									$sql = 'SELECT a.id AS id,building,addr_no,floor,"1100" as unpaid_total,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+
+									$sql = 'SELECT a.* FROM household a';
+
+
 									$data = $db->getRows($sql);
 									foreach($data as $var) {
 								?>
 								<tr>
-									<td><span><?php echo $var[building];?></span></td>
+									<td><span><?php echo strtoupper($var[short_id]);?></span></td>
 									<td><span><?php echo $var[addr_no];?></span></td>
 									<td><span><?php echo $var[floor];?></span></td>
 									<td><span><?php echo $var[holder];?></span></td>

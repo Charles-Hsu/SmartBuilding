@@ -49,7 +49,7 @@
 					<thead class="thead-light">
 						<tr>
 							<th>名稱</th>
-							<th>門號代碼</th>
+							<th>代碼</th>
 							<th>地址</th>
 							<th>建築執照編號</th>
 							<th>發照日期</th>

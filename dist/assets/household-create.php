@@ -118,7 +118,7 @@ if(count($_POST)>0) {
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
             <ul class="nav nav-pills mb-3">
-			<li class="nav-item">
+				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
@@ -142,14 +142,7 @@ if(count($_POST)>0) {
 				<div class="row justify-content-between">
 					<div class="col-lg-5 col-6">
 						<form class="householdCreate-form" action="" method="POST">
-<!--
-							<div class="form-group row">
-								<label for="community" class="text-right col-lg-6 col-md-4 col-form-label">所屬社區:</label>
-								<div class="col-lg-6 col-md-8 d-flex align-items-center">
-									<span>XXXXXX</span>
-								</div>
-							</div>
--->
+
 							<div class="form-group row">
 								<label for="household-area" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>所屬大樓:</label>
@@ -167,11 +160,7 @@ foreach($data as $var) {
 <?php
 }
 ?>
-<!--
-										<option value="" selected>選擇大樓</option>
-										<option value="AA">忠孝樓</option>
-										<option value="BB">仁愛樓</option>
--->
+
 									</select>
 								</div>
 							</div>
@@ -195,10 +184,7 @@ foreach($data as $var) {
 <?php
 }
 ?>
-<!--
-										<option value="住宅用">住宅用</option>
-										<option value="商業用">商業用</option>
--->
+
 									</select>
 								</div>
 							</div>
@@ -244,6 +230,16 @@ foreach($data as $var) {
 									<input type="text" class="form-control" name="household-floor" id="household-floor" placeholder="樓層..." value="" requiredrequired>
 								</div>
 							</div>
+
+							<div class="form-group row">
+								<label for="household-floor" class="text-right col-md-4 col-form-label">
+									<span class="important"></span>門牌代碼:
+								</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="household-floor" id="household-floor" placeholder="門牌代碼..." value="" readonly>
+								</div>
+							</div>
+
 							<div class="form-group row">
 								<label for="household-own" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>區權人:
