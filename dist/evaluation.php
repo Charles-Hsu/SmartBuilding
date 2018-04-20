@@ -44,23 +44,26 @@
                 </li>
 			</ul>
 
-				<div class="row justify-content-center">
-					<div class="col-lg-10">
-						<form class="evaluation-form" action="" method="POST">
+			<div class="row justify-content-center">
+				<div class="col-lg-10">
+					<form class="evaluation-form" action="" method="POST">
 
-							<!-- 標題 -->
-							<div class="evaluation-wrap w-100"></div>
-							<!-- 標題end -->
+						<!-- 標題 -->
+						<div class="evaluation-wrap w-100"></div>
+						<!-- 標題end -->
 
-							<div class="form-group row mt-3">
-								<div class="col-12">
-									<button class="btn btn-primary evaluation-btn mr-3">確認</button>
-									<div class="total-points d-inline font-weight-bold">總分: <span>0</span></div>
-								</div>
+						<div class="form-group row mt-3">
+							<div class="col-12">
+								<button class="btn btn-primary evaluation-btn mr-3">確認</button>
+								<div class="total-points d-inline font-weight-bold">總分: <span>0</span></div>
 							</div>
-						</form>
-					</div>
+						</div>
+					</form>
 				</div>
+			</div>
+		</div>
+		<div class="progress point-percent">
+			<div class="progress-bar bg-info" role="progressbar" style="width: 00%"></div>
 		</div>
 	</div>
 </div>
@@ -94,7 +97,7 @@ var evaluationText=[
 	],
 	[
 		{sub_title:'2-1住戶違規處理作業流程',radio_name:'2_1'},
-		{sub_title:'2-2建築物及基地管理維護修繕作業流程',radio_name:'2_1'},
+		{sub_title:'2-2建築物及基地管理維護修繕作業流程',radio_name:'2_2'},
 	],
 	[
 		{sub_title:'3-1公寓大廈停車場管理作業流程',radio_name:'3_1'},
@@ -190,7 +193,6 @@ for(var i=0;i<evaluationTitle.length;i++){
 	}
 	strAll+=strTitles+strs;
 	$('.evaluation-wrap').append(strAll);
-	console.log(evaluationTitle[i])
 }
 
 // $('.evaluation-wrap').html(strAll)
@@ -219,13 +221,19 @@ var total_points=[];
 $('.evaluation-wrap').on('click','.point-check',function(){
 	var _val=$(this).val();
 	var total_point=0;
+	var check_totals=0;
+	var check_total=$('.point-check').length / 3;
 	$(this).closest('.evaluation-item-group').find('.point').text(_val)
 	$('.point-check').each(function(i,item){
 		if($(this).prop('checked')){
 			total_point+=parseInt($(this).val());
+			check_totals+=1;
 		}
 	})
 	$('.total-points > span').text(total_point)
+	$('.point-percent .progress-bar').css('width',parseInt((check_totals / check_total)*100)+'%');
+	$('.point-percent .progress-bar').text(parseInt((check_totals / check_total)*100)+'%');
+	console.log(parseInt((check_totals / check_total)*100))
 })
 </script>
 <?php include(Document_root.'/Footer.php'); ?>

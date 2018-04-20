@@ -977,6 +977,14 @@ tr.un_completed_red{
 .evaluation-btn{
     padding: .375rem 2rem;
 }
+.point-percent {
+    width: calc(100% - 250px);
+    height: 14px;
+    background: rgb(212, 212, 212);
+    position: fixed;
+    bottom: 2px;
+    left: 250px;
+}
 @media (max-width:992px){
     .container-fluid{
         width: calc(100% - 62px);
