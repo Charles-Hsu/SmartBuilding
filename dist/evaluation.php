@@ -181,6 +181,7 @@ var str=`
 	</div>
 </div>
 `;
+var total_points=[];
 for(var i=0;i<evaluationTitle.length;i++){
 	strTitles='';
 	strs='';
@@ -190,12 +191,64 @@ for(var i=0;i<evaluationTitle.length;i++){
 		strs+=str
 		.replace('{{sub_title}}',evaluationText[i][j].sub_title)
 		.replace(/{{radio_name}}/g,evaluationText[i][j].radio_name)
+		total_points[evaluationText[i][j].radio_name]=[];
 	}
 	strAll+=strTitles+strs;
 	$('.evaluation-wrap').append(strAll);
 }
-
-// $('.evaluation-wrap').html(strAll)
+var total_point=0;
+$('.evaluation-wrap').on('click','.point-check',function(){
+	var _val=$(this).val();
+	total_point=0;
+	var check_totals=0;
+	var check_total=$('.point-check').length / 3;
+	var check_name;
+	$(this).closest('.evaluation-item-group').find('.point').text(_val)
+	$('.point-check').each(function(i,item){
+		if($(this).prop('checked')){
+			total_point+=parseInt($(this).val());
+			check_totals+=1;
+		}
+	})
+	$('.total-points > span').text(total_point)
+	$('.point-percent .progress-bar').css('width',parseInt((check_totals / check_total)*100)+'%');
+	$('.point-percent .progress-bar').text(parseInt((check_totals / check_total)*100)+'%');
+})
+var arrObj={};
+$('.evaluation-btn').on('click',function(e){
+	e.preventDefault();
+	$('.point-check').each(function(i,item){
+		if($(this).prop('checked')){
+			check_name=$(this).attr('name')
+			arrObj[check_name]=parseInt($(this).val());
+			if(total_points[check_name]){
+				total_points[check_name].push(parseInt($(this).val()))
+			}
+		}
+	})
+	// console.log(arrObj)
+	var arrObjJson=JSON.stringify(arrObj);
+	$.ajax({
+		url:'./data/evaluationData.php',
+		method:'POST',
+		dataType:'json',
+		data:{
+			evaluation_points:JSON.stringify(arrObj),
+			evaluation_total:total_point
+		},
+		success:function(data){
+			try{
+				var _data=JSON.stringify(data);
+				console.log(_data)
+			}catch(error){
+				alert(data)
+			}
+		},
+		error:function(data){
+			alert(data.responseText)
+		}
+	})
+})
 
 $('.asset-table').DataTable({
 	"language": {
@@ -216,24 +269,6 @@ $('.asset-table').DataTable({
 	},
 	"deferRender": true,
 	"processing": true
-})
-var total_points=[];
-$('.evaluation-wrap').on('click','.point-check',function(){
-	var _val=$(this).val();
-	var total_point=0;
-	var check_totals=0;
-	var check_total=$('.point-check').length / 3;
-	$(this).closest('.evaluation-item-group').find('.point').text(_val)
-	$('.point-check').each(function(i,item){
-		if($(this).prop('checked')){
-			total_point+=parseInt($(this).val());
-			check_totals+=1;
-		}
-	})
-	$('.total-points > span').text(total_point)
-	$('.point-percent .progress-bar').css('width',parseInt((check_totals / check_total)*100)+'%');
-	$('.point-percent .progress-bar').text(parseInt((check_totals / check_total)*100)+'%');
-	console.log(parseInt((check_totals / check_total)*100))
 })
 </script>
 <?php include(Document_root.'/Footer.php'); ?>
