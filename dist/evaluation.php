@@ -155,7 +155,7 @@ var str=`
 	</div>
 	<div class="evaluation-item-group d-flex w-100">
 		<div class="title w-25">{{sub_title}}</div>
-		<div class="point w-25">1</div>
+		<div class="point w-25">0</div>
 		<div class="rules w-25">
 			<div>1分:重大疏漏</div>
 			<div>2分:部分疏失</div>
