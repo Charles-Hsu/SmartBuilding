@@ -38,7 +38,7 @@
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>大樓</th>
+							<th>門號代碼</th>
 							<th>戶號</th>
 							<th>樓層</th>
 							<th>住戶狀態</th>
@@ -51,12 +51,13 @@
 					</thead>
 					<tbody>
 						<?php
-							$sql = 'SELECT a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+							// $sql = 'SELECT a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+							$sql = "SELECT SUM(a.fee) AS unpaid_total, c.short_id, a.hid,b.name AS status, resident, c.addr_no, c.floor, c.holder, c.building FROM hoa_fee_record a, household_status b, household c WHERE c.id = a.hid group by a.hid, c.addr_no, c.floor, c.holder, c.building, c.short_id";
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
 						?>
 						<tr>
-							<td><span><?php echo $var[building];?></span></td>
+							<td><span><?php echo strtoupper($var[short_id]);?></span></td>
 							<td><span><?php echo $var[addr_no];?></span></td>
 							<td><span><?php echo $var[floor];?></span></td>
 							<td><span><?php echo $var[status];?></span></td>
@@ -64,27 +65,27 @@
 							<td><span><?php echo $var[resident];?></span></td>
 							<td>
 								<?php
-									$sql = "SELECT SUM(fee) AS s FROM hoa_fee_record WHERE hid = $var[id] AND p IS NULL";
-									$s = $db->getRow($sql);
-									$s = $s['s'];
+									// $sql = "SELECT SUM(fee) AS s FROM hoa_fee_record WHERE hid = $var[id] AND p IS NULL";
+									// $s = $db->getRow($sql);
+									// $s = $s['s'];
 								?>
-								<span><?php echo number_format($s);?></span>
+								<!-- <span><?php echo number_format($s);?></span> -->
+								<span><?php echo number_format($var[unpaid_total]);?></span>
 							</td>
 							<td>
-<?php
-	if($var[unpaid_total] != 0) {
-		if (false) {
-?>
+								<?php
+									if($var[unpaid_total] != 0) {
+										if (false) {
+								?>
 								<a href="#" data-id="<?php echo $var[id];?>" class="show-details btn btn-outline-secondary">顯示</a>
-<?php
-		} else {
-?>
-
+								<?php
+										} else {
+								?>
 								<a href="/smartbuilding/assets/household-fee-list.php?id=<?php echo $var[id];?>&floor=<?php echo $var[floor];?>&addr_no=<?php echo $var[addr_no]?>&holder=<?php echo $var[holder];?>" class="btn btn-outline-secondary">顯示</a>
-<?php
-		}
-	}
-?>
+								<?php
+										}
+									}
+								?>
 							</td>
 							<td><a href="/smartbuilding/assets/household-edit.php?id=<?php echo $var[id];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>

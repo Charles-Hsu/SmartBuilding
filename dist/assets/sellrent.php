@@ -34,7 +34,7 @@
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>大樓</th>
+							<th>門號代碼</th>
 							<th>戶號</th>
 							<th>樓層</th>
 							<th>區權人</th>

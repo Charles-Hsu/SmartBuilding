@@ -66,8 +66,9 @@ $household = $db->getRow($sql);
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-            <ul class="nav nav-pills mb-3">
-			<li class="nav-item">
+
+			<ul class="nav nav-pills mb-3">
+				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets.php">資產管理</a>
 				</li>
 				<li class="nav-item">
@@ -76,7 +77,16 @@ $household = $db->getRow($sql);
 				<li class="nav-item">
 					<a class="nav-link" href="/smartbuilding/assets/sellrent.php">租售管理</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/brokerman.php">帶看管理</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/smartbuilding/assets/hoa_fee.php">管理費</a>
+				</li>
 			</ul>
+
+
+
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="/smartbuilding/assets/household.php" class="assets-create-icon fas fa-chevron-left"></a>
@@ -168,6 +178,19 @@ foreach($data as $var) {
                                 <input type="text" class="form-control" value="<?=$household['floor'];?>" readonly>
 								</div>
 							</div>
+
+
+							<div class="form-group row">
+								<label for="household-floor" class="text-right col-md-4 col-form-label">
+									<span class="important"></span>門牌代碼:
+								</label>
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="household-floor" id="household-floor" placeholder="門牌代碼..." value="" readonly>
+								</div>
+							</div>
+
+
+
 							<div class="form-group row">
 								<label for="household-own" class="text-right col-lg-6 col-md-3 col-form-label">
 									<span class="important">*</span>區權人:

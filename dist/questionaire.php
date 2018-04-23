@@ -13,43 +13,33 @@
 <div class="row">
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
-			<ul class="nav nav-pills mb-3">
-				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/apartment.php">基本資料</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/building.php">建築物</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/public-util.php">公共設施</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/meeting-man.php">會議管理</a>
-				</li>
-                <!-- <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/apartment/bank-acc.php">銀行專戶</a>
-                </li> -->
-			</ul>
-			<div id="assets-tab" class="d-flex flex-column px-3">
-				<form action="" class="col-md-8 col-sm-12">
-					<div class="form-group row">
-						<label for="apartment-name" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
-							社區名稱:
-						</label>
-						<input type="text" id="apartment-name" class="form-contorl col-md-8 col-sm-8" name="apartment-name" value="<?= $data['name']; ?>">
+			<div id="assets-tab">
+				<a href="#" class="btn add-asset-btn mb-3">
+					<span>+</span>填寫問卷
+				</a>
+				<!-- <form action="" method="POST">
+					<div>
+						<?php if($range==1) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="1" <?php echo $checked;?>>當天
 					</div>
-					<div class="form-group row">
-						<label for="apartment-address" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
-							社區地址:
-						</label>
-						<input type="text" id="apartment-address" class="form-contorl col-md-8 col-8" name="apartment-address" value="<?= $data['address']; ?>">
+					<div>
+						<?php if($range==3) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="3" <?php echo $checked;?>>三天
 					</div>
-					<div class="form-group row">
-						<div class="col-md-8 offset-md-4 col-12">
-							<button class="btn btn-primary">更新資料</button>
-						</div>
+					<div>
+						<?php if($range==7) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="7" <?php echo $checked;?>>當週
 					</div>
-				</form>
+					<div>
+						<?php if($range==31) {$checked = "checked";} else {$checked = "";}?>
+						<input type="radio" name="range" value="31" <?php echo $checked;?>>一個月
+					</div>
+					<div>
+						<span>
+							<input type="submit" value="確認">
+						</span>
+					</div>
+				</form> -->
 			</div>
 		</div>
 	</div>

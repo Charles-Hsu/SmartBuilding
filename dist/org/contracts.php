@@ -32,7 +32,7 @@
                 </li>
 			</ul>
 			<div id="assets-tab">
-				<a href="<?= $urlName ?>/org/contracts-create.php" class="btn add-asset-btn mb-3">
+				<a href="<?= $urlName ?>/org/contract-create.php" class="btn add-asset-btn mb-3">
 					<span>+</span>新增廠商
 				</a>
 				<!-- <a href="<?= $urlName ?>/org/contract-man.php" class="btn add-asset-btn mb-3">
@@ -53,7 +53,6 @@
 					<tbody>
 						<?php
 							$sql = 'SELECT a.id AS contract_id, score,dt,name,contact_person,contact_phone,b.item AS item FROM contract a, contract_item b WHERE a.id != 0 AND a.contract_item = b.id';
-							//echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
 						?>
@@ -75,7 +74,7 @@
 							</td>
 							<td><span><?php echo $var['contact_person'];?></span></td>
 							<td><span><?php echo $var['contact_phone'];?></span></td>
-							<td><a href="<?= $urlName ?>/org/contracts-editpaper.php?contract_id=" <?php echo $var['contract_id'];?> class="btn btn-outline-secondary">修改</a></td>
+							<td><a href="<?= $urlName ?>/org/contract-edit.php?contract_id=<?php echo $var['contract_id'];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 
 <?php

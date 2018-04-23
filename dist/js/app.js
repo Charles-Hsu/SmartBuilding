@@ -12,7 +12,7 @@ function getTodayTime(){
     var now_Hour=now_date.getHours();
     var now_Min=now_date.getMinutes();
     var now_Sec=now_date.getSeconds();
-    
+
     str=`${now_Year}-${getZero(now_Month)}-${getZero(now_Day)} ${getZero(now_Hour)}:${getZero(now_Min)}:${getZero(now_Sec)}`
     return str;
 }
@@ -35,7 +35,7 @@ $(function(){
             $(this).addClass('fas fa-outdent')
         }
     })
-    
+
     if($('.datepicker').length > 0){
         var dataType=$('.datepicker').attr('data-type')
         if(dataType == 'datetime'){
@@ -52,7 +52,7 @@ $(function(){
 
     var getUrl=location.pathname.split('/')[2].split('.')[0];
     $('.sidemenu-nav li').each(function(i,v){
-        if(getUrl == 'index' || getUrl == '' || getUrl == 'announcement' || getUrl == 'space-management' || getUrl == 'management'){
+        if(getUrl == 'index' || getUrl == '' || getUrl == 'announcement' || getUrl == 'space-management' || getUrl == 'management' || getUrl == 'overduelist' || getUrl == 'opinionlist' || getUrl == 'evaluation') {
             $('.sidemenu-nav li').eq(0).find('.sidemenu-link').addClass('active')
         }
         if($(v).find('.sidemenu-link').attr('data-type') == getUrl){

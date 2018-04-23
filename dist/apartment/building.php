@@ -49,7 +49,7 @@
 					<thead class="thead-light">
 						<tr>
 							<th>名稱</th>
-							<th>門號代碼</th>
+							<th>代碼</th>
 							<th>地址</th>
 							<th>建築執照編號</th>
 							<th>發照日期</th>
@@ -60,7 +60,7 @@
 					<tbody>
 						<?php
 							$sql = "SELECT alias_name,id,name,address,license_no,approved_date FROM building";
-							echo $sql;
+							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $building) {
 						?>

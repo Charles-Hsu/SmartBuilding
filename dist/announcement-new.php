@@ -14,6 +14,15 @@
 	<div class="col-12 p-4">
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
+				<li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/announcement.php">公告</a>
+				</li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+                </li>
+                <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
+                </li>
 				<?php
 					if ($_isAdmin) {
 				?>
@@ -29,17 +38,8 @@
 				<?php
 					}
 				?>
-				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">品質管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
                 </li>
 			</ul>
 			<?php
