@@ -76,7 +76,7 @@ if (count($_POST) > 0) {
 					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/management.php">管理辦法</a>
+					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
 				<?php
 					}
