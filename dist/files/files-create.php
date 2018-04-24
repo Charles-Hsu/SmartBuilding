@@ -89,7 +89,7 @@ if (count($_POST) > 0) {
 								<label for="files-upload-label" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>選擇檔案:</label>
 								<div class="col-md-9">
-                                    <label for="uploaded_file" class="uploaded_filed">
+                                    <label for="uploaded_file" class="uploaded_file">
                                         <input name="uploaded_file" type="file" id="uploaded_file" class="form-control files-input">
 										<!-- <input type="file" name="uploaded_file" class="uploaded_file">></input> -->
                                         <span class="files-name-box">

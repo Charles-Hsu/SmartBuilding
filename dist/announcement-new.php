@@ -15,33 +15,42 @@
 if (count($_POST) > 0) {
 	var_dump($_POST);
 	var_dump($_FILES);
-
-	echo '<div>_FILES[uploaded_file][name]' . $_FILES['uploaded_file']['name'] . '</div>';
-	echo '<div>_FILES[uploaded_file][tmp_name]' . $_FILES['uploaded_file']['tmp_name'] . '</div>';
-
-	if(!empty($_FILES['uploaded_file']))
+	// echo '<div>_FILES[uploaded_file][name]' . $_FILES['uploaded_file']['name'] . '</div>';
+	// echo '<div>_FILES[uploaded_file][tmp_name]' . $_FILES['uploaded_file']['tmp_name'] . '</div>';
+	$post_date = $_POST['post-date'];
+	echo 'post_date = ' .post_date;
+	$filename = basename( $_FILES['uploaded_file']['name']);
+	echo 'strlen(filename) = ' . strlen($filename);
+	if(!empty($_FILES['uploaded_file'])) {
+		echo "not empty";
+	}
+	if(strlen($filename) > 0) {
+		echo " > 0";
+	}
+	if(!empty($_FILES['uploaded_file']) && strlen($filename) > 0)
 	{
-	//   $path = "files/";
-		// $type = $_POST['file-type'];
-		$desc = $_POST['desc'];
-		// $path = "./" . $type . "/";
-		// $path = "./files/1/";
-		$path = "./";
+		echo "not empty";
+		$desc = $_POST['post-content'];
+		echo 'desc = ' . $desc;
+		$type = 9;
+		$path = "./files/9/"; // 公告附件的檔案目錄為 /files/9, 可由資料庫 file_type 看所有其他的類別
 		$upload_file = basename( $_FILES['uploaded_file']['name']);
-		  // $path = $path .$upload_file;
 		$path .= $upload_file;
-	  	echo 'path = ' . $path;
-	  	if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path)) {
-			echo "The file ".  basename( $_FILES['uploaded_file']['name']). " has been uploaded";
-			// $sql = "INSERT INTO files (`id`,`type`,`desc`,`path`) VALUES (NULL, $type, '$desc', '$upload_file')";
-			// echo $sql;
-			// $db->insert($sql);
+		echo 'path = ' . $path;
+		$tmp_file = $_FILES['uploaded_file']['tmp_name'];
+		echo "\$tmp_file = $tmp_file";
+
+	  	if(move_uploaded_file($tmp_file, $path)) {
+			// echo "The file ".  basename( $_FILES['uploaded_file']['name']). " has been uploaded";
+			$sql = "INSERT INTO files (`id`,`dt`,`type`,`desc`,`path`) VALUES (NULL, '$post_date', '$type', '$desc', '$upload_file')";
+			echo $sql;
+			$db->insert($sql);
 			// $url = "../files.php";
 			// $url = "https://www.stackoverflow.com";
 			// echo "<script>window.location='$url';</script>";
 	  	} else {
-			echo "<div>The file ".  basename( $_FILES['uploaded_file']['name']). " uploaded fail</div>";
-			echo "<div>There was an error uploading the file, please try again!</div>";
+			// echo "<div>The file ".  basename( $_FILES['uploaded_file']['name']). " uploaded fail</div>";
+			// echo "<div>There was an error uploading the file, please try again!</div>";
 			$message = "檔案上傳失敗";
 			echo $message;
 	  	}
@@ -119,7 +128,7 @@ if (count($_POST) > 0) {
 								<label for="assets-no" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>公告標題:</label>
 								<div class="col-md-9">
-                                    <input type="text" name="post-content" form="form-control" placeholder="輸入公告標題...">
+                                    <input type="text" name="post-content" placeholder="輸入公告標題...">
                                 </div>
 							</div>
 
@@ -135,9 +144,9 @@ if (count($_POST) > 0) {
 
 							<div class="form-group row">
 								<label for="files-upload-label" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>選擇檔案:</label>
+									<span class="important">*</span>附加檔案:</label>
 								<div class="col-md-9">
-                                    <label for="uploaded_file" class="uploaded_filed">
+                                    <label for="uploaded_file" class="uploaded_file">
                                         <input name="uploaded_file" type="file" id="uploaded_file" class="form-control files-input">
 										<!-- <input type="file" name="uploaded_file" class="uploaded_file">></input> -->
                                         <span class="files-name-box">
@@ -164,6 +173,14 @@ if (count($_POST) > 0) {
 		</div>
 	</div>
 </div>
+
+
+<script>
+    $('#uploaded_file').on('change',function(){
+        var _name=$('#uploaded_file').val().split('\\')[$('#uploaded_file').val().split('\\').length-1];
+        $('.files-name').text(_name)
+    })
+</script>
 
 <script>
 

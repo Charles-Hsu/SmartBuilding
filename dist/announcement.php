@@ -66,7 +66,7 @@
 								if ($_isAdmin) {
 							?>
 							<th>修改</th>
-							<th>刪除</th>
+							<!-- <th>刪除</th> -->
 							<?php
 								}
 							?>
@@ -82,8 +82,9 @@
 							<?php
 								if ($_isAdmin) {
 							?>
-							<td class="announ-edit" data-id="<?= $var[id] ?>"><a href="#" class="btn btn-primary btn-announEdit">編輯</a></td>
-							<td class="announ-del"><a href="#" data-id="<?= $var[id] ?>" class="btn btn-danger btn-announDel">刪除</a></td>
+							<td><a href="./announcement-edit.php?id=<?php echo $var[id]; ?>">編輯</a></td>
+							<!-- <td class="announ-edit" data-id="<?= $var[id] ?>"><a href="#" class="btn btn-primary btn-announEdit">編輯</a></td>
+							<td class="announ-del"><a href="#" data-id="<?= $var[id] ?>" class="btn btn-danger btn-announDel">刪除</a></td> -->
 							<?php
 								}
 							?>

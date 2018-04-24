@@ -39,55 +39,102 @@
 				<?php
 					}
 				?>
-                <li class="nav-item">
+        <li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
-                </li>
+        </li>
 			</ul>
 		</div>
 
 		<div class="files-wrapper">
 			<div id="assets-tab">
-				<a href="./evaluation-new.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增品管考核作業
-				</a>
-				<a href="./evaluation-bonus.php" class="btn add-asset-btn mb-3">
-					<span>+</span>獎金提撥
-				</a>
+
+				<div class="assets-create-title mb-3">
+					<a href="./evaluation.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>獎金提撥</span>
+				</div>
+
+
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>考核日期</th>
-							<th>管委屆別</th>
-							<th>考核人</th>
-							<th>評量方式</th>
-							<th>總分</th>
-							<th>詳細內容</th>
+							<th>年度</th>
+							<th>考核對象</th>
+							<th>考核次數</th>
+							<th>平均分數</th>
+							<th>年終獎金</th>
 						</tr>
 					</thead>
 
 
-					<!-- SELECT a.dt, b.name AS committee, c.name, d.method AS examinor FROM evaluation a, session b, eval_examinor c, eval_method d WHERE a.committee=b.id AND a.examinor = c.id AND a.method = d.id -->
+					<!-- SELECT COUNT(*) AS n, AVG(score) AS avg_score FROM evaluation WHERE YEAR(dt) = YEAR(NOW()) -->
 
 					<tbody>
 						<?php
-							$sql = "SELECT a.id, a.dt, b.name AS committee, c.name, d.method AS examinor, a.score FROM evaluation a, session b, eval_examinor c, eval_method d WHERE a.committee=b.id AND a.examinor = c.id AND a.method = d.id";
+							$sql = "SELECT bonus FROM `apartment_settings`"; // 0 團隊績效
+							$bonus = $db->getValue($sql);
+							// echo "bonus = $bonus";
+
+							$sql = "SELECT YEAR(dt) AS y, COUNT(*) AS n, AVG(score) AS avg, b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND tested_staff_id = 0 AND b.id = 0"; // 0 團隊績效
 							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
 						?>
 						<tr>
-							<td><span><?php echo $var['dt']; ?></span></td>
-							<td><span><?php echo $var['committee']; ?></span></td>
+							<td><span><?php echo $var['y']; ?></span></td>
 							<td><span><?php echo $var['name']; ?></span></td>
-							<td><span><?php echo $var['examinor']; ?></span></td>
-							<td><span><?php echo $var['score']; ?></span></td>
-							<td><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>">檢視</a></span></td>
+							<td><span><?php echo $var['n']; ?></span></td>
+							<td><span><?php echo number_format($var['avg'],1); ?></span></td>
+							<td><span><?php if($var['avg'] < 75) {$bonus = 0;} echo number_format($bonus,0); ?></span></td>
+
 						</tr>
 						<?php
 							}
 						?>
 					</tbody>
 				</table>
+
+
+				<table class="table asset-table">
+					<thead class="thead-light">
+						<tr>
+							<th>年度</th>
+							<th>考核對象</th>
+							<th>考核次數</th>
+							<th>平均分數</th>
+							<th>績效獎金</th>
+						</tr>
+					</thead>
+
+
+					<!-- SELECT COUNT(*) AS n, AVG(score) AS avg_score FROM evaluation WHERE YEAR(dt) = YEAR(NOW()) -->
+
+					<tbody>
+						<?php
+							$sql = "SELECT performance_bonus FROM `apartment_settings`";
+							$bonus = $db->getValue($sql);
+							// echo "bonus = $bonus";
+
+							$sql = "SELECT YEAR(dt) AS y, AVG(score) AS avg, b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND b.id != 0 GROUP BY b.id";
+
+
+							// echo $sql;
+							$data = $db->getRows($sql);
+							foreach($data as $var) {
+						?>
+						<tr>
+							<td><span><?php echo $var['y']; ?></span></td>
+							<td><span><?php echo $var['name']; ?></span></td>
+							<td><span><?php echo $var['n']; ?></span></td>
+							<td><span><?php echo number_format($var['avg'],1); ?></span></td>
+							<td><span><?php if($var['avg'] < 80) {$bonus = 0;} echo number_format($bonus,0); ?></span></td>
+
+						</tr>
+						<?php
+							}
+						?>
+					</tbody>
+				</table>
+
 			</div>
 		</div>
 
@@ -95,7 +142,6 @@
 </div>
 
 <script>
-
 $('.asset-table').DataTable({
 	"language": {
         "columnDefs": [
