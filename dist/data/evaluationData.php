@@ -6,33 +6,38 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
 $evaluation_points = $_POST['evaluation_points'];
 $evaluation_total  = $_POST['evaluation_total'];
+$eval_date = $_POST['eval_date'];
+$eval_session = $_POST['eval_session'];
+$eval_examinor = $_POST['eval_examinor'];
+$eval_method = $_POST['eval_method'];
+
+// echo 'eval_method:' . $eval_method . '<br>';
 
 $evaluation_points = str_replace("\\", "", $evaluation_points);
-echo 'evaluation_points:' . $evaluation_points;
-echo 'evaluation_total:' . $evaluation_total;
 
-echo 'before:' . $manage;
+// echo 'evaluation_points:' . $evaluation_points;
+// echo 'evaluation_total:' . $evaluation_total;
+// echo '(eval_session:' . $eval_session . ')';
+
+
+$sql = "INSERT INTO `evaluation` (`id`, `dt`, `committee`, `examinor`, `method`, `score`) VALUES (NULL, '$eval_date', '$eval_session', '$eval_examinor', '$eval_method', '$evaluation_total')";
+$db->insert($sql);
+
+$sql = "SELECT MAX(id) FROM evaluation";
+$eval_id = $db->getValue($sql);
+
+echo $eval_id;
 
 $evaluation_points=str_replace('\\','',$evaluation_points);
 
 $jsonB=json_decode($evaluation_points, true);
 
-<<<<<<< HEAD
-echo 'manage:' . $manage;
-
-class Msg{
-    public $success='';
-    public $data='';
-}
-
-$msg=new Msg();
-$msg->success=true;
-$msg->data=$manage;
-
-
-=======
 foreach($jsonB as $key => $value){
-    echo $key." => ".$value;
+    // echo $key." => ".$value;
+    // $sql = "INSERT INTO evualtion (`dt`, `committee`, `examinor`, ``";
+    $sql = "INSERT INTO `eval_detail` (`id`, `eval_id`, `item`, `score`) VALUES (NULL, '$eval_id', '$key', '$value')";
+    $db->insert($sql);
+    // echo $sql;
 }
 
 // print_r($jsonB);
@@ -46,7 +51,6 @@ foreach($jsonB as $key => $value){
 //     public $success='';
 //     public $data='';
 // }
->>>>>>> da10629434110de76055e63cb1b8a9cd2a8a9896
 
 // $msg=new Msg();
 // $msg->success=true;

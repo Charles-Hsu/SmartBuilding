@@ -60,7 +60,7 @@
                             </div>
                             <div class="form-group row">
 								<label for="method-upload-label" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>辦法:</label>
+									<span class="important">*</span>會議記錄:</label>
 								<div class="col-md-9">
                                     <label for="method-upload" class="files-upload">
                                         <input name="method-upload" type="file" id="method-upload" class="form-control files-input" placeholder="點擊選擇欲辦法的檔案">

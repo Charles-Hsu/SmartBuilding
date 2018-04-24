@@ -103,9 +103,9 @@ $household = $db->getRow($sql);
 -->
 							<div class="form-group row">
 								<label for="household-area" class="text-right col-lg-6 col-md-3 col-form-label">
-									所屬大樓:</label>
+									門牌代碼:</label>
 								<div class="col-lg-6 col-md-9">
-                    				<input type="text" class="form-control" value="<?=$household['building'];?>" readonly>
+                    				<input type="text" class="form-control" value="<?=$household['short_id'];?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">

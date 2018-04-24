@@ -35,7 +35,7 @@ if (count($_POST) > 0) {
 			$db->insert($sql);
 			$url = "../files.php";
 			// $url = "https://www.stackoverflow.com";
-			// echo "<script>window.location='$url';</script>";
+			echo "<script>window.location='$url';</script>";
 	  	} else {
 			echo "There was an error uploading the file, please try again!";
 			$message = "檔案上傳失敗";
@@ -98,6 +98,7 @@ if (count($_POST) > 0) {
                                     </label>
 								</div>
 							</div>
+
 							<div class="form-group row">
 								<div class="col-md-9 offset-md-3">
 									<button class="btn assets-btn assets-add-btn">上傳</button>

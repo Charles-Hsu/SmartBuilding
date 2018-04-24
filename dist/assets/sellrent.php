@@ -35,17 +35,17 @@
 					<thead class="thead-light">
 						<tr>
 							<th>門號代碼</th>
-							<th>戶號</th>
-							<th>樓層</th>
+							<!-- <th>戶號</th>
+							<th>樓層</th> -->
 							<th>區權人</th>
 							<th>欠繳</th>
 							<th>紀錄</th>
-							<th>帶看</th>
+							<th>帶看費用</th>
 						</tr>
 					</thead>
 					<tbody>
 						<?php
-							$sql = 'SELECT a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
+							$sql = 'SELECT short_id,a.id AS id,building,addr_no,floor,b.name AS status,holder,resident,sellrent FROM household a, household_status b WHERE a.status = b.id';
 							$data = $db->getRows($sql);
 						?>
 						<?php
@@ -55,9 +55,9 @@
 								$s = $s['s'];
 						?>
 						<tr>
-							<td><span><?=$var[building]?></span></td>
-							<td><span><?=$var[addr_no]?></span></td>
-							<td><span><?=$var[floor]?></span></td>
+							<td><span><?=$var[short_id]?></span></td>
+							<!-- <td><span><?=$var[addr_no]?></span></td>
+							<td><span><?=$var[floor]?></span></td> -->
 							<td><span><?=$var[holder]?></span></td>
 							<td><span><?php echo number_format($s);?></span></td>
 							<td>

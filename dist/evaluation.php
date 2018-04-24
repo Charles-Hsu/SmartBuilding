@@ -51,6 +51,81 @@
 				<div class="col-lg-10">
 					<form class="evaluation-form" action="" method="POST">
 
+						<div class="form-group row">
+							<label for="builds-license" class="text-right col-md-2 col-form-label">
+								<span class="important">*</span>考核日期:
+							</label>
+							<div class="col-md-8">
+								<input type="text" class="form-control datepicker" name="eval-date" id="eval-date">
+							</div>
+						</div>
+
+						<!-- 第幾屆 -->
+						<div class="form-group row">
+							<label for="builds-name" class="text-right col-md-2 col-form-label">
+							<span class="important">*</span>管委屆別
+							</label>
+							<div class="col-md-8">
+								<select id="eval-session" class="form-control" name="eval-session"> <!--disabled>-->
+									<?php
+										$sql = "SELECT * FROM session";
+										$data = $db->getRows($sql);
+										$session=1;// 預設第一屆
+										foreach($data as $var) {
+									?>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+									<?php
+										}
+								?>
+								</select>
+							</div>
+						</div>
+						<!-- 第幾屆end -->
+
+						<!-- 考核人 -->
+						<div class="form-group row">
+							<label for="builds-name" class="text-right col-md-2 col-form-label">
+							<span class="important">*</span>考核人
+							</label>
+							<div class="col-md-8">
+								<select id="eval-examinor" class="form-control" name="eval-examinor"> <!--disabled>-->
+									<?php
+										$sql = "SELECT * FROM eval_examinor";
+										$data = $db->getRows($sql);
+										foreach($data as $var) {
+									?>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
+									<?php
+										}
+									?>
+								</select>
+							</div>
+						</div>
+						<!-- 考核人 -->
+
+						<!-- 評量方式 -->
+						<div class="form-group row">
+							<label for="builds-name" class="text-right col-md-2 col-form-label">
+							<span class="important">*</span>評量方式
+							</label>
+							<div class="col-md-8">
+								<select id="eval-method" class="form-control" name="eval-method"> <!--disabled>-->
+									<?php
+										$sql = "SELECT * FROM eval_method";
+										$data = $db->getRows($sql);
+										foreach($data as $var) {
+									?>
+									<option value="<?=$var['id'];?>"><?=$var['method'];?></option>
+									<?php
+										}
+									?>
+								</select>
+							</div>
+						</div>
+						<!-- 評量方式 -->
+
+
+
 						<!-- 標題 -->
 						<div class="evaluation-wrap w-100"></div>
 						<!-- 標題end -->
@@ -72,6 +147,28 @@
 </div>
 
 <script>
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+
+var yyyy = today.getFullYear();
+if(dd < 10){
+    dd = '0' + dd;
+}
+if(mm < 10){
+    mm = '0' + mm;
+}
+var today = yyyy + '-' + mm + '-' + dd;
+
+$(document).ready(function() {
+    $('#eval-date').attr("value", today);
+});
+
+
+</script>
+
+<script>
 var evaluationTitle=[
 	'1.公寓大廈一般事務管理服務類',
 	'2.建築物及基地之維護修繕',
@@ -83,20 +180,20 @@ var evaluationTitle=[
 ]
 var evaluationText=[
 	[
-		{sub_title:'1-1區分所有權人會議作業流程',radio_name:'1_1'},
-		{sub_title:'1-2管理委員會會議作業流程',radio_name:'1_2'},
-		{sub_title:'1-3管理服務人委任管理流程',radio_name:'1_3'},
-		{sub_title:'1-4管理服務人員訓練流程',radio_name:'1_4'},
-		{sub_title:'1-5公寓大廈管理組織申請報備流程',radio_name:'1_5'},
-		{sub_title:'1-6室內裝修管理',radio_name:'1_6'},
-		{sub_title:'1-7公文管理流程',radio_name:'1_7'},
-		{sub_title:'1-8共用鑰匙管理流程',radio_name:'1_8'},
-		{sub_title:'1-9掛號信件處理流程',radio_name:'1_9'},
-		{sub_title:'1-10住戶管理費催繳作業流程',radio_name:'1_10'},
-		{sub_title:'1-11住戶滿意度作業流程',radio_name:'1_11'},
-		{sub_title:'1-12住戶搬入遷出作業流程',radio_name:'1_12'},
-		{sub_title:'1-13住戶反映事項作業流程',radio_name:'1_13'},
-		{sub_title:'1-14社區財產作業流程',radio_name:'1_14'},
+		{sub_title:'1-1 區分所有權人會議作業流程',radio_name:'1_1'},
+		{sub_title:'1-2 管理委員會會議作業流程',radio_name:'1_2'},
+		{sub_title:'1-3 管理服務人委任管理流程',radio_name:'1_3'},
+		{sub_title:'1-4 管理服務人員訓練流程',radio_name:'1_4'},
+		{sub_title:'1-5 公寓大廈管理組織申請報備流程',radio_name:'1_5'},
+		{sub_title:'1-6 室內裝修管理',radio_name:'1_6'},
+		{sub_title:'1-7 公文管理流程',radio_name:'1_7'},
+		{sub_title:'1-8 共用鑰匙管理流程',radio_name:'1_8'},
+		{sub_title:'1-9 掛號信件處理流程',radio_name:'1_9'},
+		{sub_title:'1-10 住戶管理費催繳作業流程',radio_name:'1_10'},
+		{sub_title:'1-11 住戶滿意度作業流程',radio_name:'1_11'},
+		{sub_title:'1-12 住戶搬入遷出作業流程',radio_name:'1_12'},
+		{sub_title:'1-13 住戶反映事項作業流程',radio_name:'1_13'},
+		{sub_title:'1-14 社區財產作業流程',radio_name:'1_14'},
 	],
 	[
 		{sub_title:'2-1住戶違規處理作業流程',radio_name:'2_1'},
@@ -184,6 +281,7 @@ var str=`
 	</div>
 </div>
 `;
+
 var total_points=[];
 for(var i=0;i<evaluationTitle.length;i++){
 	strTitles='';
@@ -237,7 +335,11 @@ $('.evaluation-btn').on('click',function(e){
 		dataType:'json',
 		data:{
 			evaluation_points:JSON.stringify(arrObj),
-			evaluation_total:total_point
+			evaluation_total:total_point,
+			eval_date:$('#eval-date').val(),
+			eval_session:$('#eval-session').val(),
+			eval_examinor:$('#eval-examinor').val(),
+			eval_method:$('#eval-method').val(),
 		},
 		success:function(data){
 			try{
