@@ -985,6 +985,19 @@ tr.un_completed_red{
     bottom: 2px;
     left: 250px;
 }
+.uploaded_filed{
+    width: 100%;
+}
+span.files-name-box {
+    display: inline-block;
+    border: 1px solid #000;
+    width: 100%;
+    padding: .375rem .75rem;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    border-radius: .25rem;
+    color: #797979;
+}
 @media (max-width:992px){
     .container-fluid{
         width: calc(100% - 62px);
