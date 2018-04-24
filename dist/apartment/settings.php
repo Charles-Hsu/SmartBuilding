@@ -73,6 +73,37 @@
 					</div>
 
 					<div class="form-group row">
+						<label for="apartment-address" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
+							年終獎金提撥:
+						</label>
+						<input type="text"  class="form-contorl col-md-8 col-8" name="op-patrol-num" value="<?php
+						$d = 30000;  echo number_format($d); ?>">
+					</div>
+
+					<div class="form-group row">
+						<label for="apartment-address" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
+							工作績效獎金提撥:
+						</label>
+						<input type="text"  class="form-contorl col-md-8 col-8" name="op-patrol-num" value="<?php $d = 30000;  echo number_format($d); ?>">
+					</div>
+
+					<div class="form-group row">
+						<label for="apartment-address" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
+							年終底標考核分數設定:
+						</label>
+						<input type="text"  class="form-contorl col-md-8 col-8" name="op-patrol-num" value="<?php echo number_format(75, 0); ?>">
+					</div>
+
+					<div class="form-group row">
+						<label for="apartment-address" class="col-md-4 col-sm-4 col-form-label text-right pr-3">
+							工作績效底標考核分數設定:
+						</label>
+						<input type="text"  class="form-contorl col-md-8 col-8" name="op-patrol-num" value="<?php echo number_format(80, 0); ?>">
+					</div>
+
+
+
+					<div class="form-group row">
 						<div class="col-md-8 offset-md-4 col-12">
 							<button class="btn btn-primary">更新資料</button>
 						</div>

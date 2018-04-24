@@ -98,7 +98,7 @@ if (count($_POST) > 0) {
 			</ul>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="./announcement.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<a href="./regulation.php" class="assets-create-icon fas fa-chevron-left"></a>
 					<span>新增管理辦法</span> <!--回上一頁'資產管理'-->
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">

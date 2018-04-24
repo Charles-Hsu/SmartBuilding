@@ -11,6 +11,9 @@ $eval_session = $_POST['eval_session'];
 $eval_examinor = $_POST['eval_examinor'];
 $eval_method = $_POST['eval_method'];
 
+// INSERT INTO eval_item (`id`, `category`, `item`, `description`) VALUES (NULL, 7, 5, '社區櫃台作業流程:代辦事項')
+
+
 // echo 'eval_method:' . $eval_method . '<br>';
 
 $evaluation_points = str_replace("\\", "", $evaluation_points);
@@ -37,7 +40,7 @@ foreach($jsonB as $key => $value){
     // $sql = "INSERT INTO evualtion (`dt`, `committee`, `examinor`, ``";
     $sql = "INSERT INTO `eval_detail` (`id`, `eval_id`, `item`, `score`) VALUES (NULL, '$eval_id', '$key', '$value')";
     $db->insert($sql);
-    // echo $sql;
+    echo $sql;
 }
 
 // print_r($jsonB);
