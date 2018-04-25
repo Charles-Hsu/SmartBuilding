@@ -54,7 +54,7 @@
 				</div>
 
 
-				<table class="table asset-table">
+				<table class="table non-asset-table">
 					<thead class="thead-light">
 						<tr>
 							<th>年度</th>
@@ -101,6 +101,7 @@
 							<th>考核對象</th>
 							<th>考核次數</th>
 							<th>平均分數</th>
+							<th>考績</th>
 							<th>績效獎金</th>
 						</tr>
 					</thead>
@@ -111,10 +112,13 @@
 					<tbody>
 						<?php
 							$sql = "SELECT performance_bonus FROM `apartment_settings`";
-							$bonus = $db->getValue($sql);
+							$performance_bonus = $db->getValue($sql);
 							// echo "bonus = $bonus";
 
 							$sql = "SELECT YEAR(dt) AS y, AVG(score) AS avg, b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND b.id != 0 GROUP BY b.id";
+
+							$sql = "SELECT year(dt) AS y,avg(a.score) AS avg ,count(*) AS n,b.id,b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND a.tested_staff_id = b.id and b.id != 0 group by b.id, b.name
+							";
 
 
 							// echo $sql;
@@ -126,8 +130,64 @@
 							<td><span><?php echo $var['name']; ?></span></td>
 							<td><span><?php echo $var['n']; ?></span></td>
 							<td><span><?php echo number_format($var['avg'],1); ?></span></td>
-							<td><span><?php if($var['avg'] < 80) {$bonus = 0;} echo number_format($bonus,0); ?></span></td>
-
+							<td>
+								<span>
+									<?php
+										// $sql = "SELECT performance_bonus FROM `apartment_settings`";
+										// $bonus = $db->getValue($sql);
+										// if((int)$var['avg'] < 80) {
+										// 	$bonus = 0;
+										// }
+										$v = (int)$var['avg'];
+										// echo number_format($v,0);
+										// echo number_format($bonus,0);
+										$percentage = 0;
+										if ($v >= 95) {
+											// echo "big";
+											echo 'A';
+											$percentage = 1;
+										} else if ($v >= 90) {
+											echo 'B';
+											$percentage = 0.8;
+										} else if ($v >= 85) {
+											echo 'C';
+											$percentage = 0.6;
+										} else if ($v >= 80) {
+											echo 'D';
+											$percentage = 0.4;
+										} else {
+											echo 'E';
+											$percentage = 0.0;
+										}
+										// echo number_format($bonus,0);
+										// echo number_format($bonus,1);
+									?>
+								</span>
+							</td>
+							<td>
+								<span>
+									<?php
+										// $sql = "SELECT performance_bonus FROM `apartment_settings`";
+										// $bonus = $db->getValue($sql);
+										// if((int)$var['avg'] < 80) {
+										// 	$bonus = 0;
+										// }
+										// $v = (int)$var['avg'];
+										// echo number_format($v,0);
+										// echo number_format($bonus,0);
+										$bonus = $performance_bonus * $percentage;
+										// if ($v > 80) {
+										// 	// echo "big";
+										// 	$bonus = $performance_bonus;
+										// } else {
+										// 	// echo "small";
+										// 	$bonus = 0;
+										// }
+										echo number_format($bonus,0);
+										// echo number_format($bonus,1);
+									?>
+								</span>
+							</td>
 						</tr>
 						<?php
 							}
