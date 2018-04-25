@@ -32,27 +32,29 @@
 					<span>+</span>作業紀錄
 				</a>
 
-				<form action="" method="POST">
-					<div>
-						<?php if($range==1) {$checked = "checked";} else {$checked = "";}?>
-						<input type="radio" name="range" value="1" <?php echo $checked;?>>當天
-					</div>
-					<div>
-						<?php if($range==3) {$checked = "checked";} else {$checked = "";}?>
-						<input type="radio" name="range" value="3" <?php echo $checked;?>>三天
-					</div>
-					<div>
-						<?php if($range==7) {$checked = "checked";} else {$checked = "";}?>
-						<input type="radio" name="range" value="7" <?php echo $checked;?>>當週
-					</div>
-					<div>
-						<?php if($range==31) {$checked = "checked";} else {$checked = "";}?>
-						<input type="radio" name="range" value="31" <?php echo $checked;?>>一個月
-					</div>
-					<div>
-						<span>
-							<input type="submit" value="確認">
-						</span>
+				<form action="" method="POST" class="mb-3">
+					<div class="from-group d-flex ml-3 align-items-center">
+						<div class="form-check mr-3">
+							<?php if($range==1) {$checked = "checked";} else {$checked = "";}?>
+							<input type="radio" id="today" class="form-check-input" name="range" value="1" <?php echo $checked;?>>
+							<label for="today" class="form-check-label">當天</label>
+						</div>
+						<div class="form-check mr-3">
+							<?php if($range==3) {$checked = "checked";} else {$checked = "";}?>
+							<input type="radio" id="three" class="form-check-input" name="range" value="3" <?php echo $checked;?>>
+							<label for="three" class="form-check-label">三天</label>
+						</div>
+						<div class="form-check mr-3">
+							<?php if($range==7) {$checked = "checked";} else {$checked = "";}?>
+							<input type="radio" id="week" class="form-check-input" name="range" value="7" <?php echo $checked;?>>
+							<label for="week" class="form-check-label">當週</label>
+						</div>
+						<div class="form-check mr-3">
+							<?php if($range==31) {$checked = "checked";} else {$checked = "";}?>
+							<input type="radio" id="month" class="form-check-input" name="range" value="31" <?php echo $checked;?>>
+							<label for="month" class="form-check-label">一個月</label>
+						</div>
+						<input type="submit" class="btn btn-primary px-3 py-1" value="確認">
 					</div>
 				</form>
 				<table class="table asset-table">

@@ -127,32 +127,22 @@ if (count($_POST) > 0) {
 									<span class="important">*</span>公告日期:
 								</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control datepicker" name="post-date" id="post-date" value="<?php echo $data['date'];?>" readonly>
+									<input type="text" class="form-control" name="post-date" id="post-date" value="<?php echo $data['date'];?>" readonly>
 								</div>
 							</div>
                             <div class="form-group row">
 								<label for="assets-no" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>公告標題:</label>
 								<div class="col-md-9">
-                                    <input type="text" name="post-content"  value="<?php echo $data['content'];?>" readonly>
+                                    <input type="text" class="form-control" name="post-content"  value="<?php echo $data['content'];?>" readonly>
                                 </div>
 							</div>
-
-
-                            <!-- <div class="form-group row">
-								<label for="assets-no" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>上傳檔案:</label>
-								<div class="col-md-9">
-                                    <textarea rows="3" cols="48" name="post-content" form="post-create-form" placeholder="限 PDF 或圖片檔..."></textarea>
-                                </div>
-							</div> -->
-
 
 							<div class="form-group row">
 								<label for="files-upload-label" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>附加檔案:</label>
 								<div class="col-md-9">
-                                    <label for="uploaded_file" class="uploaded_file">
+                                    <label for="uploaded_file" class="uploaded_file w-100">
                                         <input name="uploaded_file" type="file" id="uploaded_file" class="form-control files-input">
 										<!-- <input type="file" name="uploaded_file" class="uploaded_file">></input> -->
                                         <span class="files-name-box">
@@ -179,36 +169,6 @@ if (count($_POST) > 0) {
 	</div>
 </div>
 
-
-<script>
-    // $('#uploaded_file').on('change',function(){
-    //     var _name=$('#uploaded_file').val().split('\\')[$('#uploaded_file').val().split('\\').length-1];
-    //     $('.files-name').text(_name)
-    // })
-</script>
-
-<script>
-
-// var today = new Date();
-// var dd = today.getDate();
-// var mm = today.getMonth()+1; //January is 0!
-
-// var yyyy = today.getFullYear();
-// if(dd < 10){
-//     dd = '0' + dd;
-// }
-// if(mm < 10){
-//     mm = '0' + mm;
-// }
-// var today = yyyy + '-' + mm + '-' + dd;
-
-// $(document).ready(function() {
-//     $('#post-date').attr("value", today);
-// });
-
-
-
-</script>
 <?php
 include(Document_root.'/Footer.php');
 ?>

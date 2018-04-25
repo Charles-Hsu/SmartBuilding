@@ -50,7 +50,7 @@
 								<label for="proposal-upload-label" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>提案:</label>
 								<div class="col-md-9">
-                                    <label for="proposal-upload" class="files-upload">
+                                    <label for="proposal-upload" class="uploaded_file w-100">
                                         <input name="proposal-upload" type="file" id="proposal-upload" class="form-control files-input" placeholder="點擊選擇欲提案的檔案">
                                         <span class="files-name-box">
                                             <span class="files-name">點擊選擇欲提案的檔案</span>
@@ -62,7 +62,7 @@
 								<label for="method-upload-label" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>會議記錄:</label>
 								<div class="col-md-9">
-                                    <label for="method-upload" class="files-upload">
+                                    <label for="method-upload" class="uploaded_file w-100">
                                         <input name="method-upload" type="file" id="method-upload" class="form-control files-input" placeholder="點擊選擇欲辦法的檔案">
                                         <span class="files-name-box">
                                             <span class="files-name">點擊選擇欲辦法的檔案</span>
@@ -74,7 +74,7 @@
 								<label for="announce-upload-label" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>公告:</label>
 								<div class="col-md-9">
-                                    <label for="announce-upload" class="files-upload">
+                                    <label for="announce-upload" class="uploaded_file w-100">
                                         <input name="announce-upload" type="file" id="announce-upload" class="form-control files-input" placeholder="點擊選擇欲公告的檔案">
                                         <span class="files-name-box">
                                             <span class="files-name">點擊選擇欲公告的檔案</span>

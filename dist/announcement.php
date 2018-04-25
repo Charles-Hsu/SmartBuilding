@@ -77,12 +77,12 @@
 							foreach($data as $var) {
 						?>
 						<tr>
-							<td class="announ-date"><span><?=$var['date'];?></span></td>
-							<td class="announ-content"><input type="text" class="form-control" value="<?=$var['content'];?>" readonly></td>
+							<td width="100px" class="announ-date" width="130px"><span><?=$var['date'];?></span></td>
+							<td class="announ-content"><?=$var['content'];?></td>
 							<?php
 								if ($_isAdmin) {
 							?>
-							<td><a href="./announcement-edit.php?id=<?php echo $var[id]; ?>">編輯</a></td>
+							<td width="70px"><a href="./announcement-edit.php?id=<?php echo $var[id]; ?>" class="btn btn-primary">編輯</a></td>
 							<!-- <td class="announ-edit" data-id="<?= $var[id] ?>"><a href="#" class="btn btn-primary btn-announEdit">編輯</a></td>
 							<td class="announ-del"><a href="#" data-id="<?= $var[id] ?>" class="btn btn-danger btn-announDel">刪除</a></td> -->
 							<?php
@@ -120,6 +120,7 @@ $('.asset-table').DataTable({
 	"deferRender": true,
 	"processing": true,
     "order": [[0, 'desc']],
+
     //"order": [[0, 'asc']],
 })
 

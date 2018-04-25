@@ -81,7 +81,7 @@
 							<td><span><?php echo $var['name']; ?></span></td>
 							<td><span><?php echo $var['examinor']; ?></span></td>
 							<td><span><?php echo $var['score']; ?></span></td>
-							<td><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>">檢視</a></span></td>
+							<td><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>" class="btn btn-primary">檢視</a></span></td>
 						</tr>
 						<?php
 							}

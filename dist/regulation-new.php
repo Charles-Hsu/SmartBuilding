@@ -119,7 +119,7 @@ if (count($_POST) > 0) {
 								<label for="post-content" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>標題:</label>
 								<div class="col-md-9">
-                                    <input type="text" name="post-content" id="post-content" placeholder="輸入管理辦法主旨...">
+                                    <input type="text" name="post-content" id="post-content" class="form-control" placeholder="輸入管理辦法主旨...">
                                 </div>
 							</div>
 
@@ -127,7 +127,7 @@ if (count($_POST) > 0) {
 								<label for="files-upload-label" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>選擇檔案:</label>
 								<div class="col-md-9">
-                                    <label for="uploaded_file" class="uploaded_file">
+                                    <label for="uploaded_file" class="uploaded_file w-100">
                                         <input name="uploaded_file" type="file" id="uploaded_file" class="form-control files-input">
 										<!-- <input type="file" name="uploaded_file" class="uploaded_file">></input> -->
                                         <span class="files-name-box">

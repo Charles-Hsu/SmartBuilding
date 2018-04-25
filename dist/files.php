@@ -38,7 +38,7 @@
 							<td><span><?php echo $var['desc']; ?></span></td>
 							<td><span><?php echo $var['path']; ?></span></td>
 							<!-- <td><a href="<?php echo $var['id']/$var['path']; ?>" class="btn btn-primary" download>開啟檔案</a></td> -->
-							<td><a href="<?php echo "files/". $var['id'] . "/" . $var['path'];   ?>">開啟檔案</a></td>
+							<td><a href="<?php echo "files/". $var['id'] . "/" . $var['path'];   ?>" class="btn btn-primary">開啟檔案</a></td>
 						</tr>
 						<?php
 							}
