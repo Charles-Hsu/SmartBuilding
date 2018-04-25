@@ -61,7 +61,7 @@
 							<th>考核人</th>
 							<th>評量方式</th>
 							<th>總分</th>
-							<th>詳細內容</th>
+							<th class="text-center">詳細內容</th>
 						</tr>
 					</thead>
 
@@ -81,7 +81,7 @@
 							<td><span><?php echo $var['name']; ?></span></td>
 							<td><span><?php echo $var['examinor']; ?></span></td>
 							<td><span><?php echo $var['score']; ?></span></td>
-							<td><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>" class="btn btn-primary">檢視</a></span></td>
+							<td width="120px" class="text-center"><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>" class="btn btn-primary">檢視</a></span></td>
 						</tr>
 						<?php
 							}
@@ -97,11 +97,10 @@
 <script>
 
 $('.asset-table').DataTable({
+	"columnDefs": [
+		{ "orderable": false, "targets": 5},
+    ],
 	"language": {
-        "columnDefs": [
-            { "searchable": false, "targets": 1 },
-            { "searchable": false, "targets": 2 },
-        ],
 		"search": "搜尋_INPUT_",
 		"searchPlaceholder": "搜尋文件名稱...",
 		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
