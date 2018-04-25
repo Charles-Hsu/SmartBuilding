@@ -13,7 +13,9 @@
 <?php
 
 $post_id = $_GET['id'];
-$sql = "SELECT * FROM ";
+$sql = "SELECT date,content FROM post WHERE id = $post_id";
+$data = $db->getRow($sql);
+// var_dump($data);
 
 
 if (count($_POST) > 0) {
@@ -125,14 +127,14 @@ if (count($_POST) > 0) {
 									<span class="important">*</span>公告日期:
 								</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control datepicker" name="post-date" id="post-date" readonly>
+									<input type="text" class="form-control datepicker" name="post-date" id="post-date" value="<?php echo $data['date'];?>" readonly>
 								</div>
 							</div>
                             <div class="form-group row">
 								<label for="assets-no" class="text-right col-md-3 col-form-label">
 									<span class="important">*</span>公告標題:</label>
 								<div class="col-md-9">
-                                    <input type="text" name="post-content" placeholder="輸入公告標題...">
+                                    <input type="text" name="post-content"  value="<?php echo $data['content'];?>" readonly>
                                 </div>
 							</div>
 
@@ -179,30 +181,30 @@ if (count($_POST) > 0) {
 
 
 <script>
-    $('#uploaded_file').on('change',function(){
-        var _name=$('#uploaded_file').val().split('\\')[$('#uploaded_file').val().split('\\').length-1];
-        $('.files-name').text(_name)
-    })
+    // $('#uploaded_file').on('change',function(){
+    //     var _name=$('#uploaded_file').val().split('\\')[$('#uploaded_file').val().split('\\').length-1];
+    //     $('.files-name').text(_name)
+    // })
 </script>
 
 <script>
 
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
+// var today = new Date();
+// var dd = today.getDate();
+// var mm = today.getMonth()+1; //January is 0!
 
-var yyyy = today.getFullYear();
-if(dd < 10){
-    dd = '0' + dd;
-}
-if(mm < 10){
-    mm = '0' + mm;
-}
-var today = yyyy + '-' + mm + '-' + dd;
+// var yyyy = today.getFullYear();
+// if(dd < 10){
+//     dd = '0' + dd;
+// }
+// if(mm < 10){
+//     mm = '0' + mm;
+// }
+// var today = yyyy + '-' + mm + '-' + dd;
 
-$(document).ready(function() {
-    $('#post-date').attr("value", today);
-});
+// $(document).ready(function() {
+//     $('#post-date').attr("value", today);
+// });
 
 
 
