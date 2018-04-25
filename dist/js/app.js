@@ -22,6 +22,37 @@ function getTodayTime(){
 var findIP = new Promise(r=>{var w=window,a=new (w.RTCPeerConnection||w.mozRTCPeerConnection||w.webkitRTCPeerConnection)({iceServers:[]}),b=()=>{};a.createDataChannel("");a.createOffer(c=>a.setLocalDescription(c,b,b),b);a.onicecandidate=c=>{try{c.candidate.candidate.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g).forEach(r)}catch(e){}}})
 findIP.then( ip => document.getElementById('ip_address').value=ip ).catch(e => console.error(e))
 
+function dragElement(elmnt){
+    var pos1=0,pos2=0,pos3=0,pos4=0;
+    if(document.getElementById(elmnt.id+'-header')){
+        document.getElementById(elmnt.id+'-header').onmousedown=dragMouseDown;
+    }else{
+        elmnt.onmousedown=dragMouseDown;
+        console.log(123)
+    }
+
+
+    function dragMouseDown(e){
+        e=e||window.event;
+        pos3=e.clientX;
+        pos4=e.clientY;
+        document.onmouseup=closeDragElement;
+        document.onmousemove=elementDrag;
+    }
+    function elementDrag(e){
+        e=e||window.event;
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+    function closeDragElement(){
+        document.onmouseup=null;
+        document.onmousemove=null;
+    }
+}
 
 $(function(){
     $('.slide-toggle-btn').on('click',function(){

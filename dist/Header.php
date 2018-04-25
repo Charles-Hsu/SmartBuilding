@@ -22,6 +22,7 @@
     <script src="<?= $urlName ?>/js/dataTables.bootstrap4.min.js"></script>
     <script src="<?= $urlName ?>/js/jquery.cxcalendar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+	<script src="<?php echo $urlName; ?>/js/app.js?<?php echo time(); ?>"></script>
 </head>
 
 <?php

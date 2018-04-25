@@ -113,30 +113,45 @@
 									<input readonly type="text" class="form-control" name="orgstaff-company" id="orgstaff-company" value="<?=$staff['corp_name'];?>">
 								</div>
 							</div>
+							
 							<div class="form-group row">
 								<label for="orgstaff-company" class="text-right col-md-4 col-form-label">
 									證照:
 								</label>
-								<div class="col-md-8">
-									<input type="text" value="用打勾的跳頁顯示數量(良民證)">
-									<!-- <select id="innerswim-reply" class="form-control" name="license">
-										<?php
-											$sql = "SELECT * FROM license_type";
-											$data = $db->getRows($sql);
+								<div class="col-md-8 d-flex align-items-center">
+									<div class="license-edit">
+										無
+									</div>
+								</div>
+							</div>
 
-											foreach($data as $var) {
-												echo "var[id]=" . $var['id'];
-												echo "staff[license]=" . $staff['license'];
-												$selected = "";
-												if ($var['id'] == $staff['license']) {
-													$selected = "selected";
+							<div class="form-group row">
+								<label for="orgstaff-company" class="text-right col-md-4 col-form-label">
+									良民證:
+								</label>
+								<div class="col-md-8 d-flex align-items-center">
+									<div class="form-check">
+										<input type="checkbox" id="pcc" name="pcc" class="form-check-input" value="用打勾的跳頁顯示數量(良民證)" checked disabled>
+										<!-- <select id="innerswim-reply" class="form-control" name="license">
+											<?php
+												$sql = "SELECT * FROM license_type";
+												$data = $db->getRows($sql);
+
+												foreach($data as $var) {
+													echo "var[id]=" . $var['id'];
+													echo "staff[license]=" . $staff['license'];
+													$selected = "";
+													if ($var['id'] == $staff['license']) {
+														$selected = "selected";
+													}
+											?>
+											<option <?php echo $selected;?> value="<?=$var['id'];?>"><?=$var['type'];?></option>
+											<?php
 												}
-										?>
-										<option <?php echo $selected;?> value="<?=$var['id'];?>"><?=$var['type'];?></option>
-										<?php
-											}
-										?>
-									</select> -->
+											?>
+										</select> -->
+										<label class="form-check-label" for="pcc">良明證</label>
+									</div>
 								</div>
 							</div>
 							<div class="form-group row">

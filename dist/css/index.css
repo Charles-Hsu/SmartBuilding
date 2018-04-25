@@ -1004,6 +1004,61 @@ span.files-name-box {
     border-radius: .25rem;
     color: #797979;
 }
+#my-license {
+    position: absolute;
+    z-index: 9;
+    background-color: #f1f1f1;
+    text-align: center;
+    border: 1px solid #d3d3d3;
+    top: 20%;
+    left: 50%;
+    width: 600px;
+    display: none;
+}
+
+#my-license-header {
+    padding: 10px;
+    cursor: move;
+    z-index: 10;
+    background-color: #2196F3;
+    color: #fff;
+}
+.license-list{
+    padding: .5rem;
+}
+.license-list .form-check-inline{
+    flex-basis: calc(100% / 3);
+}
+.my-license-type .title{
+    background-color: #d4d4d4;
+    color: #000;
+}
+.license-box{
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: .5rem;
+}
+.license-edit {
+    border: 1px solid #ccc;
+    padding: .35rem;
+    width: 100%;
+    border-radius: 4px;
+}
+.license-box span{
+    display: inline-block;
+    border-radius: 6px;
+    margin-right: .5rem;
+    height: 23px;
+}
+.license-box span.license-name{
+    padding: .25rem;
+    display: inline-block;
+    border: 1px solid #969696;
+    border-radius: 6px;
+    margin-right: .5rem;
+    height: auto;
+    margin-bottom: .5rem;
+}
 @media (max-width:992px){
     .container-fluid{
         width: 100%;
