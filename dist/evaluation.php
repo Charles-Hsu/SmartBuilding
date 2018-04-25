@@ -48,7 +48,10 @@
 		<div class="files-wrapper">
 			<div id="assets-tab">
 				<a href="./evaluation-new.php" class="btn add-asset-btn mb-3">
-					<span>+</span>新增品管考核作業
+					<span>+</span>團隊考核
+				</a>
+				<a href="./evaluation-new.php" class="btn add-asset-btn mb-3">
+					<span>+</span>個人考核
 				</a>
 				<a href="./evaluation-bonus.php" class="btn add-asset-btn mb-3">
 					<span>+</span>獎金提撥
