@@ -66,7 +66,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div id="assets-tab" class="w-100">
+				<div id="assets-tab" class="w-100 px-3">
 					<table class="table asset-table">
 						<thead class="thead-light">
 							<tr>
