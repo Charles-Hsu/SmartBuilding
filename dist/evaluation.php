@@ -61,7 +61,7 @@
 							<th>考核人</th>
 							<th>評量方式</th>
 							<th>總分</th>
-							<th class="text-center">詳細內容</th>
+							<th class="text-center">內容</th>
 						</tr>
 					</thead>
 

@@ -144,24 +144,27 @@ foreach($data as $var) {
 									<input type="text" class="form-control datepicker" name="orgstaff-toworkdate" id="orgstaff-toworkdate">
 								</div>
 							</div>
-<!--
+
+
 							<div class="form-group row">
-								<label for="orgstaff-traindate" class="text-right col-md-4 col-form-label">
-									在職訓練完成日期:
+								<label for="orgstaff-toworkdate" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>專業證照:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="orgstaff-traindate" id="orgstaff-traindate">
+									<input type="text" class="form-control" name="orgstaff-toworkdate" id="orgstaff-toworkdate">
 								</div>
 							</div>
+
 							<div class="form-group row">
-								<label for="orgstaff-resigned" class="text-right col-md-4 col-form-label">
-									離職日:
+								<label for="orgstaff-toworkdate" class="text-right col-md-4 col-form-label">
+									<span class="important">*</span>良民證:
 								</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control datepicker" name="orgstaff-resigned" id="orgstaff-resigned">
+									<input type="text" class="form-control" name="orgstaff-toworkdate" id="orgstaff-toworkdate">
 								</div>
 							</div>
--->
+
+
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
 									<button class="btn btn-outline-secondary">新增</button>
