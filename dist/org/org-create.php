@@ -8,6 +8,14 @@
 	}
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 	$_isAdmin = $_SESSION['admin'];
+
+	if (COUNT($_POST)) {
+		var_dump($_POST);
+		// echo $_POST['property-manage_a'];
+		// echo $_POST['property-manage_b'];
+	}
+
+
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -183,15 +191,15 @@ foreach($data as $var) {
 									<div class="title">物業管理類</div>
 									<div class="license-list d-flex flex-wrap">
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="property-manage_a" class="form-check-input" name="property-manage" value="property-manage_a">
+											<input type="checkbox" id="property-manage_a" class="form-check-input" name="property-manage[]" value="property-manage_a">
 											<label for="property-manage_a" class="mb-0">事務管理人員</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="property-manage_b" class="form-check-input" name="property-manage" value="property-manage_b">
+											<input type="checkbox" id="property-manage_b" class="form-check-input" name="property-manage[]" value="property-manage_b">
 											<label for="property-manage_b" class="mb-0">防火避難設施管理人</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="property-manage_c" class="form-check-input" name="property-manage" value="property-manage_c">
+											<input type="checkbox" id="property-manage_c" class="form-check-input" name="property-manage[]" value="property-manage_c">
 											<label for="property-manage_c" class="mb-0">設備安全管理人員</label>
 										</div>
 									</div>
@@ -200,47 +208,47 @@ foreach($data as $var) {
 									<div class="title">機電類</div>
 									<div class="license-list d-flex flex-wrap">
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_a" class="form-check-input" name="elect" value="elect_a">
+											<input type="checkbox" id="elect_a" class="form-check-input" name="elect[]" value="elect_a">
 											<label for="elect_a" class="mb-0">電匠</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_b" class="form-check-input" name="elect" value="elect_b">
+											<input type="checkbox" id="elect_b" class="form-check-input" name="elect[]" value="elect_b">
 											<label for="elect_b" class="mb-0">冷凍空調</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_c" class="form-check-input" name="elect" value="elect_c">
+											<input type="checkbox" id="elect_c" class="form-check-input" name="elect[]" value="elect_c">
 											<label for="elect_c" class="mb-0">水匠</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_d" class="form-check-input" name="elect" value="elect_d">
+											<input type="checkbox" id="elect_d" class="form-check-input" name="elect[]" value="elect_d">
 											<label for="elect_d" class="mb-0">工業配線</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_e" class="form-check-input" name="elect" value="elect_e">
+											<input type="checkbox" id="elect_e" class="form-check-input" name="elect[]" value="elect_e">
 											<label for="elect_e" class="mb-0">室內配線</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_f" class="form-check-input" name="elect" value="elect_f">
+											<input type="checkbox" id="elect_f" class="form-check-input" name="elect[]" value="elect_f">
 											<label for="elect_f" class="mb-0">工業電子</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_g" class="form-check-input" name="elect" value="elect_g">
+											<input type="checkbox" id="elect_g" class="form-check-input" name="elect[]" value="elect_g">
 											<label for="elect_g" class="mb-0">鍋爐操作</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_h" class="form-check-input" name="elect" value="elect_h">
+											<input type="checkbox" id="elect_h" class="form-check-input" name="elect[]" value="elect_h">
 											<label for="elect_h" class="mb-0">高壓氣體</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_i" class="form-check-input" name="elect" value="elect_i">
+											<input type="checkbox" id="elect_i" class="form-check-input" name="elect[]" value="elect_i">
 											<label for="elect_i" class="mb-0">壓力容器</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_j" class="form-check-input" name="elect" value="elect_j">
+											<input type="checkbox" id="elect_j" class="form-check-input" name="elect[]" value="elect_j">
 											<label for="elect_j" class="mb-0">消防設備士(師)</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_k" class="form-check-input" name="elect" value="elect_k">
+											<input type="checkbox" id="elect_k" class="form-check-input" name="elect[]" value="elect_k">
 											<label for="elect_k" class="mb-0">汙廢水操作人員</label>
 										</div>
 									</div>
