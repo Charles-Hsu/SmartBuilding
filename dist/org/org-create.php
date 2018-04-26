@@ -185,6 +185,7 @@ foreach($data as $var) {
 								</div>
 							</div>
 
+							<!-- 證照列表 -->
 							<div id="my-license">
 								<div id="my-license-header">專業證照列表選單</div>
 								<div class="my-license-type">
@@ -271,6 +272,9 @@ foreach($data as $var) {
 									<button class="license-btn btn btn-secondary px-5 py-1">確定</button>
 								</div>
 							</div>
+							<!-- 證照取消 -->
+
+
 						</form>
 					</div>
 				</div>
@@ -300,11 +304,11 @@ foreach($data as $var) {
 		$('.license-box').html('')
 		$('#my-license').find('input:checkbox').each(function(index,item){
 			if($(this).prop('checked') == true){
-				licenseArr.push($(this).next('label').text())
+				licenseArr.push({value:$(this).val(),name:$(this).next('label').text()})
 			}
 		})
 		for(var i=0;i<licenseArr.length;i++){
-			$('.license-box').append(`<span class="license-name">${licenseArr[i]}</span>`)
+			$('.license-box').append(`<span class="license-name" data-title="${licenseArr[i].value}">${licenseArr[i].name}</span>`)
 		}
 		$('#my-license').hide();
 	})
