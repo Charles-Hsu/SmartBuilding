@@ -36,22 +36,28 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
+        <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+        </li>
 				<?php
 					}
 				?>
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
-                </li>
 			</ul>
 		</div>
+
+<!-- <div>
+
+SELECT a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name AS examinor FROM evaluation a, staff b, eval_period c, eval_examinor d WHERE a.tested_staff_id = b.id AND c.id = a.eval_period AND d.id = a.examinor;
+</div> -->
+
 
 		<div class="files-wrapper">
 			<div id="assets-tab">
 				<a href="./evaluation-new.php" class="btn add-asset-btn mb-3">
 					<span>+</span>團隊考核
 				</a>
-				<a href="./evaluation-new.php" class="btn add-asset-btn mb-3">
-					<span>+</span>個人考核
+				<a href="./evaluation-new-2.php" class="btn add-asset-btn mb-3">
+					<span>+</span>個人績效
 				</a>
 				<a href="./evaluation-bonus.php" class="btn add-asset-btn mb-3">
 					<span>+</span>獎金提撥
@@ -61,6 +67,7 @@
 						<tr>
 							<th>考核日期</th>
 							<th>管委屆別</th>
+							<th>受評人</th>
 							<th>考核人</th>
 							<th>評量方式</th>
 							<th>總分</th>
@@ -73,7 +80,8 @@
 
 					<tbody>
 						<?php
-							$sql = "SELECT a.id, a.dt, b.name AS committee, c.name, d.method AS examinor, a.score FROM evaluation a, session b, eval_examinor c, eval_method d WHERE a.committee=b.id AND a.examinor = c.id AND a.method = d.id";
+							$sql = "SELECT a.id, a.dt, b.name AS committee, c.name, d.name AS examinor, a.score FROM evaluation a, session b, eval_examinor c, eval_period d WHERE a.committee=b.id AND a.examinor = c.id AND a.eval_period = d.id";
+							$sql = "SELECT a.id, a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name AS examinor FROM evaluation a, staff b, eval_type c, eval_examinor d WHERE a.target_id = b.id AND c.id = a.eval_type AND d.id = a.examinor";
 							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
@@ -83,6 +91,7 @@
 							<td><span><?php echo $var['committee']; ?></span></td>
 							<td><span><?php echo $var['name']; ?></span></td>
 							<td><span><?php echo $var['examinor']; ?></span></td>
+							<td><span><?php echo $var['period']; ?></span></td>
 							<td><span><?php echo $var['score']; ?></span></td>
 							<td width="120px" class="text-center"><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>" class="btn btn-primary">檢視</a></span></td>
 						</tr>

@@ -35,12 +35,12 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
-				<?php
-					}
-				?>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
                 </li>
+				<?php
+					}
+				?>
 			</ul>
             <?php
                 $sql = "SELECT * FROM apartment_settings";

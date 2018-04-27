@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+
 <?php
 	include('./config.php');
 	include('./Header.php');
@@ -87,12 +88,12 @@ if (count($_POST) > 0) {
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
-				<?php
-					}
-				?>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
                 </li>
+				<?php
+					}
+				?>
 			</ul>
 			<?php
 				if (count($_POST) > 0) {

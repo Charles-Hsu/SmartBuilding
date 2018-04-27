@@ -9,6 +9,7 @@
 	$_isAdmin = $_SESSION['admin'];
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 ?>
+
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
@@ -35,73 +36,101 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+        </li>
 				<?php
 					}
 				?>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
-                </li>
 			</ul>
-			<div id="assets-tab">
-				<div class="row justify-content-lg-start justify-content-center">
-					<div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-12">
-						<form class="assets-create-form" action="" method="POST" enctype="multipart/form-data">
-							<div class="form-group row">
-								<label for="proposal-upload-label" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>提案:</label>
-								<div class="col-md-9">
-                                    <label for="proposal-upload" class="uploaded_file w-100">
-                                        <input name="proposal-upload" type="file" id="proposal-upload" class="form-control files-input" placeholder="點擊選擇欲提案的檔案">
-                                        <span class="files-name-box">
-                                            <span class="files-name">點擊選擇欲提案的檔案</span>
-                                        </span>
-                                    </label>
-								</div>
-                            </div>
-                            <div class="form-group row">
-								<label for="method-upload-label" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>會議記錄:</label>
-								<div class="col-md-9">
-                                    <label for="method-upload" class="uploaded_file w-100">
-                                        <input name="method-upload" type="file" id="method-upload" class="form-control files-input" placeholder="點擊選擇欲辦法的檔案">
-                                        <span class="files-name-box">
-                                            <span class="files-name">點擊選擇欲辦法的檔案</span>
-                                        </span>
-                                    </label>
-								</div>
-                            </div>
-                            <div class="form-group row">
-								<label for="announce-upload-label" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>公告:</label>
-								<div class="col-md-9">
-                                    <label for="announce-upload" class="uploaded_file w-100">
-                                        <input name="announce-upload" type="file" id="announce-upload" class="form-control files-input" placeholder="點擊選擇欲公告的檔案">
-                                        <span class="files-name-box">
-                                            <span class="files-name">點擊選擇欲公告的檔案</span>
-                                        </span>
-                                    </label>
-								</div>
-                            </div>
+		</div>
 
-							<div class="form-group row">
-								<div class="col-md-9 offset-md-3">
-									<button type="submit" class="btn btn-outline-secondary">確認</button>
-									<button type="reset" class="btn btn-outline-secondary">取消</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
+<!-- <div>
+
+SELECT a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name AS examinor FROM evaluation a, staff b, eval_period c, eval_examinor d WHERE a.tested_staff_id = b.id AND c.id = a.eval_period AND d.id = a.examinor;
+</div> -->
+
+
+		<div class="files-wrapper">
+			<div id="assets-tab">
+				<a href="./evaluation-new.php" class="btn add-asset-btn mb-3">
+					<span>+</span>提案
+				</a>
+				<!-- <a href="./evaluation-new-2.php" class="btn add-asset-btn mb-3">
+					<span>+</span>個人績效
+				</a>
+				<a href="./evaluation-bonus.php" class="btn add-asset-btn mb-3">
+					<span>+</span>獎金提撥
+				</a> -->
+				<table class="table asset-table">
+					<thead class="thead-light">
+						<tr>
+							<th>提案日期</th>
+							<th>提案內容</th>
+							<th>會議記錄</th>
+							<th>公告</th>
+							<th class="text-center">內容</th>
+						</tr>
+					</thead>
+
+
+					<!-- SELECT a.dt, b.name AS committee, c.name, d.method AS examinor FROM evaluation a, session b, eval_examinor c, eval_method d WHERE a.committee=b.id AND a.examinor = c.id AND a.method = d.id -->
+
+					<tbody>
+						<?php
+							$sql = "SELECT a.id, a.dt, b.name AS committee, c.name, d.name AS examinor, a.score FROM evaluation a, session b, eval_examinor c, eval_period d WHERE a.committee=b.id AND a.examinor = c.id AND a.eval_period = d.id";
+							$sql = "SELECT a.id, a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name AS examinor FROM evaluation a, staff b, eval_type c, eval_examinor d WHERE a.target_id = b.id AND c.id = a.eval_type AND d.id = a.examinor";
+							$sql = "SELECT id,dt,purpose,meeting,announcement FROM change_order";
+							// echo $sql;
+							$data = $db->getRows($sql);
+							foreach($data as $var) {
+						?>
+						<tr>
+							<td><span><?php echo $var['dt']; ?></span></td>
+							<td><span><?php echo $var['purpose']; ?></span></td>
+							<td><span><a href='#'><?php echo $var['meeting']; ?></a></span></td>
+							<td><span><a href='#'><?php echo $var['announcement']; ?></a></span></td>
+							<td width="120px" class="text-center"><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>" class="btn btn-primary">修改</a></span></td>
+						</tr>
+						<?php
+							}
+						?>
+					</tbody>
+				</table>
 			</div>
 		</div>
+
 	</div>
 </div>
+
 <script>
-    $('#files-upload').on('change',function(){
-        var _name=$('#files-upload').val().split('\\')[$('#files-upload').val().split('\\').length-1];
-        $('.files-name').text(_name)
-    })
+
+$('.asset-table').DataTable({
+	"columnDefs": [
+		{ "orderable": false, "targets": 5},
+    ],
+	"language": {
+		"search": "搜尋_INPUT_",
+		"searchPlaceholder": "搜尋文件名稱...",
+		"info": "從 _START_ 到 _END_ /共 _TOTAL_ 筆資料",
+		"infoEmpty": "",
+		"emptyTable": "目前沒有資料",
+		"lengthMenu": "每頁顯示 _MENU_ 筆資料",
+		"zeroRecords": "搜尋無此資料",
+		"infoFiltered": " 搜尋結果 _MAX_ 筆資料",
+		"paginate": {
+			"previous": "上一頁",
+			"next": "下一頁",
+			"first": "第一頁",
+			"last": "最後一頁"
+		}
+	},
+	"deferRender": true,
+	"processing": true
+})
 </script>
+
+
 <?php
 include(Document_root.'/Footer.php');
 ?>

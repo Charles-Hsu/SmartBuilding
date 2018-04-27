@@ -46,14 +46,13 @@ if (strlen($_SESSION['account']) == 0) {
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
-                </li>
-
-                <!-- <li class="nav-item">
+        </li>
+        <!-- <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
-                </li> -->
-                <li class="nav-item">
+        </li> -->
+        <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
-                </li>
+        </li>
 			</ul>
 		</div>
 	</div>
@@ -73,12 +72,10 @@ if (strlen($_SESSION['account']) == 0) {
                     <tr>
                         <!-- 姓名 -->
                         <td class="name">陳慶陽</td>
-
                         <!-- 日期 -->
                         <td id="checktime-td" class="checktime-td" colspan="31">
                             <div class="checktime-box d-flex justify-content-around"></div>
                         </td>
-
                         <!-- 時數 -->
                         <td class="totaltime">24</td>
                     </tr>
@@ -103,6 +100,9 @@ $(function(){
     var my_day=my_date.getDate();
     var daysMonth;
     var str='';
+
+
+
     if( my_year % 4){
         daysMonth=month_olympic[my_month];
     }else{
@@ -111,7 +111,8 @@ $(function(){
     for(var i=1;i<=daysMonth;i++){
         str+=`<div class="checktime">${i}</div>`;
     }
-    $('.checktime-box').html(str)
+    $('.checktime-box').html(str);
+
 
     // 初始化區
     $.ajax({
@@ -123,8 +124,17 @@ $(function(){
         }
     })
 
+    console.log(my_date);
+    console.log(my_year);
+    console.log(my_month);
+    console.log(my_day);
+
+
     $('#onwork').on('click',function(){
         var new_date=new Date();
+
+        console.log(new_date);
+
         var new_hour=new_date.getHours();
         var new_Min=new_date.getMinutes()
         var new_Sec=new_date.getSeconds();
@@ -134,10 +144,10 @@ $(function(){
             method:'POST',
             dataType:'JSON',
             data:{
-                year:my_year,
-                month:my_month,
-                day:my_day,
-                time:time
+                year:  my_year,
+                month: my_month,
+                day:   my_day,
+                time:  time
             },
             success:function(data){
                 if(data[0] == 'success'){

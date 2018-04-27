@@ -113,14 +113,30 @@
 									<input readonly type="text" class="form-control" name="orgstaff-company" id="orgstaff-company" value="<?=$staff['corp_name'];?>">
 								</div>
 							</div>
-							
+
 							<div class="form-group row">
 								<label for="orgstaff-company" class="text-right col-md-4 col-form-label">
 									證照:
 								</label>
+								<?php
+									$sql = "SELECT license_id FROM license_of_staff WHERE staff_id='$staff_id'";
+									$sql = "SELECT b.name FROM license_of_staff a, license b WHERE staff_id='$staff_id' AND a.license_id = b.id";
+									// echo $sql;
+									$data = $db->getRows($sql);
+									$license_list = "";
+									foreach($data AS $var) {
+										$license_list .= ($var['name'] . ",");
+										// echo $var['name'];
+									}
+									$len = strlen($license_list);
+									if ($len > 0) {
+										$license_list = substr($license_list, 0, $len-1);
+									}
+
+								?>
 								<div class="col-md-8 d-flex align-items-center">
 									<div class="license-edit">
-										無
+										<?php echo $license_list; ?>
 									</div>
 								</div>
 							</div>

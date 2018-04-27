@@ -10,9 +10,9 @@
 	$_isAdmin = $_SESSION['admin'];
 	// $contract_id = $_GET['contract_id'];
 	// echo COUNT($_POST);
-	// if (COUNT($_POST)) {
-	// 	var_dump($_POST);
-	// }
+	if (COUNT($_POST)) {
+		var_dump($_POST);
+	}
 ?>
 <div class="row">
 	<div class="col-12 p-4">
@@ -39,12 +39,12 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
+        <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+        </li>
 				<?php
 					}
 				?>
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
-                </li>
 			</ul>
 
 			<div id="assets-tab">
@@ -119,7 +119,7 @@
 							<div class="col-md-8">
 								<select id="eval-examinor" class="form-control" name="eval-examinor"> <!--disabled>-->
 									<?php
-										$sql = "SELECT * FROM eval_examinor";
+										$sql = "SELECT * FROM staff WHERE id = 0";
 										$data = $db->getRows($sql);
 										foreach($data as $var) {
 									?>
@@ -141,11 +141,11 @@
 							<div class="col-md-8">
 								<select id="eval-method" class="form-control" name="eval-method"> <!--disabled>-->
 									<?php
-										$sql = "SELECT * FROM eval_method";
+										$sql = "SELECT * FROM eval_type";
 										$data = $db->getRows($sql);
 										foreach($data as $var) {
 									?>
-									<option value="<?=$var['id'];?>"><?=$var['method'];?></option>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
 									<?php
 										}
 									?>
@@ -210,57 +210,57 @@ var evaluationTitle=[
 ]
 var evaluationText=[
 	[
-		{sub_title:'1-1 區分所有權人會議作業流程',radio_name:'1_1'},
-		{sub_title:'1-2 管理委員會會議作業流程',radio_name:'1_2'},
-		{sub_title:'1-3 管理服務人委任管理流程',radio_name:'1_3'},
-		{sub_title:'1-4 管理服務人員訓練流程',radio_name:'1_4'},
-		{sub_title:'1-5 公寓大廈管理組織申請報備流程',radio_name:'1_5'},
-		{sub_title:'1-6 室內裝修管理',radio_name:'1_6'},
-		{sub_title:'1-7 公文管理流程',radio_name:'1_7'},
-		{sub_title:'1-8 共用鑰匙管理流程',radio_name:'1_8'},
-		{sub_title:'1-9 掛號信件處理流程',radio_name:'1_9'},
-		{sub_title:'1-10 住戶管理費催繳作業流程',radio_name:'1_10'},
-		{sub_title:'1-11 住戶滿意度作業流程',radio_name:'1_11'},
-		{sub_title:'1-12 住戶搬入遷出作業流程',radio_name:'1_12'},
-		{sub_title:'1-13 住戶反映事項作業流程',radio_name:'1_13'},
-		{sub_title:'1-14 社區財產作業流程',radio_name:'1_14'},
+		{sub_title:'1-1 區分所有權人會議作業流程',radio_name:'1'},
+		{sub_title:'1-2 管理委員會會議作業流程',radio_name:'2'},
+		{sub_title:'1-3 管理服務人委任管理流程',radio_name:'3'},
+		{sub_title:'1-4 管理服務人員訓練流程',radio_name:'4'},
+		{sub_title:'1-5 公寓大廈管理組織申請報備流程',radio_name:'5'},
+		{sub_title:'1-6 室內裝修管理',radio_name:'6'},
+		{sub_title:'1-7 公文管理流程',radio_name:'7'},
+		{sub_title:'1-8 共用鑰匙管理流程',radio_name:'8'},
+		{sub_title:'1-9 掛號信件處理流程',radio_name:'9'},
+		{sub_title:'1-10 住戶管理費催繳作業流程',radio_name:'10'},
+		{sub_title:'1-11 住戶滿意度作業流程',radio_name:'11'},
+		{sub_title:'1-12 住戶搬入遷出作業流程',radio_name:'12'},
+		{sub_title:'1-13 住戶反映事項作業流程',radio_name:'13'},
+		{sub_title:'1-14 社區財產作業流程',radio_name:'14'},
 	],
 	[
-		{sub_title:'2-1住戶違規處理作業流程',radio_name:'2_1'},
-		{sub_title:'2-2建築物及基地管理維護修繕作業流程',radio_name:'2_2'},
+		{sub_title:'2-1住戶違規處理作業流程',radio_name:'15'},
+		{sub_title:'2-2建築物及基地管理維護修繕作業流程',radio_name:'16'},
 	],
 	[
-		{sub_title:'3-1公寓大廈停車場管理作業流程',radio_name:'3_1'},
-		{sub_title:'3-2共用設施保養維護作業流程',radio_name:'3_2'},
+		{sub_title:'3-1公寓大廈停車場管理作業流程',radio_name:'17'},
+		{sub_title:'3-2共用設施保養維護作業流程',radio_name:'18'},
 	],
 	[
-		{sub_title:'4-1公寓大廈環境清潔作業流程',radio_name:'4_1'},
-		{sub_title:'4-2公寓大廈環境綠化美化作業流程',radio_name:'4_2'},
-		{sub_title:'4-3公寓大廈資源回收作業流程',radio_name:'4_3'},
-		{sub_title:'4-4公寓大廈病媒防治作業流程',radio_name:'4_4'},
+		{sub_title:'4-1公寓大廈環境清潔作業流程',radio_name:'19'},
+		{sub_title:'4-2公寓大廈環境綠化美化作業流程',radio_name:'20'},
+		{sub_title:'4-3公寓大廈資源回收作業流程',radio_name:'21'},
+		{sub_title:'4-4公寓大廈病媒防治作業流程',radio_name:'22'},
 	],
 	[
-		{sub_title:'5-1公寓大廈安全管理作業流程',radio_name:'5_1'},
-		{sub_title:'5-2公寓大廈安全防災作業流程',radio_name:'5_2'},
-		{sub_title:'5-3公寓大廈安全維護作業流程',radio_name:'5_3'},
-		{sub_title:'5-4公寓大廈緊急事做處理作業流程',radio_name:'5_4'},
+		{sub_title:'5-1公寓大廈安全管理作業流程',radio_name:'23'},
+		{sub_title:'5-2公寓大廈安全防災作業流程',radio_name:'24'},
+		{sub_title:'5-3公寓大廈安全維護作業流程',radio_name:'25'},
+		{sub_title:'5-4公寓大廈緊急事做處理作業流程',radio_name:'26'},
 	],
 	[
-		{sub_title:'6-1財務計畫作業流程',radio_name:'6_1'},
-		{sub_title:'6-2零用金支出請款流程',radio_name:'6_2'},
-		{sub_title:'6-3管理費繳交流程',radio_name:'6_3'},
-		{sub_title:'6-4請款支出流程',radio_name:'6_4'},
-		{sub_title:'6-5裝潢保證金作業流程',radio_name:'6_5'},
-		{sub_title:'6-6遙控器、感應卡作業流程',radio_name:'6_6'},
-		{sub_title:'6-7管理費作業流程',radio_name:'6_7'},
-		{sub_title:'6-8公共基金管理作業流程',radio_name:'6_8'},
+		{sub_title:'6-1財務計畫作業流程',radio_name:'27'},
+		{sub_title:'6-2零用金支出請款流程',radio_name:'28'},
+		{sub_title:'6-3管理費繳交流程',radio_name:'29'},
+		{sub_title:'6-4請款支出流程',radio_name:'30'},
+		{sub_title:'6-5裝潢保證金作業流程',radio_name:'31'},
+		{sub_title:'6-6遙控器、感應卡作業流程',radio_name:'32'},
+		{sub_title:'6-7管理費作業流程',radio_name:'33'},
+		{sub_title:'6-8公共基金管理作業流程',radio_name:'34'},
 	],
 	[
-		{sub_title:'7-1社區社團作業流程',radio_name:'7_1'},
-		{sub_title:'7-2社區櫃台作業流程:訪客接待',radio_name:'7_2'},
-		{sub_title:'7-3社區櫃台作業流程:衣物送洗',radio_name:'7_3'},
-		{sub_title:'7-4社區櫃台作業流程:代叫計程車',radio_name:'7_4'},
-		{sub_title:'7-5社區櫃台作業流程:代辦事項',radio_name:'7_5'},
+		{sub_title:'7-1社區社團作業流程',radio_name:'35'},
+		{sub_title:'7-2社區櫃台作業流程:訪客接待',radio_name:'36'},
+		{sub_title:'7-3社區櫃台作業流程:衣物送洗',radio_name:'37'},
+		{sub_title:'7-4社區櫃台作業流程:代叫計程車',radio_name:'38'},
+		{sub_title:'7-5社區櫃台作業流程:代辦事項',radio_name:'39'},
 	]
 ]
 var strTitles='';
@@ -364,12 +364,13 @@ $('.evaluation-btn').on('click',function(e){
 		method:'POST',
 		dataType:'json',
 		data:{
-			evaluation_points:JSON.stringify(arrObj),
-			evaluation_total:total_point,
-			eval_date:$('#eval-date').val(),
-			eval_session:$('#eval-session').val(),
-			eval_examinor:$('#eval-examinor').val(),
-			eval_method:$('#eval-method').val(),
+			evaluation_points: JSON.stringify(arrObj),
+			evaluation_total:  total_point,
+			eval_date:         $('#eval-date').val(),
+			eval_session:      $('#eval-session').val(),
+			eval_examinor:     $('#eval-examinor').val(),
+			eval_method:       $('#eval-method').val(),
+			target_id:         0, // 團隊
 		},
 		success:function(data){
 			try{

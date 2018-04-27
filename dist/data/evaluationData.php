@@ -10,6 +10,7 @@ $eval_date = $_POST['eval_date'];
 $eval_session = $_POST['eval_session'];
 $eval_examinor = $_POST['eval_examinor'];
 $eval_method = $_POST['eval_method'];
+$target_id = $_POST['target_id'];
 
 // INSERT INTO eval_item (`id`, `category`, `item`, `description`) VALUES (NULL, 7, 5, '社區櫃台作業流程:代辦事項')
 
@@ -24,21 +25,24 @@ $evaluation_points = str_replace("\\", "", $evaluation_points);
 
 
 $sql = "INSERT INTO `evaluation` (`id`, `dt`, `committee`, `examinor`, `method`, `score`) VALUES (NULL, '$eval_date', '$eval_session', '$eval_examinor', '$eval_method', '$evaluation_total')";
+$sql = "INSERT INTO `evaluation` (`id`, `dt`, `committee`, `examinor`, `eval_type`, `target_id`, `score`) VALUES (NULL, '$eval_date', '$eval_session', '$eval_examinor', '$eval_method', '$target_id', '$evaluation_total')";
 $db->insert($sql);
+    // echo $sql;
+
 
 $sql = "SELECT MAX(id) FROM evaluation";
 $eval_id = $db->getValue($sql);
 
-echo $eval_id;
+// echo $eval_id;
 
 $evaluation_points=str_replace('\\','',$evaluation_points);
 
 $jsonB=json_decode($evaluation_points, true);
 
 foreach($jsonB as $key => $value){
-    // echo $key." => ".$value;
+    echo $key." => ".$value;
     // $sql = "INSERT INTO evualtion (`dt`, `committee`, `examinor`, ``";
-    $sql = "INSERT INTO `eval_detail` (`id`, `eval_id`, `item`, `score`) VALUES (NULL, '$eval_id', '$key', '$value')";
+    $sql = "INSERT INTO `eval_detail` (`id`, `eval_id`, `item_id`, `score`) VALUES (NULL, '$eval_id', '$key', '$value')";
     $db->insert($sql);
     echo $sql;
 }

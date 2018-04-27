@@ -61,8 +61,9 @@
 				<table class="table not-asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>考核日期</th>
+						<th>考核日期</th>
 							<th>管委屆別</th>
+							<th>受評人</th>
 							<th>考核人</th>
 							<th>評量方式</th>
 							<th>總分</th>
@@ -89,17 +90,18 @@ SELECT CONCAT(b.category,'-',b.item) AS item_id, c.category AS category, b.descr
 
 					<tbody>
 						<?php
-							$sql = "SELECT a.id, a.dt, b.name AS committee, c.name, d.method AS examinor, a.score FROM evaluation a, session b, eval_examinor c, eval_method d WHERE a.committee=b.id AND a.examinor = c.id AND a.method = d.id AND a.id='$id'";
+							$sql = "SELECT a.id, a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name AS examinor FROM evaluation a, staff b, eval_type c, eval_examinor d WHERE a.target_id = b.id AND c.id = a.eval_type AND d.id = a.examinor AND a.id='$id'";
 
 							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
 						?>
 						<tr>
-							<td><span><?php echo $var['dt']; ?></span></td>
+						<td><span><?php echo $var['dt']; ?></span></td>
 							<td><span><?php echo $var['committee']; ?></span></td>
 							<td><span><?php echo $var['name']; ?></span></td>
 							<td><span><?php echo $var['examinor']; ?></span></td>
+							<td><span><?php echo $var['period']; ?></span></td>
 							<td><span><?php echo $var['score']; ?></span></td>
 						</tr>
 						<?php
@@ -107,6 +109,10 @@ SELECT CONCAT(b.category,'-',b.item) AS item_id, c.category AS category, b.descr
 						?>
 					</tbody>
 				</table>
+
+						<?php
+							// echo "hello";
+						?>
 
 
 
@@ -141,7 +147,9 @@ SELECT CONCAT(b.category,'-',b.item) AS item_id, c.category AS category, b.descr
 
 					<tbody>
 						<?php
-							$sql = "SELECT CONCAT(b.category,'-',b.item) AS item_id, c.category AS category, b.description AS description, a.score AS score FROM `eval_detail` a, eval_item b, eval_category c WHERE b.id = a.item_id AND b.category=c.id AND a.eval_id='$id'";
+							$sql = "SELECT CONCAT(b.category,'-',b.item) AS item_id, c.category AS category, b.description AS description, a.score AS score FROM eval_detail a, eval_item b, eval_category c WHERE b.id = a.item_id AND b.category=c.id AND a.eval_id='$id'";
+
+
 
 							// echo $sql;
 							$data = $db->getRows($sql);

@@ -45,13 +45,14 @@
 							<th>物業公司</th>
 							<th>到職日</th>
 							<th>訓練完成日</th>
+							<th>證照數</th>
 							<th>修改</th>
 						</tr>
 					</thead>
 					<?php
 						$sql = 'SELECT a.id AS id, a.name AS staffname,a.mobile,a.no,b.title,c.name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id';// AND c.id = 1';
 
-						$sql = "SELECT a.quit_date, a.trained_date, a.on_board_date, identify, a.id AS `staff_id`, a.name AS `staff_name`, a.mobile, a.no AS staff_no, b.title, c.name AS corp_name FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id";
+						$sql = "SELECT a.quit_date, a.trained_date, a.on_board_date, identify, a.id AS `staff_id`, a.name AS `staff_name`, a.mobile, a.no AS staff_no, b.title, c.name AS corp_name, a.license FROM staff a, staff_role b, contract c WHERE a.role = b.id AND a.contract_id = c.id";
 
 						$data = $db->getRows($sql);
 					?>
@@ -73,6 +74,7 @@
 								}
 							?>
 							<td><span><?php echo $trained_date;?></span></td>
+							<td><span><?php echo $staff['license'];;?></span></td>
 							<td><a href="<?= $urlName ?>/org/org-edit.php?id=<?=$staff['staff_id'];?>" class="btn btn-outline-secondary">修改</a></td>
 						</tr>
 						<?php } ?>

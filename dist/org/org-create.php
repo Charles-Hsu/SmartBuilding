@@ -13,6 +13,33 @@
 		var_dump($_POST);
 		// echo $_POST['property-manage_a'];
 		// echo $_POST['property-manage_b'];
+
+		// array(8) { ["orgstaff-name"]=> string(9) "許家齊" ["orgstaff-num"]=> string(4) "0006" ["orgstaff-phone"]=> string(11) "0968-123311" ["orgstaff-id"]=> string(10) "Y120129015" ["orgstaff-role"]=> string(1) "1" ["orgstaff-toworkdate"]=> string(10) "2018-04-27" ["pcc"]=> string(2) "on" ["license"]=> array(6) { [0]=> string(1) "1" [1]=> string(1) "4" [2]=> string(1) "7" [3]=> string(2) "10" [4]=> string(2) "13" [5]=> string(2) "15" } }
+
+		$staff_name = $_POST["orgstaff-name"];
+		$staff_no = $_POST["orgstaff-num"];
+		$staff_phone = $_POST["orgstaff-phone"];
+		$staff_id = $_POST["orgstaff-id"];
+		$staff_role = $_POST["orgstaff-role"];
+		$staff_on_board = $_POST["orgstaff-toworkdate"];
+		$staff_good_person = $_POST["pcc"];
+		$contract_id = $_POST["orgstaff-contract-id"];
+		$licence_num = count($_POST["license"]);
+
+		// $sql = "INSERT INTO staff () VALUES ()";
+		$sql = "INSERT INTO staff (`id`, `name`, `no`, `mobile`, `identify`, `contract_id`, `role`, `on_board_date`, `trained_date`, `quit_date`, `license`) VALUES	(NULL, '$staff_name', '$staff_no', '$staff_phone', '$staff_id', '$contract_id', '$staff_role', '$staff_on_board', NULL, NULL, '$licence_num')";
+		echo $sql;
+		$db->insert($sql);
+		$sql = "SELECT MAX(id) AS id FROM staff";
+		$id = $db->getValue($sql);
+		echo $id;
+		foreach ($_POST["license"] AS $var) {
+			// echo $var;
+			$sql = "INSERT INTO license_of_staff (`id`, `license_id`, `staff_id`) VALUES (NULL, '$var', '$id')";
+			echo $sql;
+			$db->insert($sql);
+		}
+
 	}
 
 
@@ -65,9 +92,13 @@
 							</div>
 							<div class="form-group row">
 								<label for="orgstaff-num" class="text-right col-md-4 col-form-label">
+									<?php
+										$sql = "SELECT LPAD(MAX(no)+1,4,0) FROM `staff`";
+										$staff_no = $db->getValue($sql);
+									?>
 									<span class="important">*</span>員工編號:</label>
 								<div class="col-md-8">
-									<input type="text" class="form-control" name="orgstaff-num" id="orgstaff-num">
+									<input type="text" class="form-control" name="orgstaff-num" id="orgstaff-num" value="<?php echo $staff_no;?>" readonly>
 								</div>
 							</div>
 							<div class="form-group row">
@@ -91,7 +122,7 @@
 									<span class="important">*</span>職稱:
 								</label>
 								<div class="col-md-8">
-									<select name="household-area" id="household-area" class="form-control">
+									<select name="orgstaff-role" id="orgstaff-role" class="form-control">
 										<?php
 											$sql = 'SELECT * FROM staff_role';
 											$data = $db->getRows($sql);
@@ -117,28 +148,19 @@
 									<span class="important">*</span>所屬物業公司(或自聘):
 								</label>
 								<div class="col-md-8">
-
-								<select name="household-area" id="household-area" class="form-control">
-<!--
-									<option value="0">自聘</option>
--->
-<?php
-	$sql = 'SELECT * FROM contract';
-	$data = $db->getRows($sql);
-?>
-<?php
-foreach($data as $var) {
-	//	echo $var['Name'];
-	//echo $var['id'];
-?>
+									<select name="orgstaff-contract-id" id="orgstaff-contract-id" class="form-control">
+										<?php
+											$sql = 'SELECT * FROM contract';
+											$data = $db->getRows($sql);
+										?>
+										<?php
+											foreach($data as $var) {
+										?>
 										<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
-<?php
-}
-?>
-
+										<?php
+											}
+										?>
 									</select>
-
-
 								</div>
 							</div>
 
@@ -191,15 +213,15 @@ foreach($data as $var) {
 									<div class="title">物業管理類</div>
 									<div class="license-list d-flex flex-wrap">
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="property-manage_a" class="form-check-input" name="property-manage[]" value="property-manage_a">
+											<input type="checkbox" id="property-manage_a" class="form-check-input" name="license[]" value="1">
 											<label for="property-manage_a" class="mb-0">事務管理人員</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="property-manage_b" class="form-check-input" name="property-manage[]" value="property-manage_b">
+											<input type="checkbox" id="property-manage_b" class="form-check-input" name="license[]" value="2">
 											<label for="property-manage_b" class="mb-0">防火避難設施管理人</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="property-manage_c" class="form-check-input" name="property-manage[]" value="property-manage_c">
+											<input type="checkbox" id="property-manage_c" class="form-check-input" name="license[]" value="3">
 											<label for="property-manage_c" class="mb-0">設備安全管理人員</label>
 										</div>
 									</div>
@@ -208,47 +230,47 @@ foreach($data as $var) {
 									<div class="title">機電類</div>
 									<div class="license-list d-flex flex-wrap">
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_a" class="form-check-input" name="elect[]" value="elect_a">
+											<input type="checkbox" id="elect_a" class="form-check-input" name="license[]" value="4">
 											<label for="elect_a" class="mb-0">電匠</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_b" class="form-check-input" name="elect[]" value="elect_b">
+											<input type="checkbox" id="elect_b" class="form-check-input" name="license[]" value="5">
 											<label for="elect_b" class="mb-0">冷凍空調</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_c" class="form-check-input" name="elect[]" value="elect_c">
+											<input type="checkbox" id="elect_c" class="form-check-input" name="license[]" value="6">
 											<label for="elect_c" class="mb-0">水匠</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_d" class="form-check-input" name="elect[]" value="elect_d">
+											<input type="checkbox" id="elect_d" class="form-check-input" name="license[]" value="7">
 											<label for="elect_d" class="mb-0">工業配線</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_e" class="form-check-input" name="elect[]" value="elect_e">
+											<input type="checkbox" id="elect_e" class="form-check-input" name="license[]" value="8">
 											<label for="elect_e" class="mb-0">室內配線</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_f" class="form-check-input" name="elect[]" value="elect_f">
+											<input type="checkbox" id="elect_f" class="form-check-input" name="license[]" value="9">
 											<label for="elect_f" class="mb-0">工業電子</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_g" class="form-check-input" name="elect[]" value="elect_g">
+											<input type="checkbox" id="elect_g" class="form-check-input" name="license[]" value="10">
 											<label for="elect_g" class="mb-0">鍋爐操作</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_h" class="form-check-input" name="elect[]" value="elect_h">
+											<input type="checkbox" id="elect_h" class="form-check-input" name="license[]" value="11">
 											<label for="elect_h" class="mb-0">高壓氣體</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_i" class="form-check-input" name="elect[]" value="elect_i">
+											<input type="checkbox" id="elect_i" class="form-check-input" name="license[]" value="12">
 											<label for="elect_i" class="mb-0">壓力容器</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_j" class="form-check-input" name="elect[]" value="elect_j">
+											<input type="checkbox" id="elect_j" class="form-check-input" name="license[]" value="13">
 											<label for="elect_j" class="mb-0">消防設備士(師)</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="elect_k" class="form-check-input" name="elect[]" value="elect_k">
+											<input type="checkbox" id="elect_k" class="form-check-input" name="license[]" value="14">
 											<label for="elect_k" class="mb-0">汙廢水操作人員</label>
 										</div>
 									</div>
@@ -258,11 +280,11 @@ foreach($data as $var) {
 									<div class="title">環保類</div>
 									<div class="license-list d-flex flex-wrap">
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="environ_a" class="form-check-input" name="environ" value="environ_a">
+											<input type="checkbox" id="environ_a" class="form-check-input" name="license[]" value="15">
 											<label for="environ_a" class="mb-0">病媒防治</label>
 										</div>
 										<div class="form-check-inline mr-0">
-											<input type="checkbox" id="environ_b" class="form-check-input" name="environ" value="environ_b">
+											<input type="checkbox" id="environ_b" class="form-check-input" name="license[]" value="16">
 											<label for="environ_b" class="mb-0">水池水塔清洗</label>
 										</div>
 									</div>

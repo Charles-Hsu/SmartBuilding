@@ -36,12 +36,12 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
-				<?php
-					}
-				?>
         <li class="nav-item">
 					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
         </li>
+				<?php
+					}
+				?>
 			</ul>
 		</div>
 
@@ -74,7 +74,7 @@
 							$bonus = $db->getValue($sql);
 							// echo "bonus = $bonus";
 
-							$sql = "SELECT YEAR(dt) AS y, COUNT(*) AS n, AVG(score) AS avg, b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND tested_staff_id = 0 AND b.id = 0"; // 0 團隊績效
+							$sql = "SELECT YEAR(dt) AS y, COUNT(*) AS n, AVG(score) AS avg, b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND target_id = 0 AND b.id = 0"; // 0 團隊績效
 							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
@@ -117,7 +117,7 @@
 
 							$sql = "SELECT YEAR(dt) AS y, AVG(score) AS avg, b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND b.id != 0 GROUP BY b.id";
 
-							$sql = "SELECT year(dt) AS y,avg(a.score) AS avg ,count(*) AS n,b.id,b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND a.tested_staff_id = b.id and b.id != 0 group by b.id, b.name
+							$sql = "SELECT year(dt) AS y,avg(a.score) AS avg ,count(*) AS n,b.id,b.name FROM evaluation a, staff b WHERE YEAR(dt) = YEAR(NOW()) AND a.target_id = b.id and b.id != 0 group by b.id, b.name
 							";
 
 

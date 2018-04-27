@@ -44,6 +44,17 @@
 			</div>
 
 			<div id="assets-tab">
+
+				<?php
+					if ($_isAdmin) {
+				?>
+				<a href="<?= $urlName ?>/operation/energy-new.php" class="btn add-asset-btn mb-3">
+				<span>+</span>新增電費
+				</a>
+				<?php
+					}
+				?>
+
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
@@ -116,7 +127,8 @@ $('.asset-table').DataTable({
 		}
 	},
 	"deferRender": true,
-	"processing": true
+	"processing": true,
+	"order": [[0, 'desc']],
 })
 
 var colors = Chart.helpers.color;

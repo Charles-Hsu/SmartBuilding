@@ -39,18 +39,18 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
 				</li>
+        <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+        </li>
 				<?php
 					}
 				?>
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/evaluation.php">品質管理</a>
-                </li>
 			</ul>
 
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
 					<a href="/smartbuilding/evaluation.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>團隊考核</span>
+					<span>個人績效</span>
 				</div>
 
 
@@ -117,9 +117,9 @@
 							<span class="important">*</span>受測人
 							</label>
 							<div class="col-md-8">
-								<select id="eval-examinor" class="form-control" name="eval-examinor"> <!--disabled>-->
+								<select id="target-id" class="form-control" name="target-id"> <!--disabled>-->
 									<?php
-										$sql = "SELECT * FROM eval_examinor";
+										$sql = "SELECT * FROM staff WHERE id != 0";
 										$data = $db->getRows($sql);
 										foreach($data as $var) {
 									?>
@@ -141,11 +141,11 @@
 							<div class="col-md-8">
 								<select id="eval-method" class="form-control" name="eval-method"> <!--disabled>-->
 									<?php
-										$sql = "SELECT * FROM eval_method";
+										$sql = "SELECT * FROM eval_type";
 										$data = $db->getRows($sql);
 										foreach($data as $var) {
 									?>
-									<option value="<?=$var['id'];?>"><?=$var['method'];?></option>
+									<option value="<?=$var['id'];?>"><?=$var['name'];?></option>
 									<?php
 										}
 									?>
@@ -200,68 +200,42 @@ $(document).ready(function() {
 
 <script>
 var evaluationTitle=[
-	'1.公寓大廈一般事務管理服務類',
-	'2.建築物及基地之維護修繕',
-	'3.建築物附屬設備之檢查及修護',
-	'4.公寓大廈環境衛生類',
-	'5.公寓大廈安全防災管理維護類',
-	'6.財務管理類',
-	'7.生活服務與商業支援類',
+	'8.品德',
+	'9.工作能力',
+	'10.工作表現',
+	'11.工作成績',
 ]
 var evaluationText=[
 	[
-		{sub_title:'1-1 區分所有權人會議作業流程',radio_name:'1_1'},
-		{sub_title:'1-2 管理委員會會議作業流程',radio_name:'1_2'},
-		{sub_title:'1-3 管理服務人委任管理流程',radio_name:'1_3'},
-		{sub_title:'1-4 管理服務人員訓練流程',radio_name:'1_4'},
-		{sub_title:'1-5 公寓大廈管理組織申請報備流程',radio_name:'1_5'},
-		{sub_title:'1-6 室內裝修管理',radio_name:'1_6'},
-		{sub_title:'1-7 公文管理流程',radio_name:'1_7'},
-		{sub_title:'1-8 共用鑰匙管理流程',radio_name:'1_8'},
-		{sub_title:'1-9 掛號信件處理流程',radio_name:'1_9'},
-		{sub_title:'1-10 住戶管理費催繳作業流程',radio_name:'1_10'},
-		{sub_title:'1-11 住戶滿意度作業流程',radio_name:'1_11'},
-		{sub_title:'1-12 住戶搬入遷出作業流程',radio_name:'1_12'},
-		{sub_title:'1-13 住戶反映事項作業流程',radio_name:'1_13'},
-		{sub_title:'1-14 社區財產作業流程',radio_name:'1_14'},
+		{sub_title:'8-1 忠於公司維護大樓利益',radio_name:'101'},
+		{sub_title:'8-2 團結友愛、和睦相處且互助',radio_name:'102'},
+		{sub_title:'8-3 待人坦誠、謙虛有禮且可靠',radio_name:'103'},
+		{sub_title:'8-4 奉獻精神',radio_name:'104'},
 	],
 	[
-		{sub_title:'2-1住戶違規處理作業流程',radio_name:'2_1'},
-		{sub_title:'2-2建築物及基地管理維護修繕作業流程',radio_name:'2_2'},
+		{sub_title:'9-1 責任感',radio_name:'105'},
+		{sub_title:'9-2 理解能力',radio_name:'106'},
+		{sub_title:'9-3 判斷能力',radio_name:'107'},
+		{sub_title:'9-4 計畫性',radio_name:'108'},
+		// {sub_title:'知識面',radio_name:'109'},
+		// {sub_title:'公關能力',radio_name:'110'},
+		{sub_title:'9-5 表達能力',radio_name:'109'},
+		{sub_title:'9-6 處理問題',radio_name:'110'},
+		{sub_title:'9-7 組織能力',radio_name:'111'},
+		{sub_title:'9-8 協調溝通能力',radio_name:'112'},
 	],
 	[
-		{sub_title:'3-1公寓大廈停車場管理作業流程',radio_name:'3_1'},
-		{sub_title:'3-2共用設施保養維護作業流程',radio_name:'3_2'},
+		{sub_title:'10-1 服從性',radio_name:'113'},
+		{sub_title:'10-2 原則性',radio_name:'114'},
+		{sub_title:'10-3 積極性',radio_name:'115'},
+		{sub_title:'10-4 團隊合作',radio_name:'116'},
+		{sub_title:'10-5 規章制度',radio_name:'117'},
 	],
 	[
-		{sub_title:'4-1公寓大廈環境清潔作業流程',radio_name:'4_1'},
-		{sub_title:'4-2公寓大廈環境綠化美化作業流程',radio_name:'4_2'},
-		{sub_title:'4-3公寓大廈資源回收作業流程',radio_name:'4_3'},
-		{sub_title:'4-4公寓大廈病媒防治作業流程',radio_name:'4_4'},
+		{sub_title:'11-1 工作效率',radio_name:'118'},
+		{sub_title:'11-2 工作品質',radio_name:'119'},
+		{sub_title:'11-3 工作目標完成量',radio_name:'120'},
 	],
-	[
-		{sub_title:'5-1公寓大廈安全管理作業流程',radio_name:'5_1'},
-		{sub_title:'5-2公寓大廈安全防災作業流程',radio_name:'5_2'},
-		{sub_title:'5-3公寓大廈安全維護作業流程',radio_name:'5_3'},
-		{sub_title:'5-4公寓大廈緊急事做處理作業流程',radio_name:'5_4'},
-	],
-	[
-		{sub_title:'6-1財務計畫作業流程',radio_name:'6_1'},
-		{sub_title:'6-2零用金支出請款流程',radio_name:'6_2'},
-		{sub_title:'6-3管理費繳交流程',radio_name:'6_3'},
-		{sub_title:'6-4請款支出流程',radio_name:'6_4'},
-		{sub_title:'6-5裝潢保證金作業流程',radio_name:'6_5'},
-		{sub_title:'6-6遙控器、感應卡作業流程',radio_name:'6_6'},
-		{sub_title:'6-7管理費作業流程',radio_name:'6_7'},
-		{sub_title:'6-8公共基金管理作業流程',radio_name:'6_8'},
-	],
-	[
-		{sub_title:'7-1社區社團作業流程',radio_name:'7_1'},
-		{sub_title:'7-2社區櫃台作業流程:訪客接待',radio_name:'7_2'},
-		{sub_title:'7-3社區櫃台作業流程:衣物送洗',radio_name:'7_3'},
-		{sub_title:'7-4社區櫃台作業流程:代叫計程車',radio_name:'7_4'},
-		{sub_title:'7-5社區櫃台作業流程:代辦事項',radio_name:'7_5'},
-	]
 ]
 var strTitles='';
 var strs='';
@@ -284,27 +258,34 @@ var str=`
 		<div class="title w-25">{{sub_title}}</div>
 		<div class="point w-25">0</div>
 		<div class="rules w-25">
-			<div>1分:重大疏漏</div>
-			<div>2分:部分疏失</div>
-			<div>3分:完全符合</div>
+			<div>5分:很好</div>
+			<div>4分:較好</div>
+			<div>3分:一般</div>
+			<div>2分:較差</div>
 		</div>
 		<div class="check w-25">
 			<div class="form-check form-check-inline">
-				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-1" value="1">
-				<label class="form-check-label" for="{{radio_name}}-1">
-					1分
+				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-5" value="5">
+				<label class="form-check-label" for="{{radio_name}}-5">
+					5分
 				</label>
 			</div>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-2" value="2">
-				<label class="form-check-label" for="{{radio_name}}-2">
-					2分
+				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-4" value="4">
+				<label class="form-check-label" for="{{radio_name}}-4">
+					4分
 				</label>
 			</div>
 			<div class="form-check form-check-inline">
 				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-3" value="3">
 				<label class="form-check-label" for="{{radio_name}}-3">
 					3分
+				</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input point-check" type="radio" name="{{radio_name}}" id="{{radio_name}}-2" value="2">
+				<label class="form-check-label" for="{{radio_name}}-2">
+					2分
 				</label>
 			</div>
 		</div>
@@ -370,6 +351,7 @@ $('.evaluation-btn').on('click',function(e){
 			eval_session:$('#eval-session').val(),
 			eval_examinor:$('#eval-examinor').val(),
 			eval_method:$('#eval-method').val(),
+			target_id:$('#target-id').val(),
 		},
 		success:function(data){
 			try{
