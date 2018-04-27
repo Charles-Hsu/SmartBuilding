@@ -3,36 +3,38 @@ require '../lib/DBAccess.class.php';
 require '../config/config.admin.php';
 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-$curyear  = $_POST['year'];
-$curmonth = $_POST['month'];
-$curday   = $_POST['day'];
-$curtime  = $_POST['time'];
+$curyear=$_POST['year'];
+$curmonth=$_POST['month'];
+$curday=$_POST['day'];
+$curtime=$_POST['time'];
 
 echo 'curyear : ' . $_POST['year'];
 echo 'curmonth : ' . $_POST['month'];
 
+class Msg{
+    public $success='';
+    public $data='';
+}
+$msg=new Msg();
 
-if(isset($_POST['year']) && isset($_POST['month']) && isset($_POST['day']) && isset($_POST['time'])){
+if( $_POST['type'] === 'onwork' ){
     $sql='INSERT SQL';
     echo $sql;
-
-    if($db->insert($sql)){
-        $msg[0]='success';
+    // $db->insert($sql)
+    if(true){
+        $msg->success=true;
     }else{
-        $msg[0]='error';
+        $msg->success=false;
     }
-    $msg[0]='success';
 
-    echo json_encode($msg);
-}else{
+}else if($_POST['type'] === 'offwork'){
     // 初始化
     $sql='';
-
-    if($db->insert($sql)){
-        echo $msg[0]='success';
+    // $db->insert($sql)
+    if(true){
+        $msg->success=true;
     }else{
-        echo $msg[0]='error';
+        $msg->success=false;
     }
-
-    echo '';
 }
+echo json_encode($msg);
