@@ -118,7 +118,6 @@
 								<label for="orgstaff-toworkdate" class="text-right col-md-4 col-form-label">
 									<span class="important">*</span>專業證照:
 								</label>
-<<<<<<< HEAD
 								<?php
 									$sql = "SELECT license_id FROM license_of_staff WHERE staff_id='$staff_id'";
 									$sql = "SELECT b.name FROM license_of_staff a, license b WHERE staff_id='$staff_id' AND a.license_id = b.id";
@@ -138,15 +137,6 @@
 								<div class="col-md-8 d-flex align-items-center">
 									<div class="license-edit">
 										<?php echo $license_list; ?>
-=======
-								<div class="col-md-8">
-									<div class="license-box">
-										<span class="license-name" data-title="elect_g">鍋爐操作</span>
-										<span class="license-name" data-title="elect_h">高壓氣體</span>
-										<span class="license-name" data-title="elect_j">消防設備士(師)</span>
-										<span class="license-name" data-title="environ_a">病媒防治</span>
-										<span class="license-name" data-title="environ_b">水池水塔清洗</span>
->>>>>>> bea9d1ad4d72ab36a6af6a8c83a0ac2fddc022d3
 									</div>
 								</div>
 							</div>
@@ -176,7 +166,7 @@
 												}
 											?>
 										</select> -->
-										<label class="form-check-label" for="pcc">良明證</label>
+										<label class="form-check-label" for="pcc">良民證</label>
 									</div>
 								</div>
 							</div>

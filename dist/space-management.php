@@ -53,7 +53,7 @@ SELECT a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name 
 
 		<div class="files-wrapper">
 			<div id="assets-tab">
-				<a href="./evaluation-new.php" class="btn add-asset-btn mb-3">
+				<a href="./space-management-new.php" class="btn add-asset-btn mb-3">
 					<span>+</span>提案
 				</a>
 				<!-- <a href="./evaluation-new-2.php" class="btn add-asset-btn mb-3">
@@ -80,7 +80,7 @@ SELECT a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name 
 						<?php
 							$sql = "SELECT a.id, a.dt, b.name AS committee, c.name, d.name AS examinor, a.score FROM evaluation a, session b, eval_examinor c, eval_period d WHERE a.committee=b.id AND a.examinor = c.id AND a.eval_period = d.id";
 							$sql = "SELECT a.id, a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name AS examinor FROM evaluation a, staff b, eval_type c, eval_examinor d WHERE a.target_id = b.id AND c.id = a.eval_type AND d.id = a.examinor";
-							$sql = "SELECT id,dt,purpose,meeting,announcement FROM change_order";
+							$sql = "SELECT id,dt,purpose,meeting,announcement FROM space_change";
 							// echo $sql;
 							$data = $db->getRows($sql);
 							foreach($data as $var) {
@@ -88,9 +88,9 @@ SELECT a.dt, a.committee, a.score, a.eval_type, b.name,c.name AS period, d.name 
 						<tr>
 							<td><span><?php echo $var['dt']; ?></span></td>
 							<td><span><?php echo $var['purpose']; ?></span></td>
-							<td><span><a href='#'><?php echo $var['meeting']; ?></a></span></td>
-							<td><span><a href='#'><?php echo $var['announcement']; ?></a></span></td>
-							<td width="120px" class="text-center"><span><a href="./evaluation-detail.php?id=<?php echo $var['id']; ?>" class="btn btn-primary">修改</a></span></td>
+							<td><span><a href="#?meeting=<?php echo $var['meeting']; ?>">顯示</a></span></td>
+							<td><span><a href="#?announce=<?php echo $var['announcement']; ?>">顯示</a></span></td>
+							<td width="120px" class="text-center"><span><a href="./space-management-edit.php?id=<?php echo $var['id']; ?>" class="btn btn-primary">修改</a></span></td>
 						</tr>
 						<?php
 							}

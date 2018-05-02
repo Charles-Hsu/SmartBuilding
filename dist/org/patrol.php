@@ -8,29 +8,13 @@
 	}
 	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 	$_isAdmin = $_SESSION['admin'];
-?>
-<?php
 
+  if (count($_POST) > 0) {
+      //var_dump($_POST);
+  }
 
-
-
-if (count($_POST) > 0) {
-    //var_dump($_POST);
-}
-
-
-$sql = 'SELECT a.staff_id,a.dt,b.name FROM `staff_work_time` a, staff b WHERE b.id = a.staff_id';
-
-$data = $db->getRows($sql);
-
-//echo "_SESSION['account'] = " . $_SESSION['account'];
-//echo strlen($_SESSION['account']);
-//var_dump($data);
-/*
-if (strlen($_SESSION['account']) == 0) {
-	header('Location: ' . '/smartbuilding/login.php');
-}
-*/
+  $sql = 'SELECT a.staff_id,a.dt,b.name FROM `staff_work_time` a, staff b WHERE b.id = a.staff_id';
+  $data = $db->getRows($sql);
 
 ?>
 <!-- 內容切換區 -->
@@ -69,19 +53,32 @@ if (strlen($_SESSION['account']) == 0) {
                         <th class="text-center" width="60">時數</th>
                     </tr>
                 </thead>
+                <?php
+                  $sql = "SELECT a.staff_id,b.name,a.dt,a.shift FROM shift_table a, staff b WHERE a.staff_id = b.id";
+                  $sql = "SELECT a.staff_id,b.name FROM shift_table a, staff b WHERE a.staff_id = b.id GROUP BY a.staff_id";
+                  $data = $db->getRows($sql);
+                ?>
                 <tbody>
-                    <tr>
-                        <!-- 姓名 -->
-                        <td class="name">陳慶陽</td>
-
-                        <!-- 日期 -->
-                        <td id="checktime-td" class="checktime-td" colspan="31">
-                            <div class="checktime-box d-flex justify-content-around"></div>
-                        </td>
-
-                        <!-- 時數 -->
-                        <td class="totaltime">24</td>
-                    </tr>
+                  <?php
+                    foreach($data AS $var) {
+                  ?>
+                  <tr>
+                    <?php
+                      $sql = "SELECT SUM(hours) FROM shift_table WHERE staff_id=" . $var['staff_id'];
+                      $total = $db->getValue($sql);
+                    ?>
+                      <!-- 姓名 -->
+                      <td class="name"><?php echo $var['name']; ?></td>
+                      <!-- 日期 -->
+                      <td id = "checktime-td" class = "checktime-td" colspan="31">
+                          <div class = "checktime-box d-flex justify-content-around"></div>
+                      </td>
+                      <!-- 時數 -->
+                      <td class="totaltime"><?php echo $total; ?></td>
+                  </tr>
+                  <?php
+                    }
+                  ?>
                 </tbody>
             </table>
             <div class="col-6 offset-md-3 text-center">
@@ -94,29 +91,53 @@ if (strlen($_SESSION['account']) == 0) {
     </div>
 </div>
 <script>
-$(function(){
+
+$(function() {
+
     var month_olympic = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var month_normal = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-    var my_date=new Date();
-    var my_year=my_date.getFullYear();
-    var my_month=my_date.getMonth();
-    var my_day=my_date.getDate();
+    var my_date  = new Date();
+    var my_year  = my_date.getFullYear();
+    var my_month = my_date.getMonth();
+    var my_day   = my_date.getDate();
+
+    console.log("my_day", my_day);
+    console.log("my_month", my_month);
+
     var daysMonth;
-    var str='';
-    if( my_year % 4){
-        daysMonth=month_olympic[my_month];
-    }else{
-        daysMonth=month_normal[my_month];
+    var str = '';
+    if (my_year % 4){
+        daysMonth = month_olympic[my_month];
+    } else {
+        daysMonth = month_normal[my_month];
     }
-    for(var i=1;i<=daysMonth;i++){
-        str+=`<div class="checktime">${i}</div>`;
+    for (var i = 1; i <= daysMonth; i++){
+      // if(i < my_day) {
+        // str += `<div class=".checktime.oldtime">${i}</div>`;
+      // } else {
+        str += `<div class="checktime" id="${i}">${i}</div>`;
+      // }
     }
-    $('.checktime-box').html(str)
+    $('.checktime-box').html(str);
+
+    var i = 1;
+    // var id_no =
+    for (var i = 1; i < daysMonth; i++) {
+      let d = new Date(my_year, my_month, i);
+      if (d.getDay() == 0 || d.getDay() == 6) {
+        // $("#" + i).css("background-color","gray");
+      }
+      else {
+        $("#" + i).addClass('checktime_day_shift');
+      }
+
+    }
+
 
     // 初始化區
     $.ajax({
         url:'../data/patrolData.php',
-        method:'GET',
+        method: 'GET',
         dataType:'JSON',
         success:function(data){
             console.log(data)
@@ -124,31 +145,38 @@ $(function(){
     })
 
     $('#onwork').on('click',function(){
-        var new_date=new Date();
-        var new_hour=new_date.getHours();
-        var new_Min=new_date.getMinutes()
-        var new_Sec=new_date.getSeconds();
-        var time=`${new_hour}:${new_Min}:${new_Sec}`;
+        var new_date = new Date();
+        var new_hour = new_date.getHours();
+        var new_Min  = new_date.getMinutes()
+        var new_Sec  = new_date.getSeconds();
+        var time = `${new_hour}:${new_Min}:${new_Sec}`;
         $.ajax({
-            url:'../data/patrolData.php',
+            url: '../data/patrolData.php',
             method:'POST',
-            data:{
-                year:my_year,
-                month:my_month,
-                day:my_day,
-                time:time,
-                type:'onwork'
+            data: {
+                year:  my_year,
+                month: my_month,
+                day:   my_day,
+                time:  time,
+                type:  'onwork'
             },
-            success:function(data){
-                try{
-                    var _data=JSON.parse(data)
-                    if(_data.success){
+            success: function(data) {
+              console.log ("[", data, "]");
+                try {
+                    var _data = JSON.parse(data)
+                    // var _data = data;
+                    console.log ("-- _data.success---");
+                    console.log (_data.success);
+                    console.log ("-- _data.success---");
+                    console.log (_data);
+                    if (_data.success) {
                         $('.checktime').eq(my_day-1).addClass('onwork');
                         $('#onwork').removeClass('btn-primary').addClass("btn-outline-primary").prop('disabled',true)
                         $('#offwork').addClass('btn-primary').removeClass("btn-outline-primary").prop('disabled',false)
                     }
-                }catch(error){
-                    console.log(data)
+                } catch (error) {
+                  console.log("catch error");
+                  console.log("---", data, "---");
                 }
             }
         })
@@ -169,14 +197,14 @@ $(function(){
                 time:time,
                 type:'offwork'
             },
-            success:function(data){
+            success:function(data) {
                 try{
-                    var _data=JSON.parse(data);
-                    if(_data.success){
+                    var _data = JSON.parse(data);
+                    if (_data.success) {
                         $('.checktime').eq(my_day-1).addClass('offwork');
                         $('#offwork').addClass('btn-primary').removeClass("btn-outline-primary").prop('disabled',true)
                     }
-                }catch(error){
+                } catch(error) {
                     console.log(data)
                 }
             }

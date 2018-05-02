@@ -877,6 +877,12 @@ table.punch-table td.checktime label{
     text-align: center;
     line-height: 32px;
 }
+.checktime_day_shift {
+  background: #0099ff;
+}
+.checktime_night_shift {
+  background: #005c99;
+}
 .checktime.oldtime{
     background: #F7B32D;
 }
@@ -895,10 +901,10 @@ tr.un_completed_red{
 .asset-table tbody tr.amount-tr td {
     padding: 0;
 }
-.amount-tr td .amount-box{
-    /* height: 0; */
-    /* overflow: hidden; */
-}
+/* .amount-tr td .amount-box{
+    height: 0;
+     overflow: hidden;
+} */
 .amount-head{
     display: flex;
     background-color: #1F90E6;
@@ -1071,20 +1077,20 @@ span.files-name-box {
         padding-right: 0;
         padding-left: 0;
     }
-    
+
     .sidemenu .sidemenu-wrapper .sidemenu-title span {
         display: none;
     }
-    
+
     .sidemenu .sidemenu-wrapper .sidemenu-nav {
         margin-right: 0px;
         margin-left: 0px;
     }
-    
+
     .sidemenu .sidemenu-wrapper .sidemenu-nav li a i {
         margin-right: 0;
     }
-    
+
     .sidemenu .sidemenu-wrapper .sidemenu-nav li a span {
         display: none;
     }
