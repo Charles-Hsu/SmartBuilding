@@ -13,6 +13,55 @@ $curtime  = $_POST['time'];
 // echo 'curday : '   . $_POST['day'];
 // echo 'curtime : '  . $_POST['time'];
 
+// $sql = "SELECT id,name FROM staff";
+$sql = "SELECT a.staff_id, a.dt, a.shift, a.hours, b.name FROM shift_table a, staff b WHERE a.staff_id = b.id";
+
+$data = $db->getRows($sql);
+$ret = "";
+foreach ($data AS $row) {
+  if(strlen($ret) > 0)
+    $ret .= ",";
+  $ret .= "{\"staff_id\":\"" . $row['staff_id'] . "\",\"name\":\"". $row['name']."\", \"dt\":\"" . $row['dt'] . "\",\"shift\":\"" . $row['shift'] . "\", \"hours\":\"" . $row['hours'] . "\"}";
+}
+$ret = "[".$ret."]";
+
+$id[0] = array(
+  'name' => 'Charles',
+  'staff_id' => 1,
+  'shift_table' => array(
+    array('dt' => '2018-4-01', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-04', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-12', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-13', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-14', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-18', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-19', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-20', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-21', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-23', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-24', 'shift' => 1, 'hours' => 8),
+  )
+);
+$id[1] = array(
+  'name' => 'Tony',
+  'staff_id' => 2,
+  'shift_table' => array(
+    array('dt' => '2018-4-10', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-11', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-12', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-13', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-14', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-18', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-19', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-20', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-21', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-23', 'shift' => 1, 'hours' => 8),
+    array('dt' => '2018-4-24', 'shift' => 1, 'hours' => 8),
+  )
+);
+
+
+
 class Msg {
     public $success='';
     public $data='';
@@ -42,5 +91,6 @@ if ($_POST['type'] === 'onwork' ) {
     }
 }
 // echo "======json_encdoe:";
-$msg->data = "hello world";
+// $msg->data = $ret;
+$msg->data = $id;
 echo json_encode ($msg);

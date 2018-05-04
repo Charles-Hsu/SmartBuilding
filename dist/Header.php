@@ -17,12 +17,14 @@
 	<script src="<?= $urlName ?>/js/popper.min.js"></script>
 	<script src="<?= $urlName ?>/js/bootstrap.min.js"></script>
 	<script src="<?= $urlName ?>/js/bootstrap-datepicker.min.js"></script>
-    <script src="<?= $urlName ?>/js/bootstrap-datepicker.zh-TW.min.js"></script>
+  <script src="<?= $urlName ?>/js/bootstrap-datepicker.zh-TW.min.js"></script>
 	<script src="<?= $urlName ?>/js/jquery.dataTables.min.js"></script>
-    <script src="<?= $urlName ?>/js/dataTables.bootstrap4.min.js"></script>
-    <script src="<?= $urlName ?>/js/jquery.cxcalendar.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+  <script src="<?= $urlName ?>/js/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= $urlName ?>/js/jquery.cxcalendar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
 	<script src="<?php echo $urlName; ?>/js/app.js?<?php echo time(); ?>"></script>
+  <!-- 加入 bulma https://bulma.io/ -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css">
 </head>
 
 <?php
