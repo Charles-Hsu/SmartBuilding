@@ -25,7 +25,6 @@
 ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-
 <!-- 內容切換區 -->
 <div class="row">
 	<div class="col-12 p-4">
@@ -52,6 +51,11 @@
 	</div>
 </div>
 <div class="row">
+  <div class="assets-create-title mb-3">
+    <a href="<?= $urlName ?>/org/patrol.php" class="assets-create-icon fas fa-chevron-left"></a>
+    <span>打卡紀錄</span>
+	</div>
+
   <section class="section">
     <div class="container" id="timetable">
       <div class="columns">
@@ -75,9 +79,9 @@
         </div>
       </div>
       <div class="columns">
-        <div class="column">
+        <!-- <div class="column">
           日期
-        </div>
+        </div> -->
         <div class="column">
           上班時間
         </div>
@@ -94,19 +98,42 @@
 $(function() {
   var json_data = <?php echo $json_data; ?>;
   console.log(json_data);
-  var html = `<div class="columns">`;
-  html +=    `  <div class="column">`;
-  html +=    `    日期`;
-  html +=    `  </div>`;
-  html +=    `  <div class="column">`;
-  html +=    `    上班時間`;
-  html +=    `  </div>`;
-  html +=    `  <div class="column">`;
-  html +=    `    下班時間`;
-  html +=    `  </div>`;
-  html +=    `</div>`;
-  console.log(html);
-  $('#timetable').append(html);
+
+  function isNull(obj) {
+    return !obj || obj === 'null' || obj === 'undefined';
+  }
+
+  json_data.forEach(row => {
+    let totalHours = 0;
+    var dt0 = row['dt0'];
+    var dt1 = row['dt1'];
+    var html = `<div class="columns">`;
+    // html +=    `  <div class="column">`;
+    // html +=    `    日期`;
+    // html +=    `  </div>`;
+    html +=    `  <div class="column">`;
+    html +=    row['dt0'];
+    html +=    `  </div>`;
+    html +=    `  <div class="column">`;
+    html +=    isNull(row['dt1'])?"":row['dt1'];
+    html +=    `  </div>`;
+    html +=    `</div>`;
+    // let month = {}; // define month as a object
+    // for (var i=0; i<shift_table.length; i++) {
+    //   var d0 = parseInt(shift_table[i]['dt'].split('-')[2]);
+    //   var d1 = month[d0-1];
+    //   if(shift_table[i]['shift']=='1') {
+    //     d1["class"].push("checktime_day_shift");
+    //   } else {
+    //     d1["class"].push("checktime_night_shift");
+    //   }
+    //   totalHours += parseInt(shift_table[i]['hours']);
+    // }
+    // staffTable[row.staff_id] = {id:row.staff_id, name:row.name, month:month, total:totalHours};
+    $('#timetable').append(html);
+  });
+
+  // console.log(html);
 });
 
 
