@@ -45,7 +45,7 @@
 <div class="row">
     <div class="col-12">
         <div class="table-responsive-lg table-responsive-xl row">
-            <table class="punch-table table table-bordered ">
+            <table class="punch-table table table-bordered" id="time-table">
                 <thead>
                     <tr>
                         <th class="text-center" width="60">姓名</th>
@@ -53,8 +53,7 @@
                         <th class="text-center" width="60">時數</th>
                     </tr>
                 </thead>
-                <tbody id="checktime-tbody">
-                </tbody>
+                <tbody></tbody>
             </table>
             <div class="col-6 offset-md-3 text-center">
                 <div class="btn-group">
@@ -66,38 +65,22 @@
     </div>
 </div>
 
-<a id="load-ajax-data" class="button">
+<!-- <a id="load-ajax-data" class="button">
   Button
-</a>
+</a> -->
 
-<a class="button is-primary">
-  Primary button
-</a>
-
-<a class="button is-large">
-  Large button
-</a>
-
-<a class="button is-loading">
-  Loading button
-</a>
 <script>
 
+function getDaysInMonth(year, month){
+  month = parseInt(month, 10) + 1;
+  var d = new Date(year, month, 0);
+  return d.getDate();
+}
 
-$("#load-ajax-data").html("AJAX testing");
-$("#load-ajax-data").on('click',function(){
-    // $(this).addClass("is-large");
+// $("#load-ajax-data").on('click',function(){
 
+$(function() {
 
-  // var xhttp = new XMLHttpRequest();
-  // xhttp.onreadystatechange = function() {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     document.getElementById("demo").innerHTML = this.responseText;
-  //   }
-  // };
-  // // xhttp.open("GET", "../data/patrolData.php'", true);
-  // xhttp.open("GET", "http://localhost/smartbuilding/org/patrolData.php'", true);
-  // xhttp.send();
   function staff (staffMap, row) {
     let id = row && row.staff_id, staff;
     staffMap[id] = staff = staffMap[id]||{};
@@ -145,51 +128,6 @@ $("#load-ajax-data").on('click',function(){
     return map;
   }
 
-
-
-
-    // for (var i = 1; i <= daysMonth; i++){
-    //   // if(i < my_day) {
-    //     // str += `<div class=".checktime.oldtime">${i}</div>`;
-    //   // } else {
-    //     str += `<div class="checktime" id="${i}">${i}</div>`;
-    //   // }
-    // }
-    // $('.checktime-box').html(str);
-
-
-    // var i = 1;
-    // // var id_no =
-    // for (var i = 1; i < daysMonth; i++) {
-    //   let d = new Date(my_year, my_month, i);
-    //   if (d.getDay() == 0 || d.getDay() == 6) {
-    //     // $("#" + i).css("background-color","gray");
-    //   }
-    //   else {
-    //     $("#" + i).addClass('checktime_day_shift');
-    //   }
-    // }
-
-    // <tr>
-    //   <?php
-    //     // $sql = "SELECT SUM(hours) FROM shift_table WHERE staff_id=" . $var['staff_id'];
-    //     // $total = $db->getValue($sql);
-    //   ?>
-    //     <!-- 姓名 -->
-    //     <td class="name">
-    //       <!-- <?php echo $var['name']; ?> -->
-    //     </td>
-    //     <!-- 日期 -->
-    //     <td id = "checktime-td" class = "checktime-td" colspan="31">
-    //         <div class = "checktime-box d-flex justify-content-around"></div>
-    //     </td>
-    //     <!-- 時數 -->
-    //     <td class="totaltime">
-    //       <!-- <?php echo $total; ?> -->
-    //     </td>
-    // </tr>
-
-
   $.ajax({
         url:'../data/patrolData.php',
         method: 'GET',
@@ -198,111 +136,73 @@ $("#load-ajax-data").on('click',function(){
           // let rows = getRows(obj);
           let rows = obj['data'];
 
+          var _date  = new Date();
+          var _year  = _date.getFullYear();
+          var _month = _date.getMonth();
+          var _daysInMonth = getDaysInMonth(_year, _month);
 
-          var month_olympic = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-          var month_normal = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-          var my_date  = new Date();
-          var my_year  = my_date.getFullYear();
-          var my_month = my_date.getMonth();
-          var my_day   = my_date.getDate();
-
-          var daysMonth;
-          var timeShiftTbodyStr = '';
-          var checkTimeBoxTemplate = '';
-          if (my_year % 4){
-              daysMonth = month_olympic[my_month];
-          } else {
-              daysMonth = month_normal[my_month];
-          }
-          for (var i = 1; i <= daysMonth; i++){
-            checkTimeBoxTemplate += `<div class="checktime" id="${i}">${i}</div>`;
-          }
-          // $('.checktime-box').html(str);
-          let totalHours = 0;
+          let staffTable = {};
+          // create vdom
           rows.forEach(row => {
-            // console.log(row['name']);
-            // console.log(row['staff_id']);
-            $shift_table = row['shift_table'];
-            let rowStr = "<tr>";
-            rowStr += `<td class="name">${row['name']}</td>`;
-            rowStr += `<td id = "checktime-td" class = "checktime-td" colspan="31">`;
-            rowStr += `<div class = "checktime-box d-flex justify-content-around">`;
-            // let i = 0;
-
-            rowStr += checkTimeBoxTemplate;
-
-            $shift_table.forEach(item => {
-              // console.log(item['dt']);
-              // console.log(item['dt'].split('-')[2]);
-              // console.log(item['shift']);
-              // console.log(item['hours']);
-              // let dt = item['dt'].split('-')[2];
-              // let shift = item['shift'];
-              let hours = item['hours'];
-              totalHours += hours;
-              console.log('hours = ' + item['hours']);
-
-              // rowStr += `<div class="checktime" id="${i}">${i}</div>`;
-              // if (d.getDay() == 0 || d.getDay() == 6) {
-                // $("#" + i).css("background-color","gray");
-              // }
-              // else {
-              // $("#" + dt).addClass('checktime_day_shift');
-              // }
-              // i++;
-            });
-            rowStr += `</div>`;
-            // rowStr += timeShiftTableStr;
-            rowStr += "</td>";
-            rowStr += `<td class="totaltime">${totalHours}</td>`;
-            rowStr += "</tr>"
-
-            console.log(rowStr);
-            $('.checktime-tbody').html(rowStr);
-
+            let totalHours = 0;
+            var shift_table = row['shift_table'];
+            let month = {}; // define month as a object
+            for (let i = 0; i < _daysInMonth; i++) {
+              month[i] = {"class":["checktime"], "id":i};
+            }
+            for (var i=0; i<shift_table.length; i++) {
+              var d0 = parseInt(shift_table[i]['dt'].split('-')[2]);
+              var d1 = month[d0-1];
+              if(shift_table[i]['shift']=='1') {
+                d1["class"].push("checktime_day_shift");
+              } else {
+                d1["class"].push("checktime_night_shift");
+              }
+              totalHours += parseInt(shift_table[i]['hours']);
+            }
+            staffTable[row.staff_id] = {id:row.staff_id, name:row.name, month:month, total:totalHours};
           });
 
+          let innerHtml = "";
 
-          // let staffMap = {};
-          // rows.forEach (row => staff(staffMap, row));
-          // console.log(staffMap);
-          // let map = buildMap(staffMap);
-          // console.log(isMap(map));
-          // console.log(isSet(map));
+          function logMapElements(value, key, map) {
+            console.log(`m[${key}] = ${value}`);
+          }
 
-          // if (isMap(map)) {
-          //   map.forEach((value, key) => {
-          //     console.log(key);
-          //     console.log(value);
-          //     let obj = value;
-          //     Object.keys(obj).forEach((key,value) => {
-          //       console.log(key);
-          //       console.log(value['staff_id']);
-          //       console.log(value['name']);
-          //     });
-          //   });
-          // }
+          for (var key in staffTable) {
+            // console.log(key, staffTable[key]);
+            var row = staffTable[key];
+            innerHtml += `<tr>`;
+            innerHtml += `  <td><a href="patrol_timetable.php?id=` + row.id + `">` + row["name"] + `</a></td>`;
+            innerHtml += `  <td id = "checktime-td" class = "checktime-td" colspan="31">`;
+            innerHtml += `    <div class="checktime-box d-flex justify-content-around">`;
 
+            month = row["month"];
+            console.log(month);
 
-          // staffMap.map(element, index) => {
-          //   console.log("current iteration is: " + index);
-          //   console.log("current element is: " + element);
-          // });
+            for (var key in month) {
+              if (month.hasOwnProperty(key)) {
+                let day = parseInt(key);
+                let value = month[key];
+                let hasClass = value["class"];
+                day++;
+                innerHtml += `      <div class="`;
+                hasClass.forEach(function(element) {
+                  innerHtml += (element + ' ');
+                });
+                innerHtml += `">` + day + `</div>`;
+                console.log(key, month[key]);
+              }
+            }
 
-          // let n = countProperties(staffMap)
-          // console.log(n);
-          // for (let i=0; i<n; i++) {
-          //   console.log(getProperties(staffMap,i));
-          // }
-          // console.log(data.length);
-          // var myObject = JSON.parse(data);
-          // var result = Object.keys(obj).map(function(key) {
-          //   return [Number(key), obj[key]];
-          // });
-          // console.log(data.length);
-          // for (let i = 0; i < data.length; i++) {
-          //   console.log(i, data[i]);
-          // }
+            innerHtml += `    </div>`;
+            innerHtml += `  </td>`;
+            innerHtml += `  <td>` + row["total"] + `</td>`;
+            innerHtml += `</tr>`;
+          }
+
+          $('#time-table').find('tbody').append(innerHtml);
+
         },
         error:function(err){
           console.error(err);
@@ -333,40 +233,20 @@ $(function() {
     } else {
         daysMonth = month_normal[my_month];
     }
-    // for (var i = 1; i <= daysMonth; i++){
-    //   // if(i < my_day) {
-    //     // str += `<div class=".checktime.oldtime">${i}</div>`;
-    //   // } else {
-    //     str += `<div class="checktime" id="${i}">${i}</div>`;
-    //   // }
-    // }
-    // $('.checktime-box').html(str);
-
-    // var i = 1;
-    // // var id_no =
-    // for (var i = 1; i < daysMonth; i++) {
-    //   let d = new Date(my_year, my_month, i);
-    //   if (d.getDay() == 0 || d.getDay() == 6) {
-    //     // $("#" + i).css("background-color","gray");
-    //   }
-    //   else {
-    //     $("#" + i).addClass('checktime_day_shift');
-    //   }
-    // }
 
   }
 
-  genMemberRow({});
+  // genMemberRow({});
 
     // 初始化區
-    $.ajax({
-        url:'../data/patrolData.php',
-        method: 'GET',
-        dataType:'JSON',
-        success:function(data){
-            console.log(data)
-        }
-    })
+    // $.ajax({
+    //     url:'../data/patrolData.php',
+    //     method: 'GET',
+    //     dataType:'JSON',
+    //     success:function(data){
+    //         console.log(data)
+    //     }
+    // })
 
     $('#onwork').on('click',function(){
         var new_date = new Date();
@@ -390,12 +270,6 @@ $(function() {
                     var _data = JSON.parse(data);
                     var rows = _data && _data.data && JSON.parse(_data.data);
                     genMemberRow(rows);
-
-                    // var _data = data;
-                    console.log ("-- _data.success---");
-                    console.log (_data.success);
-                    console.log ("-- _data.success---");
-                    console.log (_data);
                     if (_data.success) {
                         $('.checktime').eq(my_day-1).addClass('onwork');
                         $('#onwork').removeClass('btn-primary').addClass("btn-outline-primary").prop('disabled',true)
