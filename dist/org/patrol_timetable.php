@@ -23,54 +23,73 @@
   }
 
 ?>
+<style>
+.grid-container { 
+  grid-gap: 5px;
+  background-color: #2196F3;
+  padding: 10px;
+  text-align: center;
+  border: 5px solid black;
+  }
+.grid-container .columns {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding:2px 0;
+  font-size: 16px;
+  border: 1px solid black;
+}
+.grid-container .columns {
+  grid-column-end: span 4;
+}
 
+</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+
 <!-- 內容切換區 -->
 <div class="row">
-	<div class="col-12 p-4">
-		<div class="asset-manage-wrapper">
-			<ul class="nav nav-pills mb-3">
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org.php">人員</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/org/patrol.php">勤務管理</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
+  <div class="col-12 p-4">
+    <div class="asset-manage-wrapper">
+      <ul class="nav nav-pills mb-3">
+        <li class="nav-item">
+          <a class="nav-link" href="<?= $urlName ?>/org.php">人員</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="<?= $urlName ?>/org/patrol.php">勤務管理</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= $urlName ?>/org/contracts.php">廠商管理</a>
                 </li>
 
                 <!-- <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
+          <a class="nav-link" href="<?= $urlName ?>/org/transfer.php">移交紀錄</a>
                 </li> -->
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
+          <a class="nav-link" href="<?= $urlName ?>/org/chart.php">管理委員會</a>
                 </li>
-			</ul>
-		</div>
-	</div>
+      </ul>
+    </div>
+  </div>
 </div>
 <div class="row">
-  <div class="assets-create-title mb-3">
+  <div class="assets-create-title mb-3 ">
     <a href="<?= $urlName ?>/org/patrol.php" class="assets-create-icon fas fa-chevron-left"></a>
     <span>打卡紀錄</span>
-	</div>
-
+  </div>
   <section class="section">
-    <div class="container" id="timetable">
+    <div class="grid-container"; id="timetable">
       <div class="columns">
         <div class="column">
           姓名
         </div>
         <div class="column">
-          員工編號
+           <?php
+            echo $data[0]['name'];
+          ?> 
         </div>
       </div>
       <div class="columns">
         <div class="column">
-          <?php
-            echo $data[0]['name'];
-            ?>
+          員工編號
         </div>
         <div class="column">
           <?php
@@ -83,7 +102,7 @@
           日期
         </div> -->
         <div class="column">
-          上班時間
+         上班時間
         </div>
         <div class="column">
           下班時間
