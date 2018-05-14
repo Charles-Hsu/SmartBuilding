@@ -18,12 +18,18 @@
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
 				</li>
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
-                </li>
-                <li class="nav-item">
+        <li class="nav-item">
+					<a class="nav-link" href="<?=$urlName?>/activities.php">活動資訊</a>
+        </li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
+        </li>
+        <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/service.php">支援服務</a>
+        </li>
+        <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>
+        </li>
 				<?php
 					if ($_isAdmin) {
 				?>
@@ -46,8 +52,8 @@
 
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/opinionlist.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增住戶意見 (選擇住戶)</span>
+					<a href="<?= $urlName ?>/service.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>新增住戶支援服務 (選擇住戶)</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
@@ -59,7 +65,7 @@
 									<th>樓層</th>
 									<th>區權人</th>
 									<th>現住戶</th>
-									<th>反映意見</th>
+									<th>支援服務</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -80,7 +86,7 @@
 									<td><span><?php echo $var[holder];?></span></td>
 									<td><span><?php echo $var[resident];?></span></td>
 									</td>
-									<td><a href="op-add2.php?id=<?php echo $var[id];?>" class="btn btn-outline-secondary">意見內容</a></td>
+									<td><a href="service-add2.php?id=<?php echo $var[id];?>" class="btn btn-outline-secondary">服務內容</a></td>
 								</tr>
 								<?php
 									}

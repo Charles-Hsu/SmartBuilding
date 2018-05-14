@@ -7,7 +7,9 @@
 		header("Location: " . $url);
 	}
 	$_isAdmin = $_SESSION['admin'];
-	$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+  $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+  $sql = "SELECT id,name FROM service_item";
+  $service_item = $db->getRows($sql);
 ?>
 <!-- 內容切換區 -->
 <div class="row">
@@ -17,13 +19,19 @@
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>
-                <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
-                </li>
-                <li class="nav-item">
+        </li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?=$urlName?>/activities.php">活動資訊</a>
+        </li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
+        </li>
+        <li class="nav-item">
+					<a class="nav-link active" href="<?= $urlName ?>/service.php">支援服務</a>
+        </li>
+        <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>
+        </li>
 				<?php
 					if ($_isAdmin) {
 				?>
@@ -62,8 +70,8 @@
 			?>
 			<div id="assets-tab">
 				<div class="assets-create-title mb-3">
-					<a href="<?= $urlName ?>/op-add1.php" class="assets-create-icon fas fa-chevron-left"></a>
-					<span>新增住戶意見 (意見)</span>
+					<a href="<?= $urlName ?>/service-add1.php" class="assets-create-icon fas fa-chevron-left"></a>
+					<span>新增住戶支援服務 (服務項目)</span>
 				</div>
 				<div class="row justify-content-lg-start justify-content-center">
 					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 col-12">
@@ -103,41 +111,41 @@
 							<input name="holder-id" value="<?php echo $holder_id;?>" hidden>
 							<div class="form-group row">
 								<label for="opinion-type" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>類別:
+									<span class="important">*</span>服務種類:
 								</label>
 								<div class="col-md-9">
-									<select class="custom-select" name="opinion-type">
+									<select id="service-item" class="custom-select" name="opinion-type">
 										<?php
-											$sql =  "SELECT * FROM opinion_type";
-											$data1 = $db->getRows($sql);
-											foreach($data1 as $var) {
+											// $sql =  "SELECT * FROM opinion_type";
+											// $data1 = $db->getRows($sql);
+											// foreach($data1 as $var) {
 										?>
-										<option value="<?=$var['id'];?>"><?=$var['type'];?></option>
+										<!-- <option value="<?=$var['id'];?>"><?=$var['type'];?></option> -->
 										<?php
-											}
+											// }
 										?>
 									</select>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="opinion" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>意見:
+									<span class="important">*</span>說明:
 								</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control" name="opinion-content" id="opinion-content" placeholder="反映內容...">
+									<input type="text" class="form-control" name="opinion-content" id="opinion-content" placeholder="內容...">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="assets-buy-date" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>反映日期:
+									<span class="important">*</span>日期:
 								</label>
 								<div class="col-md-9">
-									<input type="text" class="form-control datepicker" name="opinion-date" id="opinion-date" placeholder="反映日期..." >
+									<input type="text" class="form-control datepicker" name="opinion-date" id="opinion-date" placeholder="日期..." >
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="assets-use-state" class="text-right col-md-3 col-form-label">
-									<span class="important">*</span>反映人:
+									<span class="important">*</span>住戶:
 								</label>
 								<div class="col-md-9">
 									<select class="custom-select" name="who">
@@ -166,6 +174,18 @@
 		</div>
 	</div>
 </div>
+
+<script>
+  var service_item = <?php echo json_encode($service_item); ?>;
+  console.log(service_item.length);
+  service_item.forEach((item) => {
+    let option = $('<option/>');
+    option.attr({ 'value': item.id }).text(item.name);
+    $('#service-item').append(option);
+    // console.log(item);
+  });
+</script>
+
 
 <script>
 

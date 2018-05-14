@@ -61,7 +61,7 @@
 							</div>
 							<div class="form-group row">
 								<label for="household-reply" class="text-right col-md-4 col-form-label">
-									<span class="important">*</span>反應住戶:</label>
+									<span class="important">*</span>反映住戶:</label>
 								<div class="col-md-8">
 									<input type="text" class="form-control" name="household-reply" id="household-reply">
 								</div>

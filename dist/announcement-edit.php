@@ -76,7 +76,7 @@ if (count($_POST) > 0) {
 					<a class="nav-link active" href="<?= $urlName ?>/announcement.php">公告</a>
 				</li>
                 <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
                 </li>
                 <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>

@@ -21,10 +21,10 @@
 					<a class="nav-link" href="<?=$urlName?>/activities.php">活動資訊</a>
         </li>
         <li class="nav-item">
-					<a class="nav-link active" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
         </li>
         <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/service.php">支援服務</a>
+					<a class="nav-link active" href="<?= $urlName ?>/service.php">支援服務</a>
         </li>
         <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
@@ -53,7 +53,7 @@
                 $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
                 $data = $db->getRows($sql);
             ?>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-6 mb-3">
                     <div class="card card-chartbar">
                         <div class="card-header">處理案件數</div>
@@ -70,13 +70,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div id="assets-tab">
             <?php
                 if ($_isAdmin) {
             ?>
-            <a href="<?= $urlName ?>/op-add1.php" class="btn add-asset-btn mb-3">
-                <span>+</span>新增住戶意見
+            <a href="<?= $urlName ?>/service-add1.php" class="btn add-asset-btn mb-3">
+                <span>+</span>新增支援服務
             </a>
             <?php
                 }
@@ -259,153 +259,6 @@ $('.asset-table').DataTable({
     //"order": [[0, 'asc']],
 })
 
-var randomData=()=>{
-    return Math.round(Math.random()*100)
-};
 
-var colorList={
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
-};
-var colors = Chart.helpers.color;
-var months=["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"];
-
-// 處理案件數
-var opinionChart = document.getElementById("opinion-chart").getContext('2d');
-var myChart = new Chart(opinionChart, {
-    type: 'bar',
-    data: {
-        labels: months,
-        datasets: [{
-            label: '住戶意見',
-            data: contentData,
-            backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
-            borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
-            borderWidth: 1
-        },{
-            label: '已回復',
-            data: responsedData,
-            backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
-            borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
-            borderWidth: 1
-        },{
-            label: '已結案',
-            data: completedData,
-            backgroundColor: colors('rgb(0, 153, 0)').alpha(0.5).rgbString(),
-            borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-
-// 處理案件速度
-var opinionSpeedChart = document.getElementById("opinionSpeed-chart").getContext('2d');
-var myChart = new Chart(opinionSpeedChart, {
-    type: 'bar',
-    data: {
-        labels: months,
-        datasets: [{
-            label: '平均回復天數',
-            data: replyData,
-            backgroundColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
-            borderColor: colors('rgb(54, 162, 235)').alpha(0.5).rgbString(),
-            borderWidth: 1
-        },{
-            label: '平均結案天數',
-            data: endData,
-            backgroundColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
-            borderColor: colors('rgb(255, 159, 64)').alpha(0.5).rgbString(),
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
-
-$('.opinionlist_tbody').on('click','.dt_responsed',function(){
-    var _this=$(this);
-    var household_id=_this.attr('data-id');
-    var dt=_this.closest('tr').find('.td_dt span').text()
-    console.log(dt)
-    $.ajax({
-        url:"./data/optionlistData.php",
-        method:"POST",
-        data:{
-            household_id,
-            dt,
-            type:"post_res"
-        },
-        success:function(data){
-            try{
-                var _data=JSON.parse(data);
-                if(_data.success){
-                    var reply_day=Math.round((new Date(_data.data).valueOf()-new Date(dt).valueOf())/(24*60*60*1000)+1)
-                    _this.closest('td').html(`<span>${reply_day}</span>`)
-                    $('.opinionlist_tbody').find('.td_completed input').prop('disabled',false)
-                }else{
-                    alert('請重新操作')
-                }
-            }catch(error){
-                alert(data);
-            }
-        },
-        error:function(){
-            console.log('Error')
-        }
-    })
-});
-
-$('.opinionlist_tbody').on('click','.dt_completed',function(){
-    var _this=$(this);
-    var household_id=_this.attr('data-id');
-    $.ajax({
-        url:"./data/optionlistData.php",
-        method:"POST",
-        data:{
-            household_id,
-            dt,
-            type:"post_com"
-        },
-        success:function(data){
-            try{
-                var _data=JSON.parse(data);
-                if(_data.success){
-                    var end_day=Math.round((new Date(_data.data).valueOf()-new Date(dt).valueOf())/(24*60*60*1000)+1)
-                    _this.closest('td').html(`<span>${end_day}</span>`)
-                }else{
-                    alert('請重新操作')
-                }
-            }catch(error){
-                alert(data);
-            }
-        },
-        error:function(){
-            console.log('Error')
-        }
-    })
-})
 </script>
 <?php include('./Footer.php'); ?>

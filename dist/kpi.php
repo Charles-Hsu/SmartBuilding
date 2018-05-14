@@ -16,13 +16,19 @@
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
-				</li>
-                <li class="nav-item">
-					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">住戶意見</a>
-                </li>
-                <li class="nav-item">
+        </li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?=$urlName?>/activities.php">活動資訊</a>
+        </li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
+        </li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/service.php">支援服務</a>
+        </li>
+        <li class="nav-item">
 					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
-                </li>
+        </li>
 				<?php
 					if ($_isAdmin) {
 				?>

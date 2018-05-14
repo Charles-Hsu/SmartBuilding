@@ -42,7 +42,7 @@
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
-							<th>反應日期</th>
+							<th>反映日期</th>
 							<th>戶號</th>
 							<th>樓層</th>
 							<th>主旨</th>

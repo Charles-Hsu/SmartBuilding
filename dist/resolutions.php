@@ -21,7 +21,7 @@ if ($_isAdmin) {
 }
 ?>
     <a class="" href="./announcement.php">公告</a>
-    <a class="" href="./opinionlist.php">住戶意見</a>
+    <a class="" href="./opinionlist.php">反映意見</a>
     <a class="" href="./overduelist.php">欠繳費用</a>
 </nav>
 

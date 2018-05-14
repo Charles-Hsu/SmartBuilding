@@ -1,21 +1,21 @@
-<?php session_start();?>
+<?php session_start(); ?>
 <?php
-include './config.php';
-include './Header.php';
-if (!$_SESSION['online']) {
-    $url = "./login.php";
-    header("Location: " . $url);
-}
-$_isAdmin = $_SESSION['admin'];
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+	include('./config.php');
+	include('./Header.php');
+	if (!$_SESSION['online']) {
+		$url = "./login.php";
+		header("Location: " . $url);
+	}
+	$_isAdmin = $_SESSION['admin'];
+  $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 
-// $local_ip = $_COOKIE['local_ip'];
+  // $local_ip = $_COOKIE['local_ip'];
 
-// var_dump($_COOKIE);
+  // var_dump($_COOKIE);
 
-// echo $_SESSION['client_ip'];
+  // echo $_SESSION['client_ip'];
 
-// echo "local_ip = " . $local_ip;
+  // echo "local_ip = " . $local_ip;
 ?>
 
 <script>
@@ -31,89 +31,89 @@ $db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
 		<div class="asset-manage-wrapper">
 			<ul class="nav nav-pills mb-3">
 				<li class="nav-item">
-					<a class="nav-link active" href="<?=$urlName?>/announcement.php">公告</a>
-				</li>
-        <li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/activities.php">活動資訊</a>
+					<a class="nav-link" href="<?= $urlName ?>/announcement.php">公告</a>
         </li>
         <li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/opinionlist.php">反映意見</a>
+					<a class="nav-link active" href="<?=$urlName?>/activities.php">活動資訊</a>
         </li>
         <li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/service.php">支援服務</a>
+					<a class="nav-link" href="<?= $urlName ?>/opinionlist.php">反映意見</a>
         </li>
         <li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/overduelist.php">欠繳費用</a>
+					<a class="nav-link" href="<?= $urlName ?>/service.php">支援服務</a>
         </li>
-				<?php
-          if ($_isAdmin) {
-        ?>
-				<li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/kpi.php">績效指標</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/space-management.php">空間變更</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/regulation.php">管理辦法</a>
-				</li>
         <li class="nav-item">
-					<a class="nav-link" href="<?=$urlName?>/evaluation.php">品質管理</a>
+					<a class="nav-link" href="<?= $urlName ?>/overduelist.php">欠繳費用</a>
         </li>
 				<?php
-}
-?>
+					if ($_isAdmin) {
+				?>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/kpi.php">績效指標</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/space-management.php">空間變更</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/regulation.php">管理辦法</a>
+				</li>
+        <li class="nav-item">
+					<a class="nav-link" href="<?= $urlName ?>/evaluation.php">品質管理</a>
+        </li>
+				<?php
+					}
+				?>
 			</ul>
 			<?php
-$sql = 'SELECT * FROM post';
-$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
-$data = $db->getRows($sql);
-?>
+				$sql = 'SELECT * FROM post';
+				$db = new DBAccess($conf['db']['dsn'], $conf['db']['user']);
+				$data = $db->getRows($sql);
+			?>
 			<div id="assets-tab">
 				<?php
-if ($_isAdmin) {
-    ?>
-				<a href="<?=$urlName?>/announcement-new.php" class="btn add-asset-btn mb-3">
-				<span>+</span>新增公告
+					if ($_isAdmin) {
+				?>
+				<a href="<?= $urlName ?>/activities-new.php" class="btn add-asset-btn mb-3">
+				<span>+</span>新增活動資訊
 				</a>
 				<?php
-}
-?>
+					}
+				?>
 				<table class="table asset-table">
 					<thead class="thead-light">
 						<tr>
 							<th>公告日期</th>
 							<th>公告標題</th>
 							<?php
-if ($_isAdmin) {
-    ?>
+								if ($_isAdmin) {
+							?>
 							<th>修改</th>
 							<!-- <th>刪除</th> -->
 							<?php
-}
-?>
+								}
+							?>
 						</tr>
 					</thead>
 					<tbody class="opinionlist_tbody">
 						<?php
-foreach ($data as $var) {
-    ?>
+							foreach($data as $var) {
+						?>
 						<tr>
 							<td width="100px" class="announ-date" width="130px"><span><?=$var['date'];?></span></td>
 							<td class="announ-content"><?=$var['content'];?></td>
 							<?php
-if ($_isAdmin) {
-        ?>
+								if ($_isAdmin) {
+							?>
 							<td width="70px"><a href="./announcement-edit.php?id=<?php echo $var[id]; ?>" class="btn btn-primary">編輯</a></td>
-							<!-- <td class="announ-edit" data-id="<?=$var[id]?>"><a href="#" class="btn btn-primary btn-announEdit">編輯</a></td>
-							<td class="announ-del"><a href="#" data-id="<?=$var[id]?>" class="btn btn-danger btn-announDel">刪除</a></td> -->
+							<!-- <td class="announ-edit" data-id="<?= $var[id] ?>"><a href="#" class="btn btn-primary btn-announEdit">編輯</a></td>
+							<td class="announ-del"><a href="#" data-id="<?= $var[id] ?>" class="btn btn-danger btn-announDel">刪除</a></td> -->
 							<?php
-}
-    ?>
+								}
+							?>
 						</tr>
 						<?php
-}
-?>
+							}
+						?>
 					</tbody>
 				</table>
 			</div>
@@ -239,4 +239,4 @@ $('.btn-announDel').on('click',function(e){
 </script>
 
 
-<?php include './Footer.php';?>
+<?php include('./Footer.php'); ?>
