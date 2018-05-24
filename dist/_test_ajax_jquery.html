@@ -1,0 +1,60 @@
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <button id="action-button">Click me to load info!</button>
+  <div id="info"></div>
+
+  <small>Demo created by
+    <a href="https://twitter.com/AurelioDeRosa">Aurelio De Rosa</a>
+  </small>
+</body>
+<script>
+
+  $('#action-button').click(function () {
+    $.ajax({
+      // url: 'https://api.joind.in/v2.1/talks/10889',
+      url: './_test_ajax_gethint.php?q=123',
+      data: {
+        format: 'json'
+      },
+      error: function () {
+        $('#info').html('<p>An error has occurred</p>');
+      },
+      // dataType: 'jsonp',
+      success: function (text) {
+        var data = JSON.parse(text);
+        var $title = $('<h1>').text(data.talks[0].talk_title);
+        var $description = $('<p>').text(data.talks[0].talk_description);
+        $('#info')
+          .append($title)
+          .append($description);
+      },
+      type: 'GET'
+    });
+  });
+
+  // $('#main-menu a').click(function (event) {
+  //   event.preventDefault();
+  //   console.log('click');
+  //   $('#main').load(this.href + ' #main *', function (responseText, status) {
+  //     if (status === 'success') {
+  //       $('#notification-bar').text('The page has been successfully loaded');
+  //     } else {
+  //       $('#notification-bar').text('An error occurred');
+  //     }
+  //   });
+  // });
+
+
+  // document.getElementById("demo").onclick = function () { myFunction() };
+
+  // function myFunction() {
+  //   document.getElementById("demo").innerHTML = "YOU CLICKED ME!";
+  // }
+</script>
+
+</html>

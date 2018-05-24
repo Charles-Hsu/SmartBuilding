@@ -24,8 +24,7 @@
 
 ?>
 <style>
-
- .grid-container { 
+.grid-container { 
   grid-gap: 5px;
   background-color: #2196F3;
   padding: 10px;
@@ -42,7 +41,6 @@
 .grid-container .columns {
   grid-column-end: span 4;
 }
-
 
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
@@ -77,22 +75,21 @@
     <a href="<?= $urlName ?>/org/patrol.php" class="assets-create-icon fas fa-chevron-left"></a>
     <span>打卡紀錄</span>
   </div>
-  <section>
- <section class="section">
-    <div class="grid-container" id="timetable">
+  <section class="section">
+    <div class="grid-container"; id="timetable">
       <div class="columns">
         <div class="column">
           姓名
         </div>
         <div class="column">
-          員工編號
+           <?php
+            echo $data[0]['name'];
+          ?> 
         </div>
       </div>
       <div class="columns">
         <div class="column">
-          <?php
-            echo $data[0]['name'];
-            ?>
+          員工編號
         </div>
         <div class="column">
           <?php
@@ -105,7 +102,7 @@
           日期
         </div> -->
         <div class="column">
-          上班時間
+         上班時間
         </div>
         <div class="column">
           下班時間
@@ -116,18 +113,14 @@
 </div>
 
 <script>
-  
+
 $(function() {
-
   var json_data = <?php echo $json_data; ?>;
-
   console.log(json_data);
 
   function isNull(obj) {
     return !obj || obj === 'null' || obj === 'undefined';
   }
-
- 
 
   json_data.forEach(row => {
     let totalHours = 0;
@@ -164,6 +157,5 @@ $(function() {
 
 
 
-</script>
 </script>
 <?php include('../Footer.php'); ?>
