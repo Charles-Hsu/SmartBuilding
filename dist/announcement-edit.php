@@ -102,15 +102,17 @@ if (count($_POST) > 0) {
 			</ul>
 			<?php
 				if (count($_POST) > 0) {
-					$date = $_POST['post-date'];
-					$content = $_POST['post-content'];
-					$post_by = '管委會';
-					$sql = "INSERT INTO post (`id`, `date`, `post_by`, `content`) VALUES (NULL, '$date', '$post_by', '$content')";
+					$post_id = $_GET['id'];
+					// $date = $_POST['post-date'];
+					// $content = $_POST['post-content'];
+					// $post_by = '管委會';
+					//$sql = "INSERT INTO post (`id`, `date`, `post_by`, `content`) VALUES (NULL, '$date', '$post_by', '$content')";
+					$sql = "DELETE FROM `post` WHERE `post`.`id` = '$post_id'";
 					if ($db->insert($sql)) {
-						$message="新增成功";
+						$message="刪除成功";
 						$url = "./announcement.php";
 						// $url = "http://www.stackoverflow.com";
-						// echo "<script>window.location.href = '" . $url . "'</script>";
+						echo "<script>window.location.href = '" . $url . "'</script>";
 					}
 				}
 			?>
